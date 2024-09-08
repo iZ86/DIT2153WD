@@ -1,0 +1,11 @@
+# Vim temp files
+*.swp
+
+# Visual Studio
+.vs/
+.vscode/
+
+#IntelliJ
+*.iml
+.idea/
+out/
