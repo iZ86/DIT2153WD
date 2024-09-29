@@ -1092,7 +1092,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Feedback Subsystem" id="qQSUuAJ_PUwZ8zi6vLwY">
-    <mxGraphModel dx="1195" dy="-450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="574" dy="-788" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="_aOI1ebGKl25wPzTOX8g-0" />
         <mxCell id="_aOI1ebGKl25wPzTOX8g-1" parent="_aOI1ebGKl25wPzTOX8g-0" />
@@ -1196,6 +1196,11 @@
         </mxCell>
         <mxCell id="n1y0aDBsRalxbSqRbvvv-7" value="Admin can post comment on every feedback made by different Member, but Member can only comment on Feedbacks made by themselves." style="shape=note;size=20;whiteSpace=wrap;html=1;" parent="_aOI1ebGKl25wPzTOX8g-1" vertex="1">
           <mxGeometry x="620" y="1690" width="140" height="123" as="geometry" />
+        </mxCell>
+        <mxCell id="nt3dN6_mWIEj8KR671IY-0" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="_aOI1ebGKl25wPzTOX8g-1" source="n1y0aDBsRalxbSqRbvvv-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="1540" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="n1y0aDBsRalxbSqRbvvv-9" value="&lt;div&gt;Close Feedback&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="_aOI1ebGKl25wPzTOX8g-1" vertex="1">
           <mxGeometry x="363" y="1609" width="144" height="50" as="geometry" />
