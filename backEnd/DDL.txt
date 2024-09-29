@@ -1,0 +1,174 @@
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CREATE DATABASE
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+CREATE DATABASE HUANFITNESSCENTREDATABASE;
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CREATE TABLES
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+CREATE TABLE REGISTERED_USER(
+	registeredUserID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	firstName VARCHAR(255),
+	lastName VARCHAR(255),
+	username VARCHAR(255),
+	password VARCHAR(255),
+	email VARCHAR(255),
+	phoneNo VARCHAR(255),
+	gender VARCHAR(255),
+	dateOfBirth DATE);
+
+CREATE TABLE USER(
+	userID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	joinedDate DATE,
+	FOREIGN KEY (userID) REFERENCES REGISTERED_USER(registeredUserID));
+
+CREATE TABLE ADMIN(
+	adminID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	hiredDate DATE,
+	salary INT,
+	FOREIGN KEY (adminID) REFERENCES REGISTERED_USER(registeredUserID));
+
+CREATE TABLE INSTRUCTOR(
+	instructorID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	firstName VARCHAR(255),
+	lastName VARCHAR(255),
+	email VARCHAR(255),
+	phoneNo VARCHAR(255),
+	gender VARCHAR(255));
+
+CREATE TABLE FITNESS_CLASS(
+	fitnessClassID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255),
+	description VARCHAR(255));
+
+CREATE TABLE MEMBERSHIP(
+	membershipID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255),
+	type VARCHAR(255),
+	price INT);
+
+CREATE TABLE NUTRIONIST(
+	nutrionistID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	firstName VARCHAR(255),
+	lastName VARCHAR(255),
+	gender VARCHAR(255),
+	email VARCHAR(255),
+	phoneNo VARCHAR(255),
+	description VARCHAR(255),
+	type VARCHAR(255));
+
+CREATE TABLE WATER_CONSUMPTION(
+	waterConsumptionID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	litres INT,
+	recordedOn DATETIME,
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID));
+
+CREATE TABLE WEIGHT(
+	weightID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	weight INT,
+	recordedOn DATETIME,
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID));
+
+CREATE TABLE EXERCISE_ROUTINE(
+	exerciseRoutineID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	recordedOn DATETIME,
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID));
+
+CREATE TABLE EXERCISE(
+	exerciseID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255),
+	description VARCHAR(255),
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID));
+
+CREATE TABLE EXERCISE_ROUTINE_DETAIL(
+	exerciseRoutineDetailID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	weights INT,
+	reps INT,
+	restTime TIME,
+	exerciseID INT,
+	FOREIGN KEY (exerciseID) REFERENCES EXERCISE(exerciseID),
+	exerciseRoutineID INT,
+	FOREIGN KEY (exerciseRoutineID) REFERENCES EXERCISE_ROUTINE(exerciseRoutineID));
+
+CREATE TABLE NUTRIONIST_SCHEDULE(
+	nutrionistScheduleID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	createdOn DATETIME,
+	nutrionistID INT,
+	FOREIGN KEY (nutrionistID) REFERENCES NUTRIONIST(nutrionistID));
+
+CREATE TABLE PAYMENT(
+	paymentID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	type VARCHAR(255),
+	createdOn DATETIME,
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID));
+
+CREATE TABLE NUTRIONIST_BOOKING(
+	nutrionistBookingID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	description VARCHAR(255),
+	nutrionistScheduleID INT,
+	FOREIGN KEY (nutrionistScheduleID) REFERENCES NUTRIONIST_SCHEDULE(nutrionistScheduleID),
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID),
+	paymentID INT,
+	FOREIGN KEY (paymentID) REFERENCES PAYMENT(paymentID));
+
+CREATE TABLE MEMBER_SUBSCRIPTION(
+	membershipSubscriptionID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	startOn DATETIME,
+	endOn DATETIME,
+	paymentID INT,
+	FOREIGN KEY (paymentID) REFERENCES PAYMENT(paymentID),
+	membershipID INT,
+	FOREIGN KEY (membershipID) REFERENCES MEMBERSHIP(membershipID));
+
+CREATE TABLE FITNESS_CLASS_SUBSCRIPTION(
+	fitnessClassSubscriptionID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	startOn DATETIME,
+	endOn DATETIME,
+	fitnessClassID INT,
+	FOREIGN KEY (fitnessClassID) REFERENCES FITNESS_CLASS(fitnessClassID),
+	paymentID INT,
+	FOREIGN KEY (paymentID) REFERENCES PAYMENT(paymentID));
+
+CREATE TABLE FITNESS_CLASS_SCHEDULE(
+	fitnessClassScheduleID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	scheduledOn DATETIME,
+	createdOn DATETIME,
+	pax INT,
+	instructorID INT,
+	FOREIGN KEY (instructorID) REFERENCES INSTRUCTOR(instructorID),
+	fitnessClassID INT,
+	FOREIGN KEY (fitnessClassID) REFERENCES FITNESS_CLASS(fitnessClassID));
+
+CREATE TABLE FITNESS_CLASS_BOOKING(
+	fitnessClassBookingID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	status VARCHAR(255),
+	fitnessClassScheduleID INT,
+	FOREIGN KEY (fitnessClassScheduleID) REFERENCES FITNESS_CLASS_SCHEDULE(fitnessClassScheduleID),
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID));
+
+CREATE TABLE FEEDBACK(
+	feedbackID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	topic VARCHAR(255),
+	status VARCHAR(255),
+	createdOn DATETIME,
+	userID INT,
+	FOREIGN KEY (userID) REFERENCES USER(userID));
+
+CREATE TABLE COMMENT(
+	commentID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	message VARCHAR(255),
+	createdOn DATETIME,
+	feedbackID INT,
+	FOREIGN KEY (feedbackID) REFERENCES FEEDBACK(feedbackID),
+	registeredUserID INT,
+	FOREIGN KEY (registeredUserID) REFERENCES REGISTERED_USER(registeredUserID));
+
