@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.16" pages="17">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.16" pages="18">
   <diagram id="UvEfXt0v__yHU1YcHUCF" name="Account">
     <mxGraphModel dx="2045" dy="650" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -913,7 +913,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Nutrionist Booking" id="L9OC5RcmWj4cJKFkvtak">
-    <mxGraphModel dx="1195" dy="-450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="-320" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="kck3oQJdlhWTeIDru22B-0" />
         <mxCell id="kck3oQJdlhWTeIDru22B-1" parent="kck3oQJdlhWTeIDru22B-0" />
@@ -982,6 +982,68 @@
         </mxCell>
         <mxCell id="Zo3stS68rd6mGxgoaEPI-0" value="Add Favourite Nutrionists" style="ellipse;whiteSpace=wrap;html=1;" parent="kck3oQJdlhWTeIDru22B-1" vertex="1">
           <mxGeometry x="368" y="1319" width="144" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="Gmbfm0rQ6uwVVRqYs5eR" name="Create Nutrionist Include Relationship">
+    <mxGraphModel dx="989" dy="-562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1350" width="570" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-2" value="Make Payment" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="586" y="1455" width="144" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-3" value="&lt;div&gt;&lt;div&gt;Huan Fitness Centre&amp;nbsp;&lt;/div&gt;&lt;div&gt;Nutrionist Booking Subsystem&lt;/div&gt;&lt;/div&gt;&lt;div&gt;Create Nutrionist Booking &amp;lt;&amp;lt;include&amp;gt;&amp;gt; Relationships&lt;/div&gt;&lt;div&gt;Actor: Member, Credit Payment Service, E-Wallet Payment Service&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="435" y="1350" width="380" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-7" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;endArrow=open;endFill=0;" edge="1" parent="1" source="baHRAS2cvXg3ZLi6JQE0-9" target="baHRAS2cvXg3ZLi6JQE0-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-8" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="baHRAS2cvXg3ZLi6JQE0-7">
+          <mxGeometry x="-0.2135" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-9" value="Create Nutrionist Booking" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="353" y="1455" width="144" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-10" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="baHRAS2cvXg3ZLi6JQE0-11" target="baHRAS2cvXg3ZLi6JQE0-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-11" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="260" y="1450" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;" edge="1" parent="1" source="baHRAS2cvXg3ZLi6JQE0-15" target="baHRAS2cvXg3ZLi6JQE0-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-15" value="Credit/Debit" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="586" y="1550" width="144" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;" edge="1" parent="1" source="baHRAS2cvXg3ZLi6JQE0-17" target="baHRAS2cvXg3ZLi6JQE0-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-17" value="E-Wallet" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="746" y="1550" width="144" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-18" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" target="baHRAS2cvXg3ZLi6JQE0-15">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="658" y="1650" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-19" value="Credit Payment Service" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="643" y="1660" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-20" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" target="baHRAS2cvXg3ZLi6JQE0-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="818" y="1650" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="baHRAS2cvXg3ZLi6JQE0-21" value="E-Wallet Payment Service" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="803" y="1660" width="30" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
