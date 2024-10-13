@@ -9,3 +9,6 @@
 *.iml
 .idea/
 out/
+
+# NodeJS
+node_modules/
