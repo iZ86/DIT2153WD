@@ -9,9 +9,11 @@ module.exports = {
     extend: {
       colors: {
         'white-bg': '#F1FAFF',
+        'blue-button' : '#5C7AFF',
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
+        nunito: ["Nunito", "sans-serif"],
       },
     },
   },
