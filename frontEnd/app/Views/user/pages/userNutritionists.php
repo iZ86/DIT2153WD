@@ -30,26 +30,52 @@
         </div>
 
         <div class="bg-white mt-32 flex w-full items-center justify-center">
-            <div class="my-20 w-1/2 flex flex-col items-center justify-center border border-black border-solid rounded-xl py-14">
-                <h1 class="font-bold text-2xl">Make a Reservation Now</h1>
+            <div class="my-20 px-44 flex flex-col items-center justify-center border border-black border-solid rounded-xl py-14">
+                <h1 class="font-extrabold text-2xl font-montserrat">Make a Reservation Now</h1>
 
-                <form class="flex flex-col gap-y-4" action="" method="GET">
+                <form class="flex flex-col gap-y-5 py-5" action="" method="GET">
                     <div>
-                    <label for="nutritionist">Nutritionist:</label><br>
-                    <select class="w-64 border-b-[1px] border-b-black border-solid" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRTIONIST">
-                        <option value="" disabled selected>SELECT NUTRITIONIST</option>
-                    </select> 
+                        <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
+                        <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRTIONIST">
+                            <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
+                            <option value="hi" >Hi</option>
+                        </select> 
                     </div>
 
                     <div>
-                    <label for="date">Date:</label><br>
-                    <select class="w-64 border-b-[1px] border-b-black border-solid" name="date" id="date" placeholder="SELECT DATE">
-                        <option value="" disabled selected>SELECT DATE</option>
-                    </select> 
+                        <label class="font-nunito" for="date">Date:</label><br>
+                        <select required class="w-72 border-b-[1px] border-black border-solid" name="date" id="date" placeholder="SELECT DATE">
+                            <option value="" disabled selected hidden>SELECT DATE</option>
+                            <option value="hi" >Hi</option>
+                        </select> 
+                    </div>
+
+                    <div>
+                        <label class="font-nunito" for="time">Time:</label><br>
+                         <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time" placeholder="SELECT TIME">
+                            <option class="font-bold" value="" disabled selected hidden>SELECT AN AVAILABLE TIME</option>
+                            <option value="hi" >Hi</option>
+                        </select> 
+                    </div>
+
+                    <div>
+                        <label class="font-nunito" for="desc">Description:</label><br>
+                        <textarea class="border-[1px] border-black border-solid rounded-md font-nunito" name="desc" id="desc" rows="4" cols="34" placeholder="Please Tell Us Your GOAL or Any Concern"></textarea> 
+                    </div>
+
+                    <div class="text-center">
+                        <p class="font-bold text-sm font-nunito">RM20 for each Consultation Session*</p>
+                    </div>
+
+                    <div class="text-center font-nunito">
+                        <button class="text-sm rounded-lg px-2 py-2 font-semibold bg-blue-button text-white font-nunito" type="submit">Submit Booking</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+<style>
+select:invalid { color: gray; }
+</style>
 </body>
 </html>
