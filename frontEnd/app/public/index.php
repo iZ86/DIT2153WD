@@ -8,7 +8,7 @@
 </head>
 <body>
     <?php 
-    require_once '../Views/user/pages/userNutritionists.php';
+    //require_once '../Views/user/pages/userNutritionists.php';
     ?>
     
 </body>
