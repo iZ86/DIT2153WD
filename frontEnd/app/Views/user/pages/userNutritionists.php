@@ -1,6 +1,7 @@
+<?php include '../components/header.php'; ?>
+<?php include '../components/navBar.php'; ?>
+
 <section class="bg-white-bg">
-    <?php include '../components/navBar.php'; ?>
-    
     <div class="flex flex-col items-center justify-center">
         <h1 class="mt-12 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
 
@@ -80,7 +81,7 @@
         </div>
     </div>
 
-    <?php include '../components/footer.php'; ?>
+<?php include '../components/footer.php'; ?>
 </section>
 <style>
 select:invalid { 
