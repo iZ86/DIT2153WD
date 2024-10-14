@@ -14,6 +14,8 @@ module.exports = {
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
         nunito: ["Nunito", "sans-serif"],
+        orelega: ["Orelega One", "sans-serif"],
+        aoboshi: ["Aoboshi One", "serif"],
       },
     },
   },
