@@ -1,2 +1,2 @@
-# .htaccess file
-php_value include_path '.;C:\xampp\php\PEAR;C:\xampp\htdocs\DIT2153WD\frontEnd\app\Views\user;C:\xampp\htdocs\DIT2153WD\frontEnd\app\Views\user\components'
+#.htaccess file
+#php_value include_path '.;C:\xampp\php\PEAR;C:\xampp\htdocs\DIT2153WD\frontEnd\app\Views\user;C:\xampp\htdocs\DIT2153WD\frontEnd\app\Views\user\components'
