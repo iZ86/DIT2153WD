@@ -27,6 +27,7 @@
                     <th class="py-4 px-6 border-b border-gray-200">UID</th>
                     <th class="py-4 px-6 border-b border-gray-200">Amount (RM)</th>
                     <th class="py-4 px-6 border-b border-gray-200">Date</th>
+                    <th class="py-4 px-6 border-b border-gray-200">Status</th>
                     <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                 </tr>
             </thead>
@@ -40,6 +41,9 @@
                     <td class="p-3 mt-4">10001</td>
                     <td class="p-3 mt-4">35.00</td>
                     <td class="p-3 mt-4">2024-09-05 / 12:00</td>
+                    <td class="p-3 mt-4">
+                        <span class="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-lg">Completed</span>
+                    </td>
                     <td class="p-3  mt-4 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
                             <i class="bx bx-pencil"></i>
@@ -58,6 +62,9 @@
                     <td class="p-3">10002</td>
                     <td class="p-3">70.00</td>
                     <td class="p-3">2024-08-30 / 08:35</td>
+                    <td class="p-3 mt-4">
+                        <span class="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-lg">Completed</span>
+                    </td>
                     <td class="p-3 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
                             <i class="bx bx-pencil"></i>
