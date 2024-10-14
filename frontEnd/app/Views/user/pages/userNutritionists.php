@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../../public/css/output.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<body class="bg-white-bg">
+<section class="bg-white-bg">
     <?php include '../components/navBar.php'; ?>
     
     <div class="flex flex-col items-center justify-center">
@@ -92,6 +81,7 @@
     </div>
 
     <?php include '../components/footer.php'; ?>
+</section>
 <style>
 select:invalid { 
     color: rgba(0, 0, 0, 0.3); 
@@ -107,5 +97,3 @@ input[type="date"]:valid {
       color: black; /* Black color when a valid date is selected */
 }
 </style>
-</body>
-</html>

@@ -13,3 +13,5 @@
         <p class="font-montserrat">© 2024 Huan Fitness Centre All Rights Reserved.</p>
     </div>
 </footer>
+</body>
+</html>
