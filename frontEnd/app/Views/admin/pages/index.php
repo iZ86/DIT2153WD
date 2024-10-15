@@ -3,7 +3,7 @@
 <?php include '../components/navbar.php'; ?>
 
 <section class="p-6 space-y-6">
-    <p class="text-2xl mx-4 font-bold">Dashboard</p>
+    <p class="text-3xl mx-4 font-bold">Dashboard</p>
 
     <div class="grid grid-cols-4 gap-6">
         <div class="bg-white p-6 rounded-2xl">
