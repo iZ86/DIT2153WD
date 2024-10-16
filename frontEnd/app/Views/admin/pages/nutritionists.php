@@ -30,8 +30,9 @@
                     <th class="py-4 px-6 border-b border-gray-200">ID</th>
                     <th class="py-4 px-6 border-b border-gray-200">Name</th>
                     <th class="py-4 px-6 border-b border-gray-200">Phone</th>
-                    <th class="py-4 px-6 border-b border-gray-200">Address</th>
+                    <th class="py-4 px-6 border-b border-gray-200">Email</th>
                     <th class="py-4 px-6 border-b border-gray-200">Gender</th>
+                    <th class="py-4 px-6 border-b border-gray-200">Type</th>
                     <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                 </tr>
             </thead>
@@ -40,11 +41,14 @@
                     <td class="p-3 mt-4">
                         <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
                     </td>
-                    <td class="p-3 mt-4">NU0001</td>
+                    <td class="p-3 mt-4">1</td>
                     <td class="p-3 mt-4">Adam Ong</td>
                     <td class="p-3 mt-4">(60)18-999 0000</td>
-                    <td class="p-3 mt-4">5, Jalan Muda</td>
+                    <td class="p-3 mt-4">adamong@yahoo.com</td>
                     <td class="p-3 mt-4">Male</td>
+                    <td class="p-3 mt-4">
+                        <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-lg">Certified Nutritionist</span>
+                    </td>
                     <td class="p-3  mt-4 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
                             <i class="bx bx-pencil"></i>
@@ -58,11 +62,14 @@
                     <td class="p-3">
                         <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
                     </td>
-                    <td class="p-3">NU0002</td>
+                    <td class="p-3">2</td>
                     <td class="p-3">Fibian Tham</td>
                     <td class="p-3">(60)12-777 0000</td>
-                    <td class="p-3">14, Jalan Bistari</td>
+                    <td class="p-3">fibiantham@gmail.com</td>
                     <td class="p-3">Male</td>
+                    <td class="p-3 mt-4">
+                        <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-lg">Sports Nutrition Specialist</span>
+                    </td>
                     <td class="p-3 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
                             <i class="bx bx-pencil"></i>
