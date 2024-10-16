@@ -17,7 +17,8 @@ CREATE TABLE REGISTERED_USER(
 	email VARCHAR(255),
 	phoneNo VARCHAR(255),
 	gender VARCHAR(255),
-	dateOfBirth DATE);
+	dateOfBirth DATE,
+        profileImageFilePath VARCHAR(255));
 
 CREATE TABLE USER(
 	userID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -36,12 +37,15 @@ CREATE TABLE INSTRUCTOR(
 	lastName VARCHAR(255),
 	email VARCHAR(255),
 	phoneNo VARCHAR(255),
-	gender VARCHAR(255));
+	gender VARCHAR(255),
+        dateOfBirth DATE,
+        instructorImageFilePath VARCHAR(255));
 
 CREATE TABLE FITNESS_CLASS(
 	fitnessClassID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	name VARCHAR(255),
-	description VARCHAR(255));
+	description VARCHAR(255),
+        fitnessClassImageFilePath VARCHAR(255));
 
 CREATE TABLE MEMBERSHIP(
 	membershipID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -54,10 +58,12 @@ CREATE TABLE NUTRITIONIST(
 	firstName VARCHAR(255),
 	lastName VARCHAR(255),
 	gender VARCHAR(255),
+        dateOfBirth DATE,
 	email VARCHAR(255),
 	phoneNo VARCHAR(255),
 	description VARCHAR(255),
-	type VARCHAR(255));
+	type VARCHAR(255),
+        nutritionistImageFilePath VARCHAR(255));
 
 CREATE TABLE WATER_CONSUMPTION(
 	waterConsumptionID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
