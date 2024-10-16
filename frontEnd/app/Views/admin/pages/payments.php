@@ -38,7 +38,7 @@
                     </td>
                     <td class="p-3 mt-4">#230907106</td>
                     <td class="p-3 mt-4">Monthly Subscription</td>
-                    <td class="p-3 mt-4">10001</td>
+                    <td class="p-3 mt-4">1</td>
                     <td class="p-3 mt-4">35.00</td>
                     <td class="p-3 mt-4">2024-09-05 / 12:00</td>
                     <td class="p-3 mt-4">
@@ -59,7 +59,7 @@
                     </td>
                     <td class="p-3">#230907105</td>
                     <td class="p-3">Monthly Subscription</td>
-                    <td class="p-3">10002</td>
+                    <td class="p-3">2</td>
                     <td class="p-3">70.00</td>
                     <td class="p-3">2024-08-30 / 08:35</td>
                     <td class="p-3 mt-4">
