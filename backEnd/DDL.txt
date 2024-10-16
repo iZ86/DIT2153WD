@@ -38,6 +38,7 @@ CREATE TABLE INSTRUCTOR(
 	email VARCHAR(255),
 	phoneNo VARCHAR(255),
 	gender VARCHAR(255),
+        dateOfBirth DATE,
         instructorImageFilePath VARCHAR(255));
 
 CREATE TABLE FITNESS_CLASS(
