@@ -38,13 +38,13 @@ CREATE TABLE INSTRUCTOR(
 	email VARCHAR(255),
 	phoneNo VARCHAR(255),
 	gender VARCHAR(255),
-        profileImageFilePath VARCHAR(255));
+        instructorImageFilePath VARCHAR(255));
 
 CREATE TABLE FITNESS_CLASS(
 	fitnessClassID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	name VARCHAR(255),
 	description VARCHAR(255),
-        profileImageFilePath VARCHAR(255));
+        fitnessClassImageFilePath VARCHAR(255));
 
 CREATE TABLE MEMBERSHIP(
 	membershipID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -61,7 +61,7 @@ CREATE TABLE NUTRITIONIST(
 	phoneNo VARCHAR(255),
 	description VARCHAR(255),
 	type VARCHAR(255),
-        profileImageFilePath VARCHAR(255));
+        nutritionistImageFilePath VARCHAR(255));
 
 CREATE TABLE WATER_CONSUMPTION(
 	waterConsumptionID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
