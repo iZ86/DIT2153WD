@@ -57,6 +57,7 @@ CREATE TABLE NUTRITIONIST(
 	firstName VARCHAR(255),
 	lastName VARCHAR(255),
 	gender VARCHAR(255),
+        dateOfBirth DATE,
 	email VARCHAR(255),
 	phoneNo VARCHAR(255),
 	description VARCHAR(255),
