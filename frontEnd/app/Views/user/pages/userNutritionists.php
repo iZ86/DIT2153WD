@@ -1,5 +1,7 @@
 <?php include '../components/header.php'; ?>
 <?php include '../components/navBar.php'; ?>
+<?php require_once '../../../config/db_connection.php'; ?>
+<?php require_once '../../../Models/NutritionistModel.php'; ?>
 
 <section class="bg-white-bg">
     <div class="flex flex-col items-center justify-center">
@@ -67,14 +69,27 @@
                     </div>
 
                     <div class="ml-10 font-montserrat">
-                        <p>Name: Emily Johnson</p>
+                    <?php
+                    // Create an instance of NutritionistModel
+                    $nutritionistModel = new NutritionistModel($database_connection);
 
-                        <p>Qualification: Certified Nutritionist</p>
-                        <br>
-                        <p>Bio:</p>
-                        <p class="w-3/5">Emily Johnson is a certified nutritionist specializing in weight management and 
-                            overall wellness. She provides personalized, evidence-based nutrition plans to 
-                            help clients achieve lasting health and lifestyle changes.</p>
+                    // Fetch all nutritionists
+                    $result = $nutritionistModel->read(); // Ensure you fetch the data here
+
+                    if (!empty($result)) {
+                        foreach ($result as $results) {
+                            echo '<div class="ml-10 font-montserrat">';
+                            echo '<p>Name: ' . htmlspecialchars($results['firstName']) . ' ' . htmlspecialchars($results['lastName']) . '</p>';
+                            echo '<p>Qualification: ' . htmlspecialchars($results['type']) . '</p>';
+                            echo '<br>';
+                            echo '<p>Bio:</p>';
+                            echo '<p class="w-3/5">' . htmlspecialchars($results['description']) . '</p>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<p>No nutritionists found.</p>'; 
+                    }
+                    ?>
                     </div>
                 </div>
             </div>
