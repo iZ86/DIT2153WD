@@ -27,10 +27,11 @@
                     <th class="py-4 px-6 w-12 border-b border-gray-200"> 
                         <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
                     </th>
-                    <th class="py-4 px-6 border-b border-gray-200">No</th>
+                    <th class="py-4 px-6 border-b border-gray-200">ID</th>
                     <th class="py-4 px-6 border-b border-gray-200">Name</th>
                     <th class="py-4 px-6 border-b border-gray-200">Phone</th>
                     <th class="py-4 px-6 border-b border-gray-200">Email</th>
+                    <th class="py-4 px-6 border-b border-gray-200">Gender</th>
                     <th class="py-4 px-6 border-b border-gray-200">Membership</th>
                     <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                 </tr>
@@ -40,11 +41,16 @@
                     <td class="p-3 mt-4">
                         <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
                     </td>
-                    <td class="p-3 mt-4">10001</td>
+
+                    <!--TODO: username below the first name and last name-->
+                    <td class="p-3 mt-4">1</td>
                     <td class="p-3 mt-4">Emily Johnson</td>
                     <td class="p-3 mt-4">(60) 18-666 8888</td>
                     <td class="p-3 mt-4">emily@gmail.com</td>
-                    <td class="p-3 mt-4">12 Sep 2024</td>
+                    <td class="p-3 mt-4">Male</td>
+                    <td class="p-3 mt-4">
+                        <span class="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-lg">Active</span>
+                    </td>
                     <td class="p-3  mt-4 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
                             <i class="bx bx-pencil"></i>
@@ -58,11 +64,14 @@
                     <td class="p-3">
                         <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
                     </td>
-                    <td class="p-3">10002</td>
+                    <td class="p-3">2</td>
                     <td class="p-3">Anabelle Tan</td>
                     <td class="p-3">(60) 12-520 1314</td>
                     <td class="p-3">anbtan@gmail.com</td>
-                    <td class="p-3">25 Sep 2024</td>
+                    <td class="p-3 mt-4">Male</td>
+                    <td class="p-3 mt-4">
+                        <span class="bg-red-100 text-red-700 text-sm font-medium px-3 py-1 rounded-lg">Inactive</span>
+                    </td>
                     <td class="p-3 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
                             <i class="bx bx-pencil"></i>

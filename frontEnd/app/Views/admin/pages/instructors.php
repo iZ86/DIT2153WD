@@ -30,7 +30,7 @@
                     <th class="py-4 px-6 border-b border-gray-200">ID</th>
                     <th class="py-4 px-6 border-b border-gray-200">Name</th>
                     <th class="py-4 px-6 border-b border-gray-200">Phone</th>
-                    <th class="py-4 px-6 border-b border-gray-200">Address</th>
+                    <th class="py-4 px-6 border-b border-gray-200">Email</th>
                     <th class="py-4 px-6 border-b border-gray-200">Gender</th>
                     <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                 </tr>
@@ -40,10 +40,10 @@
                     <td class="p-3 mt-4">
                         <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
                     </td>
-                    <td class="p-3 mt-4">IN0001</td>
+                    <td class="p-3 mt-4">1</td>
                     <td class="p-3 mt-4">Isaac</td>
-                    <td class="p-3 mt-4">(60)18-999 3344</td>
-                    <td class="p-3 mt-4">23, Jalan Merah</td>
+                    <td class="p-3 mt-4">(60) 18-999 3344</td>
+                    <td class="p-3 mt-4">isaac@gmail.com</td>
                     <td class="p-3 mt-4">Male</td>
                     <td class="p-3  mt-4 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
@@ -58,10 +58,10 @@
                     <td class="p-3">
                         <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
                     </td>
-                    <td class="p-3">IN0002</td>
+                    <td class="p-3">2</td>
                     <td class="p-3">Aakash</td>
-                    <td class="p-3">(60)16-333 9988</td>
-                    <td class="p-3">08, Jalan Kawasanah</td>
+                    <td class="p-3">(60) 16-333 9988</td>
+                    <td class="p-3">aakash@gmail.com</td>
                     <td class="p-3">Male</td>
                     <td class="p-3 flex justify-center space-x-2">
                         <button class="text-gray-500 hover:text-blue-600">
