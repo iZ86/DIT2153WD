@@ -3,9 +3,9 @@ class UserModel {
     // Database connection
     private $databaseConn;
     // registered_user table name
-    private $table = "registered_user";
+    private $registeredUserTable = "registered_user";
     // user table name
-    private $table = "user";
+    private $userTable = "user";
 
     public function __construct($databaseConn) {
         $this->databaseConn = $databaseConn;
