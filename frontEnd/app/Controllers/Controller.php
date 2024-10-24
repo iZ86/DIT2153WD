@@ -1,20 +1,28 @@
 <?php
 require_once __DIR__ . '/../Models/nutritionistModel.php';
+require_once __DIR__ . '/../Views/user/pages/userNutritionists.php';
 
-class Controller {
-    private $nutritionistModel;
+$nutritionistModel = new NutritionistModel(require __DIR__ . '/../config/db_connection.php');
+$nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist());
 
-    public function __construct($databaseConn) {
-        $this->nutritionistModel = new NutritionistModel($databaseConn);
-    }   
+$nutritionistsView();
+/** Function to get the total number of nutritionists. */
+function getTotalNutritionist() {
+    global $nutritionistModel;
+    return $nutritionistModel->countTotal();
+}
 
-    // Function to get the total number of nutritionists
-    public function getTotalNutritionist() {
-        return $this->nutritionistModel->countTotal();
+/** Function to return a nutritionist by their ID. */
+function getNutritionistById(int $id) { 
+    global $nutritionistModel; 
+    return $nutritionistModel->getById($id);
+}   
+
+/** Funtion to return all the nutritionists information that is going to show to the user. */
+function userNutritionist() {
+    global $nutritionistsView; 
+    if ($nutritionistsView !== null) {
+        return $nutritionistsView->__invoke();
     }
-
-    // Function to get a nutritionist by their ID
-    public function getNutritionistById(int $id) {  
-        return $this->nutritionistModel->getById($id);
-    }   
+    return null; 
 }
