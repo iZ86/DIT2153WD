@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../models/nutritionistModel.php';
-require_once __DIR__ . '/../views/user/pages/userNutritionistsView.php';
+require_once '../../models/nutritionistModel.php';
+require_once '../../views/user/pages/userNutritionistsView.php';
 
-$nutritionistModel = new NutritionistModel(require __DIR__ . '/../config/db_connection.php');
+$nutritionistModel = new NutritionistModel(require '../../config/db_connection.php');
 $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist());
 
 $nutritionistsView();
