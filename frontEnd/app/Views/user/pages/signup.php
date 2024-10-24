@@ -1,5 +1,32 @@
-<?php include '../components/header.php'; ?>
-<?php include '../components/navbarLoggedOut.php'; ?>
+<?php 
+
+
+class SignUpView {
+
+    // Constructor for the object
+    public function __construction() {
+
+    }  
+
+    /** Renders the whole view. */
+    public function __invoke() : void {
+        $this->renderHeader();
+        $this->renderNavbar();
+        $this->renderContent();
+    }
+
+    /** Renders the header of the view. */
+    public function renderHeader() : void {
+        include __DIR__ . '/../components/header.php'; 
+    }
+
+    /** Renders the navbar. */
+    public function renderNavbar() : void {
+        include __DIR__ . '/../components/navbarLoggedOut.php';
+    }
+
+    /** Renders the background. */
+    public function renderContent() : void { ?>
 
 <section class="p-6 space-y-6 bg-indigo-50 h-screen flex flex-col">
     <div class="">
@@ -47,3 +74,9 @@
     </div>
 
 </section>
+
+    <?php
+    }
+
+}
+?>
