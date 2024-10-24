@@ -35,7 +35,7 @@ class SignUpView {
 
     <div class="bg-white p-6 rounded-3xl shadow-lg mx-auto flex flex-col" style="width:800px">
         <div class="flex justify-center">
-            <img class="w-40 h-20" src="../../../public/images/Logo.png" alt="Logo.png">
+            <img class="w-40 h-20" src="../public/images/Logo.png" alt="Logo.png">
         </div>
         <div class="flex flex-row mx-auto mt-6">
             <div class="flex flex-col">
