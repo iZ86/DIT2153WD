@@ -1,6 +1,6 @@
 <?php
-require_once '../../models/nutritionistModel.php';
-require_once '../../views/user/pages/userNutritionistsView.php';
+require '../../models/nutritionistModel.php';
+require '../../views/user/pages/userNutritionistsView.php';
 
 $nutritionistModel = new NutritionistModel(require '../../config/db_connection.php');
 $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist());
