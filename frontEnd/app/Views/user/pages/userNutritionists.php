@@ -11,18 +11,14 @@ class NutritionistsView {
     }
 
     public function __invoke() {
+        $this->renderHeader();
+        $this->renderNavbar();
         $this->renderContent();
+        $this->renderFooter();
     }
     public function renderNutritionists() {
         foreach($this->data as $datas) {
-            ?><!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Document</title>
-            </head>
-            <body>
+            ?>
             <div class="ml-10 font-montserrat">
             <p>Name: <?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?></p>
             <p>Qualification: <?= htmlspecialchars($datas['type']) ?> </p>
@@ -30,14 +26,28 @@ class NutritionistsView {
             <p>Bio:</p>
             <p class="w-3/5"><?= htmlspecialchars($datas['description']) ?></p>
             </div>
-            </body>
-            </html>
             <?php
             }
     }
-    public function renderContent() {
-        include __DIR__ . '/../components/header.php';
+
+    /** Renders the navbar. */
+    public function renderNavbar() {
         include __DIR__ . '/../components/navBar.php';
+    }
+    
+    /** Renders the header of the view. */
+    public function renderHeader() {
+        include __DIR__ . '/../components/header.php';
+
+    }
+
+    /** Reners the footer */
+    public function renderFooter() {
+        include __DIR__ . '/../components/footer.php';
+    }
+
+    /** Renders the page */
+    public function renderContent() {
         ?>
         <section class="bg-white-bg">
     <div class="flex flex-col items-center justify-center">
@@ -131,7 +141,6 @@ class NutritionistsView {
         </div>
     </div>
 
-<?php include __DIR__ . '/../components/footer.php'; ?>
 </section>
 <style>
 select {
