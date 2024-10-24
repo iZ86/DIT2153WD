@@ -54,7 +54,7 @@ class NutritionistsView {
         <h1 class="mt-12 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
 
         <div class="flex items-center justify-center gap-x-10 mt-10">
-            <img class="w-3/4 h-72" src="../public/images/nutrition_header.png" alt="Nutrition.png">
+            <img class="w-3/4 h-72" src="../../public/images/nutrition_header.png" alt="Nutrition.png">
             <div class="border border-[#666666] border-solid h-[17rem]"></div>
             <div class="flex flex-col">
                 <p class="font-bold text-[#00796B] font-montserrat text-xl">Why do you need a Nutritionist?</p>
@@ -128,7 +128,7 @@ class NutritionistsView {
             <div class="flex flex-col">
                 <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)]">
                     <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
-                        <img src="../public/images/emily_nutritionist.png" alt="Nutritionist.png">
+                        <img src="../../public/images/emily_nutritionist.png" alt="Nutritionist.png">
                     </div>
 
                     <div class="ml-10 font-montserrat">
