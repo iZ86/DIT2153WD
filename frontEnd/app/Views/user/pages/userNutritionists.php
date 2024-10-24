@@ -1,54 +1,50 @@
 <?php
-// Include necessary files for the header, navbar, and database connection
-include '../components/header.php';
-include '../components/navBar.php';
-require_once '../../../Controllers/Controller.php';
-
-$controller = new Controller(require '../../../config/db_connection.php');
+// Include necessary files for the header, navbar.
 
 class NutritionistsView {
-    private $controller;
+    /** Instance variable that is going to store the nutritionists information as an associative array. */
+    private $data;
 
-    public function __construct($controller) {
-        $this->controller = $controller;
+    /** Constructor that is going to retreive the nutritionists information. */
+    public function __construct($data) {
+        $this->data = $data;
     }
 
-    public function renderAll() {
-        // Get the total number of nutritionists
-        $totalNutritionists = $this->controller->getTotalNutritionist();
-
-        // Loop through all the nutritionists
-        for ($i = 1; $i <= $totalNutritionists; $i++) {
-            // Fetch the nutritionist details by ID
-            $nutritionist = $this->controller->getNutritionistById($i); 
-            
-            if ($nutritionist !== false) {
-                // Render each nutritionist's details
-                $this->render($nutritionist);
-            } else {
-                echo '<p>Nutritionist with ID ' . $i . ' not found.</p>';
+    public function __invoke() {
+        $this->renderContent();
+    }
+    public function renderNutritionists() {
+        foreach($this->data as $datas) {
+            ?><!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+            </head>
+            <body>
+            <div class="ml-10 font-montserrat">
+            <p>Name: <?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?></p>
+            <p>Qualification: <?= htmlspecialchars($datas['type']) ?> </p>
+            <br>
+            <p>Bio:</p>
+            <p class="w-3/5"><?= htmlspecialchars($datas['description']) ?></p>
+            </div>
+            </body>
+            </html>
+            <?php
             }
-        }
     }
-
-    public function render($nutritionist) {
-        echo '<div class="ml-10 font-montserrat">';
-        echo '<p>Name: ' . htmlspecialchars($nutritionist['firstName']) . ' ' . htmlspecialchars($nutritionist['lastName']) . '</p>';
-        echo '<p>Qualification: ' . htmlspecialchars($nutritionist['type']) . '</p>';
-        echo '<br>';
-        echo '<p>Bio:</p>';
-        echo '<p class="w-3/5">' . htmlspecialchars($nutritionist['description']) . '</p>';
-        echo '</div>';
-    }
-}
-?>
-
-<section class="bg-white-bg">
+    public function renderContent() {
+        include __DIR__ . '/../components/header.php';
+        include __DIR__ . '/../components/navBar.php';
+        ?>
+        <section class="bg-white-bg">
     <div class="flex flex-col items-center justify-center">
         <h1 class="mt-12 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
 
         <div class="flex items-center justify-center gap-x-10 mt-10">
-            <img class="w-3/4 h-72" src="../../../public/images/nutrition_header.png" alt="Nutrition.png">
+            <img class="w-3/4 h-72" src="../public/images/nutrition_header.png" alt="Nutrition.png">
             <div class="border border-[#666666] border-solid h-[17rem]"></div>
             <div class="flex flex-col">
                 <p class="font-bold text-[#00796B] font-montserrat text-xl">Why do you need a Nutritionist?</p>
@@ -74,7 +70,7 @@ class NutritionistsView {
                         <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
                             <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
                             
-                            <?php
+                            <?php /*
                             // Use the controller to fetch nutritionists for the dropdown
                             $totalNutritionists = $controller->getTotalNutritionist();
                             if (is_int($totalNutritionists) && $totalNutritionists > 0) {
@@ -86,7 +82,7 @@ class NutritionistsView {
                                 }
                             } else {
                                 echo '<option value="" disabled>No nutritionists available</option>';
-                            }
+                            }*/
                             ?>
                         </select> 
                     </div>
@@ -122,25 +118,20 @@ class NutritionistsView {
             <div class="flex flex-col">
                 <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)]">
                     <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
-                        <img src="../../../public/images/emily_nutritionist.png" alt="Nutritionist.png">
+                        <img src="../public/images/emily_nutritionist.png" alt="Nutritionist.png">
                     </div>
 
                     <div class="ml-10 font-montserrat">
-                        <?php
-                        $view = new NutritionistsView($controller);
-                        if ($view !== null) {
-                            $view->renderAll(); 
-                        } else {
-                            echo '<p>Nutritionist not found or invalid ID.</p>';
-                        }
-                        ?>
+                        <?=
+                        /** Function that calls the renderNutritionists() function to show all the nutritionists. */ 
+                        $this->renderNutritionists(); ?> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-<?php include '../components/footer.php'; ?>
+<?php include __DIR__ . '/../components/footer.php'; ?>
 </section>
 <style>
 select {
@@ -169,3 +160,8 @@ input[type="date"]:valid {
     color: black; /* Black color when a valid date is selected */
 }
 </style>
+
+    <?php
+    }
+}
+?>
