@@ -1,4 +1,4 @@
 <?php
-include "../views/user/pages/signup.php";
+require "../views/user/pages/signup.php";
 $signUpView = new SignUpView();
 $signUpView();
