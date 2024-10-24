@@ -1,6 +1,6 @@
 <nav>
     <div class="bg-white flex py-3 px-5 items-center justify-between font-montserrat">
-        <img class="w-40 h-20" src="../../../public/images/Logo.png" alt="Logo.png">
+        <img class="w-40 h-20" src="../public/images/Logo.png" alt="Logo.png">
 
         <div class="flex font-bold space-x-14 text-lg">
             <a href="../pages/index.php" class="my-1">Home</a>
