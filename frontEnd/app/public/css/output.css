@@ -1012,6 +1012,7 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(241 250 255 / var(--tw-bg-opacity));
 }
+
 .bg-slate-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
@@ -1028,6 +1029,7 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(251 146 60 / var(--tw-bg-opacity));
 }
+
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;

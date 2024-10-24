@@ -4,6 +4,7 @@ module.exports = {
     './public/**/*.{html,js,php}', // Include all files in public
     './Views/**/*.{html,js,php}',    // Include all files in Views
     './src/**/*.{html,js,php}',     // Include all files in src if applicable
+    './Controller/**.{html,js,php}',
   ],
   theme: {
     extend: {
