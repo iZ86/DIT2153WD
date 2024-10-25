@@ -43,7 +43,7 @@ class GuestLogInView {
             <div class="flex flex-col">
                 <p class="w-fit mb-4 mt-12 font-bold">Username</p>
                 <input type="text" id="username" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
-                <p class="w-fit mb-4">Password</p>
+                <p class="w-fit mb-4 font-bold">Password</p>
                 <input type="password" id="password" class="bg-slate-100 w-72 rounded py-1 px-2 mb-14">
                 <div class="flex flex-row space-x-2 mb-4 mx-auto text-slate-700">
                     <input type="checkbox">
