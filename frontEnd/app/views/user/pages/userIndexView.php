@@ -16,7 +16,7 @@ class userIndexView {
 
     /** Renders the header of the view. */
     public function renderHeader() : void {
-        include __DIR__ . '/../components/header.php';
+        include __DIR__ . '/../components/userHeader.php';
     }
 
     /** Renders the navbar. */
