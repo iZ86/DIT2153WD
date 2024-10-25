@@ -17,7 +17,7 @@ class SignUpView {
 
     /** Renders the header of the view. */
     public function renderHeader() : void {
-        include __DIR__ . '/user/components/header.php'; 
+        include __DIR__ . '/../components/guestHeader.php'; 
     }
 
     /** Renders the navbar. */
