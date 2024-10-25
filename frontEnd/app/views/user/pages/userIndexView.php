@@ -21,7 +21,7 @@ class userIndexView {
 
     /** Renders the navbar. */
     public function renderNavbar() : void {
-        include __DIR__ . '/../components/navbar.php';
+        include __DIR__ . '/../components/userNavbar.php';
     }
 
     /** Renders the footer. */
