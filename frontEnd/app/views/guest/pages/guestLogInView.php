@@ -6,6 +6,14 @@ class GuestLogInView {
 
     }
 
+    /** Renders the whole view. */
+    public function renderView() : void {
+        $this->renderHeader();
+        $this->renderNavbar();
+        $this->renderContent();
+        $this->renderFooter();
+    }
+
     /** Renders the header. */
     public function renderHeader() : void {
         // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
