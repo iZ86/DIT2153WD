@@ -42,18 +42,18 @@
 
     /** Renders the navbar. */
     public function renderNavbar() {
-        include __DIR__ . '/../components/navBar.php';
+        include __DIR__ . '/../components/userNavbar.php';
     }
     
     /** Renders the header of the view. */
     public function renderHeader() {
-        include __DIR__ . '/../components/header.php';
+        include __DIR__ . '/../components/userHeader.php';
 
     }
 
     /** Reners the footer */
     public function renderFooter() {
-        include __DIR__ . '/../components/footer.php';
+        include __DIR__ . '/../components/userFooter.php';
     }
 
     public function renderContent() {
