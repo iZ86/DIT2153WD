@@ -4,13 +4,13 @@
 
 <section class="p-6 space-y-6 bg-indigo-50 h-screen">
     <div class="">
-        <h2 class="text-2xl font-bold mx-auto" style="width: 600px">Forgot Password</h2>
+        <h2 class="text-2xl font-bold mx-auto" style="width: 500px">Forgot Password</h2>
     </div>
 
-    <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="height: 500px; width: 600px;">
-        <div class="flex flex-col">
-            <p class="w-fit mb-4 mt-24">Email</p>
-            <input type="text" class="bg-slate-100 w-76 rounded py-1 px-2 mb-6">
+    <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="width: 500px;">
+        <div class="flex flex-col pb-4">
+            <p class="w-fit mb-4">Email</p>
+            <input type="text" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
             <p class="w-fit mb-4">Code</p>
             <div class="flex flex-row mb-6">
                 <input type="text" class="bg-slate-100 rounded py-1 px-2">

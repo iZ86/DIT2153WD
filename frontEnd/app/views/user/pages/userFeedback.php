@@ -1,4 +1,4 @@
-<?php include '../components/header.php'; ?>
+<?php include __DIR__ .  '/../components/header.php'; ?>
 <?php include '../components/navbar.php'; ?>
 
 <section class="p-6 space-y-6 bg-indigo-50">
