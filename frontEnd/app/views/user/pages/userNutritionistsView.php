@@ -31,12 +31,7 @@ class NutritionistsView {
             }
     }
 
-    public function renderConfirmBookingOverlay() {
-    ?>
-    
-    <?php
-    }
-
+    //TODO: Fix Modal ignoring the validation, straight change to confirm booking overlay.
     public function renderBookingFormOverlay() {
     ?>
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
