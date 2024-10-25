@@ -17,12 +17,12 @@ class SignUpView {
 
     /** Renders the header of the view. */
     public function renderHeader() : void {
-        include __DIR__ . '/../components/header.php'; 
+        include __DIR__ . '/../components/guestHeader.php'; 
     }
 
     /** Renders the navbar. */
     public function renderNavbar() : void {
-        include __DIR__ . '/../components/navbarLoggedOut.php';
+        include __DIR__ . '/../components/guestNavbar.php';
     }
 
     /** Renders the background. */
