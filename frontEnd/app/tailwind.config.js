@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'white-bg': '#F1FAFF',
+        'blue-user': '#F1FAFF',
         'blue-button' : '#5C7AFF',
       },
       fontFamily: {
