@@ -1,6 +1,6 @@
 <?php
 
-class userIndexView {
+class UserIndexView {
     // Constructor for the object
     public function __construction() {
 
