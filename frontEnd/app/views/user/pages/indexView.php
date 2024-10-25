@@ -53,6 +53,30 @@ class IndexView {
 
         </div>
 
+        <!-- Feedback Updates -->
+        <div class="flex-col mt-48">
+            <h2 class="text-4xl font-montserrat font-bold ml-12">Feedback Updates</h2>
+
+            <div class="flex items-center justify-between mt-16 mx-16">
+
+
+                <input type="button" id="previousFeedback" name="previousFeedback" value="<" class="font-montserrat w-8 h-20 text-4xl font-bold bg-gray-200">
+
+                <!-- Feedback card layout -->
+                <div class="flex items-center">
+
+                    
+                    <div class="w-64 h-64 bg-purple-100 rounded-2xl">
+                    </div>
+                    
+                    
+                </div>
+
+                <input type="button" id="nextFeedback" name="nextFeedback" value=">" class="font-montserrat w-8 h-20 text-4xl font-bold bg-gray-200">
+            </div>
+
+        </div>
+
         
     
         
