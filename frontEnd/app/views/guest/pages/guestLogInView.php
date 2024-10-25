@@ -1,5 +1,8 @@
-<?php include '../components/guestHeader.php'; ?>
-<?php include '../components/guestNavbar.php'; ?>
+<?php 
+
+
+?>
+
 
 
 <section class="p-6 space-y-6 bg-indigo-50 h-screen">
