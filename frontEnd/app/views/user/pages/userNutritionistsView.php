@@ -41,7 +41,7 @@ class NutritionistsView {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">   
-        <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center needs-validation" action="" method="GET" novalidate>
+        <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center needs-validation" action="" method="GET">
             <div>
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
                 <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
@@ -105,24 +105,24 @@ class NutritionistsView {
         </div>
     </div>
     </div>
-    <a class="btn btn-primary mt-2" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Make a Reservation</a>
+    <button class="btn btn-primary mt-3 font-montserrat" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Make a Reservation</button>
     <?php
     }
 
     /** Renders the navbar. */
     public function renderNavbar() {
-        include __DIR__ . '/../components/navBar.php';
+        include __DIR__ . '/../components/userNavbar.php';
     }
     
     /** Renders the header of the view. */
     public function renderHeader() {
-        include __DIR__ . '/../components/header.php';
+        include __DIR__ . '/../components/userHeader.php';
 
     }
 
     /** Reners the footer */
     public function renderFooter() {
-        include __DIR__ . '/../components/footer.php';
+        include __DIR__ . '/../components/userHeader.php';
     }
 
     /** Renders the content */
@@ -150,10 +150,6 @@ class NutritionistsView {
         <?= $this->renderBookingFormOverlay(); ?>
 
         <div class="bg-white mt-32 flex flex-col items-center justify-center">
-            <div class="py-5 my-20 px-44 flex flex-col items-center justify-center border border-black border-solid rounded-xl">
-                
-            </div>
-
             <div class="flex flex-col">
                 <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)]">
                     <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
