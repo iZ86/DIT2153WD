@@ -38,6 +38,10 @@ CREATE TABLE INSTRUCTOR(
 	email VARCHAR(255),
 	phoneNo VARCHAR(255),
 	gender VARCHAR(255),
+	weight VARCHAR(255),
+	height VARCHAR(255),
+	description VARCHAR(255),
+	certification VARCHAR(255),
 	dateOfBirth DATE,
 	instructorImageFilePath VARCHAR(255));
 
