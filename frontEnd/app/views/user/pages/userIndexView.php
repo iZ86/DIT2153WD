@@ -35,7 +35,7 @@ class UserIndexView {
     /** Renders the content. */
     public function renderContent(): void {?>
     
-    <section class="flex-col font-montserrat bg-blue-user pt-12 pb-48">
+    <section class="flex-col font-montserrat bg-blue-user pt-16 pb-48">
         <h1 class="text-5xl font-bold ml-12">Welcome back, USERNAME</h1>
 
         <!-- Upcoming schedules -->
