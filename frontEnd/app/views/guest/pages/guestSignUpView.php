@@ -15,7 +15,7 @@ class SignUpView {
         $this->renderContent();
     }
 
-    /** Renders the header of the view. */
+    /** Renders the header. */
     public function renderHeader() : void {
         include __DIR__ . '/../components/guestHeader.php'; 
     }
