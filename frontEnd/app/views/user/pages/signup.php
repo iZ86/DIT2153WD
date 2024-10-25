@@ -28,7 +28,7 @@ class SignUpView {
     /** Renders the background. */
     public function renderContent() : void { ?>
 
-<section class="p-6 space-y-6 bg-indigo-50 h-screen flex flex-col">
+<section class="p-6 space-y-6 bg-indigo-50 flex flex-col">
     <div class="">
         <h2 class="text-2xl font-bold mx-auto" style="width: 800px">Sign Up</h2>
     </div> 
