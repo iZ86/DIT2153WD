@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         'blue-user': '#F1FAFF',
         'blue-button' : '#5C7AFF',
+        'gray-dove' : '#666666',
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
