@@ -11,6 +11,7 @@ class IndexView {
         $this->renderHeader();
         $this->renderNavbar();
         $this->renderContent();
+        $this->renderFooter();
     }
 
     /** Renders the header of the view. */
@@ -21,6 +22,11 @@ class IndexView {
     /** Renders the navbar. */
     public function renderNavbar() : void {
         include __DIR__ . '/../components/navbar.php';
+    }
+
+    /** Renders the footer. */
+    public function renderFooter() : void {
+        include __DIR__ . '/../components/footer.php';
     }
 
     /** Renders the content. */
