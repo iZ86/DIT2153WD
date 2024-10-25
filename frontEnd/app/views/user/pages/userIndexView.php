@@ -26,7 +26,7 @@ class userIndexView {
 
     /** Renders the footer. */
     public function renderFooter() : void {
-        include __DIR__ . '/../components/footer.php';
+        include __DIR__ . '/../components/userFooter.php';
     }
 
     /** Renders the content. */
