@@ -22,7 +22,7 @@ class SignUpView {
 
     /** Renders the navbar. */
     public function renderNavbar() : void {
-        include __DIR__ . '/user/components/navbarLoggedOut.php';
+        include __DIR__ . '/../components/guestNavbar.php';
     }
 
     /** Renders the background. */
