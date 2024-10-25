@@ -26,8 +26,32 @@ class IndexView {
     /** Renders the content. */
     public function renderContent(): void {?>
     
-    <section class="bg-blue-user">
-        <h1 class="text-5xl font-bold mt-12 ml-12">Welcome back, USERNAME</h1>
+    <section class="flex-col bg-blue-user pt-12 pb-48">
+        <h1 class="text-5xl font-montserrat font-bold ml-12">Welcome back, USERNAME</h1>
+
+        <!-- Upcoming schedules -->
+        <div class="flex-col mt-24">
+            <h2 class="text-4xl font-montserrat font-bold ml-12">Upcoming schedules</h2>
+
+            <div class="flex items-center justify-between mt-16 mx-16">
+
+
+                <input type="button" id="previousSchedule" name="previousSchedule" value="<" class="font-montserrat w-8 h-20 text-4xl font-bold bg-gray-200">
+
+                <!-- Schedule card layout -->
+                <div class="flex items-center">
+
+                    
+                    <div class="w-64 h-64 bg-purple-100 rounded-2xl">
+                    </div>
+                    
+                    
+                </div>
+
+                <input type="button" id="nextSchedule" name="nextSchedule" value=">" class="font-montserrat w-8 h-20 text-4xl font-bold bg-gray-200">
+            </div>
+
+        </div>
 
         
     
