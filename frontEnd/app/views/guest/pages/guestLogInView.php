@@ -5,6 +5,12 @@ class GuestLogInView {
     public function __construction() {
 
     }
+
+    /** Renders the header of the view. */
+    public function renderHeader() {
+        // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
+        include __DIR__ . '/../components/guestHeader.php';
+    }
 }
 
 ?>
