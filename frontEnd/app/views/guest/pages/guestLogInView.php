@@ -34,7 +34,7 @@ class GuestLogInView {
 
     /** Renders the content. */
     public function renderContent() : void {?>
-    <section class="p-6 space-y-6 bg-indigo-50 h-screen">
+    <section class="p-6 space-y-6 bg-blue-user">
         <div class="">
             <h2 class="text-2xl font-bold mx-auto" style="width: 600px">Login</h2>
         </div>
