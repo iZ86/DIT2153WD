@@ -10,7 +10,8 @@ class NutritionistsView {
         $this->data = $data;
     }
 
-    public function __invoke() {
+    /** Renders the userNutritionists page. */
+    public function renderView() {
         $this->renderHeader();
         $this->renderNavbar();
         $this->renderContent();
@@ -46,7 +47,7 @@ class NutritionistsView {
         include __DIR__ . '/../components/footer.php';
     }
 
-    /** Renders the page */
+    /** Renders the content */
     public function renderContent() {
         ?>
         <section class="bg-white-bg">
