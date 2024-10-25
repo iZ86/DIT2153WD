@@ -17,6 +17,12 @@ class GuestLogInView {
         // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
         include __DIR__ . '/../components/guestNavbar.php';
     }
+
+    /** Renders the footer. */
+    public function renderFooter() {
+        // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
+        include __DIR__ . '/../components/guestFooter.php';
+    }
 }
 
 ?>
