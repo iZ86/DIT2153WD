@@ -1,7 +1,7 @@
 <?php 
 
 
-class SignUpView {
+class GuestSignUpView {
 
     // Constructor for the object
     public function __construction() {
