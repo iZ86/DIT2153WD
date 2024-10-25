@@ -34,25 +34,33 @@ class GuestLogInView {
 
     /** Renders the content. */
     public function renderContent() : void {?>
-    <section class="p-6 space-y-6 font-montserrat bg-blue-user">
-        <div class="">
-            <h2 class="text-2xl font-bold mx-auto" style="width: 600px">Login</h2>
-        </div>
+    <section class="font-montserrat bg-blue-user flex flex-col pt-16 pb-48">
+        
+        <div class="bg-white py-11 px-72 rounded-3xl shadow-lg mx-auto flex flex-col items-center">
+            <!-- This code is used as this class is called by other php file. Therefore, to not keep track of the references, this code is used -->
+            <img src=<?php echo '"' . preg_replace("/.+\/xampp\/htdocs\//", "http://localhost/", str_replace('\\', '/', __DIR__)) . "/../../../public/images/Logo.png" . '"'?> class="w-64 h-32 mb-12">
+            <form class="flex flex-col mb-8 w-full">
+                <label class="text-xl font-bold">Username</label>
+                <input type="text" id="username" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6">
 
-        <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="height: 500px; width: 600px;">
-            <div class="flex flex-col">
-                <p class="w-fit mb-4 mt-12 font-bold">Username</p>
-                <input type="text" id="username" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
-                <p class="w-fit mb-4 font-bold">Password</p>
-                <input type="password" id="password" class="bg-slate-100 w-72 rounded py-1 px-2 mb-14">
-                <div class="flex flex-row space-x-2 mb-4 mx-auto text-slate-700">
+                <label class="text-xl font-bold">Password</label>
+                <input type="password" id="password" name="password" class="bg-slate-100 rounded py-1 px-2 mb-9">
+
+                <div class="flex justify-center mb-2 gap-2">
                     <input type="checkbox">
-                    <p>keep me logged in</p>
+                    <label class="font-semibold text-gray-dove text-base">Keep me logged in</label>
                 </div>
-                <input type="submit" value="Log In" class="mb-6 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2 w-40 mx-auto">
-                <a href="signup.php" class="underline mb-2 text-center text-slate-700">Dont have an account? Sign Up</a>
-                <a href="forgotPassword.php" class="underline text-center text-slate-700">Forgot Password</a>
+
+                <input type="submit" value="Log In" class="bg-blue-light hover:bg-blue-neon px-8 py-4 mx-auto rounded-lg text-white text-sm font-bold">
+
+            </form>
+            <!-- Other options -->
+            <div class="underline mb-2 text center text-gray-dove text-base font-semibold flex flex-col items-center">
+                <a href="signup.php">Dont have an account? Sign Up</a>
+                <a href="forgotPassword.php">Forgot Password</a>
             </div>
+
+            
         </div>
 
     </section>
