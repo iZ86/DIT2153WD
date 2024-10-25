@@ -77,7 +77,29 @@ class IndexView {
 
         </div>
 
-        
+        <!-- Tracker -->
+        <div class="flex-col mt-48">
+            <h2 class="text-4xl font-montserrat font-bold ml-12">Tracker</h2>
+
+            <div class="flex items-center justify-between mt-16 mx-16">
+
+
+                <input type="button" id="previousTracker" name="previousTracker" value="<" class="font-montserrat w-8 h-20 text-4xl font-bold bg-gray-200">
+
+                <!-- Tracker card layout -->
+                <div class="flex items-center">
+
+                    
+                    <div class="w-64 h-64 bg-purple-100 rounded-2xl">
+                    </div>
+                    
+                    
+                </div>
+
+                <input type="button" id="nextTracker" name="nextTracker" value=">" class="font-montserrat w-8 h-20 text-4xl font-bold bg-gray-200">
+            </div>
+
+        </div>
     
         
     </section>
