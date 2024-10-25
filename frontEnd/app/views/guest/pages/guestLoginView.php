@@ -1,4 +1,4 @@
-<?php include 'user/components/header.php'; ?>
+<?php include '../components/guestHeader.php'; ?>
 <?php include 'user/components/navbarLoggedOut.php'; ?>
 
 
