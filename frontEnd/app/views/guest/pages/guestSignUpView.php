@@ -17,11 +17,13 @@ class SignUpView {
 
     /** Renders the header. */
     public function renderHeader() : void {
+        // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
         include __DIR__ . '/../components/guestHeader.php'; 
     }
 
     /** Renders the navbar. */
     public function renderNavbar() : void {
+        // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
         include __DIR__ . '/../components/guestNavbar.php';
     }
 
