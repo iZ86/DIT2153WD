@@ -1,5 +1,5 @@
 <?php include 'user/components/header.php'; ?>
-<?php include '../components/navbarLoggedOut.php'; ?>
+<?php include 'user/components/navbarLoggedOut.php'; ?>
 
 
 <section class="p-6 space-y-6 bg-indigo-50 h-screen">
