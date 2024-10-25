@@ -41,7 +41,7 @@ class GuestLogInView {
 
         <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="height: 500px; width: 600px;">
             <div class="flex flex-col">
-                <p class="w-fit mb-4 mt-12">Username</p>
+                <p class="w-fit mb-4 mt-12 font-bold">Username</p>
                 <input type="text" id="username" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
                 <p class="w-fit mb-4">Password</p>
                 <input type="password" id="password" class="bg-slate-100 w-72 rounded py-1 px-2 mb-14">
