@@ -10,6 +10,14 @@ class UserTrackWaterConsumptionModel {
         $this->databaseConn = $databaseConn;
     }
 
+    /** Returns the start of the week from $dateTime. */
+    public function getStartDateOfWeekFromDateTime($dateTime) {
+        $nthDay = date("w", strtotime($dateTime));
+        $date = date_create($dateTime);
+        date_modify($date, "-" . $nthDay ." days");
+        return $date->format('Y-m-d');
+    }
+    
     /** Returns an array of water consumption data from $startDateTime to $endDateTime. */
     public function getWaterConsumptionDataInDays($userID, $startDateTime, $endDateTime) {
         $waterConsumptionSQL = "SELECT * FROM " .
@@ -27,3 +35,4 @@ class UserTrackWaterConsumptionModel {
         return $waterConsumptionResultArray;
     }
 }
+
