@@ -68,7 +68,7 @@ class UserTrackWaterConsumptionView {
             <input type="button" value="Add" class="bg-white drop-shadow-dark rounded-4xl" style="padding: 16px 32px 16px 32px;">
         </div>
         
-        <div class="flex items-center mx-auto">
+        <div class="flex items-center mx-auto text-3xl">
             <p><</p>
             <p>Today ▼</p>
             <p>></p>
