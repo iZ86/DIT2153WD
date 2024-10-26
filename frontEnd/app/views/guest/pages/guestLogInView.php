@@ -39,7 +39,7 @@ class GuestLogInView {
         <div class="bg-white py-11 px-72 rounded-3xl shadow-lg mx-auto flex flex-col items-center">
             <!-- This src is referenced RELATIVE to controllers/login.php, as this code is called from that file. -->
             <img src="../public/images/Logo.png" class="w-64 h-32 mb-12">
-            <!-- This object is only called at controllers/login.php, so the PHP_SELF will reference the login.php -->
+            <!-- This object is only called at controllers/login.php, so the PHP_SELF will reference the login.php. -->
             <form class="flex flex-col mb-8 w-full" method="post" action=<?php echo $_SERVER['PHP_SELF']?>>
                 <label class="text-xl font-bold">Username</label>
                 <input type="text" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6">
