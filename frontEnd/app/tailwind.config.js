@@ -32,6 +32,9 @@ module.exports = {
       },
       width: {
         '15' : '3.75rem',
+      },
+      flexBasis: {
+        '192' : '48rem',
       }
     },
   },
