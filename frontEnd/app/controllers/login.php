@@ -17,10 +17,14 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
         die(header("location: ". $_SERVER['PHP_SELF']));
     } else {
         if ($guestLogInModel->verifyLogInCredentials($username, $password)) {
+
             // If it's not a user account, its an admin account.
             // No need to do extra checks, until future more usertypes.
-            $_SESSION['username'] = $username;
             if ($guestLogInModel->isUserAccount($username)) {
+
+                // userID is the same as registeredUserID.
+                $_SESSION['username'] = $username;
+                $_SESSION['userID'] = $guestLogInModel->getRegisteredUserID($username);
                 die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/"));
             } else {
                 // TODO: head to admin controller
