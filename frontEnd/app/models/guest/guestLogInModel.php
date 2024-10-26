@@ -11,7 +11,7 @@ class GuestLogInModel {
 
     /** Constructor for model. */
     public function __construct($databaseConn) {
-        $this->$databaseConn;
+        $this->databaseConn = $databaseConn;
     }
 
     
