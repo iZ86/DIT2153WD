@@ -5,7 +5,7 @@ class UserIndexView {
     /** Username of the user logged in. */
     private $username;
     
-    // Constructor for the object
+    /** Constructor for the object. */
     public function __construct($username) {
         $this->username = $username;
     }
