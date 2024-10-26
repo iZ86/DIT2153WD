@@ -6,6 +6,9 @@ $guestLogInModel = new GuestLogInModel(require "../config/db_connection.php");
 $guestLogInView = new GuestLogInView();
 $guestLogInView->renderView();
 unset($_SESSION['invalidLogin']);
+unset($_SESSION['usernameInput']);
+unset($_SESSION['passwordInput']);
+unset($_SESSION['keepMeLoggedInInput']);
 
 
 if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
@@ -13,6 +16,9 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
     $password = $_POST['password'];
 
     if (empty($username) || empty($password)) {
+        $_SESSION['usernameInput'] = $username;
+        $_SESSION['passwordInput'] = $password;
+        $_SESSION['keepMeLoggedInInput'] = array_key_exists('keepMeLoggedInCheckBox', $_POST) ? $_POST['keepMeLoggedInCheckBox'] : "off";
         $_SESSION['invalidLogin'] = 1;
         die(header("location: ". $_SERVER['PHP_SELF']));
     } else {
@@ -30,6 +36,9 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
                 // TODO: head to admin controller
             }
         } else {
+            $_SESSION['usernameInput'] = $username;
+            $_SESSION['passwordInput'] = $password;
+            $_SESSION['keepMeLoggedInInput'] = array_key_exists('keepMeLoggedInCheckBox', $_POST) ? $_POST['keepMeLoggedInCheckBox'] : "off";
             $_SESSION['invalidLogin'] = 1;
             die(header("location: ". $_SERVER['PHP_SELF']));
         }
