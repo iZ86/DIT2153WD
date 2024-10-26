@@ -5,7 +5,7 @@ class GuestLogInModel {
     /** Registered_User table */
     private $registeredUserTable = "REGISTERED_USER";
     /** User table. */
-    private $userTable = "USER"
+    private $userTable = "USER";
     /** Admin table. */
     private $adminTable = "ADMIN";
 
