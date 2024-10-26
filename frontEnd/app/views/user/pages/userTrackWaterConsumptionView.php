@@ -46,7 +46,7 @@ class UserTrackWaterConsumptionView {
         </div>
 
         <!-- One day of water consumption data. -->
-        <div class="flex flex-col">
+        <div class="flex flex-col mb-32">
             <div class="flex items-center">
                 <h2 class="text-4xl font-bold ml-20 mr-6">Today</h2>
                 <input type="button" id="addNewWaterConsumptionData" value="+" class="text-6xl font-bold bg-gray-mid text-gray-light rounded-full w-15">
@@ -77,7 +77,7 @@ class UserTrackWaterConsumptionView {
         </div>
 
         <!-- One day of water consumption data. -->
-        <div class="flex flex-col mt-32">
+        <div class="flex flex-col mb-32">
             <div class="flex items-center">
                 <h2 class="text-4xl font-bold ml-20 mr-6">Today</h2>
                 <input type="button" id="addNewWaterConsumptionData" value="+" class="text-6xl font-bold bg-gray-mid text-gray-light rounded-full w-15">
