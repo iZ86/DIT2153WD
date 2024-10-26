@@ -14,7 +14,7 @@ class GuestLogInModel {
         $this->databaseConn = $databaseConn;
     }
 
-    /** Returns the results of rows of registered_user table with username constraint. */
+    /** Returns the results of rows of registered_user table from SQL statement with username constraint. */
     private function getRegisteredUserSQLResult($username) {
         $registeredUserSQL = "SELECT * FROM " . $this->registeredUserTable . " WHERE username = ?";
         $registeredUserSTMT = $this->databaseConn->prepare($registeredUserSQL);
@@ -46,7 +46,9 @@ class GuestLogInModel {
         return 0;
     }
 
-    /** Returns true if the username belongs to a user account. */
+    /** Returns 1 if the username belongs to a user account.
+     * Otherwise, returns 0.
+     */
     public function isUserAccount($username) {
 
         $registeredUserResult = $this->getRegisteredUserSQLResult($username);
