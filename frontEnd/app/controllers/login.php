@@ -29,6 +29,9 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
             } else {
                 // TODO: head to admin controller
             }
+        } else {
+            $_SESSION['invalidLogin'] = 1;
+            die(header("location: ". $_SERVER['PHP_SELF']));
         }
     }
     
