@@ -17,15 +17,27 @@ class UserTrackWaterConsumptionModel {
         date_modify($date, "-" . $nthDay ." days");
         return $date->format('Y-m-d');
     }
-    
-    /** Returns an array of water consumption data from $startDateTime to $endDateTime. */
-    public function getWaterConsumptionDataInDays($userID, $startDateTime, $endDateTime) {
+
+    /** Returns an array of water consumption data in a week from $dateTime to the start of the week. 
+     * E.g. if the $startDate was monday, it would return an array of data that is from monday and sunday.
+     * Another e.g. if the $startDate was last saturday, it would return an array of data that is from last saturday to last sunday.
+     * If no data, return empty array.
+    */
+    public function getWaterConsumptionDataFromWeek($userID, $dateTime) {
+
+        $startDate = $this->getStartDateOfWeekFromDateTime($dateTime);
+        $endDate = date_create($dateTime);
+        // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
+        // So increment by one.
+        date_modify($endDate, "+1 days");
+        $endDate = $endDate->format('Y-m-d');
+
         $waterConsumptionSQL = "SELECT * FROM " .
         $this->waterConsumptionTable .
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $waterConsumptionSTMT = $this->databaseConn->prepare($waterConsumptionSQL);
-        $waterConsumptionSTMT->bind_param("sss", $userID, $startDateTime, $endDateTime);
+        $waterConsumptionSTMT->bind_param("sss", $userID, $startDate, $endDate);
         $waterConsumptionSTMT->execute();
         $waterConsumptionResult = $waterConsumptionSTMT->get_result();
         $waterConsumptionResultArray = array();
