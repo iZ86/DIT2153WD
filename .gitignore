@@ -13,5 +13,5 @@ out/
 # NodeJS
 node_modules/
 
-# output.css from Tailwind, it will automatically generate
+# output.css from Tailwind, it will automatically generate.
 output.css
