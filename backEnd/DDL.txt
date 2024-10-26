@@ -120,6 +120,8 @@ CREATE TABLE NUTRITIONIST_SCHEDULE(
 	nutritionistScheduleID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	createdOn DATETIME,
 	nutritionistID INT,
+	bookingDate DATE,
+	bookingTime TIME,
 	FOREIGN KEY (nutritionistID) REFERENCES NUTRITIONIST(nutritionistID));
 
 CREATE TABLE PAYMENT(
@@ -133,6 +135,8 @@ CREATE TABLE PAYMENT(
 CREATE TABLE NUTRITIONIST_BOOKING(
 	nutritionistBookingID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	description VARCHAR(255),
+	bookingDate DATE,
+	bookingTime TIME,
 	nutritionistScheduleID INT UNIQUE NOT NULL,
 	FOREIGN KEY (nutritionistScheduleID) REFERENCES NUTRITIONIST_SCHEDULE(nutritionistScheduleID),
 	userID INT,
