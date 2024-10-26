@@ -30,7 +30,7 @@ class GuestSignUpView {
     /** Renders the background. */
     public function renderContent() : void { ?>
 
-<section class="bg-blue-user flex flex-col pt-16 pb-48">
+<section class="bg-blue-user font-montserrat flex flex-col pt-16 pb-48">
     <div class="">
         <h2 class="text-2xl font-bold mx-auto" style="width: 800px">Sign Up</h2>
     </div> 
