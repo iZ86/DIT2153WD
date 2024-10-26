@@ -2,7 +2,7 @@
 
 class GuestLogInView {
     /** Constructor for the object. */
-    public function __construction() {
+    public function __construct() {
     }
 
     /** Renders the whole view. */
@@ -42,13 +42,35 @@ class GuestLogInView {
             <form class="flex flex-col mb-8 w-full" method="post" action=<?php echo $_SERVER['PHP_SELF']?>>
                 
                 <label class="text-xl font-bold">Username</label>
-                <input type="text" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6">
+                <input type="text" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6" 
+                <?php 
+                // Persist the username inputted, if invalid.
+                if (isset($_SESSION['invalidLogin'])) {
+                    echo 'value="' . $_SESSION['usernameInput'] . '"';
+                }
+                ?>
+                >
 
                 <label class="text-xl font-bold">Password</label>
-                <input type="password" name="password" class="bg-slate-100 rounded py-1 px-2 mb-9">
+                <input type="password" name="password" class="bg-slate-100 rounded py-1 px-2 mb-9"
+                <?php 
+                // Persist the username inputted, if invalid.
+                if (isset($_SESSION['invalidLogin'])) {
+                    echo 'value="' . $_SESSION['passwordInput'] . '"';
+                }
+                ?>
+                >
 
                 <div class="flex justify-center mb-2 gap-2">
-                    <input type="checkbox">
+                    
+                    <input type="checkbox" name="keepMeLoggedInCheckBox" 
+                    <?php 
+                    if (isset($_SESSION['invalidLogin']) && (isset($_SESSION['keepMeLoggedInInput']) && $_SESSION['keepMeLoggedInInput'] === "on")) { 
+                        echo 'checked="checked"'; 
+                    }
+                    ?>
+                    >
+
                     <label class="font-semibold text-gray-dove text-base">Keep me logged in</label>
                 </div>
 

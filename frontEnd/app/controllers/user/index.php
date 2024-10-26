@@ -1,4 +1,6 @@
 <?php
 require '../../views/user/pages/userIndexView.php';
-$userIndexView = new UserIndexView();
+session_start();
+
+$userIndexView = new UserIndexView($_SESSION['username']);
 $userIndexView->renderView();
