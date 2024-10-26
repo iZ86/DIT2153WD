@@ -15,6 +15,7 @@ module.exports = {
         'blue-light' : '#5C7AFF',
         'blue-neon' : '#4666FF',
         'blue-vivid' : '#1CA3EC',
+        'gray-mid' : '#AAAAAA',
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
