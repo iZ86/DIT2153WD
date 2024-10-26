@@ -20,43 +20,43 @@
                 </a>
             </li>
             <li>
-                <a href="../../../views/admin/pages/users.php"
-                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'users.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
+                <a href="../pages/adminUsersView.php"
+                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'adminUsersView.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
                     <i class="bx bx-user text-base"></i>
                     <span class="font-medium">Users</span>
                 </a>
             </li>
             <li>
-                <a href="../../../views/admin/pages/classes.php"
-                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'classes.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
+                <a href="../pages/adminClassesView.php"
+                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'adminClassesView.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
                     <i class="bx bx-book text-base"></i>
                     <span class="font-medium">Classes</span>
                 </a>
             </li>
             <li>
-                <a href="../../../views/admin/pages/nutritionists.php"
-                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'nutritionists.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
+                <a href="../pages/adminNutritionistsView.php"
+                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'adminNutritionistsView.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
                     <i class="bx bx-food-menu text-base"></i>
                     <span class="font-medium">Nutritionists</span>
                 </a>
             </li>
             <li>
-                <a href="../../../views/admin/pages/instructors.php"
-                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'instructors.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
+                <a href="../pages/adminInstructorsView.php"
+                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'adminInstructorsView.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
                     <i class="bx bx-run text-base"></i>
                     <span class="font-medium">Instructors</span>
                 </a>
             </li>
             <li>
-                <a href="../../../views/admin/pages/payments.php"
-                   class="flex items-center space-x-6 py-3 px-5 <?php echo $current_page == 'payments.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
+                <a href="../pages/adminPaymentsView.php"
+                   class="flex items-center space-x-6 py-3 px-5 <?php echo $current_page == 'adminPaymentsView.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
                     <i class="bx bx-credit-card text-base"></i>
                     <span class="font-medium">Payments</span>
                 </a>
             </li>
             <li>
-                <a href="../../../views/admin/pages/feedbacks.php"
-                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'feedbacks.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
+                <a href="../pages/adminFeedbacksView.php"
+                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'adminFeedbacksView.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
                     <i class="bx bx-message-square-dots text-base"></i>
                     <span class="font-medium">Feedbacks</span>
                 </a>
