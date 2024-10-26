@@ -4,7 +4,7 @@
 
 <section class="p-6 space-y-6 bg-indigo-50">
 
-    <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center w-2/3">
+    <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="width:1300px">
         <img src="../../../public/images/guestIndex1.png" class="" >
         <div class="flex flex-row space-x-2 overflow-x-auto mt-4">
             <img src="../../../public/images/guestIndex2.png" style="height: 600px">
