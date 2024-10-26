@@ -51,7 +51,7 @@ class GuestLogInView {
                     <label class="font-semibold text-gray-dove text-base">Keep me logged in</label>
                 </div>
 
-                <input type="submit" value="Log In" class="bg-blue-light hover:bg-blue-neon px-8 py-4 mx-auto rounded-lg text-white text-sm font-bold">
+                <input type="submit" name="loginButton" value="Log In" class="bg-blue-light hover:bg-blue-neon px-8 py-4 mx-auto rounded-lg text-white text-sm font-bold">
 
             </form>
             <!-- Other options -->
