@@ -37,6 +37,9 @@ module.exports = {
         '192' : '48rem',
         '256' : '64rem',
       },
+      minWidth: {
+        '192' : '48rem',
+      }
     },
   },
   plugins: [],
