@@ -10,4 +10,5 @@ class UserTrackWaterConsumptionModel {
         $this->databaseConn = $databaseConn;
     }
 
+
 }
