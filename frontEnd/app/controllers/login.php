@@ -13,7 +13,7 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
     if (empty($username) || empty($password)) {
         $_SESSION['usernameInput'] = $username;
         $_SESSION['passwordInput'] = $password;
-        $_SESSION['keepMeLoggedInInput'] = array_key_exists('keepMeLoggedInCheckBox', $_POST) ? $_POST['keepMeLoggedInCheckBox'] : "off";
+        $_SESSION['keepMeLoggedInInput'] = isset($_POST['keepMeLoggedInCheckBox']) ? $_POST['keepMeLoggedInCheckBox'] : "off";
         $_SESSION['invalidLogin'] = 1;
         die(header("location: ". $_SERVER['PHP_SELF']));
     } else {
@@ -36,7 +36,7 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
         } else {
             $_SESSION['usernameInput'] = $username;
             $_SESSION['passwordInput'] = $password;
-            $_SESSION['keepMeLoggedInInput'] = array_key_exists('keepMeLoggedInCheckBox', $_POST) ? $_POST['keepMeLoggedInCheckBox'] : "off";
+            $_SESSION['keepMeLoggedInInput'] = isset($_POST['keepMeLoggedInCheckBox']) ? $_POST['keepMeLoggedInCheckBox'] : "off";
             $_SESSION['invalidLogin'] = 1;
             die(header("location: ". $_SERVER['PHP_SELF']));
         }
