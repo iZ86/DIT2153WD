@@ -71,7 +71,7 @@ class GuestSignUpView {
                         <p>I agree to the terms and conditions</p>
                     </div>
                 </div>
-                <input type="submit" value="Sign Up" class="mb-6 bg-blue-light hover:bg-blue-neon text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2 w-40 mx-auto">
+                <input type="submit" name="signupButton" value="Sign Up" class="mb-6 bg-blue-light hover:bg-blue-neon text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2 w-40 mx-auto">
             </div>
         </div>
     </form>
