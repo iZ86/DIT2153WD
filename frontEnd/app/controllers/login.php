@@ -2,6 +2,9 @@
 require "../views/guest/pages/guestLogInView.php";
 require "../models/guest/guestLogInModel.php";
 session_start();
+$guestLogInModel = new GuestLogInModel(require "../config/db_connection.php");
+
+
 
 if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
     $username = $_POST['username'];
@@ -38,7 +41,6 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
     
 }
 
-$guestLogInModel = new GuestLogInModel(require "../config/db_connection.php");
 $guestLogInView = new GuestLogInView();
 $guestLogInView->renderView();
 unset($_SESSION['invalidLogin']);
