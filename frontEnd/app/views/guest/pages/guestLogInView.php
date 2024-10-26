@@ -41,10 +41,10 @@ class GuestLogInView {
             <img src=<?php echo '"' . preg_replace("/.+\/DIT2153WD\//", "http://localhost/DIT2153WD/", str_replace('\\', '/', __DIR__)) . "/../../../public/images/Logo.png" . '"'?> class="w-64 h-32 mb-12">
             <form class="flex flex-col mb-8 w-full" method="post" action="<?php echo '"' . preg_replace("/.+\/DIT2153WD\//", "http://localhost/DIT2153WD/", str_replace('\\', '/', __DIR__)) . "/../../../controllers/login.php" . '"'?>>
                 <label class="text-xl font-bold">Username</label>
-                <input type="text" id="username" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6">
+                <input type="text" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6">
 
                 <label class="text-xl font-bold">Password</label>
-                <input type="password" id="password" name="password" class="bg-slate-100 rounded py-1 px-2 mb-9">
+                <input type="password" name="password" class="bg-slate-100 rounded py-1 px-2 mb-9">
 
                 <div class="flex justify-center mb-2 gap-2">
                     <input type="checkbox">
