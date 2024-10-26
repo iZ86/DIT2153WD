@@ -31,6 +31,25 @@ class NutritionistsView {
             }
     }
 
+    public function renderBookingConfirmationOverlay() {
+    ?>
+        
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-body flex flex-col justify-center items-center font-montserrat">
+            <i class="bx bx-check-circle bx-lg bg-green-500" style="color: #22c55e;"></i>
+            <p class="text-xl font-bold mt-3">Booking Confirmed</p>
+            <p>Thank you for choosing our Nutritionist!</p>
+            <p>We will provide you the best service</p>
+            <button type="button" class="text-red-500" data-bs-dismiss="modal"><u>Close Window</u></button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
+
     //TODO: Fix Modal ignoring the validation, straight change to confirm booking overlay.
     public function renderBookingFormOverlay() {
     ?>
@@ -41,12 +60,12 @@ class NutritionistsView {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">   
-        <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center needs-validation" action="" method="GET">
+        <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
             <div>
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
                 <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
                     <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
-                
+                    <option value="Hi">Hi</option>
                     <?php /*
                     // Use the controller to fetch nutritionists for the dropdown
                     $totalNutritionists = $controller->getTotalNutritionist();
@@ -92,20 +111,7 @@ class NutritionistsView {
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-body flex flex-col justify-center items-center font-montserrat">
-            <i class="bx bx-check-circle bx-lg bg-green-500" style="color: #22c55e;"></i>
-            <p class="text-xl font-bold mt-3">Booking Confirmed</p>
-            <p>Thank you for choosing our Nutritionist!</p>
-            <p>We will provide you the best service</p>
-            <button type="button" class="text-red-500" data-bs-dismiss="modal"><u>Close Window</u></button>
-        </div>
-        </div>
-    </div>
-    </div>
-    <button class="btn btn-primary mt-3 font-montserrat" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Make a Reservation</button>
+    <button name="make-reservation"  class="btn btn-primary mt-3 font-montserrat" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Make a Reservation</button>
     <?php
     }
 
