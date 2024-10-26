@@ -1,8 +1,8 @@
-<?php include '../components/header.php'; ?>
-<?php include '../components/navbarLoggedOut.php'; ?>
+<?php include __DIR__ .  '/../components/guestHeader.php'; ?>
+<?php include __DIR__ .  '/../components/guestNavbar.php'; ?>
 
 
-<section class="p-6 space-y-6 bg-indigo-50 h-screen">
+<section class="p-6 space-y-6 bg-indigo-50 pb-72">
     <div class="">
         <h2 class="text-2xl font-bold mx-auto" style="width: 500px">Forgot Password</h2>
     </div>
@@ -21,3 +21,5 @@
     </div>
 
 </section>
+
+<?php include __DIR__ .  '/../components/guestFooter.php'; ?>
