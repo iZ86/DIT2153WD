@@ -63,7 +63,14 @@ class GuestLogInView {
 
                 <div class="flex justify-center mb-2 gap-2">
                     
-                    <input type="checkbox" name="keepMeLoggedInCheckBox" <?php if (isset($_SESSION['invalidLogin']) && (isset($_SESSION['keepMeLoggedInInput']) && $_SESSION['keepMeLoggedInInput'] === "on")) { echo 'checked="checked"'; }?>>
+                    <input type="checkbox" name="keepMeLoggedInCheckBox" 
+                    <?php 
+                    if (isset($_SESSION['invalidLogin']) && (isset($_SESSION['keepMeLoggedInInput']) && $_SESSION['keepMeLoggedInInput'] === "on")) { 
+                        echo 'checked="checked"'; 
+                    }
+                    ?>
+                    >
+
                     <label class="font-semibold text-gray-dove text-base">Keep me logged in</label>
                 </div>
 
