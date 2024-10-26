@@ -12,3 +12,6 @@ out/
 
 # NodeJS
 node_modules/
+
+# Tailwind .css files, tailwind css will automatically add.
+output.css
