@@ -2,7 +2,7 @@
 
 class GuestLogInView {
     /** Constructor for the object. */
-    public function __construction() {
+    public function __construct() {
     }
 
     /** Renders the whole view. */
