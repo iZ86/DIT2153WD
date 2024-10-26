@@ -1,7 +1,7 @@
 <aside class="w-64 bg-white h-screen fixed">
     <div class="p-4">
         <a href="../../../views/admin/pages/index.php">
-            <img src="../../../public/images/Logo.png" alt="Logo" class="w-48 mx-auto">
+            <img src="../../public/images/Logo.png" alt="Logo" class="w-48 mx-auto">
         </a>
     </div>
 
