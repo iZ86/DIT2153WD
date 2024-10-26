@@ -68,4 +68,15 @@ class GuestLogInModel {
         }
     }
 
+    /** Returns registered_User ID in the table. */
+    public function getRegisteredUserID($username) {
+        $registeredUserResult = $this->getRegisteredUserSQLResult($username);
+
+        if ($registeredUserResult->num_rows > 0) {
+            $registeredUserRow = $registeredUserResult->fetch_assoc();
+
+            return $registeredUserRow['registeredUserID'];
+        }
+    }
+
 }
