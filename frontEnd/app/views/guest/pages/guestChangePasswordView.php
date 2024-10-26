@@ -4,11 +4,11 @@
 
 <section class="p-6 space-y-6 bg-indigo-50 h-screen">
     <div class="">
-        <h2 class="text-2xl font-bold mx-auto" style="width: 600px">Change Password</h2>
+        <h2 class="text-2xl font-bold mx-auto" style="width: 500px">Change Password</h2>
     </div>
 
     <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="width: 500px;">
-        <div class="flex flex-col p-10">
+        <div class="flex flex-col">
             <p class="w-fit mb-4">New Password</p>
             <input type="password" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
             <p class="w-fit mb-4">Repeat Password</p>

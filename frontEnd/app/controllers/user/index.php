@@ -1,4 +1,4 @@
 <?php
-require '../../views/user/pages/indexView.php';
-$indexView = new IndexView();
-$indexView->renderView();
+require '../../views/user/pages/userIndexView.php';
+$userIndexView = new UserIndexView();
+$userIndexView->renderView();

@@ -1,7 +1,7 @@
 <?php 
 
 
-class SignUpView {
+class GuestSignUpView {
 
     // Constructor for the object
     public function __construction() {
@@ -15,14 +15,16 @@ class SignUpView {
         $this->renderContent();
     }
 
-    /** Renders the header of the view. */
+    /** Renders the header. */
     public function renderHeader() : void {
-        include __DIR__ . '/../components/header.php'; 
+        // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
+        include __DIR__ . '/../components/guestHeader.php'; 
     }
 
     /** Renders the navbar. */
     public function renderNavbar() : void {
-        include __DIR__ . '/../components/navbarLoggedOut.php';
+        // Use __DIR__ to prevent referencing issues, as this object is called by other php files.
+        include __DIR__ . '/../components/guestNavbar.php';
     }
 
     /** Renders the background. */

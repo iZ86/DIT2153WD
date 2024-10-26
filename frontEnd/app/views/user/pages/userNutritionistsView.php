@@ -31,20 +31,98 @@ class NutritionistsView {
             }
     }
 
+    //TODO: Fix Modal ignoring the validation, straight change to confirm booking overlay.
+    public function renderBookingFormOverlay() {
+    ?>
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">   
+        <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center needs-validation" action="" method="GET">
+            <div>
+                <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
+                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
+                    <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
+                
+                    <?php /*
+                    // Use the controller to fetch nutritionists for the dropdown
+                    $totalNutritionists = $controller->getTotalNutritionist();
+                    if (is_int($totalNutritionists) && $totalNutritionists > 0) {
+                        for ($i = 1; $i <= $totalNutritionists; $i++) {
+                            $nutritionist = $controller->getNutritionistById($i);
+                            if ($nutritionist !== false) {
+                                echo '<option value="' . htmlspecialchars($nutritionist["nutritionistID"]) . '">' . htmlspecialchars($nutritionist["firstName"]) . '</option>'; // Use nutritionist ID as value
+                            }
+                        }
+                    } else {
+                        echo '<option value="" disabled>No nutritionists available</option>';
+                    }*/
+                    ?>
+                </select> 
+            </div>
+
+            <div>
+                <label class="font-nunito" for="date">Date:</label><br>
+                <input required class="w-72 border-b-[1px] border-black border-solid" type="date" name="date" id="date">
+            </div>
+
+            <div>
+                <label class="font-nunito" for="time">Time:</label><br>
+                <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time" placeholder="SELECT TIME">
+                    <option value="" disabled selected hidden>SELECT AN AVAILABLE TIME</option>
+                    <option value="hi" >Hi</option>
+                </select> 
+            </div>
+
+            <div>
+                <label class="font-nunito" for="desc">Description:</label><br>
+                <textarea class="pl-3 border-[1px] border-black border-solid rounded-md font-nunito resize-none" name="desc" id="desc" rows="4" cols="32" placeholder="Please Tell Us Your GOAL or Any Concern"></textarea> 
+            </div>
+
+            <div class="text-center">
+                <p class="font-bold text-sm font-nunito">RM20 for each Consultation Session*</p>
+            </div>
+            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Confirm Booking</button>
+        </form>
+        </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-body flex flex-col justify-center items-center font-montserrat">
+            <i class="bx bx-check-circle bx-lg bg-green-500" style="color: #22c55e;"></i>
+            <p class="text-xl font-bold mt-3">Booking Confirmed</p>
+            <p>Thank you for choosing our Nutritionist!</p>
+            <p>We will provide you the best service</p>
+            <button type="button" class="text-red-500" data-bs-dismiss="modal"><u>Close Window</u></button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <button class="btn btn-primary mt-3 font-montserrat" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Make a Reservation</button>
+    <?php
+    }
+
     /** Renders the navbar. */
     public function renderNavbar() {
-        include __DIR__ . '/../components/navBar.php';
+        include __DIR__ . '/../components/userNavbar.php';
     }
     
     /** Renders the header of the view. */
     public function renderHeader() {
-        include __DIR__ . '/../components/header.php';
+        include __DIR__ . '/../components/userHeader.php';
 
     }
 
     /** Reners the footer */
     public function renderFooter() {
-        include __DIR__ . '/../components/footer.php';
+        include __DIR__ . '/../components/userHeader.php';
     }
 
     /** Renders the content */
@@ -69,63 +147,9 @@ class NutritionistsView {
                 </p>
             </div>
         </div>
+        <?= $this->renderBookingFormOverlay(); ?>
 
         <div class="bg-white mt-32 flex flex-col items-center justify-center">
-            <div class="py-5 my-20 px-44 flex flex-col items-center justify-center border border-black border-solid rounded-xl">
-                <h1 class="font-extrabold text-2xl font-montserrat">Make a Reservation Now</h1>
-
-                <!-- Reservation Form -->
-                <form class="flex flex-col gap-y-5 mt-3" action="" method="GET">
-                    <div>
-                        <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
-                        <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
-                            <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
-                            
-                            <?php /*
-                            // Use the controller to fetch nutritionists for the dropdown
-                            $totalNutritionists = $controller->getTotalNutritionist();
-                            if (is_int($totalNutritionists) && $totalNutritionists > 0) {
-                                for ($i = 1; $i <= $totalNutritionists; $i++) {
-                                    $nutritionist = $controller->getNutritionistById($i);
-                                    if ($nutritionist !== false) {
-                                        echo '<option value="' . htmlspecialchars($nutritionist["nutritionistID"]) . '">' . htmlspecialchars($nutritionist["firstName"]) . '</option>'; // Use nutritionist ID as value
-                                    }
-                                }
-                            } else {
-                                echo '<option value="" disabled>No nutritionists available</option>';
-                            }*/
-                            ?>
-                        </select> 
-                    </div>
-
-                    <div>
-                        <label class="font-nunito" for="date">Date:</label><br>
-                        <input required class="w-72 border-b-[1px] border-black border-solid" type="date" name="date" id="date">
-                    </div>
-
-                    <div>
-                        <label class="font-nunito" for="time">Time:</label><br>
-                        <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time" placeholder="SELECT TIME">
-                            <option value="" disabled selected hidden>SELECT AN AVAILABLE TIME</option>
-                            <option value="hi" >Hi</option>
-                        </select> 
-                    </div>
-
-                    <div>
-                        <label class="font-nunito" for="desc">Description:</label><br>
-                        <textarea class="pl-3 border-[1px] border-black border-solid rounded-md font-nunito resize-none" name="desc" id="desc" rows="4" cols="32" placeholder="Please Tell Us Your GOAL or Any Concern"></textarea> 
-                    </div>
-
-                    <div class="text-center">
-                        <p class="font-bold text-sm font-nunito">RM20 for each Consultation Session*</p>
-                    </div>
-
-                    <div class="text-center font-nunito">
-                        <button class="text-sm rounded-lg px-2 py-2 font-semibold bg-blue-button text-white font-nunito" type="submit">Submit Booking</button>
-                    </div>
-                </form>
-            </div>
-
             <div class="flex flex-col">
                 <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)]">
                     <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
@@ -170,6 +194,9 @@ input[type="date"]:valid {
     color: black; /* Black color when a valid date is selected */
 }
 </style>
+<script>
+
+</script>
 
     <?php
     }
