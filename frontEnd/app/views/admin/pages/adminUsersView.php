@@ -38,6 +38,11 @@ class AdminUsersView {
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Users</h2>
                     <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
+                            <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+
                         <button onclick="openModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
                             <i class="bx bxs-plus-circle"></i>
                             <span>Add User</span>
