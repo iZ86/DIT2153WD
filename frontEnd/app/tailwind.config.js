@@ -24,6 +24,9 @@ module.exports = {
       },
       dropShadow: {
         'dark' : '0 4px 2px rgb(0 0 0 / 0.25)',
+      },
+      borderRadius: {
+        '4xl' : '2.5rem',
       }
     },
   },
