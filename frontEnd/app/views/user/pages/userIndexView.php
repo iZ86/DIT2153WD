@@ -40,13 +40,13 @@ class UserIndexView {
     public function renderContent(): void {?>
     
     <section class="flex flex-col font-montserrat bg-blue-user pt-16 pb-48">
-        <h1 class="text-5xl font-bold ml-12"><?php echo "Welcome back, " . $this->username; ?></h1>
+        <h1 class="text-5xl font-bold ml-20"><?php echo "Welcome back, " . $this->username; ?></h1>
 
         <!-- Upcoming schedules -->
         <div class="flex flex-col mt-24">
-            <h2 class="text-4xl font-bold ml-12">Upcoming schedules</h2>
+            <h2 class="text-4xl font-bold ml-20">Upcoming schedules</h2>
 
-            <div class="flex items-center justify-between mt-14 mx-16">
+            <div class="flex items-center justify-between mt-14 mx-24">
 
 
                 <input type="button" id="previousSchedule" name="previousSchedule" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
@@ -68,9 +68,9 @@ class UserIndexView {
 
         <!-- Feedback Updates -->
         <div class="flex flex-col mt-48">
-            <h2 class="text-4xl font-bold ml-12">Feedback Updates</h2>
+            <h2 class="text-4xl font-bold ml-20">Feedback Updates</h2>
 
-            <div class="flex items-center justify-between mt-14 mx-16">
+            <div class="flex items-center justify-between mt-14 mx-24">
 
 
                 <input type="button" id="previousFeedback" name="previousFeedback" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
@@ -92,9 +92,9 @@ class UserIndexView {
 
         <!-- Tracker -->
         <div class="flex flex-col mt-48">
-            <h2 class="text-4xl font-bold ml-12">Tracker</h2>
+            <h2 class="text-4xl font-bold ml-20">Tracker</h2>
 
-            <div class="flex items-center justify-between mt-14 mx-16">
+            <div class="flex items-center justify-between mt-14 mx-24">
 
 
                 <input type="button" id="previousTracker" name="previousTracker" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
