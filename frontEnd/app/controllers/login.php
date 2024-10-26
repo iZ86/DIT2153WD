@@ -20,7 +20,6 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
             // If it's not a user account, its an admin account.
             // No need to do extra checks, until future more usertypes.
             $_SESSION['username'] = $username;
-            $_SESSION['password'] = $password;
             if ($guestLogInModel->isUserAccount($username)) {
                 die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/"));
             } else {
