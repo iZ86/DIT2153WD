@@ -1,9 +1,13 @@
 <?php
 
 class UserIndexView {
-    // Constructor for the object
-    public function __construction() {
 
+    /** Username of the user logged in. */
+    private $username;
+    
+    // Constructor for the object
+    public function __construct($username) {
+        $this->username = $username;
     }
 
     /** Renders the whole view. */
@@ -36,7 +40,7 @@ class UserIndexView {
     public function renderContent(): void {?>
     
     <section class="flex flex-col font-montserrat bg-blue-user pt-16 pb-48">
-        <h1 class="text-5xl font-bold ml-12">Welcome back, USERNAME</h1>
+        <h1 class="text-5xl font-bold ml-12"><?php echo "Welcome back, " . $this->username; ?></h1>
 
         <!-- Upcoming schedules -->
         <div class="flex flex-col mt-24">
