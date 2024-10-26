@@ -9,15 +9,17 @@ unset($_SESSION['invalidLogin']);
 
 
 if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    if (empty($_POST['username']) || empty($_POST['password'])) {
+    if (empty($username) || empty($password)) {
         $_SESSION['invalidLogin'] = 1;
         die(header("location: ". $_SERVER['PHP_SELF']));
     } else {
-        if ($guestLogInModel->verifyLogInCredentials($_POST['username'], $_POST['password'])) {
+        if ($guestLogInModel->verifyLogInCredentials($username, $password)) {
             // If it's not a user account, its an admin account.
             // No need to do extra checks, until future more usertypes.
-            if ($guestLogInModel->isUserAccount($_POST['username'])) {
+            if ($guestLogInModel->isUserAccount($username)) {
                 die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/"));
             } else {
                 // TODO: head to admin controller
