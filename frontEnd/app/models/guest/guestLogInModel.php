@@ -38,4 +38,28 @@ class GuestLogInModel {
         return 0;
     }
 
+    /** Returns true if the username belongs to a user account. */
+    public function isUserAccount($username) {
+        $registeredUserSQL = "SELECT * FROM " . $this->registeredUserTable . " WHERE username = ?";
+        $registeredUserSTMT = $this->databaseConn->prepare($registeredUserSQL);
+        $registeredUserSTMT->bind_param("s", $username);
+        $registeredUserSTMT->execute();
+        $registeredUserResult = $registeredUserSTMT->get_result();
+        if ($registeredUserResult->num_rows > 0) {
+            
+            $registeredUserRow = $registeredUserResult->fetch_assoc();
+
+            $userSQL = "SELECT * FROM " . $this->userTable . " WHERE userId = ?";
+            $userSTMT = $this->databaseConn->prepare($userSQL);
+            $userSTMT->bind_param("s", $registeredUserRow['registeredUserID']);
+            $userSTMT->execute();
+            $userResult = $userSTMT->get_result();
+
+            if ($userResult->num_rows > 0) {
+                return 1;
+            }
+            return 0;
+        }
+    }
+
 }
