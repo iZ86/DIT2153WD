@@ -1,5 +1,5 @@
-<?php include '../components/header.php'; ?>
-<?php include '../components/navBar.php'; ?>
+<?php include __DIR__ .  '/../components/userHeader.php'; ?>
+<?php include __DIR__ .  '/../components/userNavbar.php'; ?>
 
 <section>
     <div class="w-full-relative">
@@ -53,9 +53,11 @@
             <li>Online support</li>
         </ul>
         <div class="flex justify-center mt-6">
-            <button class="bg-blue-600 text-white text-xl font-black px-6 py-4 rounded-xl hover:bg-blue-700">JOIN NOW</button>
+            <a href="subscriptionDetails.php">
+                <button class="bg-blue-600 text-white text-xl font-black px-6 py-4 rounded-xl hover:bg-blue-700">JOIN NOW</button>
+            </a>
         </div>
     </div>
 
-    <?php include '../components/footer.php'; ?>
+    <?php include __DIR__ .  '/../components/userFooter.php'; ?>
 </section>
