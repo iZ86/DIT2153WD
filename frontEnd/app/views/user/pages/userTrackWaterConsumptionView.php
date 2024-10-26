@@ -38,7 +38,7 @@ class UserTrackWaterConsumptionView {
         <h1 class="text-4xl font-bold ml-20 mb-14">Track Water Consumption</h1>
 
         <div class="mx-20 basis-64 bg-blue-vivid rounded-2xl flex flex-col items-center mb-32">
-            <img src="../../public/images/track_water-consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
+            <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
             <div class="text-white font-bold text-3xl drop-shadow-dark">
                 <p class="mb-0">Yo have drank [5L] today!</p>
                 <p class="mb-0">[Keep up the good work!]</p>
@@ -61,7 +61,7 @@ class UserTrackWaterConsumptionView {
 
                     
                     <div class="w-64 h-64 bg-blue-vivid rounded-2xl flex flex-col items-center justify-center drop-shadow-dark">
-                        <img src="../../public/images/track_water_consumption-icon.png" class="w-16 h-16 mt-14 mb-3">
+                        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-14 mb-3">
                         <p class="text-white font-bold text-lg drop-shadow-dark mb-12">[Drank 1L at XX:XX]</p>
                     
                     </div>
@@ -92,7 +92,7 @@ class UserTrackWaterConsumptionView {
 
                     
                     <div class="w-64 h-64 bg-blue-vivid rounded-2xl flex flex-col items-center justify-center drop-shadow-dark">
-                        <img src="../../public/images/track-water_consumption_icon.png" class="w-16 h-16 mt-14 mb-3">
+                        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-14 mb-3">
                         <p class="text-white font-bold text-lg drop-shadow-dark mb-12">[Drank 1L at XX:XX]</p>
                     
                     </div>
