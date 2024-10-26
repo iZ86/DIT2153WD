@@ -1,5 +1,5 @@
-<?php include __DIR__ .  '/../components/header.php'; ?>
-<?php include '../components/navbar.php'; ?>
+<?php include __DIR__ .  '/../components/userHeader.php'; ?>
+<?php include __DIR__ .  '/../components/userNavbar.php'; ?>
 
 <section class="p-6 space-y-6 bg-indigo-50">
     <div class="mx-4">
@@ -60,4 +60,4 @@
     </div>
 </section>
 
-<?php include '../components/footer.php'; ?>
+<?php include __DIR__ .  '/../components/userFooter.php'; ?>
