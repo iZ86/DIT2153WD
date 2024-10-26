@@ -13,7 +13,8 @@ module.exports = {
         'blue-button' : '#5C7AFF',
         'gray-dove' : '#666666',
         'blue-light' : '#5C7AFF',
-        'blue-neon' : '#4666FF'
+        'blue-neon' : '#4666FF',
+        'blue-vivid' : '#1CA3EC',
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
