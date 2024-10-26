@@ -34,79 +34,45 @@ class UserTrackWaterConsumptionView {
 
     /** Renders the content. */
     public function renderContent(): void {?>
-    <section class="font-montserrat bg-blue-user flex flex-col pt-16 pb-48">
-        <h1 class="text-4xl font-bold ml-20 mb-14">Track Water Consumption</h1>
+    <section class="font-montserrat bg-blue-user flex flex-col pt-20 pb-48">
+        <h1 class="text-4xl font-bold mx-auto mb-20">Track Water Consumption</h1>
 
-        <div class="mx-20 basis-64 bg-blue-vivid rounded-2xl flex flex-col items-center mb-32">
-            <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
-            <div class="text-white font-bold text-3xl drop-shadow-dark">
-                <p class="mb-0">Yo have drank [5L] today!</p>
-                <p class="mb-0">[Keep up the good work!]</p>
-            </div>
-        </div>
-
-        <!-- One day of water consumption data. -->
-        <div class="flex flex-col mb-32">
-            <div class="flex items-center">
-                <h2 class="text-4xl font-bold ml-20 mr-6">Today</h2>
-                <input type="button" id="addNewWaterConsumptionData" value="+" class="text-6xl font-bold bg-gray-mid text-gray-light rounded-full w-15">
-            </div>
-
-            <div class="flex items-center justify-between mt-14 mx-24">
-
-                <input type="button" id="previousWaterConsumptionData" name="previousWaterConsumptionData" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-
-                <!-- Water consumption card layout -->
-                <div class="flex items-center">
-
-                    
-                    <div class="w-64 h-64 bg-blue-vivid rounded-2xl flex flex-col items-center justify-center drop-shadow-dark">
-                        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-14 mb-3">
-                        <p class="text-white font-bold text-lg drop-shadow-dark mb-12">[Drank 1L at XX:XX]</p>
-                    
-                    </div>
-                    
-                    
+        <div class="flex mx-auto min-w-256 min-h-64 mb-32">
+            <div class="basis-256 bg-blue-vivid rounded-2xl flex flex-col items-center">
+                <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
+                <div class="text-white font-bold text-3xl drop-shadow-dark">
+                    <p class="mb-0">Yo have drank [5L] today!</p>
+                    <p class="mb-0">[Keep up the good work!]</p>
                 </div>
-
-            <input type="button" id="nextWaterConsumptionData" name="nextWaterConsumptionData" value=">" class="w-8 h-20 text-4xl font-bold bg-gray-200">
             </div>
-        
-
-        
         </div>
 
-        <!-- One day of water consumption data. -->
-        <div class="flex flex-col mb-32">
-            <div class="flex items-center">
-                <h2 class="text-4xl font-bold ml-20 mr-6">Today</h2>
-                <input type="button" id="addNewWaterConsumptionData" value="+" class="text-6xl font-bold bg-gray-mid text-gray-light rounded-full w-15">
-            </div>
-
-            <div class="flex items-center justify-between mt-14 mx-24">
-
-                <input type="button" id="previousWaterConsumptionData" name="previousWaterConsumptionData" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-
-                <!-- Water consumption card layout -->
-                <div class="flex items-center">
-
-                    
-                    <div class="w-64 h-64 bg-blue-vivid rounded-2xl flex flex-col items-center justify-center drop-shadow-dark">
-                        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-14 mb-3">
-                        <p class="text-white font-bold text-lg drop-shadow-dark mb-12">[Drank 1L at XX:XX]</p>
-                    
+        <div class="flex min-h-192 mx-auto">
+            <div class="min-w-192 border-2 bg-white flex flex-col border-gray-dove">
+                <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid">
+                    <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
+                    <div class="flex-col">
+                        <p class="mb-0 text-white font-bold text-lg drop-shadow-dark">[You have drank XL at XX:XX]</p>
                     </div>
-                    
-                    
                 </div>
-
-            <input type="button" id="nextWaterConsumptionData" name="nextWaterConsumptionData" value=">" class="w-8 h-20 text-4xl font-bold bg-gray-200">
+                <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid">
+                    <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
+                    <div class="flex-col">
+                        <p class="mb-0 text-white font-bold text-lg drop-shadow-dark">[You have drank XL at XX:XX]</p>
+                    </div>
+                </div>
             </div>
-        
+        </div>
 
-        
+        <div class="flex mx-auto mt-4 mb-8">
+            <input type="button" value="Add" class="bg-white drop-shadow-dark rounded-4xl" style="padding: 16px 32px 16px 32px;">
         </div>
         
+        <div class="flex items-center mx-auto">
+            <p><</p>
+            <p>Today ▼</p>
+            <p>></p>
+        </div>
 
     </section>
 
