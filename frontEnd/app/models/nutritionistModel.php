@@ -3,6 +3,8 @@
 class NutritionistModel {
     /** Nutritionist Table */
     private $nutritionistTable = 'nutritionist'; 
+    /** Nutritionist Booking Table */
+    private $nutritionistBookingTable = 'nutritionist_booking';
     /** Database connection */
     private $databaseConn;
 
@@ -10,18 +12,6 @@ class NutritionistModel {
     public function __construct($databaseConn) {
         $this->databaseConn = $databaseConn;
     }
-    
-    // Create a new nutritionist
-   /* public function create() {
-        $sql = "INSERT INTO " . $this->table . " (firstName, lastName, gender, email, phoneNo, description, type) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($sql);
-        
-        // Bind parameters
-        $stmt->bind_param("sssssss", $this->firstName, $this->lastName, $this->gender, $this->email, $this->phoneNo, $this->description, $this->type);
-
-        // Execute the statement
-        return $stmt->execute(); // Return true if successful, false otherwise
-    } */
 
     /** Function of getting the nutritionist information by using ID */
     public function getById(int $id): mixed {
@@ -49,5 +39,25 @@ class NutritionistModel {
         } else {
             return false;
         }
+    }
+
+    /** Function of creating a booking for user's reservation */
+    public function createNutritionistBooking($nutritionist, $description, $bookingDate, $bookingTime) {
+        $sql = "INSERT INTO " . $this->nutritionistBookingTable . " (description, bookingDate, bookingTime) VALUES (?, ?, ?)";
+        $stmt = $this->databaseConn->prepare($sql);
+        
+        // Bind parameters
+        $stmt->bind_param("sss", $description , $bookingDate, $bookingTime);
+
+        // Execute the statement
+        return $stmt->execute(); // Return true if successful, false otherwise
+    }
+
+    public function nutritionistsBookingHandler($nutritionist, $bookingDate, $bookingTime, $description, $makeReservationButton) {
+        if(isset($makeReservationButton) && !empty($nutritionist) && !empty($bookingDate) && !empty($bookingTime)) {
+            
+            return true;  
+        }
+        return false;
     }
 }
