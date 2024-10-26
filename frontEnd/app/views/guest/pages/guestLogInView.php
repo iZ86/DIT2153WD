@@ -44,7 +44,7 @@ class GuestLogInView {
                 <label class="text-xl font-bold">Username</label>
                 <input type="text" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6" 
                 <?php 
-                // Persist the username inputted, if invalid.
+                // Persist the username inputted, if invalid login.
                 if (isset($_SESSION['invalidLogin'])) {
                     echo 'value="' . $_SESSION['usernameInput'] . '"';
                 }
@@ -54,7 +54,7 @@ class GuestLogInView {
                 <label class="text-xl font-bold">Password</label>
                 <input type="password" name="password" class="bg-slate-100 rounded py-1 px-2 mb-9"
                 <?php 
-                // Persist the username inputted, if invalid.
+                // Persist the username inputted, if invalid login.
                 if (isset($_SESSION['invalidLogin'])) {
                     echo 'value="' . $_SESSION['passwordInput'] . '"';
                 }
@@ -64,7 +64,8 @@ class GuestLogInView {
                 <div class="flex justify-center mb-2 gap-2">
                     
                     <input type="checkbox" name="keepMeLoggedInCheckBox" 
-                    <?php 
+                    <?php
+                    // Persist the keep me logged in inputted, if invalid login.
                     if (isset($_SESSION['invalidLogin']) && (isset($_SESSION['keepMeLoggedInInput']) && $_SESSION['keepMeLoggedInInput'] === "on")) { 
                         echo 'checked="checked"'; 
                     }
