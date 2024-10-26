@@ -2,7 +2,7 @@
 
 class AdminIndexView {
     /** Constructor for the object. */
-    public function __construction() {
+    public function __construct() {
 
     }
 
