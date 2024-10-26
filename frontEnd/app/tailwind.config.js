@@ -22,6 +22,9 @@ module.exports = {
         orelega: ["Orelega One", "sans-serif"],
         aoboshi: ["Aoboshi One", "serif"],
       },
+      dropShadow: {
+        'dark' : '0 4px 2px rgb(0 0 0 / 0.25)',
+      }
     },
   },
   plugins: [],
