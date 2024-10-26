@@ -39,7 +39,8 @@ class GuestLogInView {
         <div class="bg-white py-11 px-72 rounded-3xl shadow-lg mx-auto flex flex-col items-center">
             <!-- This code is used as this class is called by other php file. Therefore, to not keep track of the references, this code is used -->
             <img src=<?php echo '"' . preg_replace("/.+\/DIT2153WD\//", "http://localhost/DIT2153WD/", str_replace('\\', '/', __DIR__)) . "/../../../public/images/Logo.png" . '"'?> class="w-64 h-32 mb-12">
-            <form class="flex flex-col mb-8 w-full" method="post" action="<?php echo '"' . preg_replace("/.+\/DIT2153WD\//", "http://localhost/DIT2153WD/", str_replace('\\', '/', __DIR__)) . "/../../../controllers/login.php" . '"'?>>
+            <!-- This object is only called at controllers/login.php, so the PHP_SELF will reference the login.php -->
+            <form class="flex flex-col mb-8 w-full" method="post" action=<?php echo $_SERVER['PHP_SELF']?>>
                 <label class="text-xl font-bold">Username</label>
                 <input type="text" name="username" class="bg-slate-100 rounded py-1 px-2 mb-6">
 
@@ -67,7 +68,3 @@ class GuestLogInView {
     <?php
     }
 }
-
-
-
-
