@@ -28,7 +28,10 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
                 $_SESSION['userID'] = $guestLogInModel->getRegisteredUserID($username);
                 die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/"));
             } else {
-                // TODO: head to admin controller
+                // adminID is the same as registeredUserID.
+                $_SESSION['username'] = $username;
+                $_SESSION['adminID'] = $guestLogInModel->getRegisteredUserID($username);
+                die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/admin/"));
             }
         } else {
             $_SESSION['usernameInput'] = $username;
