@@ -41,20 +41,20 @@ class GuestSignUpView {
             </div>
             <div class="flex flex-row mx-auto mt-6">
                 <div class="flex flex-col">
-                    <p class="w-fit mb-4">Email</p>
-                    <input type="text" name="email" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
-                    <p class="w-fit mb-4">Password</p>
-                    <input type="password" name="password" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
                     <p class="w-fit mb-4">Username</p>
                     <input type="text" name="username" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
-                    <p class="w-fit mb-4">Phone Number</p>
-                    <input type="text" name="phoneNumber" class="bg-slate-100 w-72 rounded py-1 px-2">
-                </div>
-                <div class="flex flex-col ml-10">
+                    <p class="w-fit mb-4">Password</p>
+                    <input type="password" name="password" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
                     <p class="w-fit mb-4">First name</p>
                     <input type="text" name="firstName" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
-                    <p class="w-fit mb-4">Last Name</p>
-                    <input type="text" name="lastName" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
+                    <p class="w-fit mb-4">Phone Number</p>
+                    <input type="text" name="lastName" class="bg-slate-100 w-72 rounded py-1 px-2">
+                </div>
+                <div class="flex flex-col ml-10">
+                    <p class="w-fit mb-4">Email</p>
+                    <input type="text" name="email" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
+                    <p class="w-fit mb-4">Phone Number</p>
+                    <input type="text" name="phoneNumber" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
                     <p class="w-fit mb-4">Date of Birth</p>
                     <input type="date" name="dateOfBirth" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
                     <p class="w-fit mb-4">Gender</p>
