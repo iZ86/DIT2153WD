@@ -21,7 +21,6 @@ if (isset($_POST['addWaterConsumptionDataButton']) && $_POST['addWaterConsumptio
     $unit = $_POST['unit'];
     $time = $_POST['time'];
     $dateTime = $date . " " . $time;
-    echo $dateTime;
     $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
     die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
 
