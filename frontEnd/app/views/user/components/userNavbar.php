@@ -1,4 +1,4 @@
-<nav>
+<nav class="z-30 relative">
     <div class="bg-white flex py-3 px-12 font-montserrat justify-between">
         <img class="w-40 h-20" src="../../public/images/Logo.png" alt="Logo.png">
         
