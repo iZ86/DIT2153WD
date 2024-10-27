@@ -57,7 +57,7 @@ class UserTrackWaterConsumptionView {
             ?>
         </div>
     </div>
-<?php
+    <?php
     }
 
     /** Renders the date pagination. */
