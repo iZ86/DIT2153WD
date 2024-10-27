@@ -111,7 +111,7 @@ class UserTrackWaterConsumptionView {
                 
             
         <div class="flex mt-4 mb-20">
-            <input type="button" value="Add" class="bg-white hover:bg-gray-light drop-shadow-dark rounded-4xl font-bold mx-auto px-8 py-4" onclick="openAddWaterConsumptionModal()">
+            <input type="button" value="Add" class="bg-white hover:bg-gray-light drop-shadow-dark rounded-4xl font-bold mx-auto px-8 py-4 cursor-pointer" onclick="openAddWaterConsumptionModal()">
         </div>
         
         
