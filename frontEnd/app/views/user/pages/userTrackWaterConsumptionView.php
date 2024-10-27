@@ -48,27 +48,25 @@ class UserTrackWaterConsumptionView {
 
     /** Renders water consumption data partial view. */
     private function renderWaterConsumptionDataPartialView() {?>
-    <div class="flex min-h-192 mx-auto">
-    <div class="min-w-192 border-2 bg-white flex flex-col border-gray-dove">
-        <?php
-        for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-            $this->renderOneWaterConsumptionDataPartialView($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
-        }
-        ?>
+    <div class="flex min-h-192">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove">
+            <?php
+            for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
+                $this->renderOneWaterConsumptionDataPartialView($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
+            }
+            ?>
         </div>
     </div>
 <?php
-
-        
     }
 
     /** Renders the content. */
     public function renderContent(): void {?>
-    <section class="font-montserrat bg-blue-user flex flex-col pt-20 pb-48">
+    <section class="font-montserrat bg-blue-user flex flex-col pt-20 pb-48 justify-center">
         <h1 class="text-4xl font-bold mx-auto mb-20">Track Water Consumption</h1>
 
-        <div class="flex mx-auto min-w-256 min-h-64 mb-32">
-            <div class="basis-256 bg-blue-vivid rounded-2xl flex flex-col items-center">
+        <div class="flex min-h-64 mb-32">
+            <div class="mx-auto basis-256 bg-blue-vivid rounded-2xl flex flex-col items-center">
                 <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
                 <div class="text-white font-bold text-3xl drop-shadow-dark">
                     <p class="mb-0">Yo have drank [5L] today!</p>
@@ -77,24 +75,39 @@ class UserTrackWaterConsumptionView {
             </div>
         </div>
 
-        <div class="flex items-center mx-auto text-3xl mb-8">
-            <p><</p>
-            <p>Today ▼</p>
-            <p>></p>
-        </div>
+        
 
-        <?php $this->renderWaterConsumptionDataPartialView();?>
+        <div class="flex items-center mb-14">
+            <div class="mx-auto flex items-center text-3xl mb-14 justify-between basis-96">
+            
+            
+            <input type="button" id="previousDate" name="previousDate" value="<" class="p-4">
+
+            <input type="date" id="dateOfWaterConsumption" name="dateOfWaterConsumption"
+            value=<?php echo '"' . $_GET['date'] . '"';?> class="bg-slate-100 w-72 rounded py-1 border-2" oninput="redirectTrackWaterConsumptionPage()"
+            max=<?php echo '"' . $_GET['date'] . '"';?>
+            >
+
+            <input type="button" id="nextDate" name="nextDate" value=">" class="p-4">
+            
+            </div>
+        </div>
+        
+
+        <?php
+        $this->renderWaterConsumptionDataPartialView();
+        ?>
                 
             
-
-        <div class="flex mx-auto mt-4 mb-20">
-            <input type="button" value="Add" class="bg-white drop-shadow-dark rounded-4xl font-bold" style="padding: 16px 32px 16px 32px;">
+        <div class="flex mt-4 mb-20">
+            <input type="button" value="Add" class="bg-white drop-shadow-dark rounded-4xl font-bold mx-auto px-8 py-4">
         </div>
         
         
 
     </section>
 
+    
 
 
     <?php
