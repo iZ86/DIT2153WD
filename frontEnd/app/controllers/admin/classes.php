@@ -38,9 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['addScheduleButton']) && $_POST['addScheduleButton'] === "Add Schedule") {
         $fitnessClassID = $_POST['fitnessClassID'];
-        $scheduledOn = $_POST['scheduledOn'];
+        $scheduledOnDate = $_POST['scheduledOnDate'];
+        $scheduledOnTime = $_POST['scheduledOnTime'];
         $pax = $_POST['pax'];
         $instructorID = $_POST['instructorID'];
+
+        $scheduledOn = $scheduledOnDate . ' ' . $scheduledOnTime;
 
         if (!empty($fitnessClassID) && !empty($scheduledOn) && !empty($pax) && !empty($instructorID)) {
             $adminClassesModel->addSchedule($fitnessClassID, $scheduledOn, $pax, $instructorID);
@@ -49,9 +52,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (isset($_POST['editScheduleButton']) && $_POST['editScheduleButton'] === "Edit Schedule") {
+
+    if (isset($_POST['editScheduleButton'])) {
         $fitnessClassScheduleID = $_POST['fitnessClassScheduleID'];
-        $adminClassesModel->editSchedule($fitnessClassScheduleID, $_POST['fitnessClassID'], $_POST['scheduledOn'], $_POST['pax'], $_POST['instructorID']);
+        $fitnessClassID = $_POST['fitnessClassID'];
+        $instructorID = $_POST['instructorID'];
+        $pax = $_POST['pax'];
+        $scheduledOnDate = $_POST['scheduledOnDate'];
+        $scheduledOnTime = $_POST['scheduledOnTime'];
+
+        $scheduledOn = $scheduledOnDate . ' ' . $scheduledOnTime;
+
+        $adminClassesModel->editSchedule($fitnessClassScheduleID, $fitnessClassID, $scheduledOn, $pax, $instructorID);
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
@@ -66,5 +78,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $classes = $adminClassesModel->getAllClasses();
 $schedules = $adminClassesModel->getAllSchedules();
-$adminClassesView = new AdminClassesView($classes, $schedules);
+$instructors = $adminClassesModel->getAllInstructors();
+
+if ($classes->num_rows === 0) {
+    echo "No classes found.";
+}
+
+if ($instructors->num_rows === 0) {
+    echo "No instructors found.";
+}
+
+$adminClassesView = new AdminClassesView($classes, $schedules, $instructors);
 $adminClassesView->renderView();
