@@ -3,11 +3,12 @@
 
 class NutritionistsView {
     /** Instance variable that is going to store the nutritionists information as an associative array. */
-    private $data;
-
+    private $nutritionistInformation;
+    private $nutritionistSchedule;
     /** Constructor that is going to retreive the nutritionists information. */
-    public function __construct($data) {
-        $this->data = $data;
+    public function __construct($nutritionistInformation, $nutritionistSchedule) {
+        $this->nutritionistInformation = $nutritionistInformation;
+        $this->nutritionistSchedule = $nutritionistSchedule;
     }
 
     /** Renders the userNutritionists page. */
@@ -18,26 +19,66 @@ class NutritionistsView {
         $this->renderFooter();
     }
     public function renderNutritionists() {
-        foreach($this->data as $datas) {
+        foreach($this->nutritionistInformation as $nutritionistInformations) {
             ?>
             <div class="ml-10 font-montserrat">
-            <p>Name: <?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?></p>
-            <p>Qualification: <?= htmlspecialchars($datas['type']) ?> </p>
+            <p>Name: <?= htmlspecialchars($nutritionistInformations['firstName']) . ' ' . htmlspecialchars($nutritionistInformations['lastName']) ?></p>
+            <p>Qualification: <?= htmlspecialchars($nutritionistInformations['type']) ?> </p>
             <br>
             <p>Bio:</p>
-            <p class="w-3/5"><?= htmlspecialchars($datas['description']) ?></p>
+            <p class="w-3/5"><?= htmlspecialchars($nutritionistInformations['description']) ?></p>
             </div>
             <?php
         }
     }
 
+    /** Fetches the nutritionists name from database and renders it in dropdown. */
     public function renderNutritionistsName() {
-        foreach($this->data as $datas) {
+        foreach($this->nutritionistInformation as $nutritionist) {
             ?>
-            <option value="<?= strtolower(htmlspecialchars($datas['firstName'])) . '-' . strtolower(htmlspecialchars($datas['lastName'])) ?>"> <?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?> </option>
+            <option value="<?= strtolower(htmlspecialchars($nutritionist['nutritionistID'])) ?>">
+                <?= htmlspecialchars($nutritionist['firstName']) . ' ' . htmlspecialchars($nutritionist['lastName']) ?>
+            </option>
             <?php
         }
     }
+
+    public function renderAvailableDates($nutritionistID) {
+        // Fetch available dates based on the selected nutritionist
+        $availableDates = $this->getAvailableDateByNutritionist($nutritionistID);
+
+        foreach ($availableDates as $date) {
+            ?>
+            <option value="<?= htmlspecialchars($date) ?>"><?= htmlspecialchars($date) ?></option>
+            <?php
+        }
+    }
+
+    public function getAvailableDateByNutritionist($nutritionistID) {
+        // Initialize an array to store unique available dates
+        $availableDates = [];
+
+        // Check if the nutritionist ID exists in the schedule
+        if (!isset($this->nutritionistSchedule[$nutritionistID])) {
+            return $availableDates; // Return empty array if not found
+        }
+
+        // Loop through the schedule for the given nutritionist
+        foreach ($this->nutritionistSchedule[$nutritionistID] as $datetime) {
+            // Extract date from datetime
+            $date = (new DateTime($datetime))->format('Y-m-d');
+
+            // Add the date to the array if it's not already included
+            if (!in_array($date, $availableDates)) {
+                $availableDates[] = $date; // Append the unique date
+            }
+        }
+
+        return $availableDates; // Return the array of unique dates
+    }
+
+
+
     /** Renders the navbar. */
     public function renderNavbar() {
         include __DIR__ . '/../components/userNavbar.php';
@@ -51,11 +92,12 @@ class NutritionistsView {
 
     /** Reners the footer */
     public function renderFooter() {
-        include __DIR__ . '/../components/userHeader.php';
+        include __DIR__ . '/../components/userFooter.php';
     }
 
     /** Renders the content */
-    public function renderContent() { ?>
+    public function renderContent() {
+        ?>
     <section class="bg-white-bg">
     <div class="flex flex-col items-center justify-center">
         <h1 class="mt-12 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
@@ -90,7 +132,8 @@ class NutritionistsView {
                     <div class="ml-10 font-montserrat">
                         <?=
                         /** Function that calls the renderNutritionists() function to show all the nutritionists. */
-                        $this->renderNutritionists(); ?>
+                        $this->renderNutritionists();
+                        ?>
                     </div>
                 </div>
             </div>
@@ -110,7 +153,7 @@ class NutritionistsView {
         <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
             <div>
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
-                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
+                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" onchange="getState(this.value);">
                     <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
                     <?= $this->renderNutritionistsName(); ?>
                 </select>
@@ -118,14 +161,15 @@ class NutritionistsView {
 
             <div>
                 <label class="font-nunito" for="date">Date:</label><br>
-                <input required class="w-72 border-b-[1px] border-black border-solid" type="date" name="date" id="date">
+                <select required class="w-72 border-b-[1px] border-black border-solid" name="date" id="date">
+                    <option value="" disabled selected hidden>SELECT AN AVAILABLE DATE</option>
+                </select>
             </div>
 
             <div>
                 <label class="font-nunito" for="time">Time:</label><br>
-                <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time" placeholder="SELECT TIME">
+                <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time">
                     <option value="" disabled selected hidden>SELECT AN AVAILABLE TIME</option>
-                    <option value="hi" >Hi</option>
                 </select>
             </div>
 
@@ -182,7 +226,8 @@ input[type="date"]:valid {
 }
 
 </style>
-<script>
+<script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script language="javascript" type="text/javascript">
 function openModal() {
     const modal = document.getElementById('userModal');
     const overlay = document.getElementById('modalOverlay');
@@ -206,7 +251,6 @@ function closeModal() {
     }, 300);
 }
 </script>
-
 <?php
 }
 }
