@@ -13,6 +13,19 @@ if (!(isset($_GET['date'])) || !preg_match($regex, $_GET['date']) || (date($_GET
 
 $date = $_GET['date'];
 
+
+
+if (isset($_POST['addWaterConsumptionDataButton']) && $_POST['addWaterConsumptionDataButton'] === "Add") {
+    $amountDrank = $_POST['amountDrank'];
+    $unit = $_POST['unit'];
+    $time = $_POST['time'];
+    $dateTime = $date . " " . $time;
+    echo $dateTime;
+    $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
+    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+
+}
+
 $userTrackWaterConsumptionView = new UserTrackWaterConsumptionView($userTrackWaterConsumptionModel->getWaterConsumptionDataFromDate($_SESSION['userID'], $date));
 $userTrackWaterConsumptionView->renderView();
 
