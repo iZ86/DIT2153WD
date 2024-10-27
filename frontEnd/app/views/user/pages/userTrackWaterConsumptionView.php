@@ -47,10 +47,17 @@ class UserTrackWaterConsumptionView {
     }
 
     /** Renders water consumption data partial view. */
-    private function renderWaterConsumptionDataPartialView() {
+    private function renderWaterConsumptionDataPartialView() {?>
+    <div class="flex min-h-192 mx-auto">
+    <div class="min-w-192 border-2 bg-white flex flex-col border-gray-dove">
+        <?php
         for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
             $this->renderOneWaterConsumptionDataPartialView($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
         }
+        ?>
+        </div>
+    </div>
+<?php
 
         
     }
@@ -76,13 +83,9 @@ class UserTrackWaterConsumptionView {
             <p>></p>
         </div>
 
-        <div class="flex min-h-192 mx-auto">
-            <div class="min-w-192 border-2 bg-white flex flex-col border-gray-dove">
-
-                <?php $this->renderWaterConsumptionDataPartialView();?>
+        <?php $this->renderWaterConsumptionDataPartialView();?>
                 
-            </div>
-        </div>
+            
 
         <div class="flex mx-auto mt-4 mb-20">
             <input type="button" value="Add" class="bg-white drop-shadow-dark rounded-4xl font-bold" style="padding: 16px 32px 16px 32px;">
