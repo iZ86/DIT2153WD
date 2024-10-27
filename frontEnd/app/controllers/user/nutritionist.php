@@ -5,7 +5,7 @@ require '../../views/user/pages/userNutritionistsView.php';
 $nutritionistModel = new NutritionistModel(require '../../config/db_connection.php');
 
 /** Retrieve booking information from view by using $_POST.
- * Use ?? to provide a default null value, if the $_POST doesn't retrieve it. 
+ * Use ?? to provide a default null value, if the $_POST doesn't retrieve it.
  */
 function getBookingInformation() {
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['desc'])) {
@@ -14,19 +14,21 @@ function getBookingInformation() {
         $time = $_POST['time'] ?? null;
         $description = $_POST['desc'] ?? null;
         $makeReservation = isset($_POST['make-reservation']);
-         
+
         // Test if it can retreive the data.
         echo $nutritionist . $date . $time . $description . $makeReservation;
         /** Ensure required fields are not empty. */
         if ($nutritionist && $date && $time) {
             global $nutritionistModel;
-            $nutritionistModel->nutritionistsBookingHandler(
-                $nutritionist, 
-                date('Y-m-d', strtotime($date)), 
-                $time, 
-                $description, 
+            if($nutritionistModel->nutritionistsBookingHandler(
+                $nutritionist,
+                date('Y-m-d', strtotime($date)),
+                $time,
+                $description,
                 $makeReservation
-            );
+            )) {
+                echo "<script>alert('Succesfully Made a Reservation!!');</script>";
+            }
         }
     }
 }

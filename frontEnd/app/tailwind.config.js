@@ -36,18 +36,25 @@ module.exports = {
       },
       flexBasis: {
         '128' : '32rem',
+        '144' : '36rem',
         '192' : '48rem',
         '256' : '64rem',
       },
       minWidth: {
+        '84' : '21rem',
+        '100' : '25rem',
         '192' : '48rem',
         '256' : '64rem',
       },
       minHeight: {
+        '128' : '32rem',
         '192' : '48rem',
       },
       maxHeight: {
         '192' : '48rem',
+      },
+      inset: {
+        '328' : '82rem',
       }
     },
   },
