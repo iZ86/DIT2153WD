@@ -35,24 +35,34 @@ class AdminClassesModel {
 
     public function getAllSchedules() {
         $query = "SELECT fcs.fitnessClassScheduleID, 
-                      fc.name AS className, 
-                      CONCAT(i.firstName, ' ', i.lastName) AS instructor, 
-                      fcs.scheduledOn, 
-                      fcs.createdOn, 
-                      fcs.pax 
-              FROM " . $this->scheduleTable . " AS fcs
-              JOIN " . $this->classesTable . " AS fc ON fcs.fitnessClassID = fc.fitnessClassID
-              JOIN INSTRUCTOR AS i ON fcs.instructorID = i.instructorID";
+                  fcs.fitnessClassID,
+                  fcs.instructorID,
+                  fc.name AS className, 
+                  CONCAT(i.firstName, ' ', i.lastName) AS instructor, 
+                  fcs.scheduledOn, 
+                  fcs.createdOn, 
+                  fcs.pax 
+           FROM " . $this->scheduleTable . " AS fcs
+           JOIN " . $this->classesTable . " AS fc ON fcs.fitnessClassID = fc.fitnessClassID
+           JOIN INSTRUCTOR AS i ON fcs.instructorID = i.instructorID
+           ORDER BY fcs.fitnessClassScheduleID ASC";
         $stmt = $this->databaseConn->prepare($query);
 
-        // Check if the statement was prepared successfully
         if ($stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($this->databaseConn->error));
         }
-
         $stmt->execute();
         return $stmt->get_result();
     }
+
+
+    public function getAllInstructors() {
+        $query = "SELECT instructorID, CONCAT(firstName, ' ', lastName) AS fullName FROM INSTRUCTOR";
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
 
     public function addSchedule($fitnessClassID, $scheduledOn, $pax, $instructorID) {
         $query = "INSERT INTO " . $this->scheduleTable . " (fitnessClassID, scheduledOn, createdOn, pax, instructorID) VALUES (?, ?, NOW(), ?, ?)";
