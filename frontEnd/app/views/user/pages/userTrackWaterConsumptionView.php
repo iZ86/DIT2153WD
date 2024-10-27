@@ -118,7 +118,66 @@ class UserTrackWaterConsumptionView {
 
     </section>
 
-    <script src=../../public/js/user/userTrackWaterConsumptionScript.js>
+    <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-10"></div>
+
+
+    <div id="addWaterConsumptionModal" class="absolute inset-0 flex items-center justify-center hidden z-20 top-328 modal font-montserrat">
+        <div class="flex flex-col items-center bg-blue-vivid w-full rounded-2xl shadow-lg modal-content basis-144 min-h-128">
+            <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-10 mb-5">
+            <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5">Add Water Consumption Data</h2>
+            <hr class="w-full mb-5">
+            <form action="<?php echo $_SERVER['PHP_SELF'] . "?date=" . $_GET['date']; ?>" method="POST">
+                    
+
+                <div class="flex mt-8 justify-between min-w-100">
+                    <div class="flex flex-col justify-between items-end gap-y-2 font-semibold text-2xl">
+                        <div class="flex">
+                            <select name="unit" class="bg-white rounded-lg border-2 text-shadow-dark text-black">
+                                <option value="milliliters">Milliliter (ml)</option>
+                                <option value="liters">Litre (l)</option>
+                                <option value="oz">Oz</option>
+                            </select>
+                            <label for="amountDrank" class="text-white drop-shadow-dark">:</label>
+                        </div>
+
+                        <label for="time" class="text-white drop-shadow-dark">Time:</label>
+
+                    </div>
+
+                    <div class="flex flex-col gap-y-2 justify-between">
+                        <input type="number" id="amountDrank" name="amountDrank" class="rounded-lg border-2">
+                        <input type="time" id="time" name="time" class="rounded-lg border-2">
+                    </div>
+
+                </div>
+
+                <div class="flex justify-center mt-28">
+                    <input type="button" value="Close" onclick="closeAddWaterConsumptionModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
+                    <input type="submit" name="addWaterConsumptionDataButton" value="Add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg cursor-pointer">
+                </div>
+            </form>
+        </div>
+    </div>
+
+        <style>
+            .modal {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+                opacity: 0;
+                transform: scale(0.9);
+                pointer-events: none;
+            }
+
+            .modal.show {
+                opacity: 1;
+                transform: scale(1);
+                pointer-events: auto;
+            }
+        </style>
+
+
+
+
+    <script src="../../public/js/user/userTrackWaterConsumptionScript.js">
     </script>
 
 
