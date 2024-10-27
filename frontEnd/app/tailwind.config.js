@@ -17,6 +17,7 @@ module.exports = {
         'blue-vivid' : '#1CA3EC',
         'gray-mid' : '#AAAAAA',
         'gray-light' : '#D9D9D9',
+        'blue-mid' : '#1085C5',
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
@@ -43,6 +44,9 @@ module.exports = {
         '256' : '64rem',
       },
       minHeight: {
+        '192' : '48rem',
+      },
+      maxHeight: {
         '192' : '48rem',
       }
     },
