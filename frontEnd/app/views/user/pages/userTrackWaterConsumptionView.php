@@ -1,9 +1,12 @@
 <?php
 
 class UserTrackWaterConsumptionView {
+    /** Water consumption data. */
+    private $waterConsumptionDataArray;
     
     /** Constructor for the object. */
-    public function __construct() {
+    public function __construct($waterConsumptionDataArray) {
+        $this->waterConsumptionDataArray = $waterConsumptionDataArray;
     }
 
     /** Renders the whole view. */
@@ -32,84 +35,91 @@ class UserTrackWaterConsumptionView {
         include __DIR__ . '/../components/userFooter.php';
     }
 
+    /** Renders ONE card of water consumption data. */
+    private function renderOneWaterConsumptionDataPartialView($waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
+    <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid">
+        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
+        <div class="flex-col">
+            <p class="mb-0 text-white font-bold text-lg drop-shadow-dark"><?php echo "You have drank " . $waterConsumptionDataLitres . " at " . $waterConsumptionDataRecordedOnTime?></p>
+        </div>
+    </div>
+    <?php
+    }
+
+    /** Renders water consumption data partial view. */
+    private function renderWaterConsumptionDataPartialView() {?>
+    <div class="flex min-h-192">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove">
+            <?php
+            for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
+                $this->renderOneWaterConsumptionDataPartialView($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+    }
+
+    /** Renders the date pagination. */
+    public function renderDatePagination() {?>
+    <div class="flex items-center mb-14">
+        <div class="mx-auto flex items-center text-3xl mb-14 justify-center basis-96">
+            
+        <input type="button" id="previousDate" name="previousDate" value="<" class="p-4" onclick="previousDate()">
+
+        <input type="date" id="dateOfWaterConsumption" name="dateOfWaterConsumption"
+        value=<?php echo '"' . $_GET['date'] . '"';?> class="bg-slate-100 w-72 rounded py-1 border-2" oninput="redirectTrackWaterConsumptionPage()"
+        max=<?php echo '"' . date('Y-m-d') . '"';?>
+        >
+        
+        <?php 
+        if (date($_GET['date']) !== date('Y-m-d')) {?>
+        <input type="button" id="nextDate" name="nextDate" value=">" class="p-4" onclick="nextDate()">
+        <?php
+        }
+        ?>
+            
+            
+        </div>
+    </div>
+    <?php
+    }
+
     /** Renders the content. */
     public function renderContent(): void {?>
-    <section class="font-montserrat bg-blue-user flex flex-col pt-16 pb-48">
-        <h1 class="text-4xl font-bold ml-20 mb-14">Track Water Consumption</h1>
+    <section class="font-montserrat bg-blue-user flex flex-col pt-20 pb-48 justify-center">
+        <h1 class="text-4xl font-bold mx-auto mb-20">Track Water Consumption</h1>
 
-        <div class="mx-20 basis-64 bg-blue-vivid rounded-2xl flex flex-col items-center mb-32">
-            <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
-            <div class="text-white font-bold text-3xl drop-shadow-dark">
-                <p class="mb-0">Yo have drank [5L] today!</p>
-                <p class="mb-0">[Keep up the good work!]</p>
-            </div>
-        </div>
-
-        <!-- One day of water consumption data. -->
-        <div class="flex flex-col mb-32">
-            <div class="flex items-center">
-                <h2 class="text-4xl font-bold ml-20 mr-6">Today</h2>
-                <input type="button" id="addNewWaterConsumptionData" value="+" class="text-6xl font-bold bg-gray-mid text-gray-light rounded-full w-15">
-            </div>
-
-            <div class="flex items-center justify-between mt-14 mx-24">
-
-                <input type="button" id="previousWaterConsumptionData" name="previousWaterConsumptionData" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-
-                <!-- Water consumption card layout -->
-                <div class="flex items-center">
-
-                    
-                    <div class="w-64 h-64 bg-blue-vivid rounded-2xl flex flex-col items-center justify-center drop-shadow-dark">
-                        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-14 mb-3">
-                        <p class="text-white font-bold text-lg drop-shadow-dark mb-12">[Drank 1L at XX:XX]</p>
-                    
-                    </div>
-                    
-                    
+        <div class="flex min-h-64 mb-32">
+            <div class="mx-auto basis-256 bg-blue-vivid rounded-2xl flex flex-col items-center">
+                <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
+                <div class="text-white font-bold text-3xl drop-shadow-dark">
+                    <p class="mb-0">Yo have drank [5L] today!</p>
+                    <p class="mb-0">[Keep up the good work!]</p>
                 </div>
-
-            <input type="button" id="nextWaterConsumptionData" name="nextWaterConsumptionData" value=">" class="w-8 h-20 text-4xl font-bold bg-gray-200">
             </div>
-        
-
-        
         </div>
 
-        <!-- One day of water consumption data. -->
-        <div class="flex flex-col mb-32">
-            <div class="flex items-center">
-                <h2 class="text-4xl font-bold ml-20 mr-6">Today</h2>
-                <input type="button" id="addNewWaterConsumptionData" value="+" class="text-6xl font-bold bg-gray-mid text-gray-light rounded-full w-15">
-            </div>
-
-            <div class="flex items-center justify-between mt-14 mx-24">
-
-                <input type="button" id="previousWaterConsumptionData" name="previousWaterConsumptionData" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-
-                <!-- Water consumption card layout -->
-                <div class="flex items-center">
-
-                    
-                    <div class="w-64 h-64 bg-blue-vivid rounded-2xl flex flex-col items-center justify-center drop-shadow-dark">
-                        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-14 mb-3">
-                        <p class="text-white font-bold text-lg drop-shadow-dark mb-12">[Drank 1L at XX:XX]</p>
-                    
-                    </div>
-                    
-                    
-                </div>
-
-            <input type="button" id="nextWaterConsumptionData" name="nextWaterConsumptionData" value=">" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-            </div>
         
 
         
+
+        <?php
+        $this->renderDatePagination();
+        $this->renderWaterConsumptionDataPartialView();
+        ?>
+                
+            
+        <div class="flex mt-4 mb-20">
+            <input type="button" value="Add" class="bg-white drop-shadow-dark rounded-4xl font-bold mx-auto px-8 py-4">
         </div>
+        
         
 
     </section>
 
+    <script src=../../public/js/user/userTrackWaterConsumptionScript.js>
+    </script>
 
 
     <?php

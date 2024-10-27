@@ -32,6 +32,18 @@ module.exports = {
       },
       width: {
         '15' : '3.75rem',
+      },
+      flexBasis: {
+        '128' : '32rem',
+        '192' : '48rem',
+        '256' : '64rem',
+      },
+      minWidth: {
+        '192' : '48rem',
+        '256' : '64rem',
+      },
+      minHeight: {
+        '192' : '48rem',
       }
     },
   },
