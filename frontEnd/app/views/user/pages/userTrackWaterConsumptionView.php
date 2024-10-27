@@ -77,21 +77,6 @@ class UserTrackWaterConsumptionView {
 
         
 
-        <div class="flex items-center mb-14">
-            <div class="mx-auto flex items-center text-3xl mb-14 justify-between basis-96">
-            
-            
-            <input type="button" id="previousDate" name="previousDate" value="<" class="p-4">
-
-            <input type="date" id="dateOfWaterConsumption" name="dateOfWaterConsumption"
-            value=<?php echo '"' . $_GET['date'] . '"';?> class="bg-slate-100 w-72 rounded py-1 border-2" oninput="redirectTrackWaterConsumptionPage()"
-            max=<?php echo '"' . $_GET['date'] . '"';?>
-            >
-
-            <input type="button" id="nextDate" name="nextDate" value=">" class="p-4">
-            
-            </div>
-        </div>
         
 
         <?php
@@ -107,7 +92,8 @@ class UserTrackWaterConsumptionView {
 
     </section>
 
-    
+    <script src=../../public/js/user/userTrackWaterConsumptionScript.js>
+    </script>
 
 
     <?php
