@@ -1,6 +1,6 @@
 <footer class="bg-white z-30 relative">
     <hr class="mt-0">
-    <div class="flex flex-col mt-10 ml-10 gap-y-1">
+    <div class="flex flex-col pt-10 pl-10 gap-y-1">
         <img class="w-40 h-20" src="../../public/images/Logo.png" alt="Logo.png">
 
         <div class="flex items-center gap-x-1">
