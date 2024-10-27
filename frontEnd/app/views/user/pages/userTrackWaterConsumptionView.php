@@ -52,7 +52,7 @@ class UserTrackWaterConsumptionView {
         <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto">
             <?php
             for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
+                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['litres'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
             }
             ?>
         </div>
