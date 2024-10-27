@@ -28,9 +28,16 @@ class NutritionistsView {
             <p class="w-3/5"><?= htmlspecialchars($datas['description']) ?></p>
             </div>
             <?php
-            }
+        }
     }
 
+    public function renderNutritionistsName() {
+        foreach($this->data as $datas) {
+            ?>
+            <option value="<?= strtolower(htmlspecialchars($datas['firstName'])) . '-' . strtolower(htmlspecialchars($datas['lastName'])) ?>"> <?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?> </option>
+            <?php
+        }
+    }
     /** Renders the navbar. */
     public function renderNavbar() {
         include __DIR__ . '/../components/userNavbar.php';
@@ -105,8 +112,9 @@ class NutritionistsView {
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
                 <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
                     <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
-                    <option value="Hi">Hi</option>
-                    <?php /*
+                    <?= $this->renderNutritionistsName();
+
+                    /*
                     // Use the controller to fetch nutritionists for the dropdown
                     $totalNutritionists = $controller->getTotalNutritionist();
                     if (is_int($totalNutritionists) && $totalNutritionists > 0) {
