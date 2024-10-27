@@ -19,3 +19,16 @@ function nextDate() {
     date.setDate(date.getDate() + 1);
     location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
 }
+
+/** Opens addWaterConsumptionModal. */
+function openAddWaterConsumptionModal() {
+    const modal = document.getElementById('addWaterConsumptionModal');
+    const overlay = document.getElementById('modalOverlay');
+
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+}
