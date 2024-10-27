@@ -1,9 +1,12 @@
 <?php
 
 class UserTrackWaterConsumptionView {
+    /** Water consumption data. */
+    private $waterConsumptionDataArray;
     
     /** Constructor for the object. */
-    public function __construct() {
+    public function __construct($waterConsumptionDataArray) {
+        $this->waterConsumptionDataArray = $waterConsumptionDataArray;
     }
 
     /** Renders the whole view. */
@@ -32,6 +35,26 @@ class UserTrackWaterConsumptionView {
         include __DIR__ . '/../components/userFooter.php';
     }
 
+    /** Renders ONE card of water consumption data. */
+    private function renderOneWaterConsumptionDataPartialView($waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
+    <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid">
+        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
+        <div class="flex-col">
+            <p class="mb-0 text-white font-bold text-lg drop-shadow-dark"><?php echo "You have drank " . $waterConsumptionDataLitres . " at " . $waterConsumptionDataRecordedOnTime?></p>
+        </div>
+    </div>
+    <?php
+    }
+
+    /** Renders water consumption data partial view. */
+    private function renderWaterConsumptionDataPartialView() {
+        for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
+            $this->renderOneWaterConsumptionDataPartialView($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
+        }
+
+        
+    }
+
     /** Renders the content. */
     public function renderContent(): void {?>
     <section class="font-montserrat bg-blue-user flex flex-col pt-20 pb-48">
@@ -49,18 +72,9 @@ class UserTrackWaterConsumptionView {
 
         <div class="flex min-h-192 mx-auto">
             <div class="min-w-192 border-2 bg-white flex flex-col border-gray-dove">
-                <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid">
-                    <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
-                    <div class="flex-col">
-                        <p class="mb-0 text-white font-bold text-lg drop-shadow-dark">[You have drank XL at XX:XX]</p>
-                    </div>
-                </div>
-                <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid">
-                    <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
-                    <div class="flex-col">
-                        <p class="mb-0 text-white font-bold text-lg drop-shadow-dark">[You have drank XL at XX:XX]</p>
-                    </div>
-                </div>
+
+                <?php $this->renderWaterConsumptionDataPartialView();?>
+                
             </div>
         </div>
 
