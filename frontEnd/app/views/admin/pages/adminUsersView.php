@@ -128,9 +128,6 @@ class AdminUsersView {
                     <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
                     <input name="phoneNo" type="tel" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Password <span class="text-red-500">*</span></label>
-                    <input name="password" type="password" id="password" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
-
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2">Close</button>
                         <button type="submit" id="submitButton" name="editUserButton" value="Edit User" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg">Save Changes</button>
@@ -210,7 +207,6 @@ class AdminUsersView {
                 document.getElementById('phoneNo').value = '';
                 document.getElementById('gender').value = '';
                 document.getElementById('dateOfBirth').value = '';
-                document.getElementById('password').value = '';
             }
         </script>
         <?php
