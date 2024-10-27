@@ -1,21 +1,20 @@
 <?php
-//require_once __DIR__ . '/../config/db_connection.php'; // Use __DIR__ to ensure the correct path
 class InstructorModel {
     /** Nutritionist Table */
-    private $instructorTable = 'instructor'; 
+    private $instructorTable = 'instructor';
     /** Database connection */
     private $databaseConn;
 
-    /** Constructor */  
+    /** Constructor */
     public function __construct($databaseConn) {
         $this->databaseConn = $databaseConn;
     }
-    
+
     // Create a new nutritionist
    /* public function create() {
         $sql = "INSERT INTO " . $this->table . " (firstName, lastName, gender, email, phoneNo, description, type) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        
+
         // Bind parameters
         $stmt->bind_param("sssssss", $this->firstName, $this->lastName, $this->gender, $this->email, $this->phoneNo, $this->description, $this->type);
 
@@ -44,7 +43,7 @@ class InstructorModel {
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $instructorInfo = $result->fetch_all(MYSQLI_ASSOC); 
+            $instructorInfo = $result->fetch_all(MYSQLI_ASSOC);
             return $instructorInfo;
         } else {
             return false;

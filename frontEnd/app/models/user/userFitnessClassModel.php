@@ -1,5 +1,4 @@
 <?php
-//require_once __DIR__ . '/../config/db_connection.php'; // Use __DIR__ to ensure the correct path
 class UserFitnessClass {
     /** Fitness Class Schedule Table */
     private $fitnessClassScheduleTable = 'fitness_class_schedule';
