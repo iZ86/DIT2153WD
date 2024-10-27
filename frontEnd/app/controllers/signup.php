@@ -38,7 +38,7 @@ if (isset($_POST['signupButton']) && $_POST['signupButton'] === "Sign Up") {
         die(header("location: " . $_SERVER['PHP_SELF']));         
     }
 
-    $signUp = $guestSignUpModel->createUser($_SESSION['firstName'], $_SESSION['lastName'], $_SESSION['username'], $_SESSION['password'], $_SESSION['email'], $_SESSION['phoneNo'], $_SESSION['gender'], $_SESSION['dateOfBirth'], "", $joinedDate);
+    $signUp = $guestSignUpModel->createUser($_SESSION['firstName'], $_SESSION['lastName'], $_SESSION['username'], $_SESSION['password'], $_SESSION['email'], $_SESSION['phoneNo'], $_SESSION['gender'], $_SESSION['dateOfBirth'], "", $_SESSION['joinedDate']);
 
     // check if successful registration
     if ($signUp == 1) {
