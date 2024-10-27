@@ -47,8 +47,6 @@ class AdminUsersView {
                             <i class="bx bxs-plus-circle"></i>
                             <span>Add User</span>
                         </button>
-
-                        <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden" style="left: 240px; width: calc(100% - 250px);"></div>
                     </div>
                 </div>
             </div>
@@ -89,8 +87,10 @@ class AdminUsersView {
             </div>
         </section>
 
-        <div id="userModal" class="fixed inset-0 flex items-center justify-center hidden">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+        <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+        <div id="userModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 modal-content">
                 <h2 id="modalTitle" class="text-2xl font-semibold mb-4">Add User</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -139,19 +139,40 @@ class AdminUsersView {
             </div>
         </div>
 
+        <style>
+            .modal {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+                opacity: 0;
+                transform: scale(0.9);
+                pointer-events: none;
+            }
+
+            .modal.show {
+                opacity: 1;
+                transform: scale(1);
+                pointer-events: auto;
+            }
+        </style>
+
         <script>
             function openModal() {
-                document.getElementById('userModal').classList.remove('hidden');
-                document.getElementById('modalOverlay').classList.remove('hidden');
-                document.getElementById('modalTitle').innerText = 'Add User';
-                document.getElementById('submitButton').name = 'addUserButton';
-                document.getElementById('submitButton').value = 'Add User';
-                clearModalFields();
+                const modal = document.getElementById('userModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
             }
 
             function openEditModal(id, firstName, lastName, email, phoneNo, gender, dateOfBirth) {
-                document.getElementById('userModal').classList.remove('hidden');
-                document.getElementById('modalOverlay').classList.remove('hidden');
+                const modal = document.getElementById('userModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
                 document.getElementById('modalTitle').innerText = 'Edit User';
                 document.getElementById('registeredUserID').value = id;
                 document.getElementById('firstName').value = firstName;
@@ -162,12 +183,23 @@ class AdminUsersView {
                 document.getElementById('dateOfBirth').value = dateOfBirth;
                 document.getElementById('submitButton').name = 'editUserButton';
                 document.getElementById('submitButton').value = 'Edit User';
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
             }
 
             function closeModal() {
-                document.getElementById('userModal').classList.add('hidden');
-                document.getElementById('modalOverlay').classList.add('hidden');
-                clearModalFields();
+                const modal = document.getElementById('userModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                    clearModalFields();
+                }, 300);
             }
 
             function clearModalFields() {
