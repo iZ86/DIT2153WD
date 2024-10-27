@@ -32,3 +32,16 @@ function openAddWaterConsumptionModal() {
         modal.classList.add('show');
     }, 10);
 }
+
+/** Closes addWaterConsumptionModal. */
+function closeAddWaterConsumptionModal() {
+    const modal = document.getElementById('addWaterConsumptionModal');
+    const overlay = document.getElementById('modalOverlay');
+
+    modal.classList.remove('show');
+
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        overlay.classList.add('hidden');
+    }, 300);
+}
