@@ -38,5 +38,18 @@ class UserTrackWaterConsumptionModel {
         }
         return $waterConsumptionResultArray;
     }
+
+    /** Adds water consumption record into the database.
+     * Returns true, if succeesful.
+     * Otherwise, returns false.
+     */
+    public function addWaterConsumptionData($usernameID, $amountDrank, $dateTime) {
+
+        $insertWaterConsumptionDataSQL = "INSERT INTO " . $this->waterConsumptionTable . "(litres, recordedOn, userID) VALUES (?, ?, ?)";
+        $insertWaterConsumptionDataSTMT = $this->databaseConn->prepare($insertWaterConsumptionDataSQL);
+        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrank, $dateTime, $usernameID);
+        return $insertWaterConsumptionDataSTMT->execute();
+
+    }
 }
 
