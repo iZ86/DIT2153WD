@@ -11,14 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $firstName = trim($_POST['firstName']);
         $lastName = trim($_POST['lastName']);
         $username = trim($_POST['username']);
-        $password = trim($_POST['password']);
         $email = trim($_POST['email']);
         $phoneNo = trim($_POST['phoneNo']);
         $gender = trim($_POST['gender']);
         $dateOfBirth = trim($_POST['dateOfBirth']);
 
         if (empty($errors)) {
-            $adminUsersModel->addUser($firstName, $lastName, $username, $password, $email, $phoneNo, $gender, $dateOfBirth);
+            $adminUsersModel->addUser($firstName, $lastName, $username, $email, $phoneNo, $gender, $dateOfBirth);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
