@@ -35,6 +35,7 @@ class UserTrackWaterConsumptionModel {
             $waterConsumptionResultArrayRecordOnAttribute = date_create($waterConsumptionResultArray[$i]['recordedOn']);
             $waterConsumptionResultArray[$i]['recordedOnTime'] = $waterConsumptionResultArrayRecordOnAttribute->format('H:i');
             $waterConsumptionResultArray[$i]['recordedOnDate'] = $waterConsumptionResultArrayRecordOnAttribute->format('Y-m-d');
+            unset($waterConsumptionResultArray[$i]['recordedOn']);
         }
         return $waterConsumptionResultArray;
     }
