@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-
     if (isset($_POST['editScheduleButton'])) {
         $fitnessClassScheduleID = $_POST['fitnessClassScheduleID'];
         $fitnessClassID = $_POST['fitnessClassID'];
@@ -79,14 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $classes = $adminClassesModel->getAllClasses();
 $schedules = $adminClassesModel->getAllSchedules();
 $instructors = $adminClassesModel->getAllInstructors();
-
-if ($classes->num_rows === 0) {
-    echo "No classes found.";
-}
-
-if ($instructors->num_rows === 0) {
-    echo "No instructors found.";
-}
 
 $adminClassesView = new AdminClassesView($classes, $schedules, $instructors);
 $adminClassesView->renderView();
