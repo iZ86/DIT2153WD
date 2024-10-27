@@ -37,10 +37,10 @@ class UserTrackWaterConsumptionView {
 
     /** Renders ONE card of water consumption data. */
     private function renderOneWaterConsumptionDataRow($waterConsumptionDataID, $waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
-    <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid cursor-pointer" id=<?php echo '"' . $waterConsumptionDataID . '"'; ?>>
+    <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid cursor-pointer">
         <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
-            <p class="mb-0 text-white font-bold text-lg drop-shadow-dark"><?php echo "You have drank " . $waterConsumptionDataLitres . " at " . $waterConsumptionDataRecordedOnTime;?></p>
+            <p id=<?php echo '"' . $waterConsumptionDataID . '"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"><?php echo "You have drank " . $waterConsumptionDataLitres . " at " . $waterConsumptionDataRecordedOnTime;?></p>
         </div>
     </div>
     <?php
@@ -52,7 +52,7 @@ class UserTrackWaterConsumptionView {
         <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto">
             <?php
             for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID'], $this->waterConsumptionDataArray[$i]['litres'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
+                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID'], $this->waterConsumptionDataArray[$i]['milliliters'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
             }
             ?>
         </div>
@@ -104,10 +104,20 @@ class UserTrackWaterConsumptionView {
 
         
 
-        <?php
-        $this->renderDatePagination();
-        $this->renderWaterConsumptionDataPartialView();
-        ?>
+
+        <?php $this->renderDatePagination(); ?>
+        
+        <div class="flex items-center mb-14">
+            <div class="mx-auto flex items-center text-3xl mb-14 justify-center basis-96">
+                <select name="unit" id="amountDrankUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2" oninput="convertAmountDrankOfAllWaterConsumptionDataRow('amountDrankUnit')">
+                    <option value="mL">Milliliters (mL)</option>
+                    <option value="L">Liters (L)</option>
+                    <option value="oz">Ounces (oz)</option>
+                </select>
+            </div>
+        </div>
+
+        <?php $this->renderWaterConsumptionDataPartialView(); ?>
                 
             
         <div class="flex mt-4 mb-20">
@@ -132,10 +142,12 @@ class UserTrackWaterConsumptionView {
                 <div class="flex mt-8 justify-between min-w-100">
                     <div class="flex flex-col justify-between items-end gap-y-2 font-semibold text-2xl">
                         <div class="flex">
-                            <select name="unit" class="bg-white rounded-lg border-2 text-shadow-dark text-black">
-                                <option value="milliliters">Milliliter (ml)</option>
-                                <option value="liters">Litre (l)</option>
-                                <option value="oz">Oz</option>
+                            
+
+                            <select name="unit" id="unit" class="bg-white rounded-lg border-2 text-shadow-dark text-black" oninput="convertAmountDrankOfAllWaterConsumptionDataRow('unit')">
+                                <option value="mL">Milliliters (mL)</option>
+                                <option value="L">Liters (L)</option>
+                                <option value="oz">Ounces (oz)</option>
                             </select>
                             <label for="amountDrank" class="text-white drop-shadow-dark">:</label>
                         </div>
@@ -175,6 +187,13 @@ class UserTrackWaterConsumptionView {
                 pointer-events: auto;
             }
         </style>
+    
+    <!-- Embed php array of ids of the water consumption data rows to be used to convert the amount drank based on unit. -->
+     <input type="hidden" id="phpArrayOfWaterConsumptionData" value="
+     <?php 
+     echo htmlspecialchars(json_encode($this->waterConsumptionDataArray));
+     ?>
+     ">
 
 
 
