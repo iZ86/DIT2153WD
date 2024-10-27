@@ -34,6 +34,7 @@ module.exports = {
         '15' : '3.75rem',
       },
       flexBasis: {
+        '128' : '32rem',
         '192' : '48rem',
         '256' : '64rem',
       },
