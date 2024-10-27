@@ -112,22 +112,7 @@ class NutritionistsView {
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
                 <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
                     <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
-                    <?= $this->renderNutritionistsName();
-
-                    /*
-                    // Use the controller to fetch nutritionists for the dropdown
-                    $totalNutritionists = $controller->getTotalNutritionist();
-                    if (is_int($totalNutritionists) && $totalNutritionists > 0) {
-                        for ($i = 1; $i <= $totalNutritionists; $i++) {
-                            $nutritionist = $controller->getNutritionistById($i);
-                            if ($nutritionist !== false) {
-                                echo '<option value="' . htmlspecialchars($nutritionist["nutritionistID"]) . '">' . htmlspecialchars($nutritionist["firstName"]) . '</option>'; // Use nutritionist ID as value
-                            }
-                        }
-                    } else {
-                        echo '<option value="" disabled>No nutritionists available</option>';
-                    }*/
-                    ?>
+                    <?= $this->renderNutritionistsName(); ?>
                 </select>
             </div>
 
@@ -213,9 +198,6 @@ function openModal() {
 function closeModal() {
     const modal = document.getElementById('userModal');
     const overlay = document.getElementById('modalOverlay');
-    let nutritionist = document.getElementsById('nutritionist');
-    let date = document.getElementById('date');
-    let time = document.getElementById('time');
 
     modal.classList.remove('show');
     setTimeout(() => {
