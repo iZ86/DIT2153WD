@@ -44,11 +44,11 @@ class UserTrackWaterConsumptionModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addWaterConsumptionData($usernameID, $amountDrankInMilliliters, $dateTime) {
+    public function addWaterConsumptionData($userID, $amountDrankInMilliliters, $dateTime) {
 
         $insertWaterConsumptionDataSQL = "INSERT INTO " . $this->waterConsumptionTable . "(milliliters, recordedOn, userID) VALUES (?, ?, ?)";
         $insertWaterConsumptionDataSTMT = $this->databaseConn->prepare($insertWaterConsumptionDataSQL);
-        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrankInMilliliters, $dateTime, $usernameID);
+        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrankInMilliliters, $dateTime, $userID);
         return $insertWaterConsumptionDataSTMT->execute();
 
     }
