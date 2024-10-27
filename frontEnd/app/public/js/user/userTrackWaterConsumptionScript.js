@@ -55,7 +55,7 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
         document.getElementById('amountDrankUnit').value = document.getElementById("unit").value;
     }
     let unitSelected = document.getElementById('amountDrankUnit').value;
-    const waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
+    let waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
 
 
     if (unitSelected === "L") {
