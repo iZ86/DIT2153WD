@@ -2,13 +2,14 @@
 //require_once __DIR__ . '/../config/db_connection.php'; // Use __DIR__ to ensure the correct path
 class NutritionistModel {
     /** Nutritionist Table */
-    private $nutritionistTable = 'nutritionist'; 
+    private $nutritionistTable = 'nutritionist';
     /** Nutritionist Booking Table */
     private $nutritionistBookingTable = 'nutritionist_booking';
+    private $nutritionitsScheduleTable = 'nutritionist_schedule';
     /** Database connection */
     private $databaseConn;
 
-    /** Constructor */  
+    /** Constructor */
     public function __construct($databaseConn) {
         $this->databaseConn = $databaseConn;
     }
@@ -21,8 +22,7 @@ class NutritionistModel {
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            return $row;
+            return $result->fetch_assoc();
         }
         return false;
     }
@@ -34,8 +34,7 @@ class NutritionistModel {
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $nutritionistsInfo = $result->fetch_all(MYSQLI_ASSOC); 
-            return $nutritionistsInfo;
+            return $result->fetch_all(MYSQLI_ASSOC);
         } else {
             return false;
         }
@@ -45,7 +44,7 @@ class NutritionistModel {
     public function createNutritionistBooking($nutritionist, $description, $bookingDate, $bookingTime) {
         $sql = "INSERT INTO " . $this->nutritionistBookingTable . " (description, bookingDate, bookingTime) VALUES (?, ?, ?)";
         $stmt = $this->databaseConn->prepare($sql);
-        
+
         // Bind parameters
         $stmt->bind_param("sss", $description , $bookingDate, $bookingTime);
 
@@ -55,9 +54,22 @@ class NutritionistModel {
 
     public function nutritionistsBookingHandler($nutritionist, $bookingDate, $bookingTime, $description, $makeReservationButton) {
         if(isset($makeReservationButton) && !empty($nutritionist) && !empty($bookingDate) && !empty($bookingTime)) {
-            
-            return true;  
+
+            return true;
         }
         return false;
     }
+
+    public function getAllNutritionistScheduleInformation() {
+        $sql = "SELECT * FROM " . $this->nutritionitsScheduleTable;
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
 }
