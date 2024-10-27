@@ -36,8 +36,8 @@ class UserTrackWaterConsumptionView {
     }
 
     /** Renders ONE card of water consumption data. */
-    private function renderOneWaterConsumptionDataRow($waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
-    <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid">
+    private function renderOneWaterConsumptionDataRow($waterConsumptionDataID, $waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
+    <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid cursor-pointer" id=<?php echo '"' . $waterConsumptionDataID . '"'; ?>>
         <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
             <p class="mb-0 text-white font-bold text-lg drop-shadow-dark"><?php echo "You have drank " . $waterConsumptionDataLitres . " at " . $waterConsumptionDataRecordedOnTime?></p>
@@ -52,7 +52,7 @@ class UserTrackWaterConsumptionView {
         <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto">
             <?php
             for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['litres'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
+                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID'], $this->waterConsumptionDataArray[$i]['litres'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
             }
             ?>
         </div>
@@ -154,6 +154,8 @@ class UserTrackWaterConsumptionView {
                 <div class="flex justify-center mt-28">
                     <input type="button" value="Close" onclick="closeAddWaterConsumptionModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
                     <input type="submit" name="addWaterConsumptionDataButton" value="Add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg cursor-pointer">
+                    <input type="submit" name="deleteWaterConsumptionDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
+                    <input type="submit" name="saveWaterConsumptionDataButton" value="Save" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
                 </div>
             </form>
         </div>
