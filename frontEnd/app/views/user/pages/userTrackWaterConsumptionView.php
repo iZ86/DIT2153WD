@@ -63,7 +63,7 @@ class UserTrackWaterConsumptionView {
     /** Renders the date pagination. */
     public function renderDatePagination() {?>
     <div class="flex items-center mb-14">
-        <div class="mx-auto flex items-center text-3xl mb-14 justify-center basis-96">
+        <div class="mx-auto flex items-center text-3xl justify-center basis-96">
             
         <input type="button" id="previousDate" name="previousDate" value="<" class="p-4" onclick="previousDate()">
 
@@ -108,7 +108,7 @@ class UserTrackWaterConsumptionView {
         <?php $this->renderDatePagination(); ?>
         
         <div class="flex items-center mb-14">
-            <div class="mx-auto flex items-center text-3xl mb-14 justify-center basis-96">
+            <div class="mx-auto flex items-center text-3xl justify-center basis-96">
                 <select name="unit" id="amountDrankUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2" oninput="convertAmountDrankOfAllWaterConsumptionDataRow('amountDrankUnit')">
                     <option value="mL">Milliliters (mL)</option>
                     <option value="L">Liters (L)</option>
