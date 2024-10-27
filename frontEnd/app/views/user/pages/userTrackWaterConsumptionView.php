@@ -36,7 +36,7 @@ class UserTrackWaterConsumptionView {
     }
 
     /** Renders ONE card of water consumption data. */
-    private function renderOneWaterConsumptionDataPartialView($waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
+    private function renderOneWaterConsumptionDataRow($waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
     <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid">
         <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
@@ -52,7 +52,7 @@ class UserTrackWaterConsumptionView {
         <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto">
             <?php
             for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-                $this->renderOneWaterConsumptionDataPartialView($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
+                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[0]['litres'], $this->waterConsumptionDataArray[0]['recordedOnTime']);
             }
             ?>
         </div>
