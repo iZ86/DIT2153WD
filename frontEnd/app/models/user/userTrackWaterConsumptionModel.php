@@ -35,6 +35,7 @@ class UserTrackWaterConsumptionModel {
             $waterConsumptionResultArrayRecordOnAttribute = date_create($waterConsumptionResultArray[$i]['recordedOn']);
             $waterConsumptionResultArray[$i]['recordedOnTime'] = $waterConsumptionResultArrayRecordOnAttribute->format('H:i');
             $waterConsumptionResultArray[$i]['recordedOnDate'] = $waterConsumptionResultArrayRecordOnAttribute->format('Y-m-d');
+            unset($waterConsumptionResultArray[$i]['recordedOn']);
         }
         return $waterConsumptionResultArray;
     }
@@ -43,11 +44,11 @@ class UserTrackWaterConsumptionModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addWaterConsumptionData($usernameID, $amountDrank, $dateTime) {
+    public function addWaterConsumptionData($userID, $amountDrankInMilliliters, $dateTime) {
 
-        $insertWaterConsumptionDataSQL = "INSERT INTO " . $this->waterConsumptionTable . "(litres, recordedOn, userID) VALUES (?, ?, ?)";
+        $insertWaterConsumptionDataSQL = "INSERT INTO " . $this->waterConsumptionTable . "(milliliters, recordedOn, userID) VALUES (?, ?, ?)";
         $insertWaterConsumptionDataSTMT = $this->databaseConn->prepare($insertWaterConsumptionDataSQL);
-        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrank, $dateTime, $usernameID);
+        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrankInMilliliters, $dateTime, $userID);
         return $insertWaterConsumptionDataSTMT->execute();
 
     }

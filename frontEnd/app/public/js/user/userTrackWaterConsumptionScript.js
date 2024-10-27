@@ -45,3 +45,38 @@ function closeAddWaterConsumptionModal() {
         overlay.classList.add('hidden');
     }, 300);
 }
+
+/** Converts the amount for every water consumption data rows. */
+function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
+    if (unitDropDownBoxID === "amountDrankUnit") {
+        document.getElementById('unit').value = document.getElementById("amountDrankUnit").value;
+        
+    } else if (unitDropDownBoxID === "unit") {
+        document.getElementById('amountDrankUnit').value = document.getElementById("unit").value;
+    }
+    let unitSelected = document.getElementById('amountDrankUnit').value;
+    let waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
+
+
+    if (unitSelected === "L") {
+        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
+            let amountDrank = Number(waterConsumptionDataArray[i]["milliliters"]) / 1000;
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
+        }
+        
+    } else if (unitSelected === "mL") {
+        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
+            let amountDrank = Number(waterConsumptionDataArray[i]["milliliters"]);
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
+        }
+    } else if (unitSelected === "oz") {
+        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
+            let amountDrank = Math.floor((Number(waterConsumptionDataArray[i]["milliliters"]) / 29.5735) * 100) / 100;
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
+        }
+    }
+}
+    
