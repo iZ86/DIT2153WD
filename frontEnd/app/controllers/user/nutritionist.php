@@ -8,32 +8,34 @@ $nutritionistModel = new NutritionistModel(require '../../config/db_connection.p
  * Use ?? to provide a default null value, if the $_POST doesn't retrieve it.
  */
 function getBookingInformation() {
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['desc'])) {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nutritionist = $_POST['nutritionist'] ?? null;
         $date = $_POST['date'] ?? null;
         $time = $_POST['time'] ?? null;
         $description = $_POST['desc'] ?? null;
-        $makeReservation = isset($_POST['make-reservation']);
 
-        // Test if it can retreive the data.
-        echo $nutritionist . $date . $time . $description . $makeReservation;
-        /** Ensure required fields are not empty. */
-        if ($nutritionist && $date && $time) {
+        if (!empty($nutritionist) && !empty($date) && !empty($time)) {
             global $nutritionistModel;
-            if($nutritionistModel->nutritionistsBookingHandler(
+
+            // Create the booking
+            if ($nutritionistModel->createNutritionistBooking(
                 $nutritionist,
-                date('Y-m-d', strtotime($date)),
-                $time,
                 $description,
-                $makeReservation
+                date('Y-m-d', strtotime($date)),
+                $time
             )) {
-                echo "<script>alert('Succesfully Made a Reservation!!');</script>";
+                echo "<script>alert('Successfully Made a Reservation!!');</script>";
+            } else {
+                echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
             }
+        } else {
+            echo "<script>alert('Please fill in all required fields.');</script>";
         }
     }
 }
 
+
 /** Fetch nutritionists for display in the view. */
-$nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist());
+$nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist(), $nutritionistModel->getAllNutritionistScheduleInformation());
 $nutritionistsView->renderView();
 getBookingInformation();
