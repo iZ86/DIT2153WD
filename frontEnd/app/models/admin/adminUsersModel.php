@@ -22,14 +22,12 @@ class AdminUsersModel {
         return $stmt->get_result();
     }
 
-    public function addUser($firstName, $lastName, $username, $password, $email, $phoneNo, $gender, $dateOfBirth) {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
+    public function addUser($firstName, $lastName, $username, $email, $phoneNo, $gender, $dateOfBirth) {
         $registerUserQuery = "INSERT INTO " . $this->registeredUserTable . " 
-                              (firstName, lastName, username, password, email, phoneNo, gender, dateOfBirth)
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                              (firstName, lastName, username, email, phoneNo, gender, dateOfBirth)
+                              VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->databaseConn->prepare($registerUserQuery);
-        $stmt->bind_param("ssssssss", $firstName, $lastName, $username, $hashedPassword, $email, $phoneNo, $gender, $dateOfBirth);
+        $stmt->bind_param("sssssss", $firstName, $lastName, $username, $email, $phoneNo, $gender, $dateOfBirth);
         if (!$stmt->execute()) {
             throw new Exception("Failed to add user: " . $stmt->error);
         }
