@@ -60,7 +60,7 @@ class UserTrackWaterConsumptionModel {
     public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
         
         
-        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID) === 1) {
+        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID)) {
             $updateWaterConsumptionDataSQL = "UPDATE " . $this->waterConsumptionTable .
             " SET milliliters = ?, recordedOn = ? WHERE waterConsumptionID = ? AND userID = ?";
 
@@ -83,7 +83,7 @@ class UserTrackWaterConsumptionModel {
      */
     public function deleteWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
 
-        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID) === 1) {
+        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID)) {
             $deleteWaterConsumptionDataSQL = "DELETE FROM " . $this->waterConsumptionTable .
             " WHERE waterConsumptionID = ? AND userID = ?";
 
@@ -99,8 +99,8 @@ class UserTrackWaterConsumptionModel {
         return false;
     }
 
-    /** Returns 1 if there is a record that belongs to the $waterConsumptionID and $userID.
-     * Otherwise, returns 0.
+    /** Returns true if there is a record that belongs to the $waterConsumptionID and $userID.
+     * Otherwise, returns false.
      * This function is used to prove that the $waterConsumptionID sent by the $_POST in the controller
      * actually belongs to the userID, and allows the userID to perform write actions on it.
     */
@@ -111,9 +111,9 @@ class UserTrackWaterConsumptionModel {
         $selectWaterConsumptionDataSTMT->execute();
         $selectWaterConsumptionDataResult = $selectWaterConsumptionDataSTMT->get_result();
         if ($selectWaterConsumptionDataResult->num_rows === 1) {
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     }
 }
 
