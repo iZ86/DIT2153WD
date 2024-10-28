@@ -1,13 +1,16 @@
 <?php
-// Include necessary files for the header, navbar.
-
+// Include necessary file path.
+require __DIR__ . '/../../../config/config.php';
 class NutritionistsView {
     /** Instance variable that is going to store the nutritionists information as an associative array. */
-    private $data;
-
+    private $nutritionistInformation;
+    private $nutritionistSchedule;
+    private $nutritionistTime;
     /** Constructor that is going to retreive the nutritionists information. */
-    public function __construct($data) {
-        $this->data = $data;
+    public function __construct($nutritionistInformation, $nutritionistSchedule, $nutritionistTime) {
+        $this->nutritionistInformation = $nutritionistInformation;
+        $this->nutritionistSchedule = $nutritionistSchedule;
+        $this->nutritionistTime = $nutritionistTime;
     }
 
     /** Renders the userNutritionists page. */
@@ -18,26 +21,50 @@ class NutritionistsView {
         $this->renderFooter();
     }
     public function renderNutritionists() {
-        foreach($this->data as $datas) {
+        foreach($this->nutritionistInformation as $nutritionistInformations) {
             ?>
+             <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mb-20">
+
+            <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
+                <img src="<?=IMAGE_FILE_PATH?><?=$nutritionistInformations['nutritionistImageFilePath']?>" alt="Nutritionist.png">
+            </div>
             <div class="ml-10 font-montserrat">
-            <p>Name: <?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?></p>
-            <p>Qualification: <?= htmlspecialchars($datas['type']) ?> </p>
+            <p>Name: <?= htmlspecialchars($nutritionistInformations['firstName']) . ' ' . htmlspecialchars($nutritionistInformations['lastName']) ?></p>
+            <p>Qualification: <?= htmlspecialchars($nutritionistInformations['type']) ?> </p>
             <br>
             <p>Bio:</p>
-            <p class="w-3/5"><?= htmlspecialchars($datas['description']) ?></p>
+            <p class="w-3/5"><?= htmlspecialchars($nutritionistInformations['description']) ?></p>
+            </div>
             </div>
             <?php
         }
     }
 
+    /** Fetches the nutritionists name from database and renders it in dropdown. */
     public function renderNutritionistsName() {
-        foreach($this->data as $datas) {
+        foreach($this->nutritionistInformation as $nutritionist) {
             ?>
-            <option value="<?= strtolower(htmlspecialchars($datas['firstName'])) . '-' . strtolower(htmlspecialchars($datas['lastName'])) ?>"> <?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?> </option>
+            <option value="<?= strtolower(htmlspecialchars($nutritionist['nutritionistID'])) ?>">
+                <?= htmlspecialchars($nutritionist['firstName']) . ' ' . htmlspecialchars($nutritionist['lastName']) ?>
+            </option>
             <?php
         }
     }
+
+    public function getAvailableDate() {
+        foreach ($this->nutritionistSchedule as $nutritionistDate) {
+            echo "<option value='" . htmlspecialchars($nutritionistDate['date_part']) . "'>" . htmlspecialchars($nutritionistDate['date_part']) . "</option>";
+        }
+    }
+
+    public function getAvailableTime() {
+        foreach ($this->nutritionistTime as $nutritionistTimes) {
+            echo "<option value='" . htmlspecialchars($nutritionistTimes['time_part']) . "'>" . htmlspecialchars($nutritionistTimes['time_part']) . "</option>";
+        }
+    }
+
+
+
     /** Renders the navbar. */
     public function renderNavbar() {
         include __DIR__ . '/../components/userNavbar.php';
@@ -51,11 +78,12 @@ class NutritionistsView {
 
     /** Reners the footer */
     public function renderFooter() {
-        include __DIR__ . '/../components/userHeader.php';
+        include __DIR__ . '/../components/userFooter.php';
     }
 
     /** Renders the content */
-    public function renderContent() { ?>
+    public function renderContent() {
+        ?>
     <section class="bg-white-bg">
     <div class="flex flex-col items-center justify-center">
         <h1 class="mt-12 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
@@ -82,17 +110,12 @@ class NutritionistsView {
 
         <div class="bg-white mt-32 flex flex-col items-center justify-center">
             <div class="flex flex-col">
-                <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)]">
-                    <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
-                        <img src="../../public/images/emily_nutritionist.png" alt="Nutritionist.png">
-                    </div>
-
                     <div class="ml-10 font-montserrat">
                         <?=
                         /** Function that calls the renderNutritionists() function to show all the nutritionists. */
-                        $this->renderNutritionists(); ?>
+                        $this->renderNutritionists();
+                        ?>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -110,37 +133,25 @@ class NutritionistsView {
         <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
             <div>
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
-                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" placeholder="SELECT NUTRITIONIST">
+                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" onchange="fetchFirstOptions()">
                     <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
-                    <?= $this->renderNutritionistsName();
-
-                    /*
-                    // Use the controller to fetch nutritionists for the dropdown
-                    $totalNutritionists = $controller->getTotalNutritionist();
-                    if (is_int($totalNutritionists) && $totalNutritionists > 0) {
-                        for ($i = 1; $i <= $totalNutritionists; $i++) {
-                            $nutritionist = $controller->getNutritionistById($i);
-                            if ($nutritionist !== false) {
-                                echo '<option value="' . htmlspecialchars($nutritionist["nutritionistID"]) . '">' . htmlspecialchars($nutritionist["firstName"]) . '</option>'; // Use nutritionist ID as value
-                            }
-                        }
-                    } else {
-                        echo '<option value="" disabled>No nutritionists available</option>';
-                    }*/
-                    ?>
+                    <?= $this->renderNutritionistsName(); ?>
                 </select>
             </div>
 
             <div>
                 <label class="font-nunito" for="date">Date:</label><br>
-                <input required class="w-72 border-b-[1px] border-black border-solid" type="date" name="date" id="date">
+                <select required class="w-72 border-b-[1px] border-black border-solid" name="date" id="date" onchange="fetchSecondOptions()">
+                    <option value="" disabled selected hidden>SELECT AN AVAILABLE DATE</option>
+                    <?= $this->getAvailableDate(); ?>
+                </select>
             </div>
 
             <div>
                 <label class="font-nunito" for="time">Time:</label><br>
-                <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time" placeholder="SELECT TIME">
+                <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time">
                     <option value="" disabled selected hidden>SELECT AN AVAILABLE TIME</option>
-                    <option value="hi" >Hi</option>
+                    <?= $this->getAvailableTime(); ?>
                 </select>
             </div>
 
@@ -197,7 +208,8 @@ input[type="date"]:valid {
 }
 
 </style>
-<script>
+<script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script language="javascript" type="text/javascript">
 function openModal() {
     const modal = document.getElementById('userModal');
     const overlay = document.getElementById('modalOverlay');
@@ -213,9 +225,6 @@ function openModal() {
 function closeModal() {
     const modal = document.getElementById('userModal');
     const overlay = document.getElementById('modalOverlay');
-    let nutritionist = document.getElementsById('nutritionist');
-    let date = document.getElementById('date');
-    let time = document.getElementById('time');
 
     modal.classList.remove('show');
     setTimeout(() => {
@@ -223,8 +232,50 @@ function closeModal() {
         overlay.classList.add('hidden');
     }, 300);
 }
-</script>
 
+// TODO: Fix second and third dropdown box consist of first and second dropdown box value.
+function fetchFirstOptions() {
+    var nutritionistDropdown = document.getElementById("nutritionist").value;
+    var dateDropdown = document.getElementById("date");
+
+    // Clear previous options
+    dateDropdown.innerHTML = ""; // This clears previous date options
+
+    if (nutritionistDropdown !== "") {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "nutritionist.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                dateDropdown.innerHTML = xhr.responseText; // Populate new date options
+            }
+        };
+        xhr.send("nutritionistID=" + nutritionistDropdown);
+    }
+}
+
+function fetchSecondOptions() {
+    var nutritionistDropdown = document.getElementById("nutritionist").value;
+    var dateDropdown = document.getElementById("date").value;
+    var timeDropdown = document.getElementById("time");
+
+    // Clear previous options
+    timeDropdown.innerHTML = ""; // This clears previous time options
+
+    if (dateDropdown !== "") {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "nutritionist.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                timeDropdown.innerHTML = xhr.responseText; // Populate new time options
+            }
+        };
+        xhr.send("date=" + encodeURIComponent(dateDropdown) + "&nutritionistID=" + encodeURIComponent(nutritionistDropdown));
+    }
+}
+
+</script>
 <?php
 }
 }
