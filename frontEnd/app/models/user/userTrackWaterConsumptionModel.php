@@ -52,5 +52,32 @@ class UserTrackWaterConsumptionModel {
         return $insertWaterConsumptionDataSTMT->execute();
 
     }
+
+    /** Updates the water consumption data in WATER_CONSUMPTION table.
+     * Returns 1 if success,
+     * Otherwise, returns false.
+    */
+    public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
+        
+        // Check to see if waterConsumptionID is valid, and if it belongs to the correct user.
+        // If not don't update the data.
+        $selectWaterConsumptionDataSQL = "SELECT 1 FROM " . $this->waterConsumptionTable . " WHERE waterConsumptionID = ? AND userID = ?";
+        $selectWaterConsumptionDataSTMT= $this->databaseConn->prepare($selectWaterConsumptionDataSQL);
+        $selectWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $userID);
+        $selectWaterConsumptionDataSTMT->execute();
+        $selectWaterConsumptionDataResult = $selectWaterConsumptionDataSTMT->get_result();
+        if ($selectWaterConsumptionDataResult->num_rows === 1) {
+            $updateWaterConsumptionDataSQL = "UPDATE " . $this->waterConsumptionTable .
+            " SET milliliters = ?, recordedOn = ? WHERE waterConsumptionID = ? AND userID = ?";
+
+            $updateWaterConsumptionDataSTMT = $this->databaseConn->prepare($updateWaterConsumptionDataSQL);
+            $updateWaterConsumptionDataSTMT->bind_param("ssss", $amountDrankInMilliliters, $dateTime, $waterConsumptionID, $userID);
+            $updateWaterConsumptionDataSTMT->execute();
+
+            return 1;
+        }
+
+        return 0;
+    }
 }
 
