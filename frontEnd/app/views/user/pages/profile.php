@@ -1,6 +1,26 @@
 <?php include __DIR__ .  '/../components/userHeader.php'; ?>
 <?php include __DIR__ .  '/../components/userNavbar.php'; ?>
 
+<?php
+require_once '../../../controllers/user/user-profile-management.php';
+require_once '../../../config/db_connection.php';
+
+session_start();
+
+// Check if the user is logged in and get the user ID from the session
+if (isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id']; // Get the logged-in user's ID
+
+    // Initialize the controller and fetch user data
+    $controller = new UserProfileManagement();
+    $user = $controller->getUserData($userId); // Fetch user data
+} else {
+    // Redirect to login or sign-up if user is not logged in
+    header('Location: guestSignUpView.php');
+    exit;
+}
+?>
+
 <section>
     <div class="px-32 bg-blue-50 min-h-screen">
         <!--"My Profile" Heading-->
@@ -98,3 +118,35 @@
     </div>
     <?php include __DIR__ .  '/../components/userFooter.php'; ?>
 </section>
+<form method="POST" action="../../../views/user/pages/profile.php">
+    <label>Username:</label>
+    <input type="text" name="username" value="<?php echo $user['username']; ?>" readonly><br>
+
+    <label>User ID:</label>
+    <input type="text" name="user_id" value="<?php echo $user['user_id']; ?>" readonly><br>
+
+    <label>Joined Date:</label>
+    <input type="text" name="joined_date" value="<?php echo $user['joined_date']; ?>" readonly><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" value="<?php echo $user['email']; ?>" required><br>
+
+    <label>Phone Number:</label>
+    <input type="text" name="phone_number" value="<?php echo $user['phone_number']; ?>"><br>
+
+    <button type="submit">Save Changes</button>
+</form>
+<?php
+require_once '../../../controllers/user/user-profile-management.php';
+require_once '../../../config/db_connection.php'; // Assuming you have a DB config
+
+$controller = new UserProfileManagement();
+$userId = 1; // Example user ID (you can replace with session or dynamic value)
+$user = $controller->getProfile($userId);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controller->updateProfile($userId, $_POST);
+    header('Location: profile.php'); // Redirect to avoid form resubmission
+    exit;
+}
+?>
