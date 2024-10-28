@@ -110,15 +110,12 @@ class NutritionistsView {
 
         <div class="bg-white mt-32 flex flex-col items-center justify-center">
             <div class="flex flex-col">
-
-
                     <div class="ml-10 font-montserrat">
                         <?=
                         /** Function that calls the renderNutritionists() function to show all the nutritionists. */
                         $this->renderNutritionists();
                         ?>
                     </div>
-
             </div>
         </div>
     </div>
