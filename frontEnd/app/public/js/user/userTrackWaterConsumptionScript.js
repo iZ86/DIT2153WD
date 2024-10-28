@@ -217,9 +217,6 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
 function openDeleteConfirmationModal() {
     let confirmationModal = document.getElementById('confirmationModal');
 
-    let confirmationModalTitle = document.getElementById('confirmationModalTitle');
-    confirmationModalTitle.innerText = 'Are you sure you want to delete this water consumption data?';
-
     confirmationModal.classList.remove('hidden');
     setTimeout(() => {
         confirmationModal.classList.add('show');
