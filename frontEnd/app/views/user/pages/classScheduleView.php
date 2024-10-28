@@ -58,7 +58,7 @@ class FitnessClassView {
         }
         ?>
 
-        <section class="bg-[#F1FAFF]">
+        <section class="bg-[#F1FAFF] pb-48">
             <div class="flex justify-center items-center relative">
                 <a href="./classes.php" class="bx bx-chevron-left bx-lg ml-20 absolute left-20 top-10"></a>
 
@@ -106,11 +106,11 @@ class FitnessClassView {
                         <?php endforeach; ?>
                     </table>
 
-                    <div class="flex justify-end mt-3 gap-x-5">
+                    <div class="flex justify-end mt-3 gap-x-5 items-center">
+                        <p class="font-bold font-montserrat">Week: <?= $weekOffset + 1 ?></p>
                         <a href="?instructor=<?= $instructorOffset ?>&week=<?= $weekOffset - 1 ?>" class="bx bx-chevron-left bx-md"></a>
                         <a href="?instructor=<?= $instructorOffset ?>&week=<?= $weekOffset + 1 ?>" class="bx bx-chevron-right bx-md"></a>
                     </div>
-
                 </div>
             </div>
         </section>
