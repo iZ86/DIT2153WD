@@ -36,11 +36,11 @@ class UserTrackWaterConsumptionView {
     }
 
     /** Renders ONE card of water consumption data. */
-    private function renderOneWaterConsumptionDataRow($waterConsumptionDataID, $waterConsumptionDataLitres, $waterConsumptionDataRecordedOnTime) {?>
+    private function renderOneWaterConsumptionDataRow($waterConsumptionDataID) {?>
     <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid cursor-pointer">
         <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
-            <p id=<?php echo '"' . $waterConsumptionDataID . '"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"><?php echo "You have drank " . $waterConsumptionDataLitres . " at " . $waterConsumptionDataRecordedOnTime;?></p>
+            <p id=<?php echo '"' . $waterConsumptionDataID . '"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"></p>
         </div>
     </div>
     <?php
@@ -53,7 +53,7 @@ class UserTrackWaterConsumptionView {
             <?php
             if (sizeof($this->waterConsumptionDataArray) > 0) {
                 for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-                    $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID'], $this->waterConsumptionDataArray[$i]['milliliters'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
+                    $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
                 echo '<p class="text-black font-bold text-3xl mx-auto" style="opacity: 0.2;">You have not drank any water today :&#40;</p>';
