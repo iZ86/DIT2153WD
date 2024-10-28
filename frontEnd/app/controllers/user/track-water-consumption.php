@@ -70,6 +70,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
+    } else if (isset($_POST['deleteWaterConsumptionDataButton'])) {
+        
+        echo "<script>console.log(" . 1 . ");</script>";
+        if ($_POST['deleteWaterConsumptionDataButton'] === "Delete") {
+            if (checkIsBasicPostVariablesSet() && isset($_POST['waterConsumptionID'])) {
+                $waterConsumptionID = cleanData($_POST['waterConsumptionID']);
+                $unit = cleanData($_POST['unit']);
+                $amountDrank = cleanData($_POST['amountDrank']);
+                $time = cleanData($_POST['time']);
+                if (validateBasicPostData($unit, $amountDrank, $time, $regexUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) &&
+                (($waterConsumptionID !== null) &&
+                preg_match($regexIDFormat, $waterConsumptionID))) {
+
+                    $waterConsumptionID = (int) $waterConsumptionID;
+
+
+
+                    $deleteStatus = $userTrackWaterConsumptionModel->deleteWaterConsumptionData($waterConsumptionID, $_SESSION['userID']);
+                    if ($deleteStatus) {
+                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+                    }
+                }
+            }
+        }
+
     }
 }
 
