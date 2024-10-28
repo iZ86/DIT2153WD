@@ -11,6 +11,13 @@ class UserFitnessClass {
         $this->databaseConn = $databaseConn;
     }
 
+    public function createUserFitnessClassBooking($fitnessClassScheduleId, $userID) {
+        $sql = "INSERT INTO " . $this->fitnessClassScheduleTable . " (fitnessClassScheduleID, userID) VALUES (?,?)";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("is", $fitnessClassScheduleId, $userID);
+        return $stmt->execute();
+    }
+
     /** Function of getting the fitness class information by using ID */
     public function getClassesByInstructorById(int $instructorId) {
         $sql = "SELECT * FROM " . $this->fitnessClassScheduleTable . " WHERE instructorID=?";
@@ -44,5 +51,22 @@ class UserFitnessClass {
         }
 
         return null;
+    }
+
+    public function getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorID, $fitnessClassID) {
+        $sql = "SELECT fitnessClassScheduleID FROM " . $this->fitnessClassScheduleTable . " WHERE scheduledOn=? AND instructorID=? AND fitnessClassID=?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("sii", $scheduledOn, $instructorID, $fitnessClassID);
+
+        if (!$stmt->execute()) {
+            die('Execute failed: ' . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc()['fitnessClassScheduleID'];
+        }
+
+        return null; // Return null if no record found
     }
 }
