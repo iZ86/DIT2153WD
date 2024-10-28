@@ -101,18 +101,14 @@ class UserTrackWaterConsumptionView {
         </div>
 
         
-
-        
-
-
         <?php $this->renderDatePagination(); ?>
         
         <div class="flex items-center mb-14">
             <div class="mx-auto flex items-center text-3xl justify-center basis-96">
-                <select name="unit" id="amountDrankUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2" oninput="convertAmountDrankOfAllWaterConsumptionDataRow('amountDrankUnit')">
-                    <option value="mL">Milliliters (mL)</option>
-                    <option value="L">Liters (L)</option>
-                    <option value="oz">Ounces (oz)</option>
+                <select name="unit" id="amountDrankUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2" oninput="convertAmountDrankOfAllWaterConsumptionDataRow('amountDrankUnit');createSessionForUnitSelected('amountDrankUnit')">
+                    <option value="mL" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "mL") { echo "selected"; }?>>Milliliters (mL)</option>
+                    <option value="L" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "L") { echo "selected"; }?>>Liters (L)</option>
+                    <option value="oz" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "oz") { echo "selected"; }?>>Ounces (oz)</option>
                 </select>
             </div>
         </div>
@@ -144,10 +140,10 @@ class UserTrackWaterConsumptionView {
                         <div class="flex">
                             
 
-                            <select name="unit" id="unit" class="bg-white rounded-lg border-2 text-shadow-dark text-black" oninput="convertAmountDrankOfAllWaterConsumptionDataRow('unit')">
-                                <option value="mL">Milliliters (mL)</option>
-                                <option value="L">Liters (L)</option>
-                                <option value="oz">Ounces (oz)</option>
+                            <select name="unit" id="unit" class="bg-white rounded-lg border-2 text-shadow-dark text-black" oninput="convertAmountDrankOfAllWaterConsumptionDataRow('unit');createSessionForUnitSelected('unit')">
+                                <option value="mL" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "mL") { echo "selected"; }?>>Milliliters (mL)</option>
+                                <option value="L" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "L") { echo "selected"; }?>>Liters (L)</option>
+                                <option value="oz" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "oz") { echo "selected"; }?>>Ounces (oz)</option>
                             </select>
                             <label for="amountDrank" class="text-white drop-shadow-dark">:</label>
                         </div>
@@ -195,11 +191,15 @@ class UserTrackWaterConsumptionView {
      ?>
      ">
 
-
-
-
     <script src="../../public/js/user/userTrackWaterConsumptionScript.js">
     </script>
+    <?php
+        // If there is a 'unit' saved in the session, automatically convert the amount drank in water consumption data row to the corrct unit.
+        // This is used to "save" the unit the user has chosen.
+        if (isset($_SESSION['unit']) && ($_SESSION['unit'] === "mL" || $_SESSION['unit'] === "L" || $_SESSION['unit'] === "oz")) {
+                echo "<script> convertAmountDrankOfAllWaterConsumptionDataRow('amountDrankUnit'); </script>";
+        }
+    ?>
 
 
     <?php
