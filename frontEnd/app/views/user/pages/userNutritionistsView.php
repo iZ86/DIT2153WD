@@ -5,10 +5,12 @@ class NutritionistsView {
     /** Instance variable that is going to store the nutritionists information as an associative array. */
     private $nutritionistInformation;
     private $nutritionistSchedule;
+    private $nutritionistTime;
     /** Constructor that is going to retreive the nutritionists information. */
-    public function __construct($nutritionistInformation, $nutritionistSchedule) {
+    public function __construct($nutritionistInformation, $nutritionistSchedule, $nutritionistTime) {
         $this->nutritionistInformation = $nutritionistInformation;
         $this->nutritionistSchedule = $nutritionistSchedule;
+        $this->nutritionistTime = $nutritionistTime;
     }
 
     /** Renders the userNutritionists page. */
@@ -43,38 +45,16 @@ class NutritionistsView {
         }
     }
 
-    public function renderAvailableDates($nutritionistID) {
-        // Fetch available dates based on the selected nutritionist
-        $availableDates = $this->getAvailableDateByNutritionist($nutritionistID);
-
-        foreach ($availableDates as $date) {
-            ?>
-            <option value="<?= htmlspecialchars($date) ?>"><?= htmlspecialchars($date) ?></option>
-            <?php
+    public function getAvailableDate() {
+        foreach ($this->nutritionistSchedule as $nutritionistDate) {
+            echo "<option value='" . htmlspecialchars($nutritionistDate['date_part']) . "'>" . htmlspecialchars($nutritionistDate['date_part']) . "</option>";
         }
     }
 
-    public function getAvailableDateByNutritionist($nutritionistID) {
-        // Initialize an array to store unique available dates
-        $availableDates = [];
-
-        // Check if the nutritionist ID exists in the schedule
-        if (!isset($this->nutritionistSchedule[$nutritionistID])) {
-            return $availableDates; // Return empty array if not found
+    public function getAvailableTime() {
+        foreach ($this->nutritionistTime as $nutritionistTimes) {
+            echo "<option value='" . htmlspecialchars($nutritionistTimes['time_part']) . "'>" . htmlspecialchars($nutritionistTimes['time_part']) . "</option>";
         }
-
-        // Loop through the schedule for the given nutritionist
-        foreach ($this->nutritionistSchedule[$nutritionistID] as $datetime) {
-            // Extract date from datetime
-            $date = (new DateTime($datetime))->format('Y-m-d');
-
-            // Add the date to the array if it's not already included
-            if (!in_array($date, $availableDates)) {
-                $availableDates[] = $date; // Append the unique date
-            }
-        }
-
-        return $availableDates; // Return the array of unique dates
     }
 
 
@@ -153,7 +133,7 @@ class NutritionistsView {
         <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
             <div>
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
-                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" onchange="getState(this.value);">
+                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" onchange="fetchFirstOptions()">
                     <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
                     <?= $this->renderNutritionistsName(); ?>
                 </select>
@@ -161,8 +141,9 @@ class NutritionistsView {
 
             <div>
                 <label class="font-nunito" for="date">Date:</label><br>
-                <select required class="w-72 border-b-[1px] border-black border-solid" name="date" id="date">
+                <select required class="w-72 border-b-[1px] border-black border-solid" name="date" id="date" onchange="fetchSecondOptions()">
                     <option value="" disabled selected hidden>SELECT AN AVAILABLE DATE</option>
+                    <?= $this->getAvailableDate(); ?>
                 </select>
             </div>
 
@@ -170,6 +151,7 @@ class NutritionistsView {
                 <label class="font-nunito" for="time">Time:</label><br>
                 <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time">
                     <option value="" disabled selected hidden>SELECT AN AVAILABLE TIME</option>
+                    <?= $this->getAvailableTime(); ?>
                 </select>
             </div>
 
@@ -250,6 +232,48 @@ function closeModal() {
         overlay.classList.add('hidden');
     }, 300);
 }
+
+function fetchFirstOptions() {
+    var nutritionistDropdown = document.getElementById("nutritionist").value;
+    var dateDropdown = document.getElementById("date");
+
+    // Clear previous options
+    dateDropdown.innerHTML = ""; // This clears previous date options
+
+    if (nutritionistDropdown !== "") {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "nutritionist.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                dateDropdown.innerHTML = xhr.responseText; // Populate new date options
+            }
+        };
+        xhr.send("nutritionistID=" + nutritionistDropdown);
+    }
+}
+
+function fetchSecondOptions() {
+    var nutritionistDropdown = document.getElementById("nutritionist").value;
+    var dateDropdown = document.getElementById("date").value;
+    var timeDropdown = document.getElementById("time");
+
+    // Clear previous options
+    timeDropdown.innerHTML = ""; // This clears previous time options
+
+    if (dateDropdown !== "") {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "nutritionist.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                timeDropdown.innerHTML = xhr.responseText; // Populate new time options
+            }
+        };
+        xhr.send("date=" + encodeURIComponent(dateDropdown) + "&nutritionistID=" + encodeURIComponent(nutritionistDropdown));
+    }
+}
+
 </script>
 <?php
 }
