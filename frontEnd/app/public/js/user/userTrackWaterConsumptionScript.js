@@ -216,12 +216,11 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
 /** Opens waterConsumptionDataModal to add data. */
 function openDeleteConfirmationModal() {
     let confirmationModal = document.getElementById('confirmationModal');
-    let submitDeleteWaterConsumptionDataButton = document.getElementById('submitDeleteWaterConsumptionDataButton');
+
     let confirmationModalTitle = document.getElementById('confirmationModalTitle');
     confirmationModalTitle.innerText = 'Are you sure you want to delete this water consumption data?';
 
     confirmationModal.classList.remove('hidden');
-    submitDeleteWaterConsumptionDataButton.classList.remove("hidden");
     setTimeout(() => {
         confirmationModal.classList.add('show');
     }, 10);
