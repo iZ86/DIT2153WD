@@ -1,6 +1,6 @@
 <?php
-// Include necessary files for the header, navbar.
-
+// Include necessary.
+require __DIR__ . '/../../../config/config.php';
 class NutritionistsView {
     /** Instance variable that is going to store the nutritionists information as an associative array. */
     private $nutritionistInformation;
@@ -23,12 +23,18 @@ class NutritionistsView {
     public function renderNutritionists() {
         foreach($this->nutritionistInformation as $nutritionistInformations) {
             ?>
+             <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mb-20">
+
+            <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
+                <img src="<?=IMAGE_FILE_PATH?><?=$nutritionistInformations['nutritionistImageFilePath']?>" alt="Nutritionist.png">
+            </div>
             <div class="ml-10 font-montserrat">
             <p>Name: <?= htmlspecialchars($nutritionistInformations['firstName']) . ' ' . htmlspecialchars($nutritionistInformations['lastName']) ?></p>
             <p>Qualification: <?= htmlspecialchars($nutritionistInformations['type']) ?> </p>
             <br>
             <p>Bio:</p>
             <p class="w-3/5"><?= htmlspecialchars($nutritionistInformations['description']) ?></p>
+            </div>
             </div>
             <?php
         }
@@ -104,10 +110,7 @@ class NutritionistsView {
 
         <div class="bg-white mt-32 flex flex-col items-center justify-center">
             <div class="flex flex-col">
-                <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)]">
-                    <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
-                        <img src="../../public/images/emily_nutritionist.png" alt="Nutritionist.png">
-                    </div>
+
 
                     <div class="ml-10 font-montserrat">
                         <?=
@@ -115,7 +118,7 @@ class NutritionistsView {
                         $this->renderNutritionists();
                         ?>
                     </div>
-                </div>
+
             </div>
         </div>
     </div>
