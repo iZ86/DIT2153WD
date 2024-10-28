@@ -61,3 +61,12 @@
 
     <?php include __DIR__ .  '/../components/userFooter.php'; ?>
 </section>
+<?php if ($user['membership_status'] === 'active'): ?>
+    <div class="membership-active">
+        <p>Your membership is active. Next renewal: <?php echo $user['next_renewal_date']; ?></p>
+    </div>
+<?php else: ?>
+    <div class="membership-inactive">
+        <p>Your membership is inactive. <a href="subscriptionDetails.php">Get Membership</a></p>
+    </div>
+<?php endif; ?>

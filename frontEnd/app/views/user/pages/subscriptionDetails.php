@@ -7,10 +7,10 @@
     <div class="flex text-center space-x-14 max-w-5xl mx-auto text-xl w-full">
         <!--Left Section: Membership and Classes-->
         <div class="w-1/2 px-2">
-            <div class="flex justify-center bg-gray-400 rounded-t-lg">
+            <div class="flex justify-center bg-gray-400 rounded-t-lg outline-black border-2 border-black">
                 <h2 class="bg-gray-400 text-2xl rounded-t-lg p-2">Monthly Membership</h2>
             </div>
-            <div class="flex justify-center bg-gray-200 space-x-2 rounded-b-lg">
+            <div class="flex justify-center bg-gray-200 space-x-2 rounded-b-lg outline-black border-2 border-black">
                 <h2 class="bg-gray-200 text-2xl font-light rounded-b-lg p-2">RM 50 per month</h2>
             </div>
             <div class="mt-10">
@@ -47,8 +47,8 @@
 
         <!--Right Section: Class Details-->
         <div class="w-1/2">
-            <h2 class="bg-gray-400 text-2xl rounded p-2.5">Class Details</h2>
-            <div class="bg-gray-200 px-6 pb-10 rounded-lg">
+            <h2 class="bg-gray-400 text-2xl rounded-t-lg p-2.5 outline-black border-2 border-black">Class Details</h2>
+            <div class="bg-gray-200 px-6 pb-10 rounded-b-lg outline-black border-2 border-black">
                 <h3 class="bg-gray-200 rounded p-2 text-xl">Pilates Class</h3>
                 <img src="../../../public/images/Pilates.jpg" alt="Pilates Class" class="rounded-lg mb-4 w-full">
                 <p class="text-gray-700 mb-4">
@@ -65,3 +65,12 @@
     </div>
     <?php include __DIR__ .  '/../components/userFooter.php'; ?>
 </section>
+<form method="POST" action="payment.php">
+    <label>
+        <input type="checkbox" name="classes[]" value="Yoga"> Yoga (RM15)
+    </label>
+    <label>
+        <input type="checkbox" name="classes[]" value="Pilates"> Pilates (RM15)
+    </label>
+    <button type="submit">Proceed to Payment</button>
+</form>

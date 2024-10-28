@@ -11,3 +11,4 @@ if (!$database_connection) {
 } else {
   return $database_connection;
 }
+
