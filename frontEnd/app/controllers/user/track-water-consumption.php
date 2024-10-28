@@ -34,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+if (isset($_POST['unit'])) {
+    $_SESSION['unit'] = $_POST['unit'];
+}
+
 $userTrackWaterConsumptionView = new UserTrackWaterConsumptionView($userTrackWaterConsumptionModel->getWaterConsumptionDataFromDate($_SESSION['userID'], $date));
 $userTrackWaterConsumptionView->renderView();
 

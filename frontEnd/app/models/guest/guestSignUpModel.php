@@ -19,7 +19,12 @@ class GuestSignUpModel {
         $registeredUserSTMT = $this->databaseConn->prepare($registeredUserSQL);
         $registeredUserSTMT->bind_param("s", $username);
         $registeredUserSTMT->execute();
-        return $registeredUserSTMT->get_result();
+        $registeredUserResult = $registeredUserSTMT->get_result();
+        if ($registeredUserResult->num_rows > 0) {
+          return true;
+        } else {
+          return false;
+        }
     }
     
     public function createUser($firstName, $lastName, $username, $password, $email, $phoneNo, $gender, $dateOfBirth, $profileImageFilePath, $joinedDate) {
