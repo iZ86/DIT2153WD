@@ -1,4 +1,3 @@
-
 <?php
 class FitnessClassView {
     /** Instance variable that is going to store the nutritionists information as an associative array. */
