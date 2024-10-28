@@ -4,13 +4,11 @@ require __DIR__ . '/../../../config/config.php';
 class NutritionistsView {
     /** Instance variable that is going to store the nutritionists information as an associative array. */
     private $nutritionistInformation;
-    private $nutritionistSchedule;
-    private $nutritionistTime;
+    private $nutritionistDateTime;
     /** Constructor that is going to retreive the nutritionists information. */
-    public function __construct($nutritionistInformation, $nutritionistSchedule, $nutritionistTime) {
+    public function __construct($nutritionistInformation, $nutritionistDateTime) {
         $this->nutritionistInformation = $nutritionistInformation;
-        $this->nutritionistSchedule = $nutritionistSchedule;
-        $this->nutritionistTime = $nutritionistTime;
+        $this->nutritionistTime = $nutritionistDateTime;
     }
 
     /** Renders the userNutritionists page. */
@@ -51,19 +49,11 @@ class NutritionistsView {
         }
     }
 
-    public function getAvailableDate() {
-        foreach ($this->nutritionistSchedule as $nutritionistDate) {
-            echo "<option value='" . htmlspecialchars($nutritionistDate['date_part']) . "'>" . htmlspecialchars($nutritionistDate['date_part']) . "</option>";
+    public function getAvailableDateTime() {
+        foreach ($this->nutritionistDateTime as $nutritionistDateTimes) {
+            echo "<option value='" . htmlspecialchars($nutritionistDateTimes['scheduleDateTime']) . "'>" . htmlspecialchars($nutritionistDateTimes['scheduleDateTime']) . "</option>";
         }
     }
-
-    public function getAvailableTime() {
-        foreach ($this->nutritionistTime as $nutritionistTimes) {
-            echo "<option value='" . htmlspecialchars($nutritionistTimes['time_part']) . "'>" . htmlspecialchars($nutritionistTimes['time_part']) . "</option>";
-        }
-    }
-
-
 
     /** Renders the navbar. */
     public function renderNavbar() {
@@ -133,25 +123,17 @@ class NutritionistsView {
         <form class="flex flex-col gap-y-5 mt-3 pb-3 w-full justify-center items-center" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
             <div>
                 <label class="font-nunito" for="nutritionist">Nutritionist:</label><br>
-                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" onchange="fetchFirstOptions()">
+                <select required class="w-72 border-b-[1px] border-b-black border-solid font-nunito" name="nutritionist" id="nutritionist" onchange="fetchOptions()">
                     <option value="" disabled selected hidden>SELECT NUTRITIONIST</option>
                     <?= $this->renderNutritionistsName(); ?>
                 </select>
             </div>
 
             <div>
-                <label class="font-nunito" for="date">Date:</label><br>
-                <select required class="w-72 border-b-[1px] border-black border-solid" name="date" id="date" onchange="fetchSecondOptions()">
-                    <option value="" disabled selected hidden>SELECT AN AVAILABLE DATE</option>
-                    <?= $this->getAvailableDate(); ?>
-                </select>
-            </div>
-
-            <div>
-                <label class="font-nunito" for="time">Time:</label><br>
-                <select required class="w-72 border-b-[1px] border-black border-solid" name="time" id="time">
-                    <option value="" disabled selected hidden>SELECT AN AVAILABLE TIME</option>
-                    <?= $this->getAvailableTime(); ?>
+                <label class="font-nunito" for="date">Date & Time:</label><br>
+                <select required class="w-72 border-b-[1px] border-black border-solid" name="date-time" id="date-time">
+                    <option value="" disabled selected hidden>SELECT AN AVAILABLE DATE & TIME</option>
+                    <?= $this->getAvailableDateTime(); ?>
                 </select>
             </div>
 
@@ -233,45 +215,36 @@ function closeModal() {
     }, 300);
 }
 
-// TODO: Fix second and third dropdown box consist of first and second dropdown box value.
-function fetchFirstOptions() {
-    var nutritionistDropdown = document.getElementById("nutritionist").value;
-    var dateDropdown = document.getElementById("date");
+function fetchOptions() {
+    const nutritionistID = document.getElementById("nutritionist").value;
+    const dateTimeDropdown = document.getElementById("date-time");
 
-    // Clear previous options
-    dateDropdown.innerHTML = ""; // This clears previous date options
+    // Clear previous date options
+    dateTimeDropdown.innerHTML = "";
 
-    if (nutritionistDropdown !== "") {
-        var xhr = new XMLHttpRequest();
+    if (nutritionistID !== "") {
+        const xhr = new XMLHttpRequest();
         xhr.open("POST", "nutritionist.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                dateDropdown.innerHTML = xhr.responseText; // Populate new date options
+                const response = JSON.parse(xhr.responseText); // Parse the JSON response
+
+                if (response.success) {
+                    // Populate new date options
+                    response.data.forEach(function(dateTime) {
+                        const option = document.createElement("option");
+                        option.value = dateTime;
+                        option.textContent = dateTime; // Set the display text
+                        dateTimeDropdown.appendChild(option); // Add option to the dropdown
+                    });
+                } else {
+                    // Handle the error if needed
+                    console.error("Failed to fetch available dates");
+                }
             }
         };
-        xhr.send("nutritionistID=" + nutritionistDropdown);
-    }
-}
-
-function fetchSecondOptions() {
-    var nutritionistDropdown = document.getElementById("nutritionist").value;
-    var dateDropdown = document.getElementById("date").value;
-    var timeDropdown = document.getElementById("time");
-
-    // Clear previous options
-    timeDropdown.innerHTML = ""; // This clears previous time options
-
-    if (dateDropdown !== "") {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "nutritionist.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                timeDropdown.innerHTML = xhr.responseText; // Populate new time options
-            }
-        };
-        xhr.send("date=" + encodeURIComponent(dateDropdown) + "&nutritionistID=" + encodeURIComponent(nutritionistDropdown));
+        xhr.send(`nutritionistID=${encodeURIComponent(nutritionistID)}`);
     }
 }
 
