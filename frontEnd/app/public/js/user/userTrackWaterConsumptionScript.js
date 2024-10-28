@@ -156,3 +156,7 @@ function updateAmountDrankMessages() {
     
 
 
+
+
+convertAmountDrankOfAllWaterConsumptionDataRow("amountDrankUnit");
+updateAmountDrankMessages();
