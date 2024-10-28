@@ -227,7 +227,23 @@ function openDeleteConfirmationModal() {
     }, 10);
 }
 
+/** Closes waterConsumptionDataModal. */
+function closeConfirmationModal() {
+    let confirmationModal = document.getElementById('confirmationModal');
+    let submitDeleteWaterConsumptionDataButton = document.getElementById('submitDeleteWaterConsumptionDataButton');
+    
 
+    confirmationModal.classList.remove('show');
+
+    
+    let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
+
+    setTimeout(() => {
+        confirmationModal.classList.add('hidden');
+        submitDeleteWaterConsumptionDataButton.classList.add('hidden');Z
+        clearModalFields();
+    }, 300);
+}
 
 
 
