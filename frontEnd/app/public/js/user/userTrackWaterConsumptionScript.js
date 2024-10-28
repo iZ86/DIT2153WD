@@ -185,11 +185,13 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     let modalTitle = document.getElementById('modalTitle');
     let amountDrankInput = document.getElementById("amountDrank");
     let timeInput = document.getElementById('time');
+    let waterConsumptionIDInput = document.getElementById('waterConsumptionID');
 
     unitSelected = document.getElementById("amountDrankUnit").value;
 
 
     modalTitle.innerText = 'Add Water Consumption Data';
+    waterConsumptionIDInput.value = waterConsumptionID;
 
 
     if (unitSelected === "mL") {
