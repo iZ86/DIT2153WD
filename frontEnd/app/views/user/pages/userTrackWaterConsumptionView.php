@@ -163,9 +163,9 @@ class UserTrackWaterConsumptionView {
 
                 <div class="flex justify-center mt-28">
                     <input type="button" value="Close" onclick="closeAddWaterConsumptionModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
-                    <input type="submit" name="addWaterConsumptionDataButton" value="Add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg cursor-pointer">
-                    <input type="submit" name="deleteWaterConsumptionDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
-                    <input type="submit" name="saveWaterConsumptionDataButton" value="Save" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
+                    <input type="submit" id="addWaterConsumptionDataButton" name="addWaterConsumptionDataButton" value="Add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg mr-2 cursor-pointer">
+                    <input type="submit" id="deleteWaterConsumptionDataButton" name="deleteWaterConsumptionDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg mr-2 cursor-pointer">
+                    <input type="submit" id="saveWaterConsumptionDataButton" name="saveWaterConsumptionDataButton" value="Save" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
                 </div>
             </form>
         </div>
