@@ -74,6 +74,26 @@ class UserTrackWaterConsumptionModel {
         return 0;
     }
 
+    /** Deletes the water consumption data in WATER_CONSUMPTION table.
+     * return 1 if success.
+     * Otherwise, returns false.
+     */
+    public function deleteWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
+
+        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID) === 1) {
+            $deleteWaterConsumptionDataSQL = "DELETE FROM " . $this->waterConsumptionTable .
+            " WHERE waterConsumptionID = ? AND userID = ?";
+
+            $deleteWaterConsumptionDataSTMT = $this->databaseConn->prepare($deleteWaterConsumptionDataSQL);
+            $deleteWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $amountDrankInMilliliters);
+            $deleteWaterConsumptionDataSTMT->execute();
+            if ($deleteWaterConsumptionDataSTMT->errno === 0) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
     /** Returns 1 if there is a record that belongs to the $waterConsumptionID and $userID.
      * Otherwise, returns 0.
      * This function is used to prove that the $waterConsumptionID sent by the $_POST in the controller
