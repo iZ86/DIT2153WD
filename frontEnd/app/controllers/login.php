@@ -44,11 +44,16 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
     
 }
 
+/** Unsets all the session variables that is used by this controller only. */ 
+function unsetSessionVariablesForSelf() {
+    unset($_SESSION['invalidLogin']);
+    unset($_SESSION['usernameInput']);
+    unset($_SESSION['passwordInput']);
+    unset($_SESSION['keepMeLoggedInInput']);
+}
+
 $guestLogInView = new GuestLogInView();
 $guestLogInView->renderView();
-unset($_SESSION['invalidLogin']);
-unset($_SESSION['usernameInput']);
-unset($_SESSION['passwordInput']);
-unset($_SESSION['keepMeLoggedInInput']);
+unsetSessionVariablesForSelf();
 
 
