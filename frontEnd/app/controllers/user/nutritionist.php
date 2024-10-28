@@ -1,7 +1,7 @@
 <?php
 require '../../models/nutritionistModel.php';
 require '../../views/user/pages/userNutritionistsView.php';
-require '../../config/db_connection.php';
+
 $nutritionistModel = new NutritionistModel(require '../../config/db_connection.php');
 $nutritionistAvailableDate = [];
 $nutritionistAvailableTime = [];
