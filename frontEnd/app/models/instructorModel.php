@@ -1,7 +1,10 @@
 <?php
 class InstructorModel {
-    /** Nutritionist Table */
+    /** Instructor Table */
     private $instructorTable = 'instructor';
+    private $fitnessClassTable = 'fitness_class';
+    private $fitnessClassScheduleTable = 'fitness_class_schedule';
+
     /** Database connection */
     private $databaseConn;
 
@@ -23,17 +26,13 @@ class InstructorModel {
     } */
 
     /** Function of getting the insturctor information by using ID */
-    public function getById(int $id): mixed {
+    public function getInstructorById(int $id): mixed {
         $sql = "SELECT * FROM " . $this->instructorTable . " WHERE instructorID=?";
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->bind_param("s", $id);
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            return $row;
-        }
-        return false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : [];
     }
 
     /** Function of getting all the insturctor information by returning an associative array */
@@ -42,11 +41,28 @@ class InstructorModel {
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $instructorInfo = $result->fetch_all(MYSQLI_ASSOC);
-            return $instructorInfo;
-        } else {
-            return false;
-        }
+        return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
+
+    public function getFitnessClassById($fitnessClassID) {
+        $sql = "SELECT * FROM " . $this->fitnessClassTable . " WHERE fitnessClassID = ?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("i", $fitnessClassID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_assoc() : [];
+    }
+
+    public function getInstructorsByFitnessClassID($fitnessClassID) {
+        $sql = "SELECT i.* FROM " . $this->instructorTable . " i
+                JOIN " . $this->fitnessClassScheduleTable . " fcs ON i.instructorID = fcs.instructorID
+                WHERE fcs.fitnessClassID = ?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("i", $fitnessClassID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+
 }
