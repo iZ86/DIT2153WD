@@ -35,7 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_POST['unit'])) {
-    $_SESSION['unit'] = $_POST['unit'];
+    // Ensure that the value is the correct values, so that it won't crash the server.
+    if ($_POST['unit'] === "mL" || $_POST['unit'] === "L" || $_POST['unit'] === "oz") {
+        $_SESSION['unit'] = $_POST['unit'];
+    }
 }
 
 $userTrackWaterConsumptionView = new UserTrackWaterConsumptionView($userTrackWaterConsumptionModel->getWaterConsumptionDataFromDate($_SESSION['userID'], $date));
