@@ -65,7 +65,7 @@ function closeWaterConsumptionDataModal() {
 
 /** Clear modal fields. */
 function clearModalFields() {
-
+    document.getElementById('waterConsumptionID').value = "";
     document.getElementById("amountDrank").value="";
     document.getElementById('time').value="";
 }
