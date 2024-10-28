@@ -177,7 +177,7 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     let modal = document.getElementById('waterConsumptionDataModal');
     let overlay = document.getElementById('modalOverlay');
     let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
-    let saveEditWaterConsumptionDataButton = document.getElementById('saveEditWaterConsumptionDataButton');
+    let submitWaterConsumptionDataButton = document.getElementById('submitWaterConsumptionDataButton');
     let modalTitle = document.getElementById('modalTitle');
     let amountDrankInput = document.getElementById("amountDrank");
     let timeInput = document.getElementById('time');
@@ -185,7 +185,7 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
 
     unitSelected = document.getElementById("amountDrankUnit").value;
 
-
+    submitWaterConsumptionDataButton.value="Save"
     modalTitle.innerText = 'Add Water Consumption Data';
     waterConsumptionIDInput.value = waterConsumptionID;
 
@@ -202,9 +202,8 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
     
-
+    
     deleteWaterConsumptionDataButton.classList.remove('hidden');
-    saveEditWaterConsumptionDataButton.classList.remove('hidden');
 
 
     setTimeout(() => {
