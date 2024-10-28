@@ -21,7 +21,9 @@ $regexTimeFormat = "/(^[0-3]|^)[\d]:[0-5][\d]$/";
 // Regex to validate unit.
 $regexUnitFormat = "/^(mL|L|oz)$/";
 
-/** Converts Milliliters to whatever unit is inputted. */
+/** Converts Milliliters to whatever unit is inputted.
+ * Return -1, if unit not supported.
+ */
 function convertMillilitersToUnitInputted($milliliters, $unit) {
     if ($unit === "mL") {
         return $milliliters;
@@ -42,7 +44,7 @@ function cleanData($data) {
 }
 
 /** Returns true if the basic $_POST variables are set.
- * Otherwisem return false.
+ * Otherwise, return false.
  */
 function checkIsBasicPostVariablesSet() {
     if (isset($_POST['unit']) && isset($_POST['amountDrank']) && isset($_POST['time'])) {
