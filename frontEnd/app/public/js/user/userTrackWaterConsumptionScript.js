@@ -26,7 +26,7 @@ function nextDate() {
 }
 
 /** Opens waterConsumptionDataModal. */
-function openAddWaterConsumptionModal() {
+function openAddWaterConsumptionDataModal() {
     const modal = document.getElementById('waterConsumptionDataModal');
     const overlay = document.getElementById('modalOverlay');
     let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
