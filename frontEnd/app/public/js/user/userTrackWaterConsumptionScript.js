@@ -62,6 +62,13 @@ function closeWaterConsumptionDataModal() {
     }, 300);
 }
 
+/** Clear modal fields. */
+function clearModalFields() {
+
+    document.getElementById("amountDrank").value="";
+    document.getElementById('time').value="";
+}
+
 /** Converts the amount for every water consumption data rows. */
 function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
     if (unitDropDownBoxID === "amountDrankUnit") {
