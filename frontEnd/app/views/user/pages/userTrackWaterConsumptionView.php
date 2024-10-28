@@ -132,7 +132,7 @@ class UserTrackWaterConsumptionView {
     <div id="addWaterConsumptionModal" class="absolute inset-0 flex items-center justify-center hidden z-20 top-328 modal font-montserrat">
         <div class="flex flex-col items-center bg-blue-vivid w-full rounded-2xl shadow-lg modal-content basis-144 min-h-128">
             <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-10 mb-5">
-            <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5">Add Water Consumption Data</h2>
+            <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5"></h2>
             <hr class="w-full mb-5">
             <form action="<?php echo $_SERVER['PHP_SELF'] . "?date=" . $_GET['date']; ?>" method="POST">
                     
