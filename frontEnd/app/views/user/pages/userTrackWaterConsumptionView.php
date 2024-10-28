@@ -190,11 +190,11 @@ class UserTrackWaterConsumptionView {
         </style>
     
     <!-- Embed php array of ids of the water consumption data rows to be used to convert the amount drank based on unit. -->
-     <input type="hidden" id="phpArrayOfWaterConsumptionData" value="
-     <?php 
-     echo htmlspecialchars(json_encode($this->waterConsumptionDataArray));
-     ?>
-     ">
+    <input type="hidden" id="phpArrayOfWaterConsumptionData" value="
+    <?php 
+    echo htmlspecialchars(json_encode($this->waterConsumptionDataArray));
+    ?>
+    ">
 
     <script src="../../public/js/user/userTrackWaterConsumptionScript.js">
     </script>
