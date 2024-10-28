@@ -67,8 +67,9 @@ class UserTrackWaterConsumptionModel {
             $updateWaterConsumptionDataSTMT = $this->databaseConn->prepare($updateWaterConsumptionDataSQL);
             $updateWaterConsumptionDataSTMT->bind_param("ssss", $amountDrankInMilliliters, $dateTime, $waterConsumptionID, $userID);
             $updateWaterConsumptionDataSTMT->execute();
-
-            return 1;
+            if ($updateWaterConsumptionDataSTMT->errno === 0) {
+                return 1;
+            }
         }
 
         return 0;
