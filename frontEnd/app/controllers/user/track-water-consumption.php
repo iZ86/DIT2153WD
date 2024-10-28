@@ -58,7 +58,6 @@ function checkIsBasicPostVariablesSet() {
  * Otherwise, return false.
  */
 function validateBasicPostData($unit, $amountDrank, $time, $regexUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) {
-    echo "<script>console.log(" . $time . preg_match($regexTimeFormat, $time). ");</script>";
     if ((($unit !== null) && preg_match($regexUnitFormat, $unit)) &&
     (($amountDrank !== null) && (preg_match($regexAmountDrankFormat, $amountDrank))) &&
     (($time !==null) && (preg_match($regexTimeFormat, $time)))) {
@@ -90,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $dateTime = $date . " " . $time;
     
                     $addStatus = $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
-                    echo "<script>console.log(" . 1 . ");</script>";
                     if ($addStatus) {
                         die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
                     }
@@ -118,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else if (isset($_POST['deleteWaterConsumptionDataButton'])) {
         
-        echo "<script>console.log(" . 1 . ");</script>";
         if ($_POST['deleteWaterConsumptionDataButton'] === "Delete") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['waterConsumptionID'])) {
                 $waterConsumptionID = cleanData($_POST['waterConsumptionID']);
