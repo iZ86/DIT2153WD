@@ -164,6 +164,40 @@ function updateAmountDrankMessages() {
         }
     }
 }
+
+/** Opens the waterConsumptionDataModal for edit. */
+function openEditWaterConsumptionDataModal(waterConsumptionID) {
+    let modal = document.getElementById('addWaterConsumptionModal');
+    let overlay = document.getElementById('modalOverlay');
+    let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
+    let saveWaterConsumptionDataButton = document.getElementById('saveWaterConsumptionDataButton');
+
+    unitSelected = document.getElementById("amountDrankUnit").value;
+
+    amountDrankInput = document.getElementById("amountDrank");
+    timeInput = document.getElementById('time');
+    if (unitSelected === "mL") {
+        amountDrankInput.value = waterConsumptionDataArray[waterConsumptionID]["milliliters"];
+    } else if (unitSelected === "L") {
+         amountDrankInput.value = convertMillilitersToLiters(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
+    } else if (unitSelected === "oz") {
+        amountDrankInput.value = convertMillilitersToOunces(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
+    }
+    timeInput.value = waterConsumptionDataArray[waterConsumptionID]["recordedOnTime"];
+
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+    
+
+    deleteWaterConsumptionDataButton.classList.remove('hidden');
+    saveWaterConsumptionDataButton.classList.remove('hidden');
+
+
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+
+}
     
 
 
