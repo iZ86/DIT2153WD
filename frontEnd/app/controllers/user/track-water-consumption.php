@@ -22,11 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $amountDrank = $_POST['amountDrank'];
         $unit = $_POST['unit'];
         $time = $_POST['time'];
-        if ($unit === "L") {
-            $amountDrank *= MILLILITERSTOLITERSCONVERSIONRATE;
-        } else if ($unit === "oz") {
-            $amountDrank = bcmul(MILLILITERSTOOUNCECONVERSIONRATE, $amountDrank, 2);
-        }
+        $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
         $dateTime = $date . " " . $time;
         $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
         die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
@@ -39,6 +35,18 @@ if (isset($_POST['unit'])) {
     if ($_POST['unit'] === "mL" || $_POST['unit'] === "L" || $_POST['unit'] === "oz") {
         $_SESSION['unit'] = $_POST['unit'];
     }
+}
+
+/** Converts Milliliters to whatever unit is inputted. */
+function convertMillilitersToUnitInputted($milliliters, $unit) {
+    if ($unit === "mL") {
+        return $milliliters;
+    } else if ($unit === "L") {
+        return $milliliters * MILLILITERSTOLITERSCONVERSIONRATE;
+    } else if ($unit === "oz") {
+        return bcmul(MILLILITERSTOOUNCECONVERSIONRATE, $milliliters, 2);
+    }
+    return -1;
 }
 
 $userTrackWaterConsumptionView = new UserTrackWaterConsumptionView($userTrackWaterConsumptionModel->getWaterConsumptionDataFromDate($_SESSION['userID'], $date));
