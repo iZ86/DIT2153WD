@@ -111,7 +111,8 @@ class AdminNutritionistsView {
                         </th>
                         <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Nutritionist Name</th>
-                        <th class="py-4 px-6 border-b border-gray-200">Booking Date</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Scheduled Date & Time</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Price</th>
                         <th class="py-4 px-6 border-b border-gray-200">Status</th>
                         <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
@@ -119,8 +120,8 @@ class AdminNutritionistsView {
                     <tbody class="text-gray-700 text-center">
                     <?php while ($schedule = $this->schedules->fetch_assoc()):
                         $currentDate = new DateTime();
-                        $bookingDate = new DateTime($schedule['bookingDate']);
-                        $status = ($bookingDate < $currentDate) ? "Inactive" : "Active";
+                        $scheduleDateTime = new DateTime($schedule['scheduleDateTime']);
+                        $status = ($scheduleDateTime < $currentDate) ? "Inactive" : "Active";
                         ?>
                         <tr class="bg-white">
                             <td class="p-3">
@@ -128,17 +129,17 @@ class AdminNutritionistsView {
                             </td>
                             <td class="p-3"><?php echo $schedule['nutritionistScheduleID']; ?></td>
                             <td class="p-3"><?php echo $schedule['nutritionistName']; ?></td>
-                            <td class="p-3"><?php echo date('d M Y', strtotime($schedule['bookingDate'])); ?></td>
+                            <td class="p-3"><?php echo date('d M Y H:i', strtotime($schedule['scheduleDateTime'])); ?></td>
+                            <td class="p-3"><?php echo number_format($schedule['price'], 2); ?></td>
                             <td class="p-3 mt-4">
-                                <span class="bg-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
-                                    <?php echo $status; ?>
-                                </span>
+                            <span class="bg-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
+                                <?php echo $status; ?>
+                            </span>
                             </td>
                             <td class="p-3 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['nutritionistScheduleID']; ?>, '<?php echo addslashes($schedule['bookingDate']); ?>', '<?php echo addslashes($schedule['bookingTime']); ?>', '<?php echo addslashes($schedule['nutritionistID']); ?>')">
+                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['nutritionistScheduleID']; ?>, '<?php echo addslashes($schedule['scheduleDateTime']); ?>', '<?php echo number_format($schedule['price'], 2); ?>', '<?php echo $schedule['nutritionistID']; ?>')">
                                     <i class="bx bx-pencil"></i>
                                 </button>
-                                <!--TODO: Delete function-->
                                 <button class="text-gray-500 hover:text-red-600" onclick="deleteSchedule(<?php echo $schedule['nutritionistScheduleID']; ?>)">
                                     <i class="bx bx-trash"></i>
                                 </button>
@@ -200,18 +201,17 @@ class AdminNutritionistsView {
                     <select name="nutritionistID" id="nutritionistID" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
                         <option value="">Select Nutritionist</option>
                         <?php
-                        // Reset the nutritionists pointer to fetch data for the dropdown
                         $this->nutritionists->data_seek(0);
                         while ($nutritionist = $this->nutritionists->fetch_assoc()): ?>
                             <option value="<?php echo $nutritionist['nutritionistID']; ?>"><?php echo $nutritionist['firstName'] . ' ' . $nutritionist['lastName']; ?></option>
                         <?php endwhile; ?>
                     </select>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Booking Date <span class="text-red-500">*</span></label>
-                    <input name="bookingDate" type="date" id="bookingDate" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Schedule Date & Time <span class="text-red-500">*</span></label>
+                    <input name="scheduleDateTime" type="datetime-local" id="scheduleDateTime" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Booking Time <span class="text-red-500">*</span></label>
-                    <input name="bookingTime" type="time" id="bookingTime" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Price <span class="text-red-500">*</span></label>
+                    <input name="price" type="number" step="0.01" id="price" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeScheduleModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
@@ -307,7 +307,7 @@ class AdminNutritionistsView {
                 }, 300);
             }
 
-            function openEditScheduleModal(scheduleID, bookingDate, bookingTime, nutritionistID) {
+            function openEditScheduleModal(scheduleID, scheduleDateTime, price, nutritionistID) {
                 const modal = document.getElementById('scheduleModal');
                 const overlay = document.getElementById('modalOverlay');
 
@@ -317,15 +317,14 @@ class AdminNutritionistsView {
                 document.getElementById('nutritionistScheduleID').value = scheduleID;
                 document.getElementById('nutritionistID').value = nutritionistID;
                 document.querySelector('select[name="nutritionistID"]').value = nutritionistID;
-                document.getElementById('bookingDate').value = bookingDate;
-                document.getElementById('bookingTime').value = bookingTime;
+                document.getElementById('scheduleDateTime').value = scheduleDateTime;
+                document.getElementById('price').value = price;
                 document.getElementById('scheduleModalTitle').innerText = 'Edit Schedule';
 
                 setTimeout(() => {
                     modal.classList.add('show');
                 }, 10);
             }
-
 
             function clearNutritionistModalFields() {
                 document.getElementById('nutritionistID').value = '';
@@ -339,9 +338,9 @@ class AdminNutritionistsView {
 
             function clearScheduleModalFields() {
                 document.getElementById('nutritionistScheduleID').value = '';
-                document.getElementById('bookingDate').value = '';
-                document.getElementById('bookingTime').value = '';
-                document.getElementById('nutritionistID').value = '';
+                document.getElementById('scheduleDateTime').value = '';
+                document.getElementById('price').value = '';
+                document.querySelector('select[name="nutritionistID"]').value ='';
             }
         </script>
         <?php
