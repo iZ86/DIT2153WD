@@ -51,14 +51,14 @@ function closeWaterConsumptionDataModal() {
 
     let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
     let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
-    let saveWaterConsumptionDataButton = document.getElementById('saveWaterConsumptionDataButton');
+    let saveEditWaterConsumptionDataButton = document.getElementById('saveEditWaterConsumptionDataButton');
 
     setTimeout(() => {
         modal.classList.add('hidden');
         overlay.classList.add('hidden');
         addWaterConsumptionDataButton.classList.add('hidden');
         deleteWaterConsumptionDataButton.classList.add('hidden');
-        saveWaterConsumptionDataButton.classList.add('hidden');
+        saveEditWaterConsumptionDataButton.classList.add('hidden');
     }, 300);
 }
 
@@ -173,7 +173,7 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     let modal = document.getElementById('waterConsumptionDataModal');
     let overlay = document.getElementById('modalOverlay');
     let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
-    let saveWaterConsumptionDataButton = document.getElementById('saveWaterConsumptionDataButton');
+    let saveEditWaterConsumptionDataButton = document.getElementById('saveEditWaterConsumptionDataButton');
     let modalTitle = document.getElementById('modalTitle');
     let amountDrankInput = document.getElementById("amountDrank");
     let timeInput = document.getElementById('time');
@@ -198,7 +198,7 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     
 
     deleteWaterConsumptionDataButton.classList.remove('hidden');
-    saveWaterConsumptionDataButton.classList.remove('hidden');
+    saveEditWaterConsumptionDataButton.classList.remove('hidden');
 
 
     setTimeout(() => {
