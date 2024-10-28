@@ -90,7 +90,7 @@ class UserTrackWaterConsumptionModel {
             " WHERE waterConsumptionID = ? AND userID = ?";
 
             $deleteWaterConsumptionDataSTMT = $this->databaseConn->prepare($deleteWaterConsumptionDataSQL);
-            $deleteWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $amountDrankInMilliliters);
+            $deleteWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $userID);
             $deleteWaterConsumptionDataSTMT->execute();
 
             // Checks if there was any error running the sql statemnt, error number 0 is no errors.
