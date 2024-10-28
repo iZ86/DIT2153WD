@@ -233,6 +233,7 @@ function closeModal() {
     }, 300);
 }
 
+// TODO: Fix second and third dropdown box consist of first and second dropdown box value.
 function fetchFirstOptions() {
     var nutritionistDropdown = document.getElementById("nutritionist").value;
     var dateDropdown = document.getElementById("date");
