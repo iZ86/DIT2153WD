@@ -229,7 +229,7 @@ function openDeleteConfirmationModal() {
 /** Closes waterConsumptionDataModal. */
 function closeConfirmationModal() {
     let confirmationModal = document.getElementById('confirmationModal');
-    let submitDeleteWaterConsumptionDataButton = document.getElementById('submitDeleteWaterConsumptionDataButton');
+
     
 
     confirmationModal.classList.remove('show');
@@ -237,7 +237,6 @@ function closeConfirmationModal() {
 
     setTimeout(() => {
         confirmationModal.classList.add('hidden');
-        submitDeleteWaterConsumptionDataButton.classList.add('hidden');Z
         clearModalFields();
     }, 300);
 }
