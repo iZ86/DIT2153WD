@@ -29,15 +29,15 @@ class UserTrackWaterConsumptionModel {
         $waterConsumptionSTMT->bind_param("sss", $userID, $dateTime, $endDate);
         $waterConsumptionSTMT->execute();
         $waterConsumptionResult = $waterConsumptionSTMT->get_result();
-        $waterConsumptionResultArray = array();
+        $waterConsumptionResultDataArray = array();
         for ($i = 0; $i < $waterConsumptionResult->num_rows; $i++) {
-            $waterConsumptionResultArray[] = $waterConsumptionResult->fetch_assoc();
-            $waterConsumptionResultArrayRecordOnAttribute = date_create($waterConsumptionResultArray[$i]['recordedOn']);
-            $waterConsumptionResultArray[$i]['recordedOnTime'] = $waterConsumptionResultArrayRecordOnAttribute->format('H:i');
-            $waterConsumptionResultArray[$i]['recordedOnDate'] = $waterConsumptionResultArrayRecordOnAttribute->format('Y-m-d');
-            unset($waterConsumptionResultArray[$i]['recordedOn']);
+            $waterConsumptionResultData = $waterConsumptionResult->fetch_assoc();
+            $waterConsumptionResultDataRecordOnAttribute = date_create($waterConsumptionResultData['recordedOn']);
+            $waterConsumptionResultData['recordedOnTime'] = $waterConsumptionResultDataRecordOnAttribute->format('H:i');
+            $waterConsumptionResultData['recordedOnDate'] = $waterConsumptionResultDataRecordOnAttribute->format('Y-m-d');
+            $waterConsumptionResultDataArray[$waterConsumptionResultData['waterConsumptionID']] = $waterConsumptionResultData;
         }
-        return $waterConsumptionResultArray;
+        return $waterConsumptionResultDataArray;
     }
 
     /** Adds water consumption record into the database.
