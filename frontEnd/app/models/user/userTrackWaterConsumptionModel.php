@@ -54,7 +54,7 @@ class UserTrackWaterConsumptionModel {
     }
 
     /** Updates the water consumption data in WATER_CONSUMPTION table.
-     * Returns 1 if success,
+     * Returns 1 if success.
      * Otherwise, returns false.
     */
     public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
