@@ -41,7 +41,7 @@ class NutritionistModel {
     }
 
     /** Function of creating a booking for user's reservation */
-    public function createNutritionistBooking($nutritionist, $description, $bookingDate, $bookingTime) {
+    /*public function createNutritionistBooking($nutritionist, $description, $bookingDate, $bookingTime) {
         $sql = "INSERT INTO " . $this->nutritionistBookingTable . " (description, bookingDate, bookingTime) VALUES (?, ?, ?)";
         $stmt = $this->databaseConn->prepare($sql);
 
@@ -50,7 +50,7 @@ class NutritionistModel {
 
         // Execute the statement
         return $stmt->execute(); // Return true if successful, false otherwise
-    }
+    }*/
 
     public function nutritionistsBookingHandler($nutritionist, $bookingDate, $bookingTime, $description, $makeReservationButton) {
         if(isset($makeReservationButton) && !empty($nutritionist) && !empty($bookingDate) && !empty($bookingTime)) {
@@ -72,4 +72,29 @@ class NutritionistModel {
         }
     }
 
+    public function getAllNutritionistAvailableDateById($id) {
+        $sql = "SELECT DATE(scheduleDateTime) AS date_part FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
+    public function getAllNutritionistAvailableTimeById($id) {
+        $sql = "SELECT TIME(scheduleDateTime) AS time_part FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return false;
+        }
+    }
 }
