@@ -63,24 +63,27 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
 
 
     if (unitSelected === "L") {
-        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionDataArray[i]["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"] + "Text");
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
-        }
-        
+        Object.entries(waterConsumptionDataArray).map(entry => {
+            let waterConsumptionData = entry[1];
+            let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionData["milliliters"]));
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
+        });
+    
     } else if (unitSelected === "mL") {
-        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = Number(waterConsumptionDataArray[i]["milliliters"]);
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"] + "Text");
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
-        }
+        Object.entries(waterConsumptionDataArray).map(entry => {
+            let waterConsumptionData = entry[1];
+            let amountDrank = Number(waterConsumptionData["milliliters"]);
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
+        });
     } else if (unitSelected === "oz") {
-        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionDataArray[i]["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"] + "Text");
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
-        }
+        Object.entries(waterConsumptionDataArray).map(entry => {
+            let waterConsumptionData = entry[1];
+            let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionData["milliliters"]));
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
+        });
     }
 }
 
@@ -107,7 +110,6 @@ function convertMillilitersToOunces(milliliters) {
 
 /** Updates amount drank messages. */
 function updateAmountDrankMessages() {
-    let lengthOfWaterConsumptionDataArray = waterConsumptionDataArray.length;
     
     // Formatted the date to be used for user readability.
     let currentDate = new Date();
@@ -117,9 +119,10 @@ function updateAmountDrankMessages() {
 
     let totalAmountDrank = 0;
 
-    for (let i = 0; i <lengthOfWaterConsumptionDataArray; i++) {
-        totalAmountDrank += new Number(waterConsumptionDataArray[i]["milliliters"]);
-    }
+    Object.entries(waterConsumptionDataArray).map(entry => {
+        let waterConsumptionData = entry[1];
+        totalAmountDrank += new Number(waterConsumptionData["milliliters"]);
+    });
     let amountDrankStatusMessage = document.getElementById('amountDrankStatusMessage');
     let amountDrankEncouragementMessage = document.getElementById('amountDrankEncouragementMessage');
 
