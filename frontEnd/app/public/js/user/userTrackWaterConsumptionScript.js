@@ -65,20 +65,20 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
     if (unitSelected === "L") {
         for (let i = 0; i < waterConsumptionDataArray.length; i++) {
             let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionDataArray[i]["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"] + "Text");
             waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
         }
         
     } else if (unitSelected === "mL") {
         for (let i = 0; i < waterConsumptionDataArray.length; i++) {
             let amountDrank = Number(waterConsumptionDataArray[i]["milliliters"]);
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"] + "Text");
             waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
         }
     } else if (unitSelected === "oz") {
         for (let i = 0; i < waterConsumptionDataArray.length; i++) {
             let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionDataArray[i]["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"] + "Text");
             waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
         }
     }
