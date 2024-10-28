@@ -53,7 +53,7 @@ class UserTrackWaterConsumptionView {
             <?php
             if (sizeof($this->waterConsumptionDataArray) > 0) {
                 foreach ($this->waterConsumptionDataArray as $key => $value) {
-                    $this->renderOneWaterConsumptionDataRow($value['waterConsumptionID'], $value['milliliters'], $value['recordedOnTime']);
+                    $this->renderOneWaterConsumptionDataRow($value['waterConsumptionID']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
                 echo '<p class="text-black font-bold text-3xl mx-auto" style="opacity: 0.2;">You have not drank any water today :&#40;</p>';
