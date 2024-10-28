@@ -59,6 +59,7 @@ function closeWaterConsumptionDataModal() {
         addWaterConsumptionDataButton.classList.add('hidden');
         deleteWaterConsumptionDataButton.classList.add('hidden');
         saveEditWaterConsumptionDataButton.classList.add('hidden');
+        clearModalFields();
     }, 300);
 }
 
