@@ -18,39 +18,42 @@ $date = $_GET['date'];
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['addWaterConsumptionDataButton']) && $_POST['addWaterConsumptionDataButton'] === "Add") {
-        $amountDrank = (float) $_POST['amountDrank'];
-        $unit = $_POST['unit'];
-        $time = $_POST['time'];
-        $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
-        $dateTime = $date . " " . $time;
-        $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
-        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
-
-    }
-
-    if (isset($_POST['saveEditWaterConsumptionDataButton']) && $_POST['saveEditWaterConsumptionDataButton'] === "Save") {
-        if (isset($_POST['amountDrank']) &&
-        isset($_POST['unit']) &&
-        isset($_POST['time']) &&
-        isset($_POST['waterConsumptionID']) &&
-        !empty($_POST['amountDrank']) &&
-        !empty($_POST['unit']) &&
-        !empty($_POST['time']) &&
-        !empty($_POST['waterConsumptionID'])) {
+    if (isset($_POST['submitWaterConsumptionDataButton'])) {
+        if ($_POST['submitWaterConsumptionDataButton'] === "Add") {
             $amountDrank = (float) $_POST['amountDrank'];
             $unit = $_POST['unit'];
             $time = $_POST['time'];
             $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
             $dateTime = $date . " " . $time;
-            $updateStatus = $userTrackWaterConsumptionModel->updateWaterConsumptionData((int) $_POST['waterConsumptionID'], $amountDrank, $dateTime, $_SESSION['userID']);
-            if ($updateStatus === 1) {
-                die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
-            }
-        }
+            $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
+            die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+            
 
-        // Redirect to error webpage
-    }
+        } else if ($_POST['submitWaterConsumptionDataButton'] === "Save") {
+            if (isset($_POST['amountDrank']) &&
+                isset($_POST['unit']) &&
+                isset($_POST['time']) &&
+                isset($_POST['waterConsumptionID']) &&
+                !empty($_POST['amountDrank']) &&
+                !empty($_POST['unit']) &&
+                !empty($_POST['time']) &&
+                !empty($_POST['waterConsumptionID'])) {
+                $amountDrank = (float) $_POST['amountDrank'];
+                $unit = $_POST['unit'];
+                $time = $_POST['time'];
+                $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
+                $dateTime = $date . " " . $time;
+                $updateStatus = $userTrackWaterConsumptionModel->updateWaterConsumptionData((int) $_POST['waterConsumptionID'], $amountDrank, $dateTime, $_SESSION['userID']);
+                if ($updateStatus === 1) {
+                    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+                }
+            }
+
+            // Redirect to error webpage
+        }
+        
+    } 
+
 }
 
 if (isset($_POST['unit'])) {
