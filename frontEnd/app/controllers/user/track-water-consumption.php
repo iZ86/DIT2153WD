@@ -114,9 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-    } else if (isset($_POST['deleteWaterConsumptionDataButton'])) {
+    } else if (isset($_POST['submitDeleteWaterConsumptionDataButton'])) {
         
-        if ($_POST['deleteWaterConsumptionDataButton'] === "Delete") {
+        if ($_POST['submitDeleteWaterConsumptionDataButton'] === "Delete") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['waterConsumptionID'])) {
                 $waterConsumptionID = cleanData($_POST['waterConsumptionID']);
                 $unit = cleanData($_POST['unit']);
