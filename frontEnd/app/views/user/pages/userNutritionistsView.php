@@ -1,5 +1,5 @@
 <?php
-// Include necessary.
+// Include necessary file path.
 require __DIR__ . '/../../../config/config.php';
 class NutritionistsView {
     /** Instance variable that is going to store the nutritionists information as an associative array. */
