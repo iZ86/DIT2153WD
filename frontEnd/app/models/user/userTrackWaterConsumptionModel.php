@@ -59,14 +59,8 @@ class UserTrackWaterConsumptionModel {
     */
     public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
         
-        // Check to see if waterConsumptionID is valid, and if it belongs to the correct user.
-        // If not don't update the data.
-        $selectWaterConsumptionDataSQL = "SELECT 1 FROM " . $this->waterConsumptionTable . " WHERE waterConsumptionID = ? AND userID = ?";
-        $selectWaterConsumptionDataSTMT= $this->databaseConn->prepare($selectWaterConsumptionDataSQL);
-        $selectWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $userID);
-        $selectWaterConsumptionDataSTMT->execute();
-        $selectWaterConsumptionDataResult = $selectWaterConsumptionDataSTMT->get_result();
-        if ($selectWaterConsumptionDataResult->num_rows === 1) {
+        
+        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID) === 1) {
             $updateWaterConsumptionDataSQL = "UPDATE " . $this->waterConsumptionTable .
             " SET milliliters = ?, recordedOn = ? WHERE waterConsumptionID = ? AND userID = ?";
 
@@ -77,6 +71,23 @@ class UserTrackWaterConsumptionModel {
             return 1;
         }
 
+        return 0;
+    }
+
+    /** Returns 1 if there is a record that belongs to the $waterConsumptionID and $userID.
+     * Otherwise, returns 0.
+     * This function is used to prove that the $waterConsumptionID sent by the $_POST in the controller
+     * actually belongs to the userID, and allows the userID to perform write actions on it.
+    */
+    private function verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID) {
+        $selectWaterConsumptionDataSQL = "SELECT 1 FROM " . $this->waterConsumptionTable . " WHERE waterConsumptionID = ? AND userID = ?";
+        $selectWaterConsumptionDataSTMT= $this->databaseConn->prepare($selectWaterConsumptionDataSQL);
+        $selectWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $userID);
+        $selectWaterConsumptionDataSTMT->execute();
+        $selectWaterConsumptionDataResult = $selectWaterConsumptionDataSTMT->get_result();
+        if ($selectWaterConsumptionDataResult->num_rows === 1) {
+            return 1;
+        }
         return 0;
     }
 }
