@@ -19,7 +19,7 @@ $date = $_GET['date'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['addWaterConsumptionDataButton']) && $_POST['addWaterConsumptionDataButton'] === "Add") {
-        $amountDrank = $_POST['amountDrank'];
+        $amountDrank = (float) $_POST['amountDrank'];
         $unit = $_POST['unit'];
         $time = $_POST['time'];
         $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
 
     }
+
 }
 
 if (isset($_POST['unit'])) {
