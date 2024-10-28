@@ -81,9 +81,11 @@ class UserTrackWaterConsumptionModel {
      * return true if success.
      * Otherwise, returns false.
      */
-    public function deleteWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
+    public function deleteWaterConsumptionData($waterConsumptionID, $userID) {
 
         if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID)) {
+            
+            
             $deleteWaterConsumptionDataSQL = "DELETE FROM " . $this->waterConsumptionTable .
             " WHERE waterConsumptionID = ? AND userID = ?";
 
