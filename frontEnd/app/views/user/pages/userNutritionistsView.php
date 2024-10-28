@@ -51,7 +51,7 @@ class NutritionistsView {
 
     public function getAvailableDateTime() {
         foreach ($this->nutritionistDateTime as $nutritionistDateTimes) {
-            echo "<option value='" . htmlspecialchars($nutritionistDateTimes['scheduleDateTime']) . "'>" . htmlspecialchars($nutritionistDateTimes['scheduleDateTime']) . "</option>";
+            echo "<option value='" . htmlspecialchars($nutritionistDateTimes['nutritionistScheduleID']) . "'>" . htmlspecialchars($nutritionistDateTimes['scheduleDateTime']) . "</option>";
         }
     }
 
@@ -95,7 +95,6 @@ class NutritionistsView {
         <button onclick="openModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
             <span>Book a Nutritionist</span>
         </button>
-
 
         <div class="bg-white mt-32 flex flex-col items-center justify-center">
             <div class="flex flex-col">
