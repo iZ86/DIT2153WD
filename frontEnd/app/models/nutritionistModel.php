@@ -41,16 +41,27 @@ class NutritionistModel {
     }
 
     /** Function of creating a booking for user's reservation */
-    /*public function createNutritionistBooking($nutritionist, $description, $bookingDate, $bookingTime) {
-        $sql = "INSERT INTO " . $this->nutritionistBookingTable . " (description, bookingDate, bookingTime) VALUES (?, ?, ?)";
-        $stmt = $this->databaseConn->prepare($sql);
+    public function createNutritionistBooking($nutritionistScheduleID, $description, $userID, $paymentID) {
+        // Check if the nutritionistScheduleID exists
+        $checkSql = "SELECT COUNT(*) FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistScheduleID=?";
+        $checkStmt = $this->databaseConn->prepare($checkSql);
+        $checkStmt->bind_param("i", $nutritionistScheduleID);
+        $checkStmt->execute();
+        $checkResult = $checkStmt->get_result();
+        $exists = $checkResult->fetch_row()[0];
 
-        // Bind parameters
-        $stmt->bind_param("sss", $description , $bookingDate, $bookingTime);
+        if ($exists > 0) {
+            // Proceed to insert if the schedule exists
+            $sql = "INSERT INTO " . $this->nutritionistBookingTable . " (description, nutritionistScheduleID, userID, paymentID) VALUES (?, ?, ?, ?)";
+            $stmt = $this->databaseConn->prepare($sql);
+            $stmt->bind_param("ssis", $description, $nutritionistScheduleID, $userID, $paymentID);
+            return $stmt->execute(); // Return true if successful, false otherwise
+        } else {
+            error_log("Error: nutritionistScheduleID " . $nutritionistScheduleID . " does not exist.");
+            return false; // Schedule does not exist
+        }
+    }
 
-        // Execute the statement
-        return $stmt->execute(); // Return true if successful, false otherwise
-    }*/
 
     public function nutritionistsBookingHandler($nutritionist, $bookingDate, $bookingTime, $description, $makeReservationButton) {
         if(isset($makeReservationButton) && !empty($nutritionist) && !empty($bookingDate) && !empty($bookingTime)) {
@@ -73,7 +84,7 @@ class NutritionistModel {
     }
 
     public function getAllNutritionistAvailableDateTimeById($id) {
-    $sql = "SELECT scheduleDateTime FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
+    $sql = "SELECT * FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
     $stmt = $this->databaseConn->prepare($sql);
     $stmt->bind_param("s", $id);
     $stmt->execute();
