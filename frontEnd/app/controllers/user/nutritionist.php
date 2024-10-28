@@ -29,26 +29,25 @@ if (isset($_POST['nutritionistID'])) {
 function getBookingInformation() {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nutritionist = $_POST['nutritionist'] ?? null;
-        $dateTime = $_POST['date-time'] ?? null;
+        $nutritionistScheduleID = $_POST['date-time'] ?? null;
         $description = $_POST['desc'] ?? null;
-
-        if (!empty($nutritionist) && !empty($dateTime)) {
+        $username = $_SESSION['userID'];
+        if (!empty($nutritionist) && !empty($nutritionistScheduleID) && !empty($username)) {
             global $nutritionistModel;
-            echo $nutritionist . $description . $dateTime;
-            // Create the booking
-            /*
+            echo $nutritionistScheduleID . $description . $username;
+
             if ($nutritionistModel->createNutritionistBooking(
-                $nutritionist,
+                $nutritionistScheduleID,
                 $description,
-                date('Y-m-d', strtotime($date)),
-                $time
+                            $username,
+                            1
             )) {
 
                 echo "<script>alert('Successfully Made a Reservation!!');</script>";
             } else {
                 echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
             }
-            */
+
         } else {
             echo "<script>alert('Please fill in all required fields.');</script>";
         }
