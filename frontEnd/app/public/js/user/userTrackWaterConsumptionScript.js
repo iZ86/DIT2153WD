@@ -105,3 +105,54 @@ function convertMillilitersToOunces(milliliters) {
     return Math.floor((milliliters / MILLILITERSTOOUNCESCONVERSIONRATE) * 100) / 100;
 }
 
+/** Updates amount drank messages. */
+function updateAmountDrankMessages() {
+    let lengthOfWaterConsumptionDataArray = waterConsumptionDataArray.length;
+    
+    // Formatted the date to be used for user readability.
+    let currentDate = new Date();
+    let currentDateString = currentDate.getDate() + "-" + (currentDate.getMonth() +  1) + "-" + currentDate.getFullYear();
+    let paginationDate = new Date(currentPaginationDate);
+    let paginationDateString = paginationDate.getDate() + "-" + (paginationDate.getMonth() +  1) + "-" + paginationDate.getFullYear();
+
+    let totalAmountDrank = 0;
+
+    for (let i = 0; i <lengthOfWaterConsumptionDataArray; i++) {
+        totalAmountDrank += new Number(waterConsumptionDataArray[i]["milliliters"]);
+    }
+    let amountDrankStatusMessage = document.getElementById('amountDrankStatusMessage');
+    let amountDrankEncouragementMessage = document.getElementById('amountDrankEncouragementMessage');
+
+    let amountDrankInUnitText;
+    let unitSelected = document.getElementById('amountDrankUnit').value;
+    if (unitSelected === "mL") {
+        amountDrankInUnitText = totalAmountDrank + "mL";
+    } else if (unitSelected === "L") {
+        amountDrankInUnitText = convertMillilitersToLiters(totalAmountDrank) + "L";
+    } else if (unitSelected === "oz") {
+        amountDrankInUnitText = convertMillilitersToOunces(totalAmountDrank) + "oz";
+    } else {
+        amountDrankInUnitText = "Error"
+    }
+
+    if (totalAmountDrank > 0) {
+        if (paginationDateString === currentDateString) {
+            amountDrankStatusMessage.innerText = "You have drank " + amountDrankInUnitText + " today!";
+            amountDrankEncouragementMessage.innerText = "Keep up the good work!";
+        } else {
+            amountDrankStatusMessage.innerText = "You have drank " + amountDrankInUnitText + " on " + paginationDateString;
+            amountDrankEncouragementMessage.innerText = "";
+        }
+    } else {
+        if (paginationDateString === currentDateString) {
+            amountDrankStatusMessage.innerText = "You have drank " + amountDrankInUnitText + " today!";
+            amountDrankEncouragementMessage.innerHTML = "Take a sip &#59;&#41;";
+        } else {
+            amountDrankStatusMessage.innerText = "You have drank " + amountDrankInUnitText + " on " + paginationDateString;
+            amountDrankEncouragementMessage.innerHTML = "";
+        }
+    }
+}
+    
+
+
