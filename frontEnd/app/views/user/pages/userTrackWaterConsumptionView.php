@@ -135,6 +135,7 @@ class UserTrackWaterConsumptionView {
             <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5"></h2>
             <hr class="w-full mb-5">
             <form action="<?php echo $_SERVER['PHP_SELF'] . "?date=" . $_GET['date']; ?>" method="POST">
+                <input type="hidden" id="waterConsumptionID" name="waterConsumptionID">
                     
 
                 <div class="flex mt-8 justify-between min-w-100">
