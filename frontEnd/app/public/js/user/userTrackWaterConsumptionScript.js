@@ -175,14 +175,15 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
     let saveWaterConsumptionDataButton = document.getElementById('saveWaterConsumptionDataButton');
     let modalTitle = document.getElementById('modalTitle');
-
+    let amountDrankInput = document.getElementById("amountDrank");
+    let timeInput = document.getElementById('time');
+    
     unitSelected = document.getElementById("amountDrankUnit").value;
 
 
     modalTitle.innerText = 'Add Water Consumption Data';
 
-    amountDrankInput = document.getElementById("amountDrank");
-    timeInput = document.getElementById('time');
+
     if (unitSelected === "mL") {
         amountDrankInput.value = waterConsumptionDataArray[waterConsumptionID]["milliliters"];
     } else if (unitSelected === "L") {
