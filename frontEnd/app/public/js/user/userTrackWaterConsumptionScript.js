@@ -29,10 +29,11 @@ function nextDate() {
 function openAddWaterConsumptionModal() {
     const modal = document.getElementById('addWaterConsumptionModal');
     const overlay = document.getElementById('modalOverlay');
+    let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
-
+    addWaterConsumptionDataButton.classList.remove('hidden');
     setTimeout(() => {
         modal.classList.add('show');
     }, 10);
