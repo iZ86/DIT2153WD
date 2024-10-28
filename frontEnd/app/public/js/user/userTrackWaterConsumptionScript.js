@@ -1,6 +1,7 @@
 let waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
 const MILLILITERSTOLITERSCONVERSIONRATE = 1000;
+const MILLILITERSTOOUNCESCONVERSIONRATE = 29.5735;
 
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackWaterConsumptionPage() {
@@ -76,7 +77,7 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
         }
     } else if (unitSelected === "oz") {
         for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = Math.floor((Number(waterConsumptionDataArray[i]["milliliters"]) / 29.5735) * 100) / 100;
+            let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionDataArray[i]["milliliters"]));
             let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
             waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
         }
@@ -97,5 +98,10 @@ function createSessionForUnitSelected(unitDropDownBoxID) {
 /** Converts milliliters to liters. */
 function convertMillilitersToLiters(milliliters) {
     return milliliters / MILLILITERSTOLITERSCONVERSIONRATE;
+}
+
+/** Converts milliliters to ounces. */
+function convertMillilitersToOunces(milliliters) {
+    return Math.floor((milliliters / MILLILITERSTOOUNCESCONVERSIONRATE) * 100) / 100;
 }
 
