@@ -59,10 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (validateBasicPostData($unit, $amountDrank, $time, $regexUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) &&
                 (($waterConsumptionID !== null) &&
                 preg_match($regexIDFormat, $waterConsumptionID))) {
+                    $waterConsumptionID = (int) $waterConsumptionID;
                     $amountDrank = (float) $amountDrank;
                     $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
                     $dateTime = $date . " " . $time;
-                    $updateStatus = $userTrackWaterConsumptionModel->updateWaterConsumptionData((int) $_POST['waterConsumptionID'], $amountDrank, $dateTime, $_SESSION['userID']);
+                    $updateStatus = $userTrackWaterConsumptionModel->updateWaterConsumptionData($waterConsumptionID, $amountDrank, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
                         die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
                     }
