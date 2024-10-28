@@ -69,22 +69,19 @@ class UserTrackWaterConsumptionView {
     public function renderDatePagination() {?>
     <div class="flex items-center mb-14">
         <div class="mx-auto flex items-center text-3xl justify-center basis-96">
-            
-        <input type="button" id="previousDate" name="previousDate" value="<" class="p-4" onclick="previousDate()">
+            <input type="button" id="previousDate" name="previousDate" value="<" class="p-4" onclick="previousDate()">
 
-        <input type="date" id="dateOfWaterConsumption" name="dateOfWaterConsumption"
-        value=<?php echo '"' . $_GET['date'] . '"';?> class="bg-slate-100 w-72 rounded py-1 border-2" oninput="redirectTrackWaterConsumptionPage()"
-        max=<?php echo '"' . date('Y-m-d') . '"';?>
-        >
-        
-        <?php 
-        if (date($_GET['date']) !== date('Y-m-d')) {?>
-        <input type="button" id="nextDate" name="nextDate" value=">" class="p-4" onclick="nextDate()">
-        <?php
-        }
-        ?>
+            <input type="date" id="dateOfWaterConsumption" name="dateOfWaterConsumption"
+            value=<?php echo '"' . $_GET['date'] . '"';?> class="bg-slate-100 w-72 rounded py-1 border-2" oninput="redirectTrackWaterConsumptionPage()"
+            max=<?php echo '"' . date('Y-m-d') . '"';?>
+            >
             
-            
+            <?php 
+            if (date($_GET['date']) !== date('Y-m-d')) {?>
+            <input type="button" id="nextDate" name="nextDate" value=">" class="p-4" onclick="nextDate()">
+            <?php
+            }
+            ?>
         </div>
     </div>
     <?php
