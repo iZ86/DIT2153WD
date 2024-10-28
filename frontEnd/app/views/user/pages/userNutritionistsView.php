@@ -77,7 +77,6 @@ class NutritionistsView {
     <section class="bg-white-bg">
     <div class="flex flex-col items-center justify-center">
         <h1 class="mt-12 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
-
         <div class="flex items-center justify-center gap-x-10 mt-10">
             <img class="w-3/4 h-72" src="../../public/images/nutrition_header.png" alt="Nutrition.png">
             <div class="border border-[#666666] border-solid h-[17rem]"></div>
