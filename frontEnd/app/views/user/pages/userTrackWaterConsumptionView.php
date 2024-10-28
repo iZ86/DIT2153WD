@@ -98,9 +98,9 @@ class UserTrackWaterConsumptionView {
         <div class="flex min-h-64 mb-32">
             <div class="mx-auto basis-256 bg-blue-vivid rounded-2xl flex flex-col items-center">
                 <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
-                <div class="text-white font-bold text-3xl drop-shadow-dark">
-                    <p class="mb-0">Yo have drank [5L] today!</p>
-                    <p class="mb-0">[Keep up the good work!]</p>
+                <div class="text-white font-bold text-3xl drop-shadow-dark text-center">
+                    <p class="mb-0" id="amountDrankStatusMessage"></p>
+                    <p class="mb-0" id="amountDrankEncouragementMessage"></p>
                 </div>
             </div>
         </div>
