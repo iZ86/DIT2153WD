@@ -30,6 +30,9 @@ function openAddWaterConsumptionModal() {
     const modal = document.getElementById('addWaterConsumptionModal');
     const overlay = document.getElementById('modalOverlay');
     let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
+    let modalTitle = document.getElementById('modalTitle');
+
+    modalTitle.innerText = 'Add Water Consumption Data';
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
