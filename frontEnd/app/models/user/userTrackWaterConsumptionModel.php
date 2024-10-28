@@ -78,7 +78,7 @@ class UserTrackWaterConsumptionModel {
     }
 
     /** Deletes the water consumption data in WATER_CONSUMPTION table.
-     * return 1 if success.
+     * return true if success.
      * Otherwise, returns false.
      */
     public function deleteWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
@@ -93,10 +93,10 @@ class UserTrackWaterConsumptionModel {
 
             // Checks if there was any error running the sql statemnt, error number 0 is no errors.
             if ($deleteWaterConsumptionDataSTMT->errno === 0) {
-                return 1;
+                return true;
             }
         }
-        return 0;
+        return false;
     }
 
     /** Returns 1 if there is a record that belongs to the $waterConsumptionID and $userID.
