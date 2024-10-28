@@ -54,7 +54,7 @@ class UserTrackWaterConsumptionModel {
     }
 
     /** Updates the water consumption data in WATER_CONSUMPTION table.
-     * Returns 1 if success.
+     * Returns true if success.
      * Otherwise, returns false.
     */
     public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
@@ -70,11 +70,11 @@ class UserTrackWaterConsumptionModel {
             
             // Checks if there was any error running the sql statemnt, error number 0 is no errors.
             if ($updateWaterConsumptionDataSTMT->errno === 0) {
-                return 1;
+                return true;
             }
         }
 
-        return 0;
+        return false;
     }
 
     /** Deletes the water consumption data in WATER_CONSUMPTION table.
