@@ -46,12 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['addScheduleButton']) && $_POST['addScheduleButton'] === "Add Schedule") {
         $nutritionistID = $_POST['nutritionistID'];
-        $bookingDate = $_POST['bookingDate'];
-        $bookingTime = $_POST['bookingTime'];
+        $scheduleDateTime = $_POST['scheduleDateTime'];
+        $price = $_POST['price'];
 
-        if (!empty($nutritionistID) && !empty($bookingDate) && !empty($bookingTime)) {
+        if (!empty($nutritionistID) && !empty($scheduleDateTime) && !empty($price)) {
             try {
-                $adminNutritionistsModel->addSchedule($nutritionistID, $bookingDate, $bookingTime);
+                $adminNutritionistsModel->addSchedule($nutritionistID, $scheduleDateTime, $price);
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit;
             } catch (Exception $e) {
@@ -65,11 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['editScheduleButton'])) {
         $nutritionistScheduleID = $_POST['nutritionistScheduleID'];
         $nutritionistID = $_POST['nutritionistID'];
-        $bookingDate = $_POST['bookingDate'];
-        $bookingTime = $_POST['bookingTime'];
+        $scheduleDateTime = $_POST['scheduleDateTime'];
+        $price = $_POST['price'];
 
-        if (!empty($nutritionistScheduleID) && !empty($nutritionistID) && !empty($bookingDate) && !empty($bookingTime)) {
-            $adminNutritionistsModel->editSchedule($nutritionistScheduleID, $nutritionistID, $bookingDate, $bookingTime);
+        if (!empty($nutritionistScheduleID) && !empty($nutritionistID) && !empty($scheduleDateTime) && !empty($price)) {
+            $adminNutritionistsModel->editSchedule($nutritionistScheduleID, $nutritionistID, $scheduleDateTime, $price);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
