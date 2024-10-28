@@ -173,7 +173,7 @@ class UserTrackWaterConsumptionView {
                         
                         <h2 id="confirmationModalTitle" class="text-3xl text-black font-bold mb-5 text-center">Are you sure?</h2>
                         <div class ="flex flex-row-reverse">
-                            <input type="submit" id="submitDeleteWaterConsumptionDataButton" name="submitDeleteWaterConsumptionDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg mr-2 cursor-pointer">
+                            <input type="submit" id="submitDeleteWaterConsumptionDataButton" name="submitDeleteWaterConsumptionDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
                             <input type="button" value="Close" onclick="closeConfirmationModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
                         </div>
                     </div>
