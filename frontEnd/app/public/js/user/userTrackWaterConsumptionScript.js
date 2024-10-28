@@ -48,16 +48,13 @@ function closeWaterConsumptionDataModal() {
 
     modal.classList.remove('show');
 
-    let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
+    
     let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
-    let saveEditWaterConsumptionDataButton = document.getElementById('saveEditWaterConsumptionDataButton');
 
     setTimeout(() => {
         modal.classList.add('hidden');
         overlay.classList.add('hidden');
-        addWaterConsumptionDataButton.classList.add('hidden');
         deleteWaterConsumptionDataButton.classList.add('hidden');
-        saveEditWaterConsumptionDataButton.classList.add('hidden');
         clearModalFields();
     }, 300);
 }
