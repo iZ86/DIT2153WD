@@ -72,29 +72,13 @@ class NutritionistModel {
         }
     }
 
-    public function getAllNutritionistAvailableDateById($id) {
-        $sql = "SELECT DATE(scheduleDateTime) AS date_part FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
-        $stmt = $this->databaseConn->prepare($sql);
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return false;
-        }
-    }
+    public function getAllNutritionistAvailableDateTimeById($id) {
+    $sql = "SELECT scheduleDateTime FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
+    $stmt = $this->databaseConn->prepare($sql);
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : false;
+}
 
-    public function getAllNutritionistAvailableTimeById($id) {
-        $sql = "SELECT TIME(scheduleDateTime) AS time_part FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
-        $stmt = $this->databaseConn->prepare($sql);
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return false;
-        }
-    }
 }
