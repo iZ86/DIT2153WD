@@ -35,13 +35,14 @@ class ClassesView {
     public function renderClasses() {
         foreach($this->data as $classes) {?>
         <div class="mt-12">
-                <h1 class="font-montserrat font-bold text-4xl">Other Classes:</h1>
+                <a href="./instructor.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
                 <div class="flex flex-row">
-                    <div class="">
+                    <div class="mr-28">
                         <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?><?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">
                         <p class="text-center font-bold font-aoboshi mt-2 text-xl"><?= $classes['name'] ?></p>
                     </div>
                 </div>
+                </a>
             </div>
         <?php
         }
@@ -54,7 +55,7 @@ class ClassesView {
         <div class="w-full relative">
             <img class="w-full" src="<?=IMAGE_FILE_PATH?>Yoga_header.png" alt="Yoga.png">
             <h1 class="absolute top-40 left-64 text-5xl font-bold text-[#59485b] font-orelega">Transform with</h1>
-            <h1 class="absolute top-56 left-64 text-5xl font-bold font-orelega">our Fitness Classes</h1>
+            <h1 class="absolute top-56 left-64 text-5xl font-bold font-orelega">Our Fitness Classes:</h1>
             <p class="absolute top-72 left-64 font-montserrat w-1/3">To inspire and transform individuals through fun, high-energy fitness classes that promote physical
                 strength, mental well-being, and a sense of community for all fitness levels.
             </p>
@@ -68,16 +69,11 @@ class ClassesView {
             </div>
 
             <div class="mt-12">
-                <h1 class="font-montserrat font-bold text-4xl">Subscribed Classes:</h1>
+                <h1 class="font-montserrat font-bold text-4xl">Our Classes:</h1>
                 <div class="flex flex-row">
-                    <div class="">
-                        <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?>Pilates.jpg" alt="Pilates.jpg">
-                        <p class="text-center font-bold font-aoboshi mt-2 text-xl">Pilates</p>
-                    </div>
+                    <?= $this->renderClasses(); ?>
                 </div>
             </div>
-
-            <?= $this->renderClasses(); ?>
         </div>
     </section>
     <style>
