@@ -49,11 +49,16 @@ class UserTrackWaterConsumptionView {
     /** Renders water consumption data partial view. */
     private function renderWaterConsumptionDataPartialView() {?>
     <div class="flex min-h-192 max-h-192">
-        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->waterConsumptionDataArray) == 0) { echo "justify-center";}?>">
             <?php
-            for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-                $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID'], $this->waterConsumptionDataArray[$i]['milliliters'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
+            if (sizeof($this->waterConsumptionDataArray) > 0) {
+                for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
+                    $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID'], $this->waterConsumptionDataArray[$i]['milliliters'], $this->waterConsumptionDataArray[$i]['recordedOnTime']);
+                }
+            } else if (date($_GET['date']) === date('Y-m-d')) {
+                echo '<p class="text-black font-bold text-3xl mx-auto" style="opacity: 0.2;">You have not drank any water today :&#40;</p>';
             }
+            
             ?>
         </div>
     </div>
@@ -199,9 +204,5 @@ class UserTrackWaterConsumptionView {
         if (isset($_SESSION['unit']) && ($_SESSION['unit'] === "mL" || $_SESSION['unit'] === "L" || $_SESSION['unit'] === "oz")) {
                 echo "<script> convertAmountDrankOfAllWaterConsumptionDataRow('amountDrankUnit'); </script>";
         }
-    ?>
-
-
-    <?php
     }
 }
