@@ -199,10 +199,5 @@ class UserTrackWaterConsumptionView {
     <script src="../../public/js/user/userTrackWaterConsumptionScript.js">
     </script>
     <?php
-        // If there is a 'unit' saved in the session, automatically convert the amount drank in water consumption data row to the corrct unit.
-        // This is used to "save" the unit the user has chosen.
-        if (isset($_SESSION['unit']) && ($_SESSION['unit'] === "mL" || $_SESSION['unit'] === "L" || $_SESSION['unit'] === "oz")) {
-                echo "<script> convertAmountDrankOfAllWaterConsumptionDataRow('amountDrankUnit'); </script>";
-        }
     }
 }
