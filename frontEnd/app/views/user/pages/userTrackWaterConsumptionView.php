@@ -37,10 +37,10 @@ class UserTrackWaterConsumptionView {
 
     /** Renders ONE card of water consumption data. */
     private function renderOneWaterConsumptionDataRow($waterConsumptionDataID) {?>
-    <div class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid cursor-pointer">
+    <div id=<?php echo $waterConsumptionDataID; ?> class="basis-32 bg-blue-vivid flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-blue-mid cursor-pointer" onclick="openEditWaterConsumptionDataModal(<?php echo $waterConsumptionDataID . ')';?>">
         <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
-            <p id=<?php echo '"' . $waterConsumptionDataID . '"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"></p>
+            <p id=<?php echo '"' . $waterConsumptionDataID . 'Text"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"></p>
         </div>
     </div>
     <?php
@@ -52,8 +52,8 @@ class UserTrackWaterConsumptionView {
         <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->waterConsumptionDataArray) == 0) { echo "justify-center";}?>">
             <?php
             if (sizeof($this->waterConsumptionDataArray) > 0) {
-                for ($i = 0; $i < sizeof($this->waterConsumptionDataArray); $i++) {
-                    $this->renderOneWaterConsumptionDataRow($this->waterConsumptionDataArray[$i]['waterConsumptionID']);
+                foreach ($this->waterConsumptionDataArray as $key => $value) {
+                    $this->renderOneWaterConsumptionDataRow($value['waterConsumptionID'], $value['milliliters'], $value['recordedOnTime']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
                 echo '<p class="text-black font-bold text-3xl mx-auto" style="opacity: 0.2;">You have not drank any water today :&#40;</p>';
@@ -119,7 +119,7 @@ class UserTrackWaterConsumptionView {
                 
             
         <div class="flex mt-4 mb-20">
-            <input type="button" value="Add" class="bg-white hover:bg-gray-light drop-shadow-dark rounded-4xl font-bold mx-auto px-8 py-4 cursor-pointer" onclick="openAddWaterConsumptionModal()">
+            <input type="button" value="Add" class="bg-white hover:bg-gray-light drop-shadow-dark rounded-4xl font-bold mx-auto px-8 py-4 cursor-pointer" onclick="openAddWaterConsumptionDataModal()">
         </div>
         
         
@@ -129,10 +129,10 @@ class UserTrackWaterConsumptionView {
     <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-10"></div>
 
 
-    <div id="addWaterConsumptionModal" class="absolute inset-0 flex items-center justify-center hidden z-20 top-328 modal font-montserrat">
+    <div id="waterConsumptionDataModal" class="absolute inset-0 flex items-center justify-center hidden z-20 top-328 modal font-montserrat">
         <div class="flex flex-col items-center bg-blue-vivid w-full rounded-2xl shadow-lg modal-content basis-144 min-h-128">
             <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-10 mb-5">
-            <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5">Add Water Consumption Data</h2>
+            <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5"></h2>
             <hr class="w-full mb-5">
             <form action="<?php echo $_SERVER['PHP_SELF'] . "?date=" . $_GET['date']; ?>" method="POST">
                     
@@ -162,10 +162,10 @@ class UserTrackWaterConsumptionView {
                 </div>
 
                 <div class="flex justify-center mt-28">
-                    <input type="button" value="Close" onclick="closeAddWaterConsumptionModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
-                    <input type="submit" name="addWaterConsumptionDataButton" value="Add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg cursor-pointer">
-                    <input type="submit" name="deleteWaterConsumptionDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
-                    <input type="submit" name="saveWaterConsumptionDataButton" value="Save" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
+                    <input type="button" value="Close" onclick="closeWaterConsumptionDataModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
+                    <input type="submit" id="addWaterConsumptionDataButton" name="addWaterConsumptionDataButton" value="Add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg mr-2 cursor-pointer">
+                    <input type="submit" id="deleteWaterConsumptionDataButton" name="deleteWaterConsumptionDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg mr-2 cursor-pointer">
+                    <input type="submit" id="saveWaterConsumptionDataButton" name="saveWaterConsumptionDataButton" value="Save" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg cursor-pointer">
                 </div>
             </form>
         </div>

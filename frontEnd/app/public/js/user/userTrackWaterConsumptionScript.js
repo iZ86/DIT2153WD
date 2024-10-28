@@ -25,29 +25,40 @@ function nextDate() {
     location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
 }
 
-/** Opens addWaterConsumptionModal. */
-function openAddWaterConsumptionModal() {
-    const modal = document.getElementById('addWaterConsumptionModal');
+/** Opens waterConsumptionDataModal to add data. */
+function openAddWaterConsumptionDataModal() {
+    const modal = document.getElementById('waterConsumptionDataModal');
     const overlay = document.getElementById('modalOverlay');
+    let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
+    let modalTitle = document.getElementById('modalTitle');
+
+    modalTitle.innerText = 'Add Water Consumption Data';
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
-
+    addWaterConsumptionDataButton.classList.remove('hidden');
     setTimeout(() => {
         modal.classList.add('show');
     }, 10);
 }
 
-/** Closes addWaterConsumptionModal. */
-function closeAddWaterConsumptionModal() {
-    const modal = document.getElementById('addWaterConsumptionModal');
+/** Closes waterConsumptionDataModal. */
+function closeWaterConsumptionDataModal() {
+    const modal = document.getElementById('waterConsumptionDataModal');
     const overlay = document.getElementById('modalOverlay');
 
     modal.classList.remove('show');
 
+    let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
+    let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
+    let saveWaterConsumptionDataButton = document.getElementById('saveWaterConsumptionDataButton');
+
     setTimeout(() => {
         modal.classList.add('hidden');
         overlay.classList.add('hidden');
+        addWaterConsumptionDataButton.classList.add('hidden');
+        deleteWaterConsumptionDataButton.classList.add('hidden');
+        saveWaterConsumptionDataButton.classList.add('hidden');
     }, 300);
 }
 
@@ -63,24 +74,27 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
 
 
     if (unitSelected === "L") {
-        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionDataArray[i]["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
-        }
-        
+        Object.entries(waterConsumptionDataArray).map(entry => {
+            let waterConsumptionData = entry[1];
+            let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionData["milliliters"]));
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
+        });
+    
     } else if (unitSelected === "mL") {
-        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = Number(waterConsumptionDataArray[i]["milliliters"]);
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
-        }
+        Object.entries(waterConsumptionDataArray).map(entry => {
+            let waterConsumptionData = entry[1];
+            let amountDrank = Number(waterConsumptionData["milliliters"]);
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
+        });
     } else if (unitSelected === "oz") {
-        for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionDataArray[i]["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
-        }
+        Object.entries(waterConsumptionDataArray).map(entry => {
+            let waterConsumptionData = entry[1];
+            let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionData["milliliters"]));
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
+        });
     }
 }
 
@@ -107,7 +121,6 @@ function convertMillilitersToOunces(milliliters) {
 
 /** Updates amount drank messages. */
 function updateAmountDrankMessages() {
-    let lengthOfWaterConsumptionDataArray = waterConsumptionDataArray.length;
     
     // Formatted the date to be used for user readability.
     let currentDate = new Date();
@@ -117,9 +130,10 @@ function updateAmountDrankMessages() {
 
     let totalAmountDrank = 0;
 
-    for (let i = 0; i <lengthOfWaterConsumptionDataArray; i++) {
-        totalAmountDrank += new Number(waterConsumptionDataArray[i]["milliliters"]);
-    }
+    Object.entries(waterConsumptionDataArray).map(entry => {
+        let waterConsumptionData = entry[1];
+        totalAmountDrank += new Number(waterConsumptionData["milliliters"]);
+    });
     let amountDrankStatusMessage = document.getElementById('amountDrankStatusMessage');
     let amountDrankEncouragementMessage = document.getElementById('amountDrankEncouragementMessage');
 
@@ -152,6 +166,45 @@ function updateAmountDrankMessages() {
             amountDrankEncouragementMessage.innerHTML = "";
         }
     }
+}
+
+/** Opens the waterConsumptionDataModal to edit data. */
+function openEditWaterConsumptionDataModal(waterConsumptionID) {
+    let modal = document.getElementById('waterConsumptionDataModal');
+    let overlay = document.getElementById('modalOverlay');
+    let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
+    let saveWaterConsumptionDataButton = document.getElementById('saveWaterConsumptionDataButton');
+    let modalTitle = document.getElementById('modalTitle');
+    let amountDrankInput = document.getElementById("amountDrank");
+    let timeInput = document.getElementById('time');
+
+    unitSelected = document.getElementById("amountDrankUnit").value;
+
+
+    modalTitle.innerText = 'Add Water Consumption Data';
+
+
+    if (unitSelected === "mL") {
+        amountDrankInput.value = waterConsumptionDataArray[waterConsumptionID]["milliliters"];
+    } else if (unitSelected === "L") {
+         amountDrankInput.value = convertMillilitersToLiters(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
+    } else if (unitSelected === "oz") {
+        amountDrankInput.value = convertMillilitersToOunces(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
+    }
+    timeInput.value = waterConsumptionDataArray[waterConsumptionID]["recordedOnTime"];
+
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+    
+
+    deleteWaterConsumptionDataButton.classList.remove('hidden');
+    saveWaterConsumptionDataButton.classList.remove('hidden');
+
+
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+
 }
     
 
