@@ -43,7 +43,7 @@ function openAddWaterConsumptionDataModal() {
 }
 
 /** Closes waterConsumptionDataModal. */
-function closeAddWaterConsumptionModal() {
+function closeWaterConsumptionDataModal() {
     const modal = document.getElementById('waterConsumptionDataModal');
     const overlay = document.getElementById('modalOverlay');
 
