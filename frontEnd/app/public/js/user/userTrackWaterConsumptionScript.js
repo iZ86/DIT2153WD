@@ -1,3 +1,7 @@
+let waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
+let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
+const MILLILITERSTOLITERSCONVERSIONRATE = 1000;
+
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackWaterConsumptionPage() {
     let dateInput = document.getElementById("dateOfWaterConsumption");
@@ -55,12 +59,11 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
         document.getElementById('amountDrankUnit').value = document.getElementById("unit").value;
     }
     let unitSelected = document.getElementById('amountDrankUnit').value;
-    let waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
 
 
     if (unitSelected === "L") {
         for (let i = 0; i < waterConsumptionDataArray.length; i++) {
-            let amountDrank = Number(waterConsumptionDataArray[i]["milliliters"]) / 1000;
+            let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionDataArray[i]["milliliters"]));
             let waterConsumptionDataRow = document.getElementById(waterConsumptionDataArray[i]["waterConsumptionID"]);
             waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataArray[i]["recordedOnTime"];
         }
@@ -90,3 +93,9 @@ function createSessionForUnitSelected(unitDropDownBoxID) {
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlHttRequest.send("unit=" + unitSelected);
 }
+
+/** Converts milliliters to liters. */
+function convertMillilitersToLiters(milliliters) {
+    return milliliters / MILLILITERSTOLITERSCONVERSIONRATE;
+}
+
