@@ -235,8 +235,6 @@ function closeConfirmationModal() {
 
     confirmationModal.classList.remove('show');
 
-    
-    let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
 
     setTimeout(() => {
         confirmationModal.classList.add('hidden');
