@@ -195,6 +195,12 @@ class UserTrackWaterConsumptionView {
     echo htmlspecialchars(json_encode($this->waterConsumptionDataArray));
     ?>
     ">
+    <!-- Embed php current pagination. -->
+    <input type="hidden" id="currentPaginationDate" value="
+    <?php 
+    echo htmlspecialchars(json_encode($_GET['date']));
+    ?>
+    ">
 
     <script src="../../public/js/user/userTrackWaterConsumptionScript.js">
     </script>
