@@ -3,30 +3,38 @@ require '../../models/nutritionistModel.php';
 require '../../views/user/pages/userNutritionistsView.php';
 
 $nutritionistModel = new NutritionistModel(require '../../config/db_connection.php');
-$nutritionistAvailableDate = [];
-$nutritionistAvailableTime = [];
+$nutritionistAvailableDateTime = [];
+// Check if only 'nutritionistID' is set for fetching dates
 if (isset($_POST['nutritionistID'])) {
     $nutritionistID = $_POST['nutritionistID'];
-    $nutritionistAvailableDate = $nutritionistModel->getAllNutritionistAvailableDateById($nutritionistID);
+
+    // Fetch available date and time
+    $nutritionistAvailableDateTime = $nutritionistModel->getAllNutritionistAvailableDateTimeById($nutritionistID);
+
+    $availableDateTimes = [];
+    if ($nutritionistAvailableDateTime) {
+        foreach ($nutritionistAvailableDateTime as $dateTime) {
+            $availableDateTimes[] = $dateTime['scheduleDateTime']; // Store datetime values
+        }
+    }
+
+    // Return available datetime slots
+    echo json_encode(['success' => true, 'data' => $availableDateTimes]);
+    exit;
 }
 
-if(isset($_POST['date']) && isset($_POST['nutritionistID'])) {
-    $nutritionistID = $_POST['nutritionistID'];
-    $nutritionistAvailableTime = $nutritionistModel->getAllNutritionistAvailableTimeById($nutritionistID);
-}
 /** Retrieve booking information from view by using $_POST.
  * Use ?? to provide a default null value, if the $_POST doesn't retrieve it.
  */
 function getBookingInformation() {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nutritionist = $_POST['nutritionist'] ?? null;
-        $date = $_POST['date'] ?? null;
-        $time = $_POST['time'] ?? null;
+        $dateTime = $_POST['date-time'] ?? null;
         $description = $_POST['desc'] ?? null;
 
-        if (!empty($nutritionist) && !empty($date) && !empty($time)) {
+        if (!empty($nutritionist) && !empty($dateTime)) {
             global $nutritionistModel;
-            echo $nutritionist . $description . $date . $time;
+            echo $nutritionist . $description . $dateTime;
             // Create the booking
             /*
             if ($nutritionistModel->createNutritionistBooking(
@@ -49,6 +57,6 @@ function getBookingInformation() {
 
 
 /** Fetch nutritionists for display in the view. */
-$nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist(), $nutritionistAvailableDate, $nutritionistAvailableTime);
+$nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist(), $nutritionistAvailableDateTime);
 $nutritionistsView->renderView();
 getBookingInformation();
