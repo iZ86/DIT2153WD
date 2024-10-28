@@ -25,9 +25,9 @@ function nextDate() {
     location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
 }
 
-/** Opens addWaterConsumptionModal. */
+/** Opens waterConsumptionDataModal. */
 function openAddWaterConsumptionModal() {
-    const modal = document.getElementById('addWaterConsumptionModal');
+    const modal = document.getElementById('waterConsumptionDataModal');
     const overlay = document.getElementById('modalOverlay');
     let addWaterConsumptionDataButton = document.getElementById('addWaterConsumptionDataButton');
     let modalTitle = document.getElementById('modalTitle');
@@ -42,9 +42,9 @@ function openAddWaterConsumptionModal() {
     }, 10);
 }
 
-/** Closes addWaterConsumptionModal. */
+/** Closes waterConsumptionDataModal. */
 function closeAddWaterConsumptionModal() {
-    const modal = document.getElementById('addWaterConsumptionModal');
+    const modal = document.getElementById('waterConsumptionDataModal');
     const overlay = document.getElementById('modalOverlay');
 
     modal.classList.remove('show');
@@ -170,14 +170,14 @@ function updateAmountDrankMessages() {
 
 /** Opens the waterConsumptionDataModal for edit. */
 function openEditWaterConsumptionDataModal(waterConsumptionID) {
-    let modal = document.getElementById('addWaterConsumptionModal');
+    let modal = document.getElementById('waterConsumptionDataModal');
     let overlay = document.getElementById('modalOverlay');
     let deleteWaterConsumptionDataButton = document.getElementById('deleteWaterConsumptionDataButton');
     let saveWaterConsumptionDataButton = document.getElementById('saveWaterConsumptionDataButton');
     let modalTitle = document.getElementById('modalTitle');
     let amountDrankInput = document.getElementById("amountDrank");
     let timeInput = document.getElementById('time');
-    
+
     unitSelected = document.getElementById("amountDrankUnit").value;
 
 
