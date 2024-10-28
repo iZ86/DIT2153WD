@@ -25,7 +25,7 @@ function nextDate() {
     location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
 }
 
-/** Opens waterConsumptionDataModal. */
+/** Opens waterConsumptionDataModal to add data. */
 function openAddWaterConsumptionDataModal() {
     const modal = document.getElementById('waterConsumptionDataModal');
     const overlay = document.getElementById('modalOverlay');
@@ -168,7 +168,7 @@ function updateAmountDrankMessages() {
     }
 }
 
-/** Opens the waterConsumptionDataModal for edit. */
+/** Opens the waterConsumptionDataModal to edit data. */
 function openEditWaterConsumptionDataModal(waterConsumptionID) {
     let modal = document.getElementById('waterConsumptionDataModal');
     let overlay = document.getElementById('modalOverlay');
