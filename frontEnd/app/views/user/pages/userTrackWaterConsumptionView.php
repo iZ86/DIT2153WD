@@ -129,7 +129,7 @@ class UserTrackWaterConsumptionView {
     <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-10"></div>
 
 
-    <div id="addWaterConsumptionModal" class="absolute inset-0 flex items-center justify-center hidden z-20 top-328 modal font-montserrat">
+    <div id="waterConsumptionDataModal" class="absolute inset-0 flex items-center justify-center hidden z-20 top-328 modal font-montserrat">
         <div class="flex flex-col items-center bg-blue-vivid w-full rounded-2xl shadow-lg modal-content basis-144 min-h-128">
             <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-10 mb-5">
             <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5"></h2>
