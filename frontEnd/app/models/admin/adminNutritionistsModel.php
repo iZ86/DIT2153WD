@@ -17,13 +17,13 @@ class AdminNutritionistsModel {
 
     public function getAllSchedules() {
         $query = "SELECT ns.nutritionistScheduleID, 
-                         n.nutritionistID, 
-                         CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName, 
-                         ns.bookingDate, 
-                         ns.bookingTime 
-                  FROM " . $this->scheduleTable . " AS ns
-                  JOIN " . $this->nutritionistsTable . " AS n ON ns.nutritionistID = n.nutritionistID
-                  ORDER BY ns.nutritionistScheduleID ASC";
+                     n.nutritionistID, 
+                     CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName, 
+                     ns.scheduleDateTime, 
+                     ns.price 
+              FROM " . $this->scheduleTable . " AS ns
+              JOIN " . $this->nutritionistsTable . " AS n ON ns.nutritionistID = n.nutritionistID
+              ORDER BY ns.nutritionistScheduleID ASC";
         $stmt = $this->databaseConn->prepare($query);
         $stmt->execute();
         return $stmt->get_result();
@@ -56,10 +56,10 @@ class AdminNutritionistsModel {
         }
     }
 
-    public function addSchedule($nutritionistID, $bookingDate, $bookingTime) {
-        $query = "INSERT INTO " . $this->scheduleTable . " (nutritionistID, createdOn, bookingDate, bookingTime) VALUES (?, NOW(), ?, ?)";
+    public function addSchedule($nutritionistID, $scheduleDateTime, $price) {
+        $query = "INSERT INTO " . $this->scheduleTable . " (nutritionistID, createdOn, scheduleDateTime, price) VALUES (?, NOW(), ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("iss", $nutritionistID, $bookingDate, $bookingTime);
+        $stmt->bind_param("isd", $nutritionistID, $scheduleDateTime, $price);
 
         if (!$stmt->execute()) {
             error_log("Failed to add schedule: " . $stmt->error);
@@ -67,10 +67,10 @@ class AdminNutritionistsModel {
         }
     }
 
-    public function editSchedule($nutritionistScheduleID, $nutritionistID, $bookingDate, $bookingTime) {
-        $query = "UPDATE " . $this->scheduleTable . " SET nutritionistID = ?, bookingDate = ?, bookingTime = ? WHERE nutritionistScheduleID = ?";
+    public function editSchedule($nutritionistScheduleID, $nutritionistID, $scheduleDateTime, $price) {
+        $query = "UPDATE " . $this->scheduleTable . " SET nutritionistID = ?, scheduleDateTime = ?, price = ? WHERE nutritionistScheduleID = ?";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("issi", $nutritionistID, $bookingDate, $bookingTime, $nutritionistScheduleID);
+        $stmt->bind_param("isdi", $nutritionistID, $scheduleDateTime, $price, $nutritionistScheduleID);
         if (!$stmt->execute()) {
             throw new Exception("Failed to update schedule: " . $stmt->error);
         }
