@@ -54,13 +54,6 @@
                     <span class="font-medium">Payments</span>
                 </a>
             </li>
-            <li>
-                <a href="../admin/feedbacks.php"
-                   class="flex items-center space-x-5 py-3 px-5 <?php echo $current_page == 'feedbacks.php' ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100'; ?> rounded-md">
-                    <i class="bx bx-message-square-dots text-base"></i>
-                    <span class="font-medium">Feedbacks</span>
-                </a>
-            </li>
         </ul>
     </nav>
 </aside>

@@ -8,13 +8,12 @@ class AdminProfileModel {
 
     public function getAdminById($adminID) {
         $query = "SELECT ru.registeredUserID, ru.firstName, ru.lastName, ru.username, ru.email, 
-                         ru.gender, ru.dateOfBirth AS dob, ru.phoneNo AS phone, a.salary 
+                         ru.gender, ru.dateOfBirth AS dob, ru.phoneNo AS phone, a.salary, ru.profileImageFilePath
                   FROM ADMIN a
                   JOIN REGISTERED_USER ru ON a.adminID = ru.registeredUserID
                   WHERE a.adminID = ?";
 
         $stmt = $this->databaseConn->prepare($query);
-
         if (!$stmt) {
             throw new Exception("Failed to prepare statement: " . $this->databaseConn->error);
         }
@@ -51,6 +50,18 @@ class AdminProfileModel {
 
         if (!$stmt->execute()) {
             throw new Exception("Failed to update admin salary: " . $stmt->error);
+        }
+    }
+
+    public function updateProfileImagePath($adminID, $profileImagePath) {
+        $query = "UPDATE REGISTERED_USER 
+                  SET profileImageFilePath = ? 
+                  WHERE registeredUserID = ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->bind_param("si", $profileImagePath, $adminID);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update profile image path: " . $stmt->error);
         }
     }
 }

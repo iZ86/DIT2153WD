@@ -95,9 +95,6 @@ class AdminClassesView {
                                 <button class="text-gray-500 hover:text-blue-600" onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>')">
                                     <i class="bx bx-pencil"></i>
                                 </button>
-                                <button class="text-gray-500 hover:text-red-600">
-                                    <i class="bx bx-trash"></i>
-                                </button>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -164,9 +161,6 @@ class AdminClassesView {
                             <td class="p-3 flex justify-center space-x-2">
                                 <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['fitnessClassScheduleID']; ?>, '<?php echo $schedule['fitnessClassID']; ?>', '<?php echo $schedule['instructorID']; ?>', <?php echo $schedule['pax']; ?>, '<?php echo $schedule['scheduledOn']; ?>')">
                                     <i class="bx bx-pencil"></i>
-                                </button>
-                                <button class="text-gray-500 hover:text-red-600">
-                                    <i class="bx bx-trash"></i>
                                 </button>
                             </td>
                         </tr>

@@ -19,12 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+$searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 $limit = 6;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-$totalUsers = $adminUsersModel->getUserCount();
-$users = $adminUsersModel->getAllUsers($limit, $offset);
+$totalUsers = $adminUsersModel->getUserCount($searchQuery);
+$users = $adminUsersModel->getAllUsers($limit, $offset, $searchQuery);
 $totalPages = ceil($totalUsers / $limit);
 $adminUsersView = new AdminUsersView($users, $totalPages, $page);
 $adminUsersView->renderView();

@@ -14,7 +14,6 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
         $_SESSION['passwordInput'] = $password;
         $_SESSION['keepMeLoggedInInput'] = isset($_POST['keepMeLoggedInCheckBox']) ? $_POST['keepMeLoggedInCheckBox'] : "off";
         $_SESSION['invalidLogin'] = 1;
-        unsetSessionVariablesForSelf();
         die(header("location: ". $_SERVER['PHP_SELF']));
     } else {
         if ($guestLogInModel->verifyLogInCredentials($username, $password)) {
@@ -26,37 +25,29 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
                 // userID is the same as registeredUserID.
                 $_SESSION['username'] = $username;
                 $_SESSION['userID'] = $guestLogInModel->getRegisteredUserID($username);
-                unsetSessionVariablesForSelf();
-                die(header("location: ../controllers/user/"));
+                die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/"));
             } else {
                 // adminID is the same as registeredUserID.
                 $_SESSION['username'] = $username;
                 $_SESSION['adminID'] = $guestLogInModel->getRegisteredUserID($username);
-                unsetSessionVariablesForSelf();
-                die(header("location: ../controllers/admin/"));
+                die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/admin/"));
             }
         } else {
             $_SESSION['usernameInput'] = $username;
             $_SESSION['passwordInput'] = $password;
             $_SESSION['keepMeLoggedInInput'] = isset($_POST['keepMeLoggedInCheckBox']) ? $_POST['keepMeLoggedInCheckBox'] : "off";
             $_SESSION['invalidLogin'] = 1;
-            unsetSessionVariablesForSelf();
             die(header("location: ". $_SERVER['PHP_SELF']));
         }
     }
-    
-}
 
-/** Unsets all the session variables that is used by this controller only. */ 
-function unsetSessionVariablesForSelf() {
-    unset($_SESSION['invalidLogin']);
-    unset($_SESSION['usernameInput']);
-    unset($_SESSION['passwordInput']);
-    unset($_SESSION['keepMeLoggedInInput']);
 }
 
 $guestLogInView = new GuestLogInView();
 $guestLogInView->renderView();
-unsetSessionVariablesForSelf();
+unset($_SESSION['invalidLogin']);
+unset($_SESSION['usernameInput']);
+unset($_SESSION['passwordInput']);
+unset($_SESSION['keepMeLoggedInInput']);
 
 

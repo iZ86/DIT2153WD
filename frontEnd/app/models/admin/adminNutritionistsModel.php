@@ -97,12 +97,70 @@ class AdminNutritionistsModel {
         }
     }
 
-    public function deleteSchedule($nutritionistScheduleID) {
-        $query = "DELETE FROM " . $this->scheduleTable . " WHERE nutritionistScheduleID = ?";
+    public function addBooking($description, $nutritionistScheduleID, $userID, $paymentID) {
+        $query = "INSERT INTO NUTRITIONIST_BOOKING (description, nutritionistScheduleID, userID, paymentID) VALUES (?, ?, ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("i", $nutritionistScheduleID);
+        $stmt->bind_param("siis", $description, $nutritionistScheduleID, $userID, $paymentID);
         if (!$stmt->execute()) {
-            throw new Exception("Failed to delete schedule: " . $stmt->error);
+            throw new Exception("Failed to add booking: " . $stmt->error);
         }
+    }
+
+    public function getTotalBookings() {
+        $query = "SELECT COUNT(*) as total FROM NUTRITIONIST_BOOKING";
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['total'];
+    }
+
+    public function getBookings($limit, $offset) {
+        $query = "SELECT nb.nutritionistBookingID, nb.description, ns.scheduleDateTime, 
+                     CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName 
+              FROM NUTRITIONIST_BOOKING AS nb
+              JOIN NUTRITIONIST_SCHEDULE AS ns ON nb.nutritionistScheduleID = ns.nutritionistScheduleID
+              JOIN NUTRITIONIST AS n ON ns.nutritionistID = n.nutritionistID
+              LIMIT ? OFFSET ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function editBooking($nutritionistBookingID, $description, $nutritionistScheduleID) {
+        $query = "UPDATE NUTRITIONIST_BOOKING SET description = ?, nutritionistScheduleID = ? WHERE nutritionistBookingID = ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->bind_param("sii", $description, $nutritionistScheduleID, $nutritionistBookingID);
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update booking: " . $stmt->error);
+        }
+    }
+
+    public function getBookingsWithDetails($limit, $offset) {
+        $query = "SELECT nb.nutritionistBookingID, 
+                     nb.description, 
+                     ns.scheduleDateTime, 
+                     ns.nutritionistScheduleID,
+                     CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName, 
+                     ru.username
+              FROM NUTRITIONIST_BOOKING AS nb
+              JOIN NUTRITIONIST_SCHEDULE AS ns ON nb.nutritionistScheduleID = ns.nutritionistScheduleID
+              JOIN NUTRITIONIST AS n ON ns.nutritionistID = n.nutritionistID
+              JOIN REGISTERED_USER AS ru ON nb.userID = ru.registeredUserID
+              LIMIT ? OFFSET ?";
+
+        $stmt = $this->databaseConn->prepare($query);
+
+        if (!$stmt) {
+            throw new Exception("Failed to prepare statement: " . $this->databaseConn->error);
+        }
+
+        $stmt->bind_param("ii", $limit, $offset);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute statement: " . $stmt->error);
+        }
+
+        return $stmt->get_result();
     }
 }

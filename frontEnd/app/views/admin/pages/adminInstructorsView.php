@@ -85,9 +85,6 @@ class AdminInstructorsView {
                                     <button class="text-gray-500 hover:text-blue-600" onclick="openEditInstructorModal(<?php echo $instructor['instructorID']; ?>)">
                                         <i class="bx bx-pencil"></i>
                                     </button>
-                                    <button class="text-gray-500 hover:text-red-600" onclick="deleteInstructor(<?php echo $instructor['instructorID']; ?>)">
-                                        <i class="bx bx-trash"></i>
-                                    </button>
                                 </td>
                             </tr>
                         <?php endwhile; ?>

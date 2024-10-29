@@ -80,11 +80,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (isset($_POST['deleteScheduleButton'])) {
+    if (isset($_POST['addBookingButton']) && $_POST['addBookingButton'] === "Add Booking") {
+        $description = trim($_POST['description']);
         $nutritionistScheduleID = $_POST['nutritionistScheduleID'];
-        $adminNutritionistsModel->deleteSchedule($nutritionistScheduleID);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
+        $userID = $_SESSION['userID'];
+        $paymentID = $_POST['paymentID'];
+
+        if (!empty($description) && !empty($nutritionistScheduleID) && !empty($userID) && !empty($paymentID)) {
+            $adminNutritionistsModel->addBooking($description, $nutritionistScheduleID, $userID, $paymentID);
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit;
+        }
+    }
+
+    if (isset($_POST['editBookingButton'])) {
+        $nutritionistBookingID = $_POST['nutritionistBookingID'];
+        $description = trim($_POST['description']);
+        $nutritionistScheduleID = $_POST['nutritionistScheduleID'];
+
+        if (!empty($nutritionistBookingID) && !empty($description) && !empty($nutritionistScheduleID)) {
+            $adminNutritionistsModel->editBooking($nutritionistBookingID, $description, $nutritionistScheduleID);
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit;
+        }
     }
 }
 
@@ -94,11 +112,14 @@ $offset = ($currentPage - 1) * $limit;
 
 $totalNutritionists = $adminNutritionistsModel->getTotalNutritionists();
 $totalSchedules = $adminNutritionistsModel->getTotalSchedules();
+$totalBookings = $adminNutritionistsModel->getTotalBookings();
 $totalPagesNutritionists = ceil($totalNutritionists / $limit);
 $totalPagesSchedules = ceil($totalSchedules / $limit);
+$totalPagesBooking = ceil($totalBookings / $limit);
 
 $nutritionists = $adminNutritionistsModel->getNutritionists($limit, $offset);
 $schedules = $adminNutritionistsModel->getSchedules($limit, $offset);
+$bookings = $adminNutritionistsModel->getBookingsWithDetails($limit, $offset);
 
-$adminNutritionistsView = new AdminNutritionistsView($nutritionists, $schedules, $totalPagesNutritionists, $totalPagesSchedules, $currentPage);
+$adminNutritionistsView = new AdminNutritionistsView($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBooking, $currentPage);
 $adminNutritionistsView->renderView();
