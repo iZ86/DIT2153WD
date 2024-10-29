@@ -2,6 +2,8 @@
 class UserPaymentModel {
     /** Registered User Table */
     private $userPaymentTable = 'payment';
+    /** Nutritionist Booking Table */
+    private $nutritionistBookingTable = 'nutritionist_booking';
     /** Database connection */
     private $databaseConn;
 
@@ -16,11 +18,7 @@ class UserPaymentModel {
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return false;
-        }
+        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
     }
 
     public function createUserPayment($type, $status, $createdOn, $userID) {
@@ -29,4 +27,32 @@ class UserPaymentModel {
         $stmt->bind_param("sssi", $type, $status, $createdOn, $userID);
         return $stmt->execute();
     }
+
+    public function getPaymentIDByTypeCreatedOnAndUserID($type, $createdOn, $userID) {
+        $sql = "SELECT paymentID FROM " . $this->userPaymentTable . " WHERE type=? AND createdOn=? AND userID=?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("ssi", $type, $createdOn, $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+    }
+
+    /** Function of creating a booking for user's reservation */
+    public function createNutritionistBooking($description, $nutritionistScheduleID, $userID, $paymentID) {
+        $sql = "INSERT INTO " . $this->nutritionistBookingTable . " (description,nutritionistScheduleID,userID,paymentID) VALUES (?,?,?,?)";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("siii", $description, $nutritionistScheduleID, $userID, $paymentID);
+        return $stmt->execute();
+    }
+
+    public function isScheduleIDBooked($nutritionistScheduleID) {
+        $sql = "SELECT COUNT(*) as count FROM " . $this->nutritionistBookingTable . " WHERE nutritionistScheduleID = ?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("i", $nutritionistScheduleID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['count'] > 0; // Returns true if the schedule ID is already booked
+    }
+
 }
