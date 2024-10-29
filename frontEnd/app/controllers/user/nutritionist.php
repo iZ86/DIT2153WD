@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require '../../models/nutritionistModel.php';
 require '../../views/user/pages/userNutritionistsView.php';
 
@@ -40,8 +41,11 @@ function getBookingInformation() {
             if ($nutritionistScheduleData) {
                 $nutritionistScheduleID = $nutritionistScheduleData ? $nutritionistScheduleData['nutritionistScheduleID'] : null;
                 echo $nutritionistScheduleID;
-                $nutritionistModel->createNutritionistBooking($description, $nutritionistScheduleID, $username, 1);
                 echo "<script>alert('Successfully Made a Reservation!!');</script>";
+                header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=20");
+                $nutritionistModel->createNutritionistBooking($description, $nutritionistScheduleID, $username, 1);
+                exit();
+
             } else {
                 echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
             }
@@ -57,3 +61,4 @@ function getBookingInformation() {
 $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist(), $nutritionistAvailableDateTime);
 $nutritionistsView->renderView();
 getBookingInformation();
+ob_end_flush();
