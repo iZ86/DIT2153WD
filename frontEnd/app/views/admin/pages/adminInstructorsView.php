@@ -1,9 +1,13 @@
 <?php
 class AdminInstructorsView {
     private $instructors;
+    private $totalPagesInstructors;
+    private $currentPage;
 
-    public function __construct($instructors) {
+    public function __construct($instructors, $totalPagesInstructors, $currentPage) {
         $this->instructors = $instructors;
+        $this->totalPagesInstructors = $totalPagesInstructors;
+        $this->currentPage = $currentPage;
     }
 
     public function renderView() : void {
@@ -51,7 +55,7 @@ class AdminInstructorsView {
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 600px;">
+            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 540px;">
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
                         <tr class="text-gray-500 font-medium text-center">
@@ -89,6 +93,22 @@ class AdminInstructorsView {
                         <?php endwhile; ?>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2 mr-4">
+                        <?php for ($i = 1; $i <= $this->totalPagesInstructors; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
+                                <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
+                                transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
             </div>
         </section>
 
