@@ -43,15 +43,15 @@ class AdminUsersView {
                     <h2 class="text-2xl font-bold">Users</h2>
                     <div class="flex items-center space-x-4">
                         <div class="relative">
-                            <input type="text" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
+                            <input type="text" id="searchInput" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search..." onkeyup="searchUsers()">
                             <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 540px;">
-                <table class="min-w-full table-auto border-collapse w-full">
+            <div id="userTableContainer" class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 540px;">
+                <table class="min-w-full table-auto border-collapse w-full" id="userTable">
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
                         <th class="py-4 px-6 border-b border-gray-200">ID</th>
@@ -63,7 +63,7 @@ class AdminUsersView {
                         <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
                     </thead>
-                    <tbody class="text-gray-700 text-center">
+                    <tbody class="text-gray-700 text-center" id="userTableBody">
                     <?php while ($user = $this->users->fetch_assoc()): ?>
                         <tr class="bg-white">
                             <td class="p-3 mt-4"><?php echo $user['registeredUserID']; ?></td>
@@ -225,6 +225,19 @@ class AdminUsersView {
                 document.getElementById('phoneNo').value = '';
                 document.getElementById('gender').value = '';
                 document.getElementById('dateOfBirth').value = '';
+            }
+
+            function searchUsers() {
+                const query = document.getElementById('searchInput').value;
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'searchUsers.php?query=' + encodeURIComponent(query), true);
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        document.getElementById('userTableBody').innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send();
             }
         </script>
         <?php

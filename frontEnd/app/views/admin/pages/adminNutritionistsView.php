@@ -3,16 +3,19 @@
 class AdminNutritionistsView {
     private $nutritionists;
     private $schedules;
-
+    private $bookings;
     private $totalPagesNutritionists;
     private $totalPagesSchedules;
+    private $totalPagesBookings;
     private $currentPage;
 
-    public function __construct($nutritionists, $schedules, $totalPagesNutritionists, $totalPagesSchedules, $currentPage) {
+    public function __construct($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBookings, $currentPage) {
         $this->nutritionists = $nutritionists;
         $this->schedules = $schedules;
+        $this->bookings = $bookings;
         $this->totalPagesNutritionists = $totalPagesNutritionists;
         $this->totalPagesSchedules = $totalPagesSchedules;
+        $this->totalPagesBookings = $totalPagesBookings;
         $this->currentPage = $currentPage;
     }
 
@@ -163,9 +166,6 @@ class AdminNutritionistsView {
                                 <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['nutritionistScheduleID']; ?>, '<?php echo addslashes($schedule['scheduleDateTime']); ?>', '<?php echo number_format($schedule['price'], 2); ?>', '<?php echo $schedule['nutritionistID']; ?>')">
                                     <i class="bx bx-pencil"></i>
                                 </button>
-                                <button class="text-gray-500 hover:text-red-600" onclick="deleteSchedule(<?php echo $schedule['nutritionistScheduleID']; ?>)">
-                                    <i class="bx bx-trash"></i>
-                                </button>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -181,6 +181,69 @@ class AdminNutritionistsView {
                                 <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
                                     <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
                                     transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+
+        <section class="p-6 space-y-6">
+            <div class="mx-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold">Nutritionist Bookings</h2>
+                    <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openBookingModal()">
+                        <i class="bx bxs-plus-circle"></i>
+                        <span>Add Booking</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 600px;">
+                <table class="min-w-full table-auto border-collapse w-full">
+                    <thead>
+                    <tr class="text-gray-500 font-medium text-center">
+                        <th class="py-4 px-6 border-b border-gray-200">Booking ID</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Nutritionist Name</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Username</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Description</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Edit</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-gray-700 text-center">
+                    <?php while ($booking = $this->bookings->fetch_assoc()): ?>
+                        <tr class="bg-white">
+                            <td class="p-3"><?php echo $booking['nutritionistBookingID']; ?></td>
+                            <td class="p-3"><?php echo $booking['nutritionistName']; ?></td>
+                            <td class="p-3"><?php echo $booking['nutritionistScheduleID']; ?></td>
+                            <td class="p-3"><?php echo $booking['username']; ?></td>
+                            <td class="p-3"><?php echo $booking['description']; ?></td>
+                            <td class="p-3 flex justify-center">
+                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditBookingModal(
+                                <?php echo $booking['nutritionistBookingID']; ?>,
+                                        '<?php echo addslashes($booking['description']); ?>',
+                                        '<?php echo $booking['nutritionistScheduleID']; ?>'
+                                        )">
+                                    <i class="bx bx-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2 mr-4">
+                        <?php for ($i = 1; $i <= $this->totalPagesBookings; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
+                        <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
+                        transition">
                                     <?php echo $i; ?>
                                 </a>
                             </li>
@@ -228,7 +291,6 @@ class AdminNutritionistsView {
             </div>
         </div>
 
-        <!-- Modal for Schedule -->
         <div id="scheduleModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
                 <h2 id="scheduleModalTitle" class="text-2xl font-semibold mb-4">Add Schedule</h2>
@@ -259,7 +321,49 @@ class AdminNutritionistsView {
             </div>
         </div>
 
-            <style>
+        <div id="bookingModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 id="bookingModalTitle" class="text-2xl font-semibold mb-4">Edit Booking</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                    <input type="hidden" id="nutritionistBookingID" name="nutritionistBookingID">
+
+                    <label class="block text-gray-700 text-sm font-medium">Description <span class="text-red-500">*</span></label>
+                    <input name="description" type="text" id="description" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Nutritionist <span class="text-red-500">*</span></label>
+                    <select name="nutritionistID" id="nutritionistID" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Select Nutritionist</option>
+                        <?php
+                        $this->nutritionists->data_seek(0);
+                        while ($nutritionist = $this->nutritionists->fetch_assoc()): ?>
+                            <option value="<?php echo $nutritionist['nutritionistID']; ?>" <?php echo ($nutritionist['nutritionistID'] == $currentNutritionistID) ? 'selected' : ''; ?>>
+                                <?php echo $nutritionist['firstName'] . ' ' . $nutritionist['lastName']; ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Schedule <span class="text-red-500">*</span></label>
+                    <select name="nutritionistScheduleID" id="nutritionistScheduleID" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Select Schedule</option>
+                        <?php
+                        $this->schedules->data_seek(0);
+                        while ($schedule = $this->schedules->fetch_assoc()): ?>
+                            <option value="<?php echo $schedule['nutritionistScheduleID']; ?>" <?php echo ($schedule['nutritionistScheduleID'] == $currentScheduleID) ? 'selected' : ''; ?>>
+                                <?php echo date('d M Y H:i', strtotime($schedule['scheduleDateTime'])); ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="button" onclick="closeBookingModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <button type="submit" id="submitBookingButton" name="editBookingButton" value="Edit Booking" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <style>
                 .modal {
                     transition: opacity 0.3s ease, transform 0.3s ease;
                     opacity: 0;
@@ -364,6 +468,49 @@ class AdminNutritionistsView {
                 }, 10);
             }
 
+            function openBookingModal() {
+                const modal = document.getElementById('bookingModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeBookingModal() {
+                const modal = document.getElementById('bookingModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                    clearBookingModalFields();
+                }, 300);
+            }
+
+            function openEditBookingModal(nutritionistBookingID, description, nutritionistScheduleID, nutritionistID) {
+                const modal = document.getElementById('bookingModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                document.getElementById('nutritionistBookingID').value = nutritionistBookingID;
+                document.getElementById('description').value = description;
+                document.getElementById('nutritionistID').value = nutritionistID;
+                document.getElementById('nutritionistScheduleID').value = nutritionistScheduleID;
+                document.getElementById('bookingModalTitle').innerText = 'Edit Booking';
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
             function clearNutritionistModalFields() {
                 document.getElementById('nutritionistID').value = '';
                 document.getElementById('firstName').value = '';
@@ -379,6 +526,12 @@ class AdminNutritionistsView {
                 document.getElementById('scheduleDateTime').value = '';
                 document.getElementById('price').value = '';
                 document.querySelector('select[name="nutritionistID"]').value ='';
+            }
+
+            function clearBookingModalFields() {
+                document.getElementById('nutritionistBookingID').value = '';
+                document.getElementById('description').value = '';
+                document.getElementById('nutritionistScheduleID').value = '';
             }
         </script>
         <?php

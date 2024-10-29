@@ -7,6 +7,10 @@ class AdminProfileView {
     }
 
     public function renderView() : void {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePhoto'])) {
+            $this->handleFileUpload();
+        }
+
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -89,16 +93,20 @@ class AdminProfileView {
                     </form>
                 </div>
 
-                <div class="w-full lg:w-1/3 flex items-center justify-center lg:h-[70vh]">
-                    <div class="flex flex-col items-center justify-center">
-                        <h3 class="text-lg font-semibold text-gray-600 mb-5">Profile Photo</h3>
-                        <div class="relative flex flex-col items-center">
-                            <img src="../../../public/images/avatar.png" alt="Profile Photo" class="w-48 h-48 rounded-3xl shadow-lg object-cover mb-10">
-                            <button class="bg-gray-900 text-white py-1.5 px-10 rounded-full hover:bg-gray-700 transition">Upload Photo</button>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="w-full lg:w-1/3 flex items-center justify-center lg:h-[70vh]">
+                        <div class="flex flex-col items-center justify-center">
+                            <h3 class="text-lg font-semibold text-gray-600 mb-5">Profile Photo</h3>
+                            <div class="relative flex flex-col items-center">
+                                <div class="aspect-w-1 aspect-h-1 w-48">
+                                    <img src="<?php echo htmlspecialchars($this->adminDetails['profileImageFilePath'] ?? '../../public/images/avatar.png'); ?>" alt="Profile Photo" class=" rounded-3xl shadow-lg object-cover mb-10">
+                                </div>
+                                <input type="file" id="profile-photo" name="profilePhoto" class="hidden" accept="image/*" onchange="this.form.submit();">
+                                <button type="button" class="bg-gray-900 text-white py-1.5 px-10 rounded-full hover:bg-gray-700 transition" onclick="document.getElementById('profile-photo').click();">Upload Photo</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-
+                </form>
             </div>
         </body>
         </html>

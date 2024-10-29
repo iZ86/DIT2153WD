@@ -60,17 +60,20 @@ class AdminIndexView {
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl h-80 col-span-2">
-                    <h2 class="text-gray-600 font-bold mb-4">Upcoming Schedules</h2>
-                </div>
-                <div class="bg-white p-6 rounded-2xl row-span-2">
-                    <h2 class="text-gray-600 font-bold mb-4">Latest Feedbacks</h2>
-                </div>
-                <div class="bg-white p-6 rounded-2xl h-80 col-span-2">
-                    <h2 class="text-gray-600 font-bold mb-4">Latest Transactions</h2>
+            <div class="bg-white p-6 rounded-2xl h-80 col-span-2">
+                <h2 class="text-gray-600 font-bold mb-4">Upcoming Schedules</h2>
+                <div class="flex items-center justify-center h-full">
+                    <p class="text-gray-500">No upcoming schedules.</p>
                 </div>
             </div>
+
+            <div class="bg-white p-6 rounded-2xl h-80 col-span-2">
+                <h2 class="text-gray-600 font-bold mb-4">Latest Transactions</h2>
+                <div class="flex items-center justify-center h-full">
+                    <p class="text-gray-500">No records found in the last 3 days.</p>
+                </div>
+            </div>
+
         </section>
         <?php
     }
