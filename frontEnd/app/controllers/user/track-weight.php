@@ -10,7 +10,7 @@ $userTrackWeightModel = new UserTrackWeightModel(require "../../config/db_connec
 $regexDateFormat = "/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/";
 
 // Regex to validate weight format.
-$regexWeightFormat = "/^[1-9][\d]*([.\d]{3}$|$)/";
+$regexWeightFormat = "/^[\d]*(.[\d]{1,2}$|$)/";
 
 // Regex to validate ID.
 $regexIDFormat = "/^(0|[1-9][\d]*)$/";
