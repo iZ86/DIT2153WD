@@ -4,6 +4,7 @@ require '../../views/user/pages/classScheduleView.php';
 
 $instructorId = isset($_GET['instructor']) ? intval($_GET['instructor']) : null;
 $weekOffset = isset($_GET['week']) ? intval($_GET['week']) : 0;
+$fitnessClassID = isset($_GET['fitnessClassID']) ? intval($_GET['fitnessClassID']) : null;
 
 $fitnessClassModel = new UserFitnessClass(require '../../config/db_connection.php');
 
