@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require '../../models/nutritionistModel.php';
 require '../../views/user/pages/userNutritionistsView.php';
 
@@ -28,22 +29,23 @@ if (isset($_POST['nutritionistID'])) {
  */
 function getBookingInformation() {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $nutritionist = $_POST['nutritionist'] ?? null;
-        $nutritionistScheduleID = $_POST['date-time'] ?? null;
+        $nutritionistID = $_POST['nutritionist'] ?? null;
+        $nutritionistSchedule = $_POST['date-time'] ?? null;
         $description = $_POST['desc'] ?? null;
         $username = $_SESSION['userID'];
-        if (!empty($nutritionist) && !empty($nutritionistScheduleID) && !empty($username)) {
+        if (!empty($nutritionistID) && !empty($nutritionistSchedule) && !empty($username)) {
             global $nutritionistModel;
-            echo $nutritionistScheduleID . $description . $username;
+            echo $nutritionistID . $nutritionistSchedule . $description . $username;
+            $nutritionistScheduleData = $nutritionistModel->getNutritionistScheduleIaByNutritionistIdAndScheduleDateTime($nutritionistID, $nutritionistSchedule);
 
-            if ($nutritionistModel->createNutritionistBooking(
-                $nutritionistScheduleID,
-                $description,
-                            $username,
-                            1
-            )) {
-
+            if ($nutritionistScheduleData) {
+                $nutritionistScheduleID = $nutritionistScheduleData ? $nutritionistScheduleData['nutritionistScheduleID'] : null;
+                echo $nutritionistScheduleID;
                 echo "<script>alert('Successfully Made a Reservation!!');</script>";
+                header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=20");
+                $nutritionistModel->createNutritionistBooking($description, $nutritionistScheduleID, $username, 1);
+                exit();
+
             } else {
                 echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
             }
@@ -59,3 +61,4 @@ function getBookingInformation() {
 $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist(), $nutritionistAvailableDateTime);
 $nutritionistsView->renderView();
 getBookingInformation();
+ob_end_flush();
