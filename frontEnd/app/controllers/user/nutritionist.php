@@ -1,4 +1,5 @@
 <?php
+session_start();
 ob_start();
 require '../../models/nutritionistModel.php';
 require '../../views/user/pages/userNutritionistsView.php';
