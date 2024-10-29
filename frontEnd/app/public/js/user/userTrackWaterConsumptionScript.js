@@ -186,7 +186,7 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     unitSelected = document.getElementById("amountDrankUnit").value;
 
     submitWaterConsumptionDataButton.value="Save"
-    modalTitle.innerText = 'Add Water Consumption Data';
+    modalTitle.innerText = 'Edit Water Consumption Data';
     waterConsumptionIDInput.value = waterConsumptionID;
 
 
