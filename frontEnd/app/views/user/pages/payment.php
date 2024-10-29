@@ -158,7 +158,7 @@ class PaymentView {
                         <input type="tel" name="securityCode" id="securityCode" class="w-full p-2 mb-4 border rounded-lg required">
                     </div>
                 </div>
-                <button type="submit" class="bg-orange-500 font-bold text-2xl hover:bg-orange-300 rounded-lg px-2 py-2 w-full">Subscribe</button>
+                <button type="submit" name="subscribe" id="subscribe" class="bg-orange-500 font-bold text-2xl hover:bg-orange-300 rounded-lg px-2 py-2 w-full">Subscribe</button>
             </div>
         </div>
     </div>
