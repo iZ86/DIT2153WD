@@ -1,9 +1,39 @@
-<?php include __DIR__ .  '/../components/userHeader.php'; ?>
-<?php include __DIR__ .  '/../components/userNavbar.php'; ?>
 
-<section class="px-32 space-y-6">
-    <!--Main Flex Container-->
-    <h1 class="text-3xl font-bold font-sans mb-5">Monthly Membership</h1>
+<?php
+class PaymentView {
+    private $data;
+    public function __construct($data) {
+        $this->data = $data;
+    }
+
+    /** Renders the userNutritionists page. */
+    public function renderView() {
+        $this->renderHeader();
+        $this->renderNavbar();
+        $this->renderContent();
+        $this->renderFooter();
+    }
+
+    /** Renders the navbar. */
+    public function renderNavbar() {
+        include __DIR__ . '/../components/userNavbar.php';
+    }
+
+    /** Renders the header of the view. */
+    public function renderHeader() {
+        include __DIR__ . '/../components/userHeader.php';
+
+    }
+
+    /** Reners the footer */
+    public function renderFooter() {
+        include __DIR__ . '/../components/userFooter.php';
+    }
+
+    public function renderContent() {?>
+    <section class="px-32 space-y-6 bg-blue-user pt-10 pb-28">
+    <h1 class="text-3xl font-bold font-sans">Monthly Membership</h1>
+    <form action="">
     <div class="flex space-x-14">
         <!--Billing Address-->
         <div class="bg-gray-100 p-6 w-1/2 rounded-lg border border-black">
@@ -69,15 +99,15 @@
                 <h1 class="text-3xl font-bold">Payment Method</h1>
                 <!--Payment Method Box-->
                 <div class="flex bg-purple-200 rounded-t-lg">
-                    <img src="../../../public/images/visa.png" alt="Visa Card" class="w-24 ml-3 mr-4">
+                    <img src="../../public/images/visa.png" alt="Visa Card" class="w-24 ml-3 mr-4">
                     <label for="card" class="text-2xl flex items-center">
                         <span class="px-2 ml-6">Credit / Debit Card</span>
                         <input type="radio" name="card" id="card" class="ml-32 w-6 h-6">
                     </label>
                 </div>
                 <div class="flex justify-end bg-gray-200 p-2 space-x-2 rounded-b-lg">
-                    <img src="../../../public/images/unionPay.png" alt="Union Pay Card" class="h-8">
-                    <img src="../../../public/images/mastercard.png" alt="Mastercard" class="h-8">
+                    <img src="../../public/images/unionPay.png" alt="Union Pay Card" class="h-8">
+                    <img src="../../public/images/mastercard.png" alt="Mastercard" class="h-8">
                 </div>
                 <div class="space-y-4">
                     <div class="mt-4">
@@ -128,53 +158,12 @@
                         <input type="tel" name="securityCode" id="securityCode" class="w-full p-2 mb-4 border rounded-lg required">
                     </div>
                 </div>
-                <button class="bg-orange-500 font-bold text-2xl hover:bg-orange-300 rounded-lg px-2 py-2 w-full">Subscribe</button>
+                <button type="submit" class="bg-orange-500 font-bold text-2xl hover:bg-orange-300 rounded-lg px-2 py-2 w-full">Subscribe</button>
             </div>
         </div>
     </div>
-    <?php include __DIR__ .  '/../components/userFooter.php'; ?>
+    </form>
 </section>
-<?php
-$classes = $_POST['classes'];
-$total = count($classes) * 15; // Example calculation
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['card_number'])) {
-    // Process the payment logic here (e.g., integrate with payment gateway)
-    echo "Payment successful! You have subscribed to: " . implode(", ", $classes);
+    <?php
+    }
 }
-?>
-
-<form method="POST" action="../../../controllers/user/processPayment.php">
-
-    <button type="submit">Subscribe</button>
-</form>
-
-<form  method="POST" action="../../../controllers/user/processPayment.php">
-    <h2>Billing Address</h2>
-    <input type="email" name="email" placeholder="Email Address" required>
-    <input type="text" name="first_name" placeholder="First Name" required>
-    <input type="text" name="last_name" placeholder="Last Name" required>
-    <input type="text" name="address1" placeholder="Address Line 1" required>
-    <input type="text" name="address2" placeholder="Address Line 2">
-    <input type="text" name="country" placeholder="Country" required>
-    <input type="text" name="zip" placeholder="Zip Code" required>
-    <input type="text" name="city" placeholder="City" required>
-    <input type="text" name="state" placeholder="State" required>
-    <input type="text" name="phone" placeholder="Phone Number" required>
-
-    <h2>Order Summary</h2>
-    <input type="hidden" name="total" value="80">
-
-    <h2>Payment Method</h2>
-    <?php foreach ($classes as $class): ?>
-        <input type="hidden" name="classes[]" value="<?php echo $class; ?>">
-    <?php endforeach; ?>
-    <p>Total: RM<?php echo $total; ?></p>
-    <input type="text" name="card_number" placeholder="Card Number" required>
-    <input type="text" name="name_on_card" placeholder="Name on Card" required>
-    <input type="text" name="expiration_month" placeholder="Expiration Month" required>
-    <input type="text" name="expiration_year" placeholder="Expiration Year" required>
-    <input type="text" name="security_code" placeholder="Security Code (CVV)" required>
-
-    <button type="submit">Subscribe</button>
-</form>
