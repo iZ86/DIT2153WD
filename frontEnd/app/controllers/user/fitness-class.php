@@ -2,7 +2,6 @@
 require '../../models/user/userFitnessClassModel.php';
 require '../../views/user/pages/classScheduleView.php';
 
-// Assuming a request handling script
 $instructorId = isset($_GET['instructor']) ? intval($_GET['instructor']) : null;
 $weekOffset = isset($_GET['week']) ? intval($_GET['week']) : 0;
 
