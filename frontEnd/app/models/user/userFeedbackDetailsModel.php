@@ -1,6 +1,6 @@
 <?php
 
-class AdminUsersModel {
+class userFeedbackDetailsModel {
     private $databaseConn;
     private $registeredUserTable = "REGISTERED_USER";
     private $userTable = "USER";
