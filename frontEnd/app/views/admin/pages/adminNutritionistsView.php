@@ -90,9 +90,6 @@ class AdminNutritionistsView {
                                 <button class="text-gray-500 hover:text-blue-600" onclick="openEditNutritionistModal(<?php echo $nutritionist['nutritionistID']; ?>, '<?php echo addslashes($nutritionist['firstName']); ?>', '<?php echo addslashes($nutritionist['lastName']); ?>', '<?php echo addslashes($nutritionist['phoneNo']); ?>', '<?php echo addslashes($nutritionist['email']); ?>', '<?php echo addslashes($nutritionist['gender']); ?>', '<?php echo addslashes($nutritionist['type']); ?>')">
                                     <i class="bx bx-pencil"></i>
                                 </button>
-                                <button class="text-gray-500 hover:text-red-600" onclick="deleteNutritionist(<?php echo $nutritionist['nutritionistID']; ?>)">
-                                    <i class="bx bx-trash"></i>
-                                </button>
                             </td>
                         </tr>
                     <?php endwhile; ?>
