@@ -4,8 +4,6 @@ class GuestForgotPasswordModel {
     private $databaseConn;
     /** Registered_User table */
     private $registeredUserTable = "REGISTERED_USER";
-    /** User table. */
-    private $userTable = "USER";
     /** Password Reset table. */
     private $passwordResetsTable = "PASSWORD_RESETS";
 

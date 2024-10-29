@@ -39,6 +39,11 @@ class GuestChangePasswordView {
         </div>
 
         <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="width: 500px;">
+            <?php
+                if (isset($_SESSION['invalidChangePassword'])) {
+                    echo "<div class='bg-red-200 text-center m-3 text-gray-600 p-3 rounded-lg'>Error during password change, please try again.</div>";
+                }
+            ?>
             <div class="flex flex-col">
                 <p class="w-fit mb-4">New Password</p>
                 <input type="password" name="newPassword" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">
