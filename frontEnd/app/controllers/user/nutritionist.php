@@ -43,7 +43,7 @@ function getBookingInformation() {
                 echo $nutritionistScheduleID;
                 echo "<script>alert('Successfully Made a Reservation!!');</script>";
                 header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=20");
-                $nutritionistModel->createNutritionistBooking($description, $nutritionistScheduleID, $username, 1);
+                //$nutritionistModel->createNutritionistBooking($description, $nutritionistScheduleID, $username, 1);
                 exit();
 
             } else {
