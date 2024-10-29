@@ -3,6 +3,11 @@ require '../../views/admin/pages/AdminInstructorsView.php';
 require '../../models/admin/AdminInstructorsModel.php';
 session_start();
 
+if (!isset($_SESSION['adminID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 $adminInstructorsModel = new AdminInstructorsModel(require '../../config/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -65,6 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     exit;
 }
 
-$instructors = $adminInstructorsModel->getAllInstructors();
-$adminInstructorsView = new AdminInstructorsView($instructors);
+$limit = 6;
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($currentPage - 1) * $limit;
+
+$instructors = $adminInstructorsModel->getAllInstructors($limit, $offset);
+
+$totalInstructors = $adminInstructorsModel->getTotalInstructors();
+$totalPagesInstructors = ceil($totalInstructors / $limit);
+
+$adminInstructorsView = new AdminInstructorsView($instructors, $totalPagesInstructors, $currentPage);
 $adminInstructorsView->renderView();
