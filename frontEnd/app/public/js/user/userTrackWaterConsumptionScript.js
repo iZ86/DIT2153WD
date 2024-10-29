@@ -115,7 +115,7 @@ function createSessionForUnitSelected(unitDropDownBoxID) {
 
 /** Converts milliliters to liters. */
 function convertMillilitersToLiters(milliliters) {
-    return milliliters / MILLILITERSTOLITERSCONVERSIONRATE;
+    return Math.floor(milliliters / MILLILITERSTOLITERSCONVERSIONRATE * 100) / 100;
 }
 
 /** Converts milliliters to ounces. */
