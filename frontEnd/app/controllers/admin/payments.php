@@ -3,6 +3,11 @@ require '../../views/admin/pages/AdminPaymentsView.php';
 require '../../models/admin/AdminPaymentsModel.php';
 session_start();
 
+if (!isset($_SESSION['adminID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 $adminPaymentsModel = new AdminPaymentsModel(require '../../config/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$payments = $adminPaymentsModel->getAllPayments();
-if ($payments->num_rows === 0) {
-    echo "No payments found.";
-    exit;
-}
+$limit = 10;
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($currentPage - 1) * $limit;
+
+$payments = $adminPaymentsModel->getAllPayments($limit, $offset);
+$totalPagesPayments = ceil($payments->num_rows / $limit);
 
 $users = $adminPaymentsModel->getAllUsers();
-$payments = $adminPaymentsModel->getAllPayments();
-$adminPaymentsView = new AdminPaymentsView($payments, $adminPaymentsModel, $users);
+$adminPaymentsView = new AdminPaymentsView($payments, $adminPaymentsModel, $users, $totalPagesPayments, $currentPage);
 $adminPaymentsView->renderView();
