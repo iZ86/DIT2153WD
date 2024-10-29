@@ -37,20 +37,17 @@ function getBookingInformation() {
         if (!empty($nutritionistID) && !empty($nutritionistSchedule) && !empty($username)) {
             global $nutritionistModel;
             echo $nutritionistID . $nutritionistSchedule . $description . $username;
-            $nutritionistScheduleData = $nutritionistModel->getNutritionistScheduleIaByNutritionistIdAndScheduleDateTime($nutritionistID, $nutritionistSchedule);
+            $nutritionistScheduleData = $nutritionistModel->getNutritionistScheduleIdByNutritionistIdAndScheduleDateTime($nutritionistID, $nutritionistSchedule);
 
             if ($nutritionistScheduleData) {
                 $nutritionistScheduleID = $nutritionistScheduleData ? $nutritionistScheduleData['nutritionistScheduleID'] : null;
-                echo $nutritionistScheduleID;
-                echo "<script>alert('Successfully Made a Reservation!!');</script>";
+                $_SESSION['description'] = $description;
+                $_SESSION['nutritionistScheduleID'] = $nutritionistScheduleID;
                 header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=20");
-                //$nutritionistModel->createNutritionistBooking($description, $nutritionistScheduleID, $username, 1);
                 exit();
-
             } else {
                 echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
             }
-
         } else {
             echo "<script>alert('Please fill in all required fields.');</script>";
         }
