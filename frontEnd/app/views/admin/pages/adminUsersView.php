@@ -2,9 +2,13 @@
 
 class AdminUsersView {
     private $users;
+    private $totalPages;
+    private $currentPage;
 
-    public function __construct($users) {
+    public function __construct($users, $totalPages, $currentPage) {
         $this->users = $users;
+        $this->totalPages = $totalPages;
+        $this->currentPage = $currentPage;
     }
 
     public function renderView() : void {
@@ -42,16 +46,11 @@ class AdminUsersView {
                             <input type="text" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
                             <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
-
-                        <button onclick="openModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
-                            <i class="bx bxs-plus-circle"></i>
-                            <span>Add User</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 600px;">
+            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 540px;">
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
@@ -68,7 +67,10 @@ class AdminUsersView {
                     <?php while ($user = $this->users->fetch_assoc()): ?>
                         <tr class="bg-white">
                             <td class="p-3 mt-4"><?php echo $user['registeredUserID']; ?></td>
-                            <td class="p-3 mt-4"><?php echo $user['fullName']; ?></td>
+                            <td class="p-3 mt-4">
+                                <span class="font-semibold"><?php echo $user['fullName']; ?><br></span>
+                                <span class="text-gray-500"><?php echo $user['username']; ?></span>
+                            </td>
                             <td class="p-3 mt-4"><?php echo $user['phoneNo']; ?></td>
                             <td class="p-3 mt-4"><?php echo $user['email']; ?></td>
                             <td class="p-3 mt-4"><?php echo $user['gender']; ?></td>
@@ -76,7 +78,7 @@ class AdminUsersView {
                                 <span class="bg-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $user['membershipStatus']; ?></span>
                             </td>
                             <td class="p-3 mt-4 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>')">
+                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>')">
                                     <i class="bx bx-pencil"></i>
                                 </button>
                             </td>
@@ -85,16 +87,31 @@ class AdminUsersView {
                     </tbody>
                 </table>
             </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2 mr-4">
+                        <?php for ($i = 1; $i <= $this->totalPages; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500'; ?> hover:bg-indigo-600 hover:text-white transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+            </div>
         </section>
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
         <div id="userModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 modal-content">
-                <h2 id="modalTitle" class="text-2xl font-semibold mb-4">Add User</h2>
+                <h2 id="modalTitle" class="text-2xl font-semibold mb-4">Edit User</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <input type="hidden" id="registeredUserID" name="registeredUserID">
+
                     <label class="block text-gray-700 text-sm font-medium">Email <span class="text-red-500">*</span></label>
                     <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
@@ -108,6 +125,9 @@ class AdminUsersView {
                             <input name="lastName" type="text" id="lastName" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
                         </div>
                     </div>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Username <span class="text-red-500">*</span></label>
+                    <input name="username" type="text" id="username" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
@@ -130,7 +150,7 @@ class AdminUsersView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2">Close</button>
-                        <button type="submit" id="submitButton" name="editUserButton" value="Edit User" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg">Save Changes</button>
+                        <button type="submit" id="editUserButton" name="editUserButton" value="Edit User" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -164,22 +184,20 @@ class AdminUsersView {
                 }, 10);
             }
 
-            function openEditModal(id, firstName, lastName, email, phoneNo, gender, dateOfBirth) {
+            function openEditModal(id, firstName, lastName, username, email, phoneNo, gender, dateOfBirth) {
                 const modal = document.getElementById('userModal');
                 const overlay = document.getElementById('modalOverlay');
 
                 modal.classList.remove('hidden');
                 overlay.classList.remove('hidden');
-                document.getElementById('modalTitle').innerText = 'Edit User';
                 document.getElementById('registeredUserID').value = id;
                 document.getElementById('firstName').value = firstName;
                 document.getElementById('lastName').value = lastName;
+                document.getElementById('username').value = username;
                 document.getElementById('email').value = email;
                 document.getElementById('phoneNo').value = phoneNo;
                 document.getElementById('gender').value = gender;
                 document.getElementById('dateOfBirth').value = dateOfBirth;
-                document.getElementById('submitButton').name = 'editUserButton';
-                document.getElementById('submitButton').value = 'Edit User';
 
                 setTimeout(() => {
                     modal.classList.add('show');
