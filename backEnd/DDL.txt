@@ -101,7 +101,7 @@ CREATE TABLE BMI(
 	bmiID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	age INT,
 	gender VARCHAR(255),
-	height INT,
+	height DECIMAL(18, 2),
 	weight INT,
 	recordedOn DATE,
 	userID INT,
