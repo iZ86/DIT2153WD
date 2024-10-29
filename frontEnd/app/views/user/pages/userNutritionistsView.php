@@ -92,7 +92,7 @@ class NutritionistsView {
                 </p>
             </div>
         </div>
-        <button onclick="openModal()" class="mt-5 bg-indigo-500 hover:bg-indigo-600 text-white hover:text-gray-mid text-sm font-bold py-4 px-6 rounded-lg flex items-center space-x-2">
+        <button onclick="openModal()" class="mt-5 bg-indigo-500 hover:bg-indigo-600 text-white hover:text-gray-mid font-bold py-3 px-5 rounded-lg flex items-center space-x-2">
             <span>Book a Nutritionist</span>
         </button>
 
