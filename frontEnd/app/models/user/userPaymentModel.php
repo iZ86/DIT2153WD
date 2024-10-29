@@ -22,4 +22,11 @@ class UserPaymentModel {
             return false;
         }
     }
+
+    public function createUserPayment($type, $status, $createdOn, $userID) {
+        $sql = "INSERT INTO " . $this->userPaymentTable . " (type,status,createdOn,userID) VALUES(?,?,?,?)";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("sssi", $type, $status, $createdOn, $userID);
+        return $stmt->execute();
+    }
 }
