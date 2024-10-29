@@ -3,6 +3,11 @@ require '../../views/admin/pages/AdminNutritionistsView.php';
 require '../../models/admin/AdminNutritionistsModel.php';
 session_start();
 
+if (!isset($_SESSION['adminID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 $adminNutritionistsModel = new AdminNutritionistsModel(require '../../config/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -83,8 +88,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$nutritionists = $adminNutritionistsModel->getAllNutritionists();
-$schedules = $adminNutritionistsModel->getAllSchedules();
+$limit = 10;
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($currentPage - 1) * $limit;
 
-$adminNutritionistsView = new AdminNutritionistsView($nutritionists, $schedules);
+$totalNutritionists = $adminNutritionistsModel->getTotalNutritionists();
+$totalSchedules = $adminNutritionistsModel->getTotalSchedules();
+$totalPagesNutritionists = ceil($totalNutritionists / $limit);
+$totalPagesSchedules = ceil($totalSchedules / $limit);
+
+$nutritionists = $adminNutritionistsModel->getNutritionists($limit, $offset);
+$schedules = $adminNutritionistsModel->getSchedules($limit, $offset);
+
+$adminNutritionistsView = new AdminNutritionistsView($nutritionists, $schedules, $totalPagesNutritionists, $totalPagesSchedules, $currentPage);
 $adminNutritionistsView->renderView();
