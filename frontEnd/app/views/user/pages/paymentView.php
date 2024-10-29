@@ -30,10 +30,12 @@ class PaymentView {
         include __DIR__ . '/../components/userFooter.php';
     }
 
-    public function renderContent() {?>
+    public function renderContent() {
+        $order = isset($_GET['order']) ? $_GET['order'] : '';
+        $price = isset($_GET['price']) ? $_GET['price'] : '0'; ?>
     <section class="px-32 space-y-6 bg-blue-user pt-10 pb-28">
     <h1 class="text-3xl font-bold font-sans">Monthly Membership</h1>
-    <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
+    <form action="<?=$_SERVER['PHP_SELF']?>?order=<?= $order ?>" method="POST">
     <div class="flex space-x-14">
         <!--Billing Address-->
         <div class="bg-gray-100 p-6 w-1/2 rounded-lg border border-black">
@@ -82,11 +84,11 @@ class PaymentView {
         <div class="bg-gray-100 p-4 w-1/2 rounded-lg flex flex-col space-y-6 border border-black">
             <h1 class="text-3xl font-bold">Order Summary</h1>
             <div class="space-y-4">
-                <h3 class="pb-2 font-normal text-2xl"><?= $_GET['order'] ?> <span class="float-right">RM <?= $_GET['price'] ?></span></h3>
+                <h3 class="pb-2 font-normal text-2xl"><?= isset($_GET['order'])? $_GET['order'] : "-"  ?> <span class="float-right">RM <?= isset($_GET['price'])? $_GET['price'] : "0"  ?></span></h3>
 
                 <!-- Horizontal Line -->
                 <div class="border border-gray-500 border-solid mb-6"></div>
-                <h2 class="text-2xl font-semibold">Grand Total <span class="float-right">RM<?= $_GET['price'] ?></span></h2>
+                <h2 class="text-2xl font-semibold">Grand Total <span class="float-right">RM<?= isset($_GET['price'])? $_GET['price'] : "0"  ?> </span></h2>
             </div>
 
             <!--Payment Method-->
