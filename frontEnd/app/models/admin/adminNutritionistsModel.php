@@ -8,14 +8,33 @@ class AdminNutritionistsModel {
         $this->databaseConn = $databaseConn;
     }
 
-    public function getAllNutritionists() {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type FROM " . $this->nutritionistsTable;
+    public function getTotalNutritionists() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->nutritionistsTable;
         $stmt = $this->databaseConn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['total'];
+    }
+
+    public function getNutritionists($limit, $offset) {
+        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type 
+              FROM " . $this->nutritionistsTable . " 
+              LIMIT ? OFFSET ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
         return $stmt->get_result();
     }
 
-    public function getAllSchedules() {
+    public function getTotalSchedules() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->scheduleTable;
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['total'];
+    }
+
+    public function getSchedules($limit, $offset) {
         $query = "SELECT ns.nutritionistScheduleID, 
                      n.nutritionistID, 
                      CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName, 
@@ -23,8 +42,10 @@ class AdminNutritionistsModel {
                      ns.price 
               FROM " . $this->scheduleTable . " AS ns
               JOIN " . $this->nutritionistsTable . " AS n ON ns.nutritionistID = n.nutritionistID
-              ORDER BY ns.nutritionistScheduleID ASC";
+              ORDER BY ns.nutritionistScheduleID ASC
+              LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
+        $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
         return $stmt->get_result();
     }
