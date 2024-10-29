@@ -7,11 +7,29 @@ class AdminInstructorsModel {
         $this->databaseConn = $databaseConn;
     }
 
-    public function getAllInstructors() {
+    public function getAllInstructors($limit = null, $offset = null) {
         $query = "SELECT instructorID, firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth FROM " . $this->instructorsTable;
+
+        if ($limit !== null && $offset !== null) {
+            $query .= " LIMIT ? OFFSET ?";
+        }
+
         $stmt = $this->databaseConn->prepare($query);
+
+        if ($limit !== null && $offset !== null) {
+            $stmt->bind_param("ii", $limit, $offset);
+        }
+
         $stmt->execute();
         return $stmt->get_result();
+    }
+
+    public function getTotalInstructors() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->instructorsTable;
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc()['total'];
     }
 
     public function addInstructor($firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth) {
