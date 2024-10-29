@@ -26,26 +26,40 @@ function checkIsBasicPostVariablesSet() {
     return false;
 }
 
-
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset($_POST['subscribe'])) {
         if($_POST['subscribe'] === "Subscribe") {
-                ?> <script>alert("Able to access subscribe");</script><?php
-                $email = cleanData($_POST['email']);
-                $firstName = cleanData($_POST['firstName']);
-                $lastName = cleanData($_POST['lastName']);
-                $address = cleanData($_POST['address']);
-                $country = cleanData($_POST['country']);
-                $zipCode = cleanData($_POST['zipCode']);
-                $country = cleanData($_POST['city']);
-                $state = cleanData($_POST['state']);
-                $phoneNumber = cleanData($_POST['phoneNumber']);
-                $type = isset($_GET['order']) ? cleanData($_GET['order']) : null;
-                $status = "Completed";
-                $createdOn = date('Y-m-d H:i:s');
+            $email = cleanData($_POST['email']);
+            $firstName = cleanData($_POST['firstName']);
+            $lastName = cleanData($_POST['lastName']);
+            $address = cleanData($_POST['address']);
+            $country = cleanData($_POST['country']);
+            $zipCode = cleanData($_POST['zipCode']);
+            $country = cleanData($_POST['city']);
+            $state = cleanData($_POST['state']);
+            $phoneNumber = cleanData($_POST['phoneNumber']);
+            $type = isset($_GET['order']) ? cleanData($_GET['order']) : null;
+            $status = "Completed";
+            $createdOn = date('Y-m-d H:i:s');
+            $nutritionistBookingDescription = isset($_SESSION['description']) ? cleanData($_SESSION['description']) : null;
+            $nutritionistScheduleID = isset($_SESSION['nutritionistScheduleID']) ? cleanData($_SESSION['nutritionistScheduleID']) : null;
 
-                $userPaymentModel->createUserPayment($type, $status, $createdOn, $_SESSION['userID']);
-                echo $type . $status . $createdOn . $_SESSION['userID'];
+            $userPaymentModel->createUserPayment($type, $status, $createdOn, $_SESSION['userID']);
+            $paymentID = $userPaymentModel->getPaymentIDByTypeCreatedOnAndUserID($type, $createdOn, htmlspecialchars($_SESSION['userID']));
+
+            if ($paymentID) {
+                // Check if the schedule is already booked
+                if ($userPaymentModel->isScheduleIDBooked($nutritionistScheduleID)) {
+                    echo "<script>alert('This schedule is already booked.Please select a different schedule.'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
+                } else {
+                    $bookingResult = $userPaymentModel->createNutritionistBooking($nutritionistBookingDescription, $nutritionistScheduleID, $_SESSION['userID'], $paymentID['paymentID']);
+                    if ($bookingResult === true) {
+                        echo "<script>alert('Succesfully booked the Nutritionist. Please make sure be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
+                    } else {
+                        echo "<script>alert('Error: " . htmlspecialchars($bookingResult) . "');</script>";
+                    }
+                }
+            }
         }
     }
 }
