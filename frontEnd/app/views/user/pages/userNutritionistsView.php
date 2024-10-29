@@ -76,7 +76,7 @@ class NutritionistsView {
         ?>
     <section class="bg-white-bg">
     <div class="flex flex-col items-center justify-center">
-        <h1 class="mt-12 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
+        <h1 class="mt-8 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
         <div class="flex items-center justify-center gap-x-10 mt-10">
             <img class="w-3/4 h-72" src="../../public/images/nutrition_header.png" alt="Nutrition.png">
             <div class="border border-[#666666] border-solid h-[17rem]"></div>
@@ -92,7 +92,7 @@ class NutritionistsView {
                 </p>
             </div>
         </div>
-        <button onclick="openModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+        <button onclick="openModal()" class="mt-5 bg-indigo-500 hover:bg-indigo-600 text-white hover:text-gray-mid text-sm font-bold py-4 px-6 rounded-lg flex items-center space-x-2">
             <span>Book a Nutritionist</span>
         </button>
 
