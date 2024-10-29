@@ -4,11 +4,17 @@ class AdminClassesView {
     private $classes;
     private $schedules;
     private $instructors;
+    private $totalPagesClasses;
+    private $totalPagesSchedules;
+    private $currentPage;
 
-    public function __construct($classes, $schedules, $instructors) {
+    public function __construct($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage) {
         $this->classes = $classes;
         $this->schedules = $schedules;
         $this->instructors = $instructors;
+        $this->totalPagesClasses = $totalPagesClasses;
+        $this->totalPagesSchedules = $totalPagesSchedules;
+        $this->currentPage = $currentPage;
     }
 
     public function renderView() : void {
@@ -98,6 +104,22 @@ class AdminClassesView {
                     </tbody>
                 </table>
             </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2 mr-4">
+                        <?php for ($i = 1; $i <= $this->totalPagesClasses; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
+                        <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
+                        transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+            </div>
         </section>
 
         <section class="p-6 space-y-6">
@@ -151,6 +173,22 @@ class AdminClassesView {
                     <?php endwhile; ?>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2 mr-4">
+                        <?php for ($i = 1; $i <= $this->totalPagesSchedules; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
+                        <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
+                        transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
             </div>
         </section>
 
@@ -241,9 +279,8 @@ class AdminClassesView {
                 setTimeout(() => {
                     modal.classList.add('hidden');
                     overlay.classList.add('hidden');
+                    clearClassModalFields();
                 }, 300);
-
-                clearClassModalFields();
             }
 
             function openScheduleModal() {
@@ -267,9 +304,8 @@ class AdminClassesView {
                 setTimeout(() => {
                     modal.classList.add('hidden');
                     overlay.classList.add('hidden');
+                    clearScheduleModalFields();
                 }, 300);
-
-                clearScheduleModalFields();
             }
 
             function openEditClassModal(id, name, description) {
@@ -302,14 +338,12 @@ class AdminClassesView {
                 document.querySelector('select[name="instructorID"]').value = instructorID;
                 document.querySelector('input[name="pax"]').value = pax;
 
-                // Parse the scheduledOn datetime
                 const date = new Date(scheduledOn);
-                const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD
-                const formattedTime = date.toTimeString().split(' ')[0].substring(0, 5); // HH:MM
+                const formattedDate = date.toISOString().split('T')[0];
+                const formattedTime = date.toTimeString().split(' ')[0].substring(0, 5);
 
                 document.getElementById('scheduledOnDate').value = formattedDate;
                 document.getElementById('scheduledOnTime').value = formattedTime;
-
                 document.getElementById('submitScheduleButton').name = 'editScheduleButton';
                 document.getElementById('submitScheduleButton').value = 'Edit Schedule';
 
