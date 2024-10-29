@@ -5,7 +5,6 @@ session_start();
 $guestLogInModel = new GuestLogInModel(require "../config/db_connection.php");
 
 
-
 if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
     $username = $_POST['username'];
     $password = $_POST['password'];
