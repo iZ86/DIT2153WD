@@ -3,17 +3,17 @@
         <div class="flex justify-end w-full items-center space-x-4 relative">
             <div class="relative">
                 <button id="dropdownToggle" class="flex items-center space-x-2 mr-2">
-                    <span class="font-semibold text-gray-700 mr-2">Admin</span>
+                    <span class="font-semibold text-gray-700 mr-2"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Admin'); ?></span>
                     <img src="../../public/images/avatar.png" alt="Admin Avatar" class="w-10 h-10 rounded-full">
                 </button>
 
                 <div id="dropdownMenu" class="absolute right-0 mt-2 p-2 w-48 bg-white border border-gray-200 rounded-lg hidden">
-                    <a href="../pages/adminProfileView.php"
+                    <a href="../admin/profile.php"
                        class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
                         <i class='bx bxs-user text-base'></i>
                         <span class="font-medium">View Profile</span>
                     </a>
-                    <a href="/"
+                    <a href="../logout.php"
                        class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
                         <i class='bx bx-log-out text-base'></i>
                         <span class="font-medium">Log Out</span>
