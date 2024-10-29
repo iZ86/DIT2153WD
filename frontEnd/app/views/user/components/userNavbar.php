@@ -7,7 +7,7 @@
             <div class="flex font-bold space-x-14 text-lg">
                 <a href="">Home</a>
                 <a href="">Explore</a>
-                <a href="">Nutritionists</a>
+                <a href="http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php">Nutritionists</a>
                 <a href="">Feedbacks</a>
             </div>
 
