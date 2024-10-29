@@ -3,6 +3,11 @@ require '../../views/admin/pages/adminClassesView.php';
 require '../../models/admin/adminClassesModel.php';
 session_start();
 
+if (!isset($_SESSION['adminID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 $adminClassesModel = new AdminClassesModel(require '../../config/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -75,9 +80,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$classes = $adminClassesModel->getAllClasses();
-$schedules = $adminClassesModel->getAllSchedules();
+$limit = 10;
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($currentPage - 1) * $limit;
+
+$classes = $adminClassesModel->getClasses($limit, $offset);
+$schedules = $adminClassesModel->getSchedules($limit, $offset);
 $instructors = $adminClassesModel->getAllInstructors();
 
-$adminClassesView = new AdminClassesView($classes, $schedules, $instructors);
+$totalClasses = $adminClassesModel->getTotalClasses();
+$totalSchedules = $adminClassesModel->getTotalSchedules();
+$totalPagesClasses = ceil($totalClasses / $limit);
+$totalPagesSchedules = ceil($totalSchedules / $limit);
+
+$adminClassesView = new AdminClassesView($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage);
 $adminClassesView->renderView();
