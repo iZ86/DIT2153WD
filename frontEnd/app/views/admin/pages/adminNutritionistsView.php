@@ -4,9 +4,16 @@ class AdminNutritionistsView {
     private $nutritionists;
     private $schedules;
 
-    public function __construct($nutritionists, $schedules) {
+    private $totalPagesNutritionists;
+    private $totalPagesSchedules;
+    private $currentPage;
+
+    public function __construct($nutritionists, $schedules, $totalPagesNutritionists, $totalPagesSchedules, $currentPage) {
         $this->nutritionists = $nutritionists;
         $this->schedules = $schedules;
+        $this->totalPagesNutritionists = $totalPagesNutritionists;
+        $this->totalPagesSchedules = $totalPagesSchedules;
+        $this->currentPage = $currentPage;
     }
 
     public function renderView() : void {
@@ -89,6 +96,22 @@ class AdminNutritionistsView {
                     </tbody>
                 </table>
             </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2 mr-4">
+                        <?php for ($i = 1; $i <= $this->totalPagesNutritionists; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
+                                <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
+                                transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+            </div>
         </section>
 
         <section class="p-6 space-y-6">
@@ -149,11 +172,26 @@ class AdminNutritionistsView {
                     </tbody>
                 </table>
             </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2 mr-4">
+                        <?php for ($i = 1; $i <= $this->totalPagesSchedules; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
+                                    <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
+                                    transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+            </div>
         </section>
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
-        <!-- Modal for Nutritionist -->
         <div id="nutritionistModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
                 <h2 id="nutritionistModalTitle" class="text-2xl font-semibold mb-4">Add Nutritionist</h2>
