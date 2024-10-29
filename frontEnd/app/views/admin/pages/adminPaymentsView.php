@@ -4,11 +4,15 @@ class AdminPaymentsView {
     private $payments;
     private $adminPaymentsModel;
     private $users;
+    private $totalPagesPayments;
+    private $currentPage;
 
-    public function __construct($payments, $adminPaymentsModel, $users) {
+    public function __construct($payments, $adminPaymentsModel, $users, $totalPagesPayments, $currentPage) {
         $this->payments = $payments;
         $this->adminPaymentsModel = $adminPaymentsModel;
         $this->users = $users;
+        $this->totalPagesPayments = $totalPagesPayments;
+        $this->currentPage = $currentPage;
     }
 
     public function renderView() : void {
@@ -92,6 +96,22 @@ class AdminPaymentsView {
                     <?php endwhile; ?>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="flex justify-end mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="flex space-x-2">
+                        <?php for ($i = 1; $i <= $this->totalPagesPayments; $i++): ?>
+                            <li>
+                                <a href="?page=<?php echo $i; ?>" class="px-4 py-2 border rounded-md
+                                <?php echo $i == $this->currentPage ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white'; ?>
+                                transition">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
             </div>
         </section>
 
