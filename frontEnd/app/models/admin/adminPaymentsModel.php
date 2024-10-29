@@ -30,16 +30,59 @@ class AdminPaymentsModel {
         return null;
     }
 
-    public function getAllPayments() {
+    public function getAllPayments($limit = null, $offset = null) {
         $query = "SELECT paymentID, type, status, createdOn, userID FROM " . $this->paymentsTable;
+
+        if ($limit !== null && $offset !== null) {
+            $query .= " LIMIT ? OFFSET ?";
+        }
+
         $stmt = $this->databaseConn->prepare($query);
+
+        if ($limit !== null && $offset !== null) {
+            $stmt->bind_param("ii", $limit, $offset);
+        }
+
         $stmt->execute();
         return $stmt->get_result();
     }
 
-    /*TODO: Sum all the amount of records(price) to one paymentID*/
     public function getTotalAmountByPaymentID($paymentID) {
+        $totalAmount = 0;
 
+        $query = "SELECT SUM(m.price) AS totalAmount
+              FROM PAYMENT p
+              JOIN MEMBER_SUBSCRIPTION ms ON p.paymentID = ms.paymentID
+              JOIN MEMBERSHIP m ON ms.membershipID = m.membershipID
+              WHERE p.paymentID = ?";
+
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->bind_param("i", $paymentID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $totalAmount += $row['totalAmount'] ? (float)$row['totalAmount'] : 0;
+        }
+
+        $query = "SELECT SUM(f.price) AS totalAmount
+              FROM PAYMENT p
+              JOIN FITNESS_CLASS_SUBSCRIPTION fcs ON p.paymentID = fcs.paymentID
+              JOIN FITNESS_CLASS f ON fcs.fitnessClassID = f.fitnessClassID
+              WHERE p.paymentID = ?";
+
+        $stmt = $this->databaseConn->prepare($query);
+        $stmt->bind_param("i", $paymentID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $totalAmount += $row['totalAmount'] ? (float)$row['totalAmount'] : 0;
+        }
+
+        return $totalAmount;
     }
 
     public function editPayment($paymentID, $type, $status, $createdOn, $userID) {
