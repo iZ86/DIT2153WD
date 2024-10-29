@@ -102,7 +102,7 @@ CREATE TABLE BMI(
 	age INT,
 	gender VARCHAR(255),
 	height DECIMAL(18, 2),
-	weight INT,
+	weight DECIMAL(18, 2),
 	recordedOn DATE,
 	userID INT,
 	FOREIGN KEY (userID) REFERENCES USER(userID));
