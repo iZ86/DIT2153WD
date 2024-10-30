@@ -70,7 +70,7 @@ class AdminClassesModel {
                      fcs.pax,
                      CASE 
                          WHEN fcs.scheduledOn > NOW() THEN 'Upcoming'
-                         WHEN fcs.scheduledOn <= NOW() AND fcs.scheduledOn > NOW() - INTERVAL 1 HOUR THEN 'In Progress'
+                         WHEN fcs.scheduledOn <= NOW() AND fcs.scheduledOn > NOW() - INTERVAL 2 HOUR THEN 'In Progress'
                          ELSE 'Completed'
                      END as status
               FROM " . $this->scheduleTable . " AS fcs
