@@ -134,11 +134,14 @@ function updateWeightMessages() {
 
     let latestWeight = -1;
 
+    // Start of time.
+    let weightTime = "00:00";
+
     Object.entries(weightDataArray).map(entry => {
         let weightData = entry[1];
-        weight = new Number(weightData["weight"]);
-        if (weight > latestWeight) {
-            latestWeight = weight;
+        if (weightData["recordedOnTime"] > weightTime) {
+            latestWeight = weightData["weight"];
+            weightTime = weightData["recordedOnTime"];
         }
     });
 
@@ -159,10 +162,10 @@ function updateWeightMessages() {
 
     if (latestWeight > 0) {
         if (paginationDateString === currentDateString) {
-            weightStatusMessage.innerText = "You weigh " + weightInUnitText + " today!";
+            weightStatusMessage.innerText = "Your latest weight is " + weightInUnitText + " today!";
             weightEncouragementMessage.innerText = "Keep up the good work!";
         } else {
-            weightStatusMessage.innerText = "Your weight was " + weightInUnitText + " on " + paginationDateString;
+            weightStatusMessage.innerText = "Your latest weight on " + paginationDateString + " is " + weightInUnitText;
             weightEncouragementMessage.innerText = "";
         }
     } else {
