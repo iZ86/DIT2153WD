@@ -37,7 +37,7 @@ class UserTrackBMIView {
 
     /** Renders ONE card of BMI data. */
     private function renderOneBMIDataRow($bmiID) {?>
-    <div id=<?php echo $bmiID; ?> class="basis-32 bg-orange-400 flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-orange-600 cursor-pointer" onclick="openEditBMIDataModal(<?php echo $bmiID . ')';?>">
+    <div id=<?php echo $bmiID; ?> class="basis-32 bg-gray-400 flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-gray-400 cursor-pointer" onclick="openEditBMIDataModal(<?php echo $bmiID . ')';?>">
         <img src="../../public/images/track_bmi_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
             <p id=<?php echo '"' . $bmiID . 'Text"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"></p>
@@ -93,7 +93,7 @@ class UserTrackBMIView {
         <h1 class="text-4xl font-bold mx-auto mb-20">Track BMI</h1>
 
         <div class="flex min-h-64 mb-32">
-            <div class="mx-auto basis-256 bg-orange-400 rounded-2xl flex flex-col items-center">
+            <div class="mx-auto basis-256 bg-gray-400 rounded-2xl flex flex-col items-center">
                 <img src="../../public/images/track_bmi_icon.png" class="w-16 h-16 mb-10" style="margin-top: 20px;">
                 <div class="text-white font-bold text-3xl drop-shadow-dark text-center">
                     <p class="mb-0" id="bmiStatusMessage"></p>
@@ -120,7 +120,7 @@ class UserTrackBMIView {
 
 
     <div id="bmiDataModal" class="absolute inset-0 flex items-center justify-center z-20 top-296 modal hidden font-montserrat">
-        <div class="flex flex-col items-center bg-orange-400 w-full rounded-2xl shadow-lg modal-content basis-144 min-h-144">
+        <div class="flex flex-col items-center bg-gray-400 w-full rounded-2xl shadow-lg modal-content basis-144 min-h-144">
             <img src="../../public/images/track_bmi_icon.png" class="w-16 h-16 mt-10 mb-5">
             <h2 id="modalTitle" class="text-3xl text-white font-bold drop-shadow-dark mb-5"></h2>
             <hr class="w-full mb-5">
