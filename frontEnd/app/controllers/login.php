@@ -25,11 +25,25 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
                 // userID is the same as registeredUserID.
                 $_SESSION['username'] = $username;
                 $_SESSION['userID'] = $guestLogInModel->getRegisteredUserID($username);
+
+                // Once logged in, these data are no longer needed.
+                unset($_SESSION['invalidLogin']);
+                unset($_SESSION['usernameInput']);
+                unset($_SESSION['passwordInput']);
+                unset($_SESSION['keepMeLoggedInInput']);
+
                 die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/"));
             } else {
                 // adminID is the same as registeredUserID.
                 $_SESSION['username'] = $username;
                 $_SESSION['adminID'] = $guestLogInModel->getRegisteredUserID($username);
+
+                // Once logged in, these data are no longer needed.
+                unset($_SESSION['invalidLogin']);
+                unset($_SESSION['usernameInput']);
+                unset($_SESSION['passwordInput']);
+                unset($_SESSION['keepMeLoggedInInput']);
+
                 die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/admin/"));
             }
         } else {
