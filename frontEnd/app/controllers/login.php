@@ -59,6 +59,8 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
 
 $guestLogInView = new GuestLogInView();
 $guestLogInView->renderView();
+
+// Prevent data from persisting after the user leaves the page, and returns.
 unset($_SESSION['invalidLogin']);
 unset($_SESSION['usernameInput']);
 unset($_SESSION['passwordInput']);
