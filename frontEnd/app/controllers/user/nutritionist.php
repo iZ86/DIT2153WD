@@ -60,3 +60,5 @@ $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionis
 $nutritionistsView->renderView();
 getBookingInformation();
 ob_end_flush();
+unset($_SESSION['description']);
+unset($_SESSION['nutritionistScheduleID']);
