@@ -132,7 +132,15 @@ class AdminInstructorsView {
                     <label class="block text-gray-700 text-sm font-medium mt-4">Email <span class="text-red-500">*</span></label>
                     <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
+                    <input name="phoneNo" type="text" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
                     <div class="flex space-x-4 mt-4">
+                        <div class="flex-1">
+                            <label class="block text-gray-700 text-sm font-medium">Date of Birth <span class="text-red-500">*</span></label>
+                            <input name="dateOfBirth" type="date" id="dateOfBirth" class="w-full border border-gray-300 rounded-lg py-2 px-3" required>
+                        </div>
+
                         <div class="flex-1">
                             <label class="block text-gray-700 text-sm font-medium">Gender <span class="text-red-500">*</span></label>
                             <select name="gender" id="gender" class="w-full border border-gray-300 rounded-lg py-2 px-3" required>
@@ -141,30 +149,23 @@ class AdminInstructorsView {
                                 <option value="Female">Female</option>
                             </select>
                         </div>
-                        <div class="flex-1">
-                            <label class="block text-gray-700 text-sm font-medium">Date of Birth <span class="text-red-500">*</span></label>
-                            <input name="dateOfBirth" type="date" id="dateOfBirth" class="w-full border border-gray-300 rounded-lg py-2 px-3" required>
-                        </div>
                     </div>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone No <span class="text-red-500">*</span></label>
-                    <input name="phoneNo" type="text" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
-                            <label class="block text-gray-700 text-sm font-medium">Weight</label>
+                            <label class="block text-gray-700 text-sm font-medium">Weight (Kg) <span class="text-red-500">*</span></label>
                             <input name="weight" type="text" id="weight" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
                         </div>
                         <div class="flex-1">
-                            <label class="block text-gray-700 text-sm font-medium">Height</label>
+                            <label class="block text-gray-700 text-sm font-medium">Height (Cm) <span class="text-red-500">*</span></label>
                             <input name="height" type="text" id="height" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
                         </div>
                     </div>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Certification</label>
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Certification <span class="text-red-500">*</span></label>
                     <input name="certification" type="text" id="certification" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Description</label>
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Description <span class="text-red-500">*</span></label>
                     <textarea name="description" id="description" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1"></textarea>
 
                     <div class="flex justify-end mt-10">
