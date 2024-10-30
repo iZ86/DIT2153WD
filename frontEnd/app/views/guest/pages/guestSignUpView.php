@@ -32,15 +32,15 @@ class GuestSignUpView {
                 <?php
                     // If there is error, display error message
                     if (isset($_SESSION['signUpError'])) {
-                        if ($_SESSION['signUpError'] == 1) {
+                        if ($_SESSION['signUpError'] === 1) {
                             $errorMsg = "Unsuccessful registration. Please do not leave empty fields.";
-                        } else if ($_SESSION['signUpError'] == 2) {
+                        } else if ($_SESSION['signUpError'] === 2) {
                             $errorMsg = "Unsuccessful registration. Username already exists.";
-                        } else if ($_SESSION['signUpError'] == 3) {
+                        } else if ($_SESSION['signUpError'] === 3) {
                             $errorMsg = "Unsuccessful registration. Email already exists.";
-                        } else if ($_SESSION['signUpError'] == 4) {
+                        } else if ($_SESSION['signUpError'] === 4) {
                             $errorMsg = "Unsuccessful registration. Verification mail failed to send.";
-                        } else if ($_SESSION['signUpError'] == 5) {
+                        } else if ($_SESSION['signUpError'] === 5) {
                             $errorMsg = "Unsuccessful registration. Error during registration.";
                         }
                         echo "<div class='bg-red-200 text-center m-3 text-gray-600 p-3 rounded-lg'>$errorMsg</div>";
@@ -60,7 +60,7 @@ class GuestSignUpView {
                         <p class="w-fit mb-4">Username</p>
                         <input type="text" name="username" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6"
                         <?php 
-                        // Persist the username inputted, if error.
+                        // Persist inputted data, if error.
                             if (isset($_SESSION['signUpError'])) {
                                 echo 'value="' . $_SESSION['signUpUsername'] . '"';
                             }
