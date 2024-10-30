@@ -6,6 +6,15 @@ require '../../views/user/pages/userNutritionistsView.php';
 
 $nutritionistModel = new NutritionistModel(require '../../config/db_connection.php');
 $nutritionistAvailableDateTime = [];
+
+/** Cleans the data. */
+function cleanData($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 // Check if only 'nutritionistID' is set for fetching dates
 if (isset($_POST['nutritionistID'])) {
     $nutritionistID = $_POST['nutritionistID'];
@@ -30,9 +39,9 @@ if (isset($_POST['nutritionistID'])) {
  */
 function getBookingInformation() {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $nutritionistID = $_POST['nutritionist'] ?? null;
-        $nutritionistSchedule = $_POST['date-time'] ?? null;
-        $description = $_POST['desc'] ?? null;
+        $nutritionistID = cleanData($_POST['nutritionist']) ?? null;
+        $nutritionistSchedule = cleanData($_POST['date-time']) ?? null;
+        $description = cleanData($_POST['desc']) ?? null;
         $username = $_SESSION['userID'];
         if (!empty($nutritionistID) && !empty($nutritionistSchedule) && !empty($username)) {
             global $nutritionistModel;
