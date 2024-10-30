@@ -212,8 +212,8 @@ class AdminInstructorsView {
                 setTimeout(() => {
                     modal.classList.add('hidden');
                     overlay.classList.add('hidden');
+                    clearInstructorModalFields();
                 }, 300);
-                clearInstructorModalFields();
             }
 
             function openEditInstructorModal(instructorID) {
