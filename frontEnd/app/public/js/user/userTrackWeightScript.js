@@ -240,7 +240,6 @@ function closeConfirmationModal() {
 
     setTimeout(() => {
         confirmationModal.classList.add('hidden');
-        clearModalFields();
     }, 300);
 }
 
