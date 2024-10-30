@@ -196,3 +196,16 @@ CREATE TABLE COMMENT(
 	registeredUserID INT,
 	FOREIGN KEY (registeredUserID) REFERENCES REGISTERED_USER(registeredUserID));
 
+CREATE TABLE PASSWORD_RESETS (
+  	passwordResetID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  	email varchar(255) NOT NULL,
+  	token varchar(255) NOT NULL,
+  	createdOn timestamp NOT NULL DEFAULT current_timestamp()
+);
+
+CREATE TABLE VERIFY_SIGNUP (
+	verifySignUpID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  	email varchar(255) NOT NULL,
+  	token varchar(255) NOT NULL,
+  	createdOn timestamp NOT NULL DEFAULT current_timestamp()
+);
