@@ -25,7 +25,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $instructorIdForPost = $_POST['instructorID'];
             $fitnessClassID = $_POST['fitnessClassID'];
             $fitnessClassScheduleID = $fitnessClassModel->getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorIdForPost, $fitnessClassID);
-            $fitnessClassModel->createUserFitnessClassBooking($fitnessClassScheduleID, $userID);
+
+            date_default_timezone_set('Asia/Kuala_Lumpur');
+            $currentDateTime = new DateTime(); // Get current date and time in Malaysia
+            $scheduledDateTime = new DateTime($scheduledOn);
+
+            $status = ($scheduledDateTime < $currentDateTime) ? "Completed" : "Pending";
+            
+            $fitnessClassModel->createUserFitnessClassBooking($status, $fitnessClassScheduleID, $userID);
         }
     }
 }
