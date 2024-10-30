@@ -20,7 +20,7 @@ class UserFitnessClass {
     }
 
     /** Function of getting the fitness class information by using ID */
-    public function getClassesByInstructorById(int $instructorId) {
+    public function getClassesByInstructorById($instructorId) {
         $sql = "SELECT * FROM " . $this->fitnessClassScheduleTable . " WHERE instructorID=?";
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->bind_param("i", $instructorId);
@@ -30,7 +30,7 @@ class UserFitnessClass {
     }
 
     /** Function of getting the instructor name by using ID */
-    public function getInstructorNameById(int $instructorId): ?string {
+    public function getInstructorNameById($instructorId) {
         $sql = "SELECT firstName, lastName FROM " . $this->instructorTable . " WHERE instructorID=?";
         $stmt = $this->databaseConn->prepare($sql);
 

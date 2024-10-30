@@ -92,7 +92,7 @@ class FitnessClassView {
                                         foreach ($this->data as $class) {
                                             if (date('j/n/Y', strtotime($class['scheduledOn'])) === $date && date('H:i', strtotime($class['scheduledOn'])) === $time) {
                                                 ?>
-                                                <button onclick="openModal()" class="w-full h-full bg-[#E3E3E3] font-montserrat font-bold text-xl flex justify-center items-center hover:bg-[#00F587] transition ease-in-out duration-500 hover:text-white cursor-pointer">Class Available!</button>
+                                                <button onclick="openModal()" class="w-full h-full bg-[#E3E3E3] font-montserrat font-bold text-xl flex justify-center items-center hover:bg-[#00F587] transition ease-in-out duration-500 hover:text-white cursor-pointer"><?= $_GET['fitnessClassID'] ?>Class Available!</button>
                                                 <?php
                                                 $classFound = true;
                                                 break;
@@ -124,13 +124,16 @@ class FitnessClassView {
                 <hr class="py-2">
                 <div class="flex flex-col justify-center items-center">
                     <p class="font-montserrat text-xl mt-4 font-semibold">Are you sure you want to confirm the booking?</p>
-                    <div class="flex gap-x-10 mt-8">
                         <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
-                        <input type="hidden" name="scheduledOn" value="<?= $class['scheduledOn']?>">
-                        <button class="rounded-md px-8 py-2 bg-blue-button text-white font-bold" onclick="confirmBookingCloseModal()" name="confirm-fitness-class-booking" id="confirmed">Yes</button>
+                        <div class="flex gap-x-10 mt-8">
+                            <button class="rounded-md px-8 py-2 bg-blue-button text-white font-bold" onclick="confirmBookingCloseModal()" name="confirm-fitness-class-booking" id="confirmed">Yes</button>
+                            <input type="hidden" name="scheduledOn" value="<?= $class['scheduledOn'] ?>">
+                            <input type="hidden" name="fitnessClassID" value="<?= $_GET['fitnessClassID'] ?>">
+                            <input type="hidden" name="instructorID" value="<?= $_GET['instructor'] ?>">
+                            <button class="rounded-md px-8 py-2 bg-gray-mid text-white font-bold" onclick="closeModal()">No</button>
+                        </div>
                         </form>
-                        <button class="rounded-md px-8 py-2 bg-gray-mid text-white font-bold" onclick="closeModal()">No</button>
-                    </div>
+
                 </div>
             </div>
         </div>
