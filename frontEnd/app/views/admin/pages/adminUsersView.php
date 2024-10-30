@@ -111,11 +111,7 @@ class AdminUsersView {
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <input type="hidden" id="registeredUserID" name="registeredUserID">
-
-                    <label class="block text-gray-700 text-sm font-medium">Email</label>
-                    <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
-
-                    <div class="flex space-x-4 mt-4">
+                    <div class="flex space-x-4">
                         <div class="flex-1">
                             <label class="block text-gray-700 text-sm font-medium">First Name <span class="text-red-500">*</span></label>
                             <input name="firstName" type="text" id="firstName" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
@@ -128,6 +124,12 @@ class AdminUsersView {
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Username</label>
                     <input name="username" type="text" id="username" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Email</label>
+                    <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
+                    <input name="phoneNo" type="tel" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
@@ -144,9 +146,6 @@ class AdminUsersView {
                             </select>
                         </div>
                     </div>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
-                    <input name="phoneNo" type="tel" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
