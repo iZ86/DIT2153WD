@@ -19,6 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+if (isset($_GET['registeredUserID'])) {
+    $registeredUserID = $_GET['registeredUserID'];
+    $userDetails = $adminUsersModel->getUserDetails($registeredUserID);
+}
+
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 $limit = 6;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
