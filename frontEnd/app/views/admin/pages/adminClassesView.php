@@ -140,13 +140,13 @@ class AdminClassesView {
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
 
-                    <!--TODO: Add a status row which is active or inactive-->
                     <tr class="text-gray-500 font-medium text-center">
                         <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Class Name</th>
                         <th class="py-4 px-6 border-b border-gray-200">Instructor</th>
                         <th class="py-4 px-6 border-b border-gray-200">Pax</th>
                         <th class="py-4 px-6 border-b border-gray-200">Scheduled On</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Status</th>
                         <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
                     </thead>
@@ -158,6 +158,11 @@ class AdminClassesView {
                             <td class="p-3"><?php echo $schedule['instructor']; ?></td>
                             <td class="p-3"><?php echo $schedule['pax']; ?></td>
                             <td class="p-3"><?php echo date('d M Y h:i A', strtotime($schedule['scheduledOn'])); ?></td>
+                            <td class="p-3 mt-4">
+                                <span class="bg-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-100 text-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
+                                    <?php echo $schedule['status']; ?>
+                                </span>
+                            </td>
                             <td class="p-3 flex justify-center space-x-2">
                                 <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['fitnessClassScheduleID']; ?>, '<?php echo $schedule['fitnessClassID']; ?>', '<?php echo $schedule['instructorID']; ?>', <?php echo $schedule['pax']; ?>, '<?php echo $schedule['scheduledOn']; ?>')">
                                     <i class="bx bx-pencil"></i>
