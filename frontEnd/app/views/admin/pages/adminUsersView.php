@@ -112,8 +112,8 @@ class AdminUsersView {
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <input type="hidden" id="registeredUserID" name="registeredUserID">
 
-                    <label class="block text-gray-700 text-sm font-medium">Email <span class="text-red-500">*</span></label>
-                    <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                    <label class="block text-gray-700 text-sm font-medium">Email</label>
+                    <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
 
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
