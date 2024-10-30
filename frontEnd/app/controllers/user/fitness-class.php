@@ -18,12 +18,20 @@ $classData = $fitnessClassModel->getClassesByInstructorById($instructorIdForOffS
 // Pass the data to the view
 $fitnessClassView = new FitnessClassView($classData, $instructorName);
 
+/** Cleans the data. */
+function cleanData($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_POST['confirm-fitness-class-booking'])) {
         if(isset($_POST['scheduledOn']) && isset($_POST['instructorID']) && isset($_POST['fitnessClassID'])){
-            $scheduledOn = $_POST['scheduledOn'];
-            $instructorIdForPost = $_POST['instructorID'];
-            $fitnessClassID = $_POST['fitnessClassID'];
+            $scheduledOn = cleanData($_POST['scheduledOn']);
+            $instructorIdForPost = cleanData($_POST['instructorID']);
+            $fitnessClassID = cleanData($_POST['fitnessClassID']);
             $fitnessClassScheduleID = $fitnessClassModel->getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorIdForPost, $fitnessClassID);
 
             date_default_timezone_set('Asia/Kuala_Lumpur');
@@ -31,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $scheduledDateTime = new DateTime($scheduledOn);
 
             $status = ($scheduledDateTime < $currentDateTime) ? "Completed" : "Pending";
-            
+
             $fitnessClassModel->createUserFitnessClassBooking($status, $fitnessClassScheduleID, $userID);
         }
     }

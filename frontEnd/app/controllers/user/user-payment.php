@@ -43,15 +43,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $createdOn = date('Y-m-d H:i:s');
             $nutritionistBookingDescription = isset($_SESSION['description']) ? cleanData($_SESSION['description']) : null;
             $nutritionistScheduleID = isset($_SESSION['nutritionistScheduleID']) ? cleanData($_SESSION['nutritionistScheduleID']) : null;
-
-            $userPaymentModel->createUserPayment($type, $status, $createdOn, $_SESSION['userID']);
             $paymentID = $userPaymentModel->getPaymentIDByTypeCreatedOnAndUserID($type, $createdOn, htmlspecialchars($_SESSION['userID']));
 
-            if ($paymentID) {
                 // Check if the schedule is already booked
                 if ($userPaymentModel->isScheduleIDBooked($nutritionistScheduleID)) {
                     echo "<script>alert('This schedule is already booked.Please select a different schedule.'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
                 } else {
+                    $userPaymentModel->createUserPayment($type, $status, $createdOn, $_SESSION['userID']);
                     $bookingResult = $userPaymentModel->createNutritionistBooking($nutritionistBookingDescription, $nutritionistScheduleID, $_SESSION['userID'], $paymentID['paymentID']);
                     if ($bookingResult === true) {
                         echo "<script>alert('Succesfully booked the Nutritionist. Please make sure be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
@@ -59,7 +57,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         echo "<script>alert('Error: " . htmlspecialchars($bookingResult) . "');</script>";
                     }
                 }
-            }
         }
     }
 }

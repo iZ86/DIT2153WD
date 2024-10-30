@@ -143,7 +143,7 @@ class NutritionistsView {
             <div class="text-center">
                 <p class="font-bold text-sm font-nunito">RM20 for each Consultation Session*</p>
             </div>
-            <button onclick="openConfirmBookingModal()" type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">Confirm Booking</button>
+            <button name="confirm-booking-nutritionist" value="Confirm" onclick="openConfirmBookingModal()" type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">Confirm Booking</button>
         </form>
     </div>
 </div>
