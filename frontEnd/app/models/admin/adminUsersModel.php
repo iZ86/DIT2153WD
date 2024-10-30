@@ -72,12 +72,12 @@ class AdminUsersModel {
         return $result->fetch_assoc()['total'];
     }
 
-    public function editUser($registeredUserID, $firstName, $lastName, $username, $email, $phoneNo, $gender, $dateOfBirth) {
+    public function editUser($registeredUserID, $firstName, $lastName, $phoneNo, $gender, $dateOfBirth) {
         $updateQuery = "UPDATE " . $this->registeredUserTable . " 
-                        SET firstName = ?, lastName = ?, username = ?, email = ?, phoneNo = ?, gender = ?, dateOfBirth = ?
+                        SET firstName = ?, lastName = ?, phoneNo = ?, gender = ?, dateOfBirth = ?
                         WHERE registeredUserID = ?";
         $stmt = $this->databaseConn->prepare($updateQuery);
-        $stmt->bind_param("sssssssi", $firstName, $lastName, $username, $email, $phoneNo, $gender, $dateOfBirth, $registeredUserID);
+        $stmt->bind_param("sssssi", $firstName, $lastName, $phoneNo, $gender, $dateOfBirth, $registeredUserID);
         if (!$stmt->execute()) {
             throw new Exception("Failed to update user: " . $stmt->error);
         }
