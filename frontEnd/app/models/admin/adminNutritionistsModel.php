@@ -42,7 +42,7 @@ class AdminNutritionistsModel {
                      ns.price,
                      CASE 
                          WHEN ns.scheduleDateTime > NOW() THEN 'Upcoming'
-                         WHEN ns.scheduleDateTime <= NOW() AND ns.scheduleDateTime > NOW() - INTERVAL 2 HOUR THEN 'In Progress'
+                         WHEN ns.scheduleDateTime <= NOW() AND ns.scheduleDateTime > NOW() - INTERVAL 2  HOUR THEN 'In Progress'
                          ELSE 'Completed'
                      END as status
               FROM " . $this->scheduleTable . " AS ns

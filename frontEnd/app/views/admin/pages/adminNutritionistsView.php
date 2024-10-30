@@ -134,18 +134,14 @@ class AdminNutritionistsView {
                         </th>
                         <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Nutritionist Name</th>
-                        <th class="py-4 px-6 border-b border-gray-200">Scheduled Date & Time</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Scheduled On</th>
                         <th class="py-4 px-6 border-b border-gray-200">Price</th>
                         <th class="py-4 px-6 border-b border-gray-200">Status</th>
                         <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
-                    <?php while ($schedule = $this->schedules->fetch_assoc()):
-                        $currentDate = new DateTime();
-                        $scheduleDateTime = new DateTime($schedule['scheduleDateTime']);
-                        $status = ($scheduleDateTime < $currentDate) ? "Inactive" : "Active";
-                        ?>
+                    <?php while ($schedule = $this->schedules->fetch_assoc()): ?>
                         <tr class="bg-white">
                             <td class="p-3">
                                 <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
@@ -155,9 +151,9 @@ class AdminNutritionistsView {
                             <td class="p-3"><?php echo date('d M Y H:i', strtotime($schedule['scheduleDateTime'])); ?></td>
                             <td class="p-3"><?php echo number_format($schedule['price'], 2); ?></td>
                             <td class="p-3 mt-4">
-                            <span class="bg-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
-                                <?php echo $status; ?>
-                            </span>
+                                <span class="bg-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-100 text-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
+                                    <?php echo $schedule['status']; ?>
+                                </span>
                             </td>
                             <td class="p-3 flex justify-center space-x-2">
                                 <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['nutritionistScheduleID']; ?>, '<?php echo addslashes($schedule['scheduleDateTime']); ?>', '<?php echo number_format($schedule['price'], 2); ?>', '<?php echo $schedule['nutritionistID']; ?>')">
