@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <nav class="z-40 relative">
     <div class="bg-white flex py-3 px-12 font-montserrat justify-between">
         <img class="w-40 h-20" src="../../public/images/Logo.png" alt="Logo.png">
@@ -7,7 +6,7 @@
             <div class="flex font-bold space-x-14 text-lg">
                 <a href="">Home</a>
                 <a href="">Explore</a>
-                <a href="">Nutritionists</a>
+                <a href="http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php">Nutritionists</a>
                 <a href="">Feedbacks</a>
             </div>
 

@@ -2,6 +2,7 @@
 class UserFitnessClass {
     /** Fitness Class Schedule Table */
     private $fitnessClassScheduleTable = 'fitness_class_schedule';
+    private $fitnessClassBookingTable = 'fitness_class_booking';
     private $instructorTable = 'instructor';
     /** Database connection */
     private $databaseConn;
@@ -12,9 +13,9 @@ class UserFitnessClass {
     }
 
     public function createUserFitnessClassBooking($fitnessClassScheduleId, $userID) {
-        $sql = "INSERT INTO " . $this->fitnessClassScheduleTable . " (fitnessClassScheduleID, userID) VALUES (?,?)";
+        $sql = "INSERT INTO " . $this->fitnessClassBookingTable . " (fitnessClassScheduleId, userID) VALUES (?,?)";
         $stmt = $this->databaseConn->prepare($sql);
-        $stmt->bind_param("is", $fitnessClassScheduleId, $userID);
+        $stmt->bind_param("ii", $fitnessClassScheduleId, $userID);
         return $stmt->execute();
     }
 

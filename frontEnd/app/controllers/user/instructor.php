@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../../views/user/pages/classDetailsView.php';
 require '../../models/instructorModel.php';
 

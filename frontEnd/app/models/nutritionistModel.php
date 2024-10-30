@@ -1,10 +1,7 @@
 <?php
-//require_once __DIR__ . '/../config/db_connection.php'; // Use __DIR__ to ensure the correct path
 class NutritionistModel {
     /** Nutritionist Table */
     private $nutritionistTable = 'nutritionist';
-    /** Nutritionist Booking Table */
-    private $nutritionistBookingTable = 'nutritionist_booking';
     private $nutritionitsScheduleTable = 'nutritionist_schedule';
     /** Database connection */
     private $databaseConn;
@@ -40,19 +37,7 @@ class NutritionistModel {
         }
     }
 
-    /** Function of creating a booking for user's reservation */
-    public function createNutritionistBooking($description, $nutritionistScheduleID, $userID, $paymentID) {
-        $sql = "INSERT INTO " . $this->nutritionistBookingTable . " (description,nutritionistScheduleID,userID,paymentID) VALUES (?, ?, ?,?)";
-        $stmt = $this->databaseConn->prepare($sql);
-
-        // Bind parameters
-        $stmt->bind_param("ssss", $description, $nutritionistScheduleID, $userID, $paymentID);
-
-        // Execute the statement
-        return $stmt->execute(); // Return true if successful, false otherwise
-    }
-
-    public function getNutritionistScheduleIaByNutritionistIdAndScheduleDateTime($nutritionistID, $scheduleDateTime) {
+    public function getNutritionistScheduleIdByNutritionistIdAndScheduleDateTime($nutritionistID, $scheduleDateTime) {
         $sql = "SELECT * FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=? AND scheduleDateTime=?";
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->bind_param("is", $nutritionistID, $scheduleDateTime);
@@ -88,5 +73,4 @@ class NutritionistModel {
     $result = $stmt->get_result();
     return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : false;
 }
-
 }
