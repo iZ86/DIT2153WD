@@ -12,10 +12,10 @@ class UserFitnessClass {
         $this->databaseConn = $databaseConn;
     }
 
-    public function createUserFitnessClassBooking($fitnessClassScheduleId, $userID) {
-        $sql = "INSERT INTO " . $this->fitnessClassBookingTable . " (fitnessClassScheduleId, userID) VALUES (?,?)";
+    public function createUserFitnessClassBooking($status, $fitnessClassScheduleId, $userID) {
+        $sql = "INSERT INTO " . $this->fitnessClassBookingTable . " (status, fitnessClassScheduleId, userID) VALUES (?,?,?)";
         $stmt = $this->databaseConn->prepare($sql);
-        $stmt->bind_param("ii", $fitnessClassScheduleId, $userID);
+        $stmt->bind_param("sii", $status, $fitnessClassScheduleId, $userID);
         return $stmt->execute();
     }
 
