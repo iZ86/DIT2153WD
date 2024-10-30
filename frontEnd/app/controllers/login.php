@@ -45,9 +45,9 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
 
     // No errors, redirect to user or admin page
     if ($accType === 1) {
-        die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/"));
+        die(header("location: ../controllers/user/"));
     } else if ($accType === 2) {
-        die(header("location: http://localhost/DIT2153WD/frontEnd/app/controllers/admin/"));
+        die(header("location: ../controllers/admin/"));
     }
 }
 
