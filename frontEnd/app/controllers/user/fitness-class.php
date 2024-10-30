@@ -3,27 +3,38 @@ session_start();
 require '../../models/user/userFitnessClassModel.php';
 require '../../views/user/pages/classScheduleView.php';
 
-$instructorId = isset($_GET['instructor']) ? intval($_GET['instructor']) : null;
-$weekOffset = isset($_GET['week']) ? intval($_GET['week']) : 0;
-$fitnessClassID = isset($_GET['fitnessClassID']) ? intval($_GET['fitnessClassID']) : null;
+$instructorIdForOffSet = isset($_GET['instructor']) ? intval($_GET['instructor']) : null;
 
 $fitnessClassModel = new UserFitnessClass(require '../../config/db_connection.php');
 $scheduledOn = null;
+$instructorIdForPost = null;
+$fitnessClassID = null;
 $userID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
 
-if(isset($_POST['confirm-fitness-class-booking'])) {
-    if(isset($_POST['scheduledOn'])){
-        $scheduledOn = $_POST['scheduledOn'];
-    }
-}
-
-$fitnessClassScheduleID = $fitnessClassModel->getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorId, $fitnessClassID);
-$fitnessClassModel->createUserFitnessClassBooking($fitnessClassScheduleID, $userID);
-// TODO: Fix instructorID null bug.
 // Fetch instructor name and class data
-$instructorName = $fitnessClassModel->getInstructorNameById($instructorId);
-$classData = $fitnessClassModel->getClassesByInstructorById($instructorId);
+$instructorName = $fitnessClassModel->getInstructorNameById($instructorIdForOffSet);
+$classData = $fitnessClassModel->getClassesByInstructorById($instructorIdForOffSet);
 
 // Pass the data to the view
 $fitnessClassView = new FitnessClassView($classData, $instructorName);
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(isset($_POST['confirm-fitness-class-booking'])) {
+        if(isset($_POST['scheduledOn']) && isset($_POST['instructorID']) && isset($_POST['fitnessClassID'])){
+            $scheduledOn = $_POST['scheduledOn'];
+            $instructorIdForPost = $_POST['instructorID'];
+            $fitnessClassID = $_POST['fitnessClassID'];
+            $fitnessClassScheduleID = $fitnessClassModel->getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorIdForPost, $fitnessClassID);
+
+            date_default_timezone_set('Asia/Kuala_Lumpur');
+            $currentDateTime = new DateTime(); // Get current date and time in Malaysia
+            $scheduledDateTime = new DateTime($scheduledOn);
+
+            $status = ($scheduledDateTime < $currentDateTime) ? "Completed" : "Pending";
+            
+            $fitnessClassModel->createUserFitnessClassBooking($status, $fitnessClassScheduleID, $userID);
+        }
+    }
+}
+
 $fitnessClassView->renderView();

@@ -5,7 +5,7 @@ session_start();
 $guestSignUpModel = new GuestSignUpModel(require "../config/db_connection.php");
 
 if (isset($_POST['signUp']) && $_POST['signUp'] === "Sign Up") {
-    // Saver user input to persist data even after error
+    // Save user input to persist data even after error
     $_SESSION['signUpEmail'] = $_POST['email'];
     $_SESSION['signUpPassword'] = $_POST['password'];
     $_SESSION['signUpUsername'] = $_POST['username'];
