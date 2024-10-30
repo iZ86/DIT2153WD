@@ -419,6 +419,8 @@ class AdminNutritionistsView {
                 document.getElementById('email').value = email;
                 document.getElementById('gender').value = gender;
                 document.getElementById('type').value = type;
+                document.getElementById('submitNutritionistButton').name = 'editNutritionistButton';
+                document.getElementById('submitNutritionistButton').value = 'Edit Nutritionist';
                 document.getElementById('nutritionistModalTitle').innerText = 'Edit Nutritionist';
 
                 setTimeout(() => {
@@ -463,6 +465,8 @@ class AdminNutritionistsView {
                 document.querySelector('select[name="nutritionistID"]').value = nutritionistID;
                 document.getElementById('scheduleDateTime').value = scheduleDateTime;
                 document.getElementById('price').value = price;
+                document.getElementById('submitScheduleButton').name = 'editScheduleButton';
+                document.getElementById('submitScheduleButton').value = 'Edit Schedule';
                 document.getElementById('scheduleModalTitle').innerText = 'Edit Schedule';
 
                 setTimeout(() => {
