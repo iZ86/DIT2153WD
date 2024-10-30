@@ -92,7 +92,7 @@ class FitnessClassView {
                                         foreach ($this->data as $class) {
                                             if (date('j/n/Y', strtotime($class['scheduledOn'])) === $date && date('H:i', strtotime($class['scheduledOn'])) === $time) {
                                                 ?>
-                                                <button onclick="openModal()" class="w-full h-full bg-[#E3E3E3] font-montserrat font-bold text-xl flex justify-center items-center hover:bg-[#00F587] transition ease-in-out duration-500 hover:text-white cursor-pointer"><?= $_GET['fitnessClassID'] ?>Class Available!</button>
+                                                <button onclick="openModal()" class="w-full h-full bg-[#E3E3E3] font-montserrat font-bold text-xl flex justify-center items-center hover:bg-[#00F587] transition ease-in-out duration-500 hover:text-white cursor-pointer">Class Available!</button>
                                                 <?php
                                                 $classFound = true;
                                                 break;
