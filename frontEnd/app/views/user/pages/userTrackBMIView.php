@@ -165,7 +165,7 @@ class UserTrackBMIView {
 
                 </div>
 
-                <div class="flex flex-row-reverse justify-center mt-28">
+                <div class="flex flex-row-reverse justify-center mt-28 mb-14">
                     <input type="submit" id="submitBMIDataButton" name="submitBMIDataButton" value="" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
                     <input type="button" id="deleteBMIDataButton" name="deleteBMIDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 hidden rounded-lg shadow-lg mr-2 cursor-pointer" onclick="openDeleteConfirmationModal()">
                     <input type="button" value="Close" onclick="closeBMIDataModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
