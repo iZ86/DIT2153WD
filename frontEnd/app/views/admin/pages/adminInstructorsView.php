@@ -154,19 +154,19 @@ class AdminInstructorsView {
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
                             <label class="block text-gray-700 text-sm font-medium">Weight (Kg) <span class="text-red-500">*</span></label>
-                            <input name="weight" type="text" id="weight" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
+                            <input name="weight" type="text" id="weight" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
                         </div>
                         <div class="flex-1">
                             <label class="block text-gray-700 text-sm font-medium">Height (Cm) <span class="text-red-500">*</span></label>
-                            <input name="height" type="text" id="height" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
+                            <input name="height" type="text" id="height" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
                         </div>
                     </div>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Certification <span class="text-red-500">*</span></label>
-                    <input name="certification" type="text" id="certification" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
+                    <input name="certification" type="text" id="certification" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Description <span class="text-red-500">*</span></label>
-                    <textarea name="description" id="description" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1"></textarea>
+                    <textarea name="description" id="description" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required></textarea>
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeInstructorModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
