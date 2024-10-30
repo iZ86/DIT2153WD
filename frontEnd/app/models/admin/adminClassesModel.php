@@ -61,18 +61,23 @@ class AdminClassesModel {
 
     public function getSchedules($limit, $offset) {
         $query = "SELECT fcs.fitnessClassScheduleID, 
-                          fcs.fitnessClassID,
-                          fcs.instructorID,
-                          fc.name AS className, 
-                          CONCAT(i.firstName, ' ', i.lastName) AS instructor, 
-                          fcs.scheduledOn, 
-                          fcs.createdOn, 
-                          fcs.pax 
-                   FROM " . $this->scheduleTable . " AS fcs
-                   JOIN " . $this->classesTable . " AS fc ON fcs.fitnessClassID = fc.fitnessClassID
-                   JOIN INSTRUCTOR AS i ON fcs.instructorID = i.instructorID
-                   ORDER BY fcs.fitnessClassScheduleID ASC
-                   LIMIT ? OFFSET ?";
+                     fcs.fitnessClassID,
+                     fcs.instructorID,
+                     fc.name AS className, 
+                     CONCAT(i.firstName, ' ', i.lastName) AS instructor, 
+                     fcs.scheduledOn, 
+                     fcs.createdOn, 
+                     fcs.pax,
+                     CASE 
+                         WHEN fcs.scheduledOn > NOW() THEN 'Upcoming'
+                         WHEN fcs.scheduledOn <= NOW() AND fcs.scheduledOn > NOW() - INTERVAL 1 HOUR THEN 'In Progress'
+                         ELSE 'Completed'
+                     END as status
+              FROM " . $this->scheduleTable . " AS fcs
+              JOIN " . $this->classesTable . " AS fc ON fcs.fitnessClassID = fc.fitnessClassID
+              JOIN INSTRUCTOR AS i ON fcs.instructorID = i.instructorID
+              ORDER BY fcs.fitnessClassScheduleID ASC
+              LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
