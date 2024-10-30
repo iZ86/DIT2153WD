@@ -124,15 +124,16 @@ class FitnessClassView {
                 <hr class="py-2">
                 <div class="flex flex-col justify-center items-center">
                     <p class="font-montserrat text-xl mt-4 font-semibold">Are you sure you want to confirm the booking?</p>
-                    <div class="flex gap-x-10 mt-8">
                         <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
+                        <div class="flex gap-x-10 mt-8">
                             <button class="rounded-md px-8 py-2 bg-blue-button text-white font-bold" onclick="confirmBookingCloseModal()" name="confirm-fitness-class-booking" id="confirmed">Yes</button>
                             <input type="hidden" name="scheduledOn" value="<?= $class['scheduledOn'] ?>">
                             <input type="hidden" name="fitnessClassID" value="<?= $_GET['fitnessClassID'] ?>">
                             <input type="hidden" name="instructorID" value="<?= $_GET['instructor'] ?>">
                             <button class="rounded-md px-8 py-2 bg-gray-mid text-white font-bold" onclick="closeModal()">No</button>
+                        </div>
                         </form>
-                    </div>
+
                 </div>
             </div>
         </div>
