@@ -110,16 +110,46 @@ $limit = 10;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $limit;
 
+$nutritionistFilterType = isset($_GET['nutritionistFilterType']) ? $_GET['nutritionistFilterType'] : '';
+$nutritionistKeywords = isset($_GET['nutritionistKeywords']) ? $_GET['nutritionistKeywords'] : '';
+
+if (!empty($nutritionistFilterType) && !empty($nutritionistKeywords)) {
+    $nutritionists = $adminNutritionistsModel->getFilteredNutritionists($limit, $offset, $nutritionistFilterType, $nutritionistKeywords);
+} else {
+    $nutritionists = $adminNutritionistsModel->getNutritionists($limit, $offset);
+}
+
+$noNutritionistsFound = $nutritionists->num_rows === 0;
+
+$scheduleFilterType = isset($_GET['scheduleFilterType']) ? $_GET['scheduleFilterType'] : '';
+$scheduleKeywords = isset($_GET['scheduleKeywords']) ? $_GET['scheduleKeywords'] : '';
+
+if (!empty($scheduleFilterType) && !empty($scheduleKeywords)) {
+    $schedules = $adminNutritionistsModel->getFilteredSchedules($limit, $offset, $scheduleFilterType, $scheduleKeywords);
+} else {
+    $schedules = $adminNutritionistsModel->getSchedules($limit, $offset);
+}
+
+$bookingFilterType = isset($_GET['bookingFilterType']) ? $_GET['bookingFilterType'] : '';
+$bookingKeywords = isset($_GET['bookingKeywords']) ? $_GET['bookingKeywords'] : '';
+
+if (!empty($bookingFilterType) && !empty($bookingKeywords)) {
+    $bookings = $adminNutritionistsModel->getFilteredBookings($limit, $offset, $bookingFilterType, $bookingKeywords);
+} else {
+    $bookings = $adminNutritionistsModel->getBookingsWithDetails($limit, $offset);
+}
+
+$noNutritionistsFound = $nutritionists->num_rows === 0;
+$noSchedulesFound = $schedules->num_rows === 0;
+$noBookingsFound = $bookings->num_rows === 0;
+
 $totalNutritionists = $adminNutritionistsModel->getTotalNutritionists();
 $totalSchedules = $adminNutritionistsModel->getTotalSchedules();
 $totalBookings = $adminNutritionistsModel->getTotalBookings();
+
 $totalPagesNutritionists = ceil($totalNutritionists / $limit);
 $totalPagesSchedules = ceil($totalSchedules / $limit);
 $totalPagesBooking = ceil($totalBookings / $limit);
 
-$nutritionists = $adminNutritionistsModel->getNutritionists($limit, $offset);
-$schedules = $adminNutritionistsModel->getSchedules($limit, $offset);
-$bookings = $adminNutritionistsModel->getBookingsWithDetails($limit, $offset);
-
-$adminNutritionistsView = new AdminNutritionistsView($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBooking, $currentPage);
+$adminNutritionistsView = new AdminNutritionistsView($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBooking, $currentPage, $noNutritionistsFound, $noSchedulesFound, $noBookingsFound);
 $adminNutritionistsView->renderView();
