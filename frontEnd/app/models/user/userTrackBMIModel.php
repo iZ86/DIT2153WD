@@ -17,7 +17,7 @@ class UserTrackBMIModel {
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getBMIDataFromDate($userID, $recordedOn) {
+    public function getBMIDatasetFromDate($userID, $recordedOn) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.

@@ -222,6 +222,6 @@ if (isset($_POST['unit'])) {
     }
 }
 
-$userTrackBMIView = new UserTrackBMIView($userTrackBMIModel->getBMIDataFromDate($_SESSION['userID'], $date));
+$userTrackBMIView = new UserTrackBMIView($userTrackBMIModel->getBMIDatasetFromDate($_SESSION['userID'], $date));
 $userTrackBMIView->renderView();
 
