@@ -56,7 +56,7 @@ require __DIR__ . '/../../../config/config.php';
                                     <div class='flex gap-x-36 border-b border-[#676767] border-dashed text-xl font-bold pb-2'><p class='text-red-500'>HEIGHT </p><p class='ml-3 text-[#676767] font-normal'><?= htmlspecialchars($datas['height']) ?></p></div>
                                         <div class='flex gap-x-16 border-b border-[#676767] border-dashed text-xl font-bold pb-2'><p class='text-red-500'>CERTIFICATION </p><p class='ml-2 text-[#676767] font-normal'><?= htmlspecialchars($datas['certification']) ?></p></div>
                         </div>
-                        <a href='./fitness-class-schedule.php?instructor=<?=htmlspecialchars($datas['instructorID'])?>&fitnessClassID=<?=htmlspecialchars($this->fitnessClassID)?>' class='w-fit p-2 rounded-lg mt-4 text-white font-semibold font-nunito bg-blue-button'>View Schedule</a>
+                        <a href='./fitness-class-schedule.php?instructor=<?=htmlspecialchars($datas['instructorID'])?>&fitnessClassID=<?=htmlspecialchars($this->fitnessClassID)?>' class='w-fit p-2 rounded-lg mt-4 text-white font-semibold font-nunito bg-blue-button hover:bg-blue-600'>View Schedule</a>
                     </div>
             </div>
             <?php
