@@ -30,7 +30,9 @@ class UserTrackExerciseRoutineDetailModel {
 
         $exerciseRoutineDetailDatasetSQL = "SELECT erd.exerciseRoutineDetailID, e.exerciseName, erd.weight, erd.rep, erd.note, erd.recordedOnTime, e.exerciseID FROM " .
         $this->exerciseRoutineDetailTable . " erd, " . $this->exerciseTable . " e, " . $this->exerciseRoutineTable .
-        " er WHERE erd.exerciseID = e.exerciseID AND erd.exerciseRoutineID = er.exerciseRoutineID AND er.recordedOnDate BETWEEN ? AND ? AND er.userID = ?;";
+        " er WHERE erd.exerciseID = e.exerciseID AND erd.exerciseRoutineID = er.exerciseRoutineID AND
+        er.recordedOnDate BETWEEN ? AND ? AND er.userID = ?
+        ORDER BY erd.recordedonTime DESC;";
         
         $exerciseRoutineDetailDatasetSTMT = $this->databaseConn->prepare($exerciseRoutineDetailDatasetSQL);
         $exerciseRoutineDetailDatasetSTMT->bind_param("sss", $recordedOnDate, $endDate, $userID);
