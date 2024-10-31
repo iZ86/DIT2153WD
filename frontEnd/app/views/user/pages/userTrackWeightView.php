@@ -157,8 +157,8 @@ class UserTrackWeightView {
                             id="weightUnitInWeightDataModalInUserTrackWeightView"
                             class="bg-white rounded-lg border-2 text-shadow-dark text-black"
                             oninput="convertWeightOfAllWeightDataRow('weightUnitInWeightDataModalInUserTrackWeightView');
-                            createSessionForWeightUnitSelected()
-                            ;updateWeightMessages()">
+                            createSessionForWeightUnitSelected();
+                            updateWeightMessages()">
 
                                 <option value="Kg" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
                                 $_SESSION['weightUnitInUserTrackWeightView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
