@@ -40,7 +40,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $status = ($scheduledDateTime < $currentDateTime) ? "Completed" : "Pending";
 
-            $fitnessClassModel->createUserFitnessClassBooking($status, $fitnessClassScheduleID, $userID);
+            $price = $fitnessClassModel->getFitnessClassPriceByFitnessClassID($fitnessClassID);
+            $price = $price['price'];
+
+            $_SESSION['fitnessClassScheduleID'] = $fitnessClassScheduleID;
+            $_SESSION['status'] = $status;
+
+            header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Fitness Class Booking&price=$price");
+            exit();
         }
     }
 }
