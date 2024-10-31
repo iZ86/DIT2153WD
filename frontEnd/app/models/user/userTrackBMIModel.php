@@ -17,11 +17,11 @@ class UserTrackBMIModel {
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getBMIDatasetFromDate($userID, $recordedOn) {
+    public function getBMIDatasetFromDate($date, $userID) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($recordedOn);
+        $endDate = date_create($date);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -30,7 +30,7 @@ class UserTrackBMIModel {
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $selectBMIDataSTMT = $this->databaseConn->prepare($selectBMIDataSQL);
-        $selectBMIDataSTMT->bind_param("sss", $userID, $recordedOn, $endDate);
+        $selectBMIDataSTMT->bind_param("sss", $userID, $date, $endDate);
         $selectBMIDataSTMT->execute();
         $selectBMIDataResult = $selectBMIDataSTMT->get_result();
         $selectBMIDataResultDataArray = array();
