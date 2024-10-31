@@ -1,6 +1,6 @@
 <?php
 require '../../models/user/userProfileModel.php';
-require '../../views/user/pages/profileView.php';
+require '../../views/user/pages/userProfileView.php';
 
 session_start();
 
