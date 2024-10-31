@@ -142,10 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
+// Used to persist the volume unit chosen by user.
 if (isset($_POST['volumeUnitInUserTrackWaterConsumptionView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['volumeUnitInUserTrackWaterConsumptionView'] === "mL" || $_POST['volumeUnitInUserTrackWaterConsumptionView'] === "L" || $_POST['volumeUnitInUserTrackWaterConsumptionView'] === "oz") {
+    if ($_POST['volumeUnitInUserTrackWaterConsumptionView'] !== null && preg_match($regexVolumeUnitFormat, $_POST['volumeUnitInUserTrackWaterConsumptionView'])) {
         $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] = $_POST['volumeUnitInUserTrackWaterConsumptionView'];
     }
 }
