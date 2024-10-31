@@ -78,7 +78,7 @@ class AdminUsersView {
                                 <span class="bg-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $user['membershipStatus']; ?></span>
                             </td>
                             <td class="p-3 mt-4 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>')">
+                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>', '<?php echo $user['startOn']; ?>', '<?php echo $user['endOn']; ?>')">
                                     <i class="bx bx-pencil"></i>
                                 </button>
                             </td>
@@ -111,11 +111,7 @@ class AdminUsersView {
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <input type="hidden" id="registeredUserID" name="registeredUserID">
-
-                    <label class="block text-gray-700 text-sm font-medium">Email <span class="text-red-500">*</span></label>
-                    <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-
-                    <div class="flex space-x-4 mt-4">
+                    <div class="flex space-x-4">
                         <div class="flex-1">
                             <label class="block text-gray-700 text-sm font-medium">First Name <span class="text-red-500">*</span></label>
                             <input name="firstName" type="text" id="firstName" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
@@ -126,8 +122,14 @@ class AdminUsersView {
                         </div>
                     </div>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Username <span class="text-red-500">*</span></label>
-                    <input name="username" type="text" id="username" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Username</label>
+                    <input name="username" type="text" id="username" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Email</label>
+                    <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
+                    <input name="phoneNo" type="tel" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
@@ -145,8 +147,16 @@ class AdminUsersView {
                         </div>
                     </div>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
-                    <input name="phoneNo" type="tel" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                    <div class="flex space-x-4 mt-4">
+                        <div class="flex-1">
+                            <label class="block text-gray-700 text-sm font-medium">Membership Start On</label>
+                            <input name="membershipStart" type="text" id="membershipStart" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-gray-700 text-sm font-medium">Membership End On</label>
+                            <input name="membershipEnd" type="text" id="membershipEnd" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" disabled>
+                        </div>
+                    </div>
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2">Close</button>
@@ -184,7 +194,7 @@ class AdminUsersView {
                 }, 10);
             }
 
-            function openEditModal(id, firstName, lastName, username, email, phoneNo, gender, dateOfBirth) {
+            function openEditModal(id, firstName, lastName, username, email, phoneNo, gender, dateOfBirth, membershipStart, membershipEnd) {
                 const modal = document.getElementById('userModal');
                 const overlay = document.getElementById('modalOverlay');
 
@@ -198,6 +208,8 @@ class AdminUsersView {
                 document.getElementById('phoneNo').value = phoneNo;
                 document.getElementById('gender').value = gender;
                 document.getElementById('dateOfBirth').value = dateOfBirth;
+                document.getElementById('membershipStart').value = membershipStart ? membershipStart: '-';
+                document.getElementById('membershipEnd').value = membershipEnd ? membershipEnd: '-';
 
                 setTimeout(() => {
                     modal.classList.add('show');
@@ -225,6 +237,8 @@ class AdminUsersView {
                 document.getElementById('phoneNo').value = '';
                 document.getElementById('gender').value = '';
                 document.getElementById('dateOfBirth').value = '';
+                document.getElementById('membershipStart').value = '';
+                document.getElementById('membershipEnd').value = '';
             }
 
             function searchUsers() {
