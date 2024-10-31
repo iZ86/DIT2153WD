@@ -9,7 +9,6 @@
                 <a href="user-nutritionist.php" class="<?php echo $currentPage === "user-nutritionist.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Nutritionists</a>
             </div>
 
-            <div class="flex justify-center items-center relative">
             <div class="relative">
                 <button id="dropdownToggle" class="flex items-center space-x-2 mr-2">
                     <span class="font-semibold text-gray-700 mr-2"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></span>
@@ -33,7 +32,6 @@
                         <span class="font-medium">Log Out</span>
                     </a>
                 </div>
-            </div>
             </div>
 
         </div>
