@@ -119,6 +119,8 @@ require __DIR__ . '/../../../config/config.php';
                     </div>
                 </div>
 
+                <i onclick="topFunction()" id="myBtn" title="Back to top" class='bx bxs-up-arrow-circle bx-md fixed bottom-5 right-8 z-50 bg-green-500 cursor-pointer text-white p-2 rounded-xl hover:bg-green-700 hover:text-pink-300 bx-fade-up-hover'></i>
+
                 <div class='flex flex-col w-full justify-start mt-20'>
                     <div class='font-montserrat'>
                         <p class='text-red-500'>CLASSES</p>
@@ -131,6 +133,21 @@ require __DIR__ . '/../../../config/config.php';
                 </div>
             </div>
         </section>
+        <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        </style>
+        <script>
+        // Get the button
+        let mybutton = document.getElementById("myBtn");
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+        </script>
         <?php
     }
 }
