@@ -95,7 +95,7 @@ function createSessionForHeightUnitSelected() {
 /** This function is used to send to track-bmi.php?date=...,
  * to persist the weight unit selected by the user.
  */
-function createSessionForweightUnitSelected() {
+function createSessionForWeightUnitSelected() {
     let unitSelected = document.getElementById('weightUnitInBMIDataModalInUserTrackBMIView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
