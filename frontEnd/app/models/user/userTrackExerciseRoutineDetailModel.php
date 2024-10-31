@@ -21,7 +21,7 @@ class UserTrackExerciseRoutineDetailModel {
      * Otherwise, return an empty array.
     */
     public function getExerciseRoutineDetailDatasetFromDate($recordedOnDate, $userID) {
-
+        date_default_timezone_set("Asia/Kuala_Lumpur");
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
         $endDate = date_create($recordedOnDate);
@@ -40,7 +40,7 @@ class UserTrackExerciseRoutineDetailModel {
         for ($i = 0; $i < $exerciseRoutineDetailDatasetResult->num_rows; $i++) {
             $exerciseRoutineDetailDataResult = $exerciseRoutineDetailDatasetResult->fetch_assoc();
             $recordedOnTime = date_create($exerciseRoutineDetailDataResult["recordedOnTime"]);
-            $exerciseRoutineDetailDataResult["recordedOnTime"] = $recordedOnTime->format("h:m");
+            $exerciseRoutineDetailDataResult["recordedOnTime"] = $recordedOnTime->format("H:i");
             $exerciseRoutineDetailDataset[$exerciseRoutineDetailDataResult['exerciseRoutineDetailID']] = $exerciseRoutineDetailDataResult;
         }
         return $exerciseRoutineDetailDataset;
