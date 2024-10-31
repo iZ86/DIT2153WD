@@ -51,13 +51,23 @@ module.exports = {
         '144' : '36rem',
         '192' : '48rem',
       },
+      maxWidth: {
+        '128' : '32rem',
+        '144' : '36rem',
+        '192' : '48rem',
+        '256' : '64rem',
+      },
       maxHeight: {
         '192' : '48rem',
       },
       inset: {
         '296' : '74rem',
         '328' : '82rem',
-      }
+      },
+      margin: {
+        '16' : '4.25rem',
+        '17' : '4.5rem',
+      },
     },
   },
   plugins: [],

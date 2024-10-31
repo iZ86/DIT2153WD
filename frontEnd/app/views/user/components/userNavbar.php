@@ -6,7 +6,9 @@
         <div class="px-11 flex items-center gap-x-14">
             <div class="flex font-bold space-x-14 text-lg">
                 <a href="index.php" class="<?php echo $currentPage === "index.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>" >Home</a>
-                <a href="user-nutritionist.php" class="<?php echo $currentPage === "user-nutritionist.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Nutritionists</a>
+                <a href="fitness-class.php" class="<?php echo $currentPage === "fitness-class.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Fitness Classes</a>
+                <a href="nutritionist.php" class="<?php echo $currentPage === "nutritionist.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Nutritionists</a>
+                <a href="membership.php" class="<?php echo $currentPage === "membership.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Membership</a>
             </div>
 
             <div class="relative">
@@ -16,7 +18,7 @@
                 </button>
 
                 <div id="dropdownMenu" class="absolute right-0 mt-2 p-2 w-48 bg-white border border-gray-200 rounded-lg hidden">
-                    <a href=""
+                    <a href="profile.php"
                        class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
                         <i class='bx bxs-user text-base'></i>
                         <span class="font-medium">View Profile</span>

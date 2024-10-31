@@ -62,15 +62,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             elseif($fitnessClassScheduleID) {
                 $fitnessClassBookingResult = $userPaymentModel->createFitnessClassBooking($fitnessClassBookingStatus, $fitnessClassScheduleID, $_SESSION['userID'], $paymentID['paymentID']);
             } else {
-                //TODO: Bring user to error page.
+                die(header('location: error.php'));
             }
 
             if ($nutritionistBookingResult) {
-                echo "<script>alert('Successfully booked the Nutritionist! Please make sure to be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-nutritionist.php';</script>";
+                echo "<script>alert('Successfully booked the Nutritionist! Please make sure to be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
             } elseif($fitnessClassBookingResult) {
                 echo "<script>alert('Successfully booked the Class, Enjoy the Class!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/fitness-class.php';</script>";
             } else {
-                //TODO: Bring useer to errror page.
+                die(header('location: error.php'));
             }
         }
     }
