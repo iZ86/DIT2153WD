@@ -589,6 +589,15 @@ video {
 .top-72 {
   top: 18rem;
 }
+.bottom-10 {
+  bottom: 2.5rem;
+}
+.bottom-5 {
+  bottom: 1.25rem;
+}
+.right-8 {
+  right: 2rem;
+}
 .z-10 {
   z-index: 10;
 }
@@ -1216,6 +1225,9 @@ video {
 .rounded-xl {
   border-radius: 0.75rem;
 }
+.rounded-sm {
+  border-radius: 0.125rem;
+}
 .rounded-b-lg {
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
@@ -1821,6 +1833,9 @@ video {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+.outline {
+  outline-style: solid;
 }
 .outline-black {
   outline-color: #000;
