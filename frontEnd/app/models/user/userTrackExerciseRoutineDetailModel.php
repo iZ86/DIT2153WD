@@ -27,7 +27,7 @@ class UserTrackExerciseRoutineDetailModel {
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
-        $exerciseRoutineDetailDatasetSQL = "SELECT erd.exerciseRoutineDetailID, e.exerciseName, erd.weight, erd.rep, erd.note, erd.recordedOnTime, e.exerciseID FROM " .
+        $exerciseRoutineDetailDatasetSQL = "SELECT erd.exerciseRoutineDetailID, e.exerciseName, erd.weightInGram, erd.rep, erd.note, erd.recordedOnTime, e.exerciseID FROM " .
         $this->exerciseRoutineDetailTable . " erd, " . $this->exerciseTable . " e, " . $this->exerciseRoutineTable .
         " er WHERE erd.exerciseID = e.exerciseID AND erd.exerciseRoutineID = er.exerciseRoutineID AND
         er.recordedOnDate BETWEEN ? AND ? AND er.userID = ?
@@ -117,15 +117,15 @@ class UserTrackExerciseRoutineDetailModel {
      * Returns true, if successful.
      * Otherwise, returns false.
      */
-    public function addExerciseRoutineDetailData($weight, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID, $userID) {
+    public function addExerciseRoutineDetailData($weightInGram, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID, $userID) {
         
         if (($this->verifyExerciseIDToUserID($exerciseID, $userID)) && ($this->verifyExerciseRoutineIDToUserID($exerciseRoutineID, $userID))) {
             $insertExerciseRoutineDetailDataSQL = "INSERT INTO " . $this->exerciseRoutineDetailTable .
-            " (weight, rep, note, recordedOnTime, exerciseID, exerciseRoutineID) VALUES (?, ?, ?, ?, ?, ?)";
+            " (weightInGram, rep, note, recordedOnTime, exerciseID, exerciseRoutineID) VALUES (?, ?, ?, ?, ?, ?)";
             
             
             $insertExerciseRoutineDetailDataSTMT = $this->databaseConn->prepare($insertExerciseRoutineDetailDataSQL);
-            $insertExerciseRoutineDetailDataSTMT->bind_param("ssssss", $weight, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID);
+            $insertExerciseRoutineDetailDataSTMT->bind_param("ssssss", $weightInGram, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID);
             return $insertExerciseRoutineDetailDataSTMT->execute();
         }
     }
@@ -149,16 +149,16 @@ class UserTrackExerciseRoutineDetailModel {
      * Returns true, if success.
      * Otherwise, returns false.
      */
-    public function updateExerciseRoutineDetailData($exerciseRoutineDetailID, $weight, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID, $userID) {
+    public function updateExerciseRoutineDetailData($exerciseRoutineDetailID, $weightInGram, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID, $userID) {
         
         if (($this->verifyExerciseIDToUserID($exerciseID, $userID)) && ($this->verifyExerciseRoutineIDToUserID($exerciseRoutineID, $userID)) &&
         $this->verifyExerciseRoutineDetailIDToExerciseRoutineID($exerciseRoutineDetailID, $exerciseRoutineID)) {
             
             $updateExerciseRoutineDetailDataSQL = "UPDATE " . $this->exerciseRoutineDetailTable .
-            " SET weight = ?, rep = ?, note = ?, recordedOnTime = ?, exerciseID = ?, exerciseRoutineID = ? WHERE exerciseRoutineDetailID = ?";
+            " SET weightInGram = ?, rep = ?, note = ?, recordedOnTime = ?, exerciseID = ?, exerciseRoutineID = ? WHERE exerciseRoutineDetailID = ?";
             
             $updateExerciseRoutineDataSTMT = $this->databaseConn->prepare($updateExerciseRoutineDetailDataSQL);
-            $updateExerciseRoutineDataSTMT->bind_param("sssssss", $weight, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID, $exerciseRoutineDetailID);
+            $updateExerciseRoutineDataSTMT->bind_param("sssssss", $weightInGram, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID, $exerciseRoutineDetailID);
             return $updateExerciseRoutineDataSTMT->execute();
         }
         return false;
