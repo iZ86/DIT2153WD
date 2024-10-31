@@ -17,11 +17,11 @@ class UserTrackWaterConsumptionModel {
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getWaterConsumptionDatasetFromDate($userID, $recordedOn) {
+    public function getWaterConsumptionDatasetFromDate($date, $userID) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($recordedOn);
+        $endDate = date_create($date);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -30,7 +30,7 @@ class UserTrackWaterConsumptionModel {
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $waterConsumptionSTMT = $this->databaseConn->prepare($waterConsumptionSQL);
-        $waterConsumptionSTMT->bind_param("sss", $userID, $recordedOn, $endDate);
+        $waterConsumptionSTMT->bind_param("sss", $userID, $date, $endDate);
         $waterConsumptionSTMT->execute();
         $waterConsumptionResult = $waterConsumptionSTMT->get_result();
         $waterConsumptionResultDataArray = array();
