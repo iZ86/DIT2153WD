@@ -17,7 +17,7 @@ class UserTrackWeightModel {
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getWeightDataFromDate($userID, $recordedOn) {
+    public function getWeightDatasetFromDate($userID, $recordedOn) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
