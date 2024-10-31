@@ -99,7 +99,7 @@ $regexTimeFormat) {
 
 // Ensures that there is a valid $_GET request.
 if (!(isset($_GET['date'])) || !preg_match($regexDateFormat, $_GET['date']) || (date($_GET['date']) > date("Y-m-d"))) {
-    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=' . date("Y-m-d")));
+    die(header('location: track-bmi.php?date=' . date("Y-m-d")));
 }
 
 $date = $_GET['date'];
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
                     $addStatus = $userTrackBMIModel->addBMIData($age, $gender, $height, $weight, $dateTime, $_SESSION['userID']);
                     if ($addStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=' . $date));
+                        die(header('location: track-bmi.php?date=' . $date));
                     }
                 }
             }
@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackBMIModel->updateBMIData($bmiID, $age, $gender, $height, $weight, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=' . $date));
+                        die(header('location: track-bmi.php?date=' . $date));
                     }
                 }
             }
@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $dateTime = $date . " " . $time;
                     $deleteStatus = $userTrackBMIModel->deleteBMIData($bmiID, $_SESSION['userID']);
                     if ($deleteStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=' . $date));
+                        die(header('location: track-bmi.php?date=' . $date));
                     }
                 }
             }
