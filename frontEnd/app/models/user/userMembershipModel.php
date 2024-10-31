@@ -18,18 +18,6 @@ class UserMembershipModel {
         $this->databaseConn = $databaseConn;
     }
 
-    // Connect payment with membership_subscription table 
-    // Order by descending
-    // The first record is the latest membership_subscription paid
-    // Check if the date has passed
-    // If passed, membership active.
-    // Otherwise, inactive
-    // If active, get the paymentID
-    // Go to the fitness_class_subscription
-    // Connect with fitness class
-    // Sum it up
-    // + membership price
-
     /** Returns one associate array that contains the active membership subscription data that belongs to $userID.
      * If there is no active membership subscription data, return an empty array.
      */
@@ -51,10 +39,6 @@ class UserMembershipModel {
         return array();
     }
 
-    // Get payment ID
-    // Join it with all the fitness_class_subscriptions
-    // Join the new table with the fitness_class
-    // SUM their price.
     /** Returns the sum of the FITNESS_CLASS_SUBSCRIPTION record, where paymentID attribute is $paymentID.
      * No checks inside the function, as this method won't be accessed by the client.
     */
