@@ -82,7 +82,6 @@ function getBookingInformation() {
     }
 }
 
-
 /** Fetch nutritionists for display in the view. */
 $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist(), $nutritionistAvailableDateTime);
 $nutritionistsView->renderView();
