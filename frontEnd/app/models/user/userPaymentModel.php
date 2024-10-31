@@ -20,7 +20,7 @@ class UserPaymentModel {
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
 
     public function createUserPayment($type, $status, $createdOn, $userID) {
@@ -36,7 +36,7 @@ class UserPaymentModel {
         $stmt->bind_param("ssi", $type, $createdOn, $userID);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
 
     /** Function of creating a booking for user's reservation */
