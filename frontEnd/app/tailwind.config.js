@@ -63,7 +63,11 @@ module.exports = {
       inset: {
         '296' : '74rem',
         '328' : '82rem',
-      }
+      },
+      margin: {
+        '16' : '4.25rem',
+        '17' : '4.5rem',
+      },
     },
   },
   plugins: [],
