@@ -16,7 +16,7 @@
                 </button>
 
                 <div id="dropdownMenu" class="absolute right-0 mt-2 p-2 w-48 bg-white border border-gray-200 rounded-lg hidden">
-                    <a href=""
+                    <a href="user-profile.php"
                        class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
                         <i class='bx bxs-user text-base'></i>
                         <span class="font-medium">View Profile</span>
