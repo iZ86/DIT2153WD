@@ -51,7 +51,7 @@ class ClassesView {
     public function renderContent() {?>
     <?php  ?>
 
-    <section class="bg-white">
+    <section class="bg-white pb-48">
         <div class="w-full relative">
             <img class="w-full" src="<?=IMAGE_FILE_PATH?>Yoga_header.png" alt="Yoga.png">
             <h1 class="absolute top-40 left-64 text-5xl font-bold text-[#59485b] font-orelega">Transform with</h1>
@@ -93,6 +93,5 @@ class ClassesView {
     }
     </style>
     <?php
-
     }
 }
