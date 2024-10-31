@@ -1,4 +1,4 @@
-let weightDataArray = JSON.parse(document.getElementById('phpArrayOfWeightData').value);
+let weightDataset = JSON.parse(document.getElementById('phpWeightDataset').value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
 const KILOGRAMSTOGRAMSCONVERSIONRATE = 1000;
 const KILOGRAMSTOPOUNDSCONVERSIONRATE = 2.20462;
@@ -78,7 +78,7 @@ function convertWeightOfAllWeightDataRow(unitDropDownBoxID) {
 
 
     if (unitSelected === "Kg") {
-        Object.entries(weightDataArray).map(entry => {
+        Object.entries(weightDataset).map(entry => {
             let weightData = entry[1];
             let weight = new Number(weightData["weight"]);
             let weightDataRow = document.getElementById(weightData["weightID"] + "Text");
@@ -86,14 +86,14 @@ function convertWeightOfAllWeightDataRow(unitDropDownBoxID) {
         });
     
     } else if (unitSelected === "g") {
-        Object.entries(weightDataArray).map(entry => {
+        Object.entries(weightDataset).map(entry => {
             let weightData = entry[1];
             let weight = convertKilogramsToGrams(Number(weightData["weight"]));
             let weightDataRow = document.getElementById(weightData["weightID"] + "Text");
             weightDataRow.innerText = "You weigh " + weight + unitSelected + " at " + weightData["recordedOnTime"];
         });
     } else if (unitSelected === "lb") {
-        Object.entries(weightDataArray).map(entry => {
+        Object.entries(weightDataset).map(entry => {
             let weightData = entry[1];
             let weight = convertKilogramsToPounds(new Number(weightData["weight"]));
             let weightDataRow = document.getElementById(weightData["weightID"] + "Text");
@@ -137,7 +137,7 @@ function updateWeightMessages() {
     // Start of time.
     let weightTime = "00:00";
 
-    Object.entries(weightDataArray).map(entry => {
+    Object.entries(weightDataset).map(entry => {
         let weightData = entry[1];
         if (weightData["recordedOnTime"] > weightTime) {
             latestWeight = weightData["weight"];
@@ -200,13 +200,13 @@ function openEditWeightDataModal(weightID) {
 
 
     if (unitSelected === "Kg") {
-        weightInput.value = weightDataArray[weightID]["weight"];
+        weightInput.value = weightDataset[weightID]["weight"];
     } else if (unitSelected === "g") {
-        weightInput.value = convertKilogramsToGrams(new Number(weightDataArray[weightID]['weight']));
+        weightInput.value = convertKilogramsToGrams(new Number(weightDataset[weightID]['weight']));
     } else if (unitSelected === "lb") {
-        weightInput.value = convertKilogramsToPounds(new Number(weightDataArray[weightID]['weight']));
+        weightInput.value = convertKilogramsToPounds(new Number(weightDataset[weightID]['weight']));
     }
-    timeInput.value = weightDataArray[weightID]["recordedOnTime"];
+    timeInput.value = weightDataset[weightID]["recordedOnTime"];
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');

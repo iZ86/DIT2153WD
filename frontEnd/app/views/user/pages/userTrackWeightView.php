@@ -2,11 +2,11 @@
 
 class UserTrackWeightView {
     /** Weight data. */
-    private $weightDataArray;
+    private $weightDataset;
     
     /** Constructor for the object. */
-    public function __construct($weightDataArray) {
-        $this->weightDataArray = $weightDataArray;
+    public function __construct($weightDataset) {
+        $this->weightDataset = $weightDataset;
     }
 
     /** Renders the whole view. */
@@ -49,10 +49,10 @@ class UserTrackWeightView {
     /** Renders weight data partial view. */
     private function renderWeightDataPartialView() {?>
     <div class="flex min-h-192 max-h-192">
-        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->weightDataArray) == 0) { echo "justify-center";}?>">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->weightDataset) == 0) { echo "justify-center";}?>">
             <?php
-            if (sizeof($this->weightDataArray) > 0) {
-                foreach ($this->weightDataArray as $key => $value) {
+            if (sizeof($this->weightDataset) > 0) {
+                foreach ($this->weightDataset as $key => $value) {
                     $this->renderOneWeightDataRow($value['weightID']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
@@ -198,9 +198,9 @@ class UserTrackWeightView {
         </style>
     
     <!-- Embed php array of ids of the weight data rows to be used to convert the amount drank based on unit. -->
-    <input type="hidden" id="phpArrayOfWeightData" value="
+    <input type="hidden" id="phpWeightDataset" value="
     <?php 
-    echo htmlspecialchars(json_encode($this->weightDataArray));
+    echo htmlspecialchars(json_encode($this->weightDataset));
     ?>
     ">
     <!-- Embed php current pagination. -->
