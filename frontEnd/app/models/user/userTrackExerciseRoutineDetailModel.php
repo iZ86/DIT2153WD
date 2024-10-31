@@ -168,13 +168,30 @@ class UserTrackExerciseRoutineDetailModel {
      */
     public function deleteExerciseData($exerciseID, $userID) {
         if ($this->verifyExerciseIDToUserID($exerciseID, $userID)) {
-            $deleteExerciseDataSQL = "DELETE FROM " . $this->exerciseTable .
-            " WHERE exerciseID = ? AND userID = ?";
-
-            $deleteExerciseDataSTMT = $this->databaseConn->prepare($deleteExerciseDataSQL);
-            $deleteExerciseDataSTMT->bind_param("ss", $exerciseID, $userID);
-            return $deleteExerciseDataSTMT->execute();
+            if ($this->deleteExerciseRoutineDetailDataToExerciseID($exerciseID, $userID)) {
+                $deleteExerciseDataSQL = "DELETE FROM " . $this->exerciseTable .
+                " WHERE exerciseID = ? AND userID = ?";
+    
+                $deleteExerciseDataSTMT = $this->databaseConn->prepare($deleteExerciseDataSQL);
+                $deleteExerciseDataSTMT->bind_param("ss", $exerciseID, $userID);
+                return $deleteExerciseDataSTMT->execute();
+            }
         }
+    }
+
+    /** Deletes all the exercise routine detail data in the EXERCISE_ROUTINE_DETAIL table.
+     * Where exerciseID attribute is $exerciseID.
+     * This is called when the user wishes to delete an exercise, all exercise routine detail data shall be deleted with it,
+     * and it is called by deleteExerciseData($exerciseID, $userID) function.
+     * NOTE: There wil be no checks, as this will be called after the checks in the deleteExerciseData($exerciseID, $userID) function.
+     * Returns true, if success.
+     * Otherwise, returns false.
+     */
+    public function deleteExerciseRoutineDetailDataToExerciseID($exerciseID) {
+        $deleteExerciseRoutineDetailDataSQl = "DELETE FROM " . $this->exerciseRoutineDetailTable . " WHERE exerciseID = ?";
+        $deleteExerciseRoutineDetailDataSTMT = $this->databaseConn->prepare($deleteExerciseRoutineDetailDataSQl);
+        $deleteExerciseRoutineDetailDataSTMT->bind_param("s", $exerciseID);
+        return $deleteExerciseRoutineDetailDataSTMT->execute();
     }
 
     /** Delete exercise routine detail data in the exercise_routine_detail table.
