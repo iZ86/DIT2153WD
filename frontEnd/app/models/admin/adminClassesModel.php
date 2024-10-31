@@ -99,4 +99,22 @@ class AdminClassesModel {
         $result = $stmt->get_result();
         return $result->fetch_assoc()['total'];
     }
+
+    public function getFilteredClassesByName($name, $limit, $offset) {
+        $query = "SELECT fitnessClassID, name, description FROM " . $this->classesTable . " WHERE name LIKE ? LIMIT ? OFFSET ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $searchTerm = '%' . $name . '%';
+        $stmt->bind_param("sii", $searchTerm, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function getFilteredClassesByDescription($description, $limit, $offset) {
+        $query = "SELECT fitnessClassID, name, description FROM " . $this->classesTable . " WHERE description LIKE ? LIMIT ? OFFSET ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $searchTerm = '%' . $description . '%';
+        $stmt->bind_param("sii", $searchTerm, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
