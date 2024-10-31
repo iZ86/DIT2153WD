@@ -81,7 +81,7 @@ require __DIR__ . '/../../../config/config.php';
 
     public function renderContent() {
         ?>
-        <section class='flex justify-center items-center'>
+        <section class='flex justify-center items-center pb-36'>
             <div class='flex flex-col mt-10 justify-center items-center w-3/5'>
                 <?= $this->renderFitnessClassImage(); ?>
                 <?= $this->renderFitnessClassName(); ?>
