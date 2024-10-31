@@ -54,7 +54,7 @@ class FitnessClassView {
 
         <section class="bg-[#F1FAFF] pb-48">
             <div class="flex justify-center items-center relative">
-                <a href="./classes.php" class="bx bx-chevron-left bx-lg ml-20 absolute left-20 top-10"></a>
+                <a href="./fitness-class.php" class="bx bx-chevron-left bx-lg ml-20 absolute left-20 top-10"></a>
 
                 <div class="flex flex-col">
                     <div class="flex flex-col font-bold font-montserrat text-4xl items-center my-5">
