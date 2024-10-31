@@ -164,7 +164,7 @@ class UserTrackBMIView {
                             <select name="weightUnitInBMIDataModalInUserTrackBMIView"
                             id="weightUnitInBMIDataModalInUserTrackBMIView"
                             class="bg-white rounded-lg border-2 text-shadow-dark text-black"
-                            onclick="createSessionForHeightUnitSelected()">
+                            onclick="createSessionForWeightUnitSelected()">
 
                                 <option value="Kg" <?php if (isset($_SESSION['weightUnitInBMIDataModalInUserTrackBMIView']) &&
                                 $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
