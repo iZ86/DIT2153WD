@@ -107,18 +107,18 @@ class UserTrackWaterConsumptionView {
         
         <div class="flex items-center mb-14">
             <div class="mx-auto flex items-center text-3xl justify-center basis-96">
-                <select name="volumeUnitInTrackWaterConsumptionView" id="volumeUnitInTrackWaterConsumptionView"
+                <select name="volumeUnitInUserTrackWaterConsumptionView" id="volumeUnitInUserTrackWaterConsumptionView"
                 class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2"
-                oninput="convertAmountDrankOfAllWaterConsumptionDataRow('volumeUnitInTrackWaterConsumptionView');
-                createSessionForUnitSelected('volumeUnitInTrackWaterConsumptionView');
+                oninput="convertAmountDrankOfAllWaterConsumptionDataRow('volumeUnitInUserTrackWaterConsumptionView');
+                createSessionForUnitSelected('volumeUnitInUserTrackWaterConsumptionView');
                 updateAmountDrankMessages()">
 
-                    <option value="mL" <?php if (isset($_SESSION['volumeUnitInTrackWaterConsumptionView']) &&
-                    $_SESSION['volumeUnitInTrackWaterConsumptionView'] === "mL") { echo "selected"; }?>>Milliliters (mL)</option>
-                    <option value="L" <?php if (isset($_SESSION['volumeUnitInTrackWaterConsumptionView']) &&
-                    $_SESSION['volumeUnitInTrackWaterConsumptionView'] === "L") { echo "selected"; }?>>Liters (L)</option>
-                    <option value="oz" <?php if (isset($_SESSION['volumeUnitInTrackWaterConsumptionView']) &&
-                    $_SESSION['volumeUnitInTrackWaterConsumptionView'] === "oz") { echo "selected"; }?>>Ounces (oz)</option>
+                    <option value="mL" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
+                    $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] === "mL") { echo "selected"; }?>>Milliliters (mL)</option>
+                    <option value="L" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
+                    $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] === "L") { echo "selected"; }?>>Liters (L)</option>
+                    <option value="oz" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
+                    $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] === "oz") { echo "selected"; }?>>Ounces (oz)</option>
 
                 </select>
             </div>

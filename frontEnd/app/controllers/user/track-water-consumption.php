@@ -142,10 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-if (isset($_POST['volumeUnitInTrackWaterConsumptionView'])) {
+if (isset($_POST['volumeUnitInUserTrackWaterConsumptionView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['volumeUnitInTrackWaterConsumptionView'] === "mL" || $_POST['volumeUnitInTrackWaterConsumptionView'] === "L" || $_POST['volumeUnitInTrackWaterConsumptionView'] === "oz") {
-        $_SESSION['volumeUnitInTrackWaterConsumptionView'] = $_POST['volumeUnitInTrackWaterConsumptionView'];
+    if ($_POST['volumeUnitInUserTrackWaterConsumptionView'] === "mL" || $_POST['volumeUnitInUserTrackWaterConsumptionView'] === "L" || $_POST['volumeUnitInUserTrackWaterConsumptionView'] === "oz") {
+        $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] = $_POST['volumeUnitInUserTrackWaterConsumptionView'];
     }
 }
 
