@@ -70,7 +70,7 @@ function validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitForm
 
 // Ensures that there is a valid $_GET request.
 if (!(isset($_GET['date'])) || !preg_match($regexDateFormat, $_GET['date']) || (date($_GET['date']) > date("Y-m-d"))) {
-    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . date("Y-m-d")));
+    die(header('location: track-weight.php?date=' . date("Y-m-d")));
 }
 
 $date = $_GET['date'];
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
                     $addStatus = $userTrackWeightModel->addWeightData($_SESSION['userID'], $weight, $dateTime);
                     if ($addStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . $date));
+                        die(header('location: track-weight.php?date=' . $date));
                     }
                 }
             }
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackWeightModel->updateWeightData($weightID, $weight, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . $date));
+                        die(header('location: track-weight.php?date=' . $date));
                     }
                 }
             }
@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     
                     if ($deleteStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . $date));
+                        die(header('location: track-weight.php?date=' . $date));
                     }
                 }
             }
