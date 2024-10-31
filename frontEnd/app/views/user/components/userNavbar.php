@@ -6,7 +6,6 @@
         <div class="px-11 flex items-center gap-x-14">
             <div class="flex font-bold space-x-14 text-lg">
                 <a href="index.php" class="<?php echo $currentPage === "index.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>" >Home</a>
-                <a href="">Explore</a>
                 <a href="nutritionist.php" class="<?php echo $currentPage === "nutritionist.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Nutritionists</a>
             </div>
 
