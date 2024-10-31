@@ -77,6 +77,7 @@ function getBookingInformation() {
                         }
                     } else {
                         echo "<script>alert('Please fill in all required fields.');</script>";
+                        die(header('location: error.php'));
                     }
                 }
             }
