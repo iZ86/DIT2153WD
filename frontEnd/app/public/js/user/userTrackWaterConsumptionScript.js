@@ -1,4 +1,4 @@
-let waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
+let waterConsumptionDataset = JSON.parse(document.getElementById('phpWaterConsumptionDataset').value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
 const MILLILITERSTOLITERSCONVERSIONRATE = 1000;
 const MILLILITERSTOOUNCESCONVERSIONRATE = 29.5735;
@@ -78,7 +78,7 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
 
 
     if (unitSelected === "L") {
-        Object.entries(waterConsumptionDataArray).map(entry => {
+        Object.entries(waterConsumptionDataset).map(entry => {
             let waterConsumptionData = entry[1];
             let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionData["milliliters"]));
             let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
@@ -86,14 +86,14 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
         });
     
     } else if (unitSelected === "mL") {
-        Object.entries(waterConsumptionDataArray).map(entry => {
+        Object.entries(waterConsumptionDataset).map(entry => {
             let waterConsumptionData = entry[1];
             let amountDrank = Number(waterConsumptionData["milliliters"]);
             let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
             waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
         });
     } else if (unitSelected === "oz") {
-        Object.entries(waterConsumptionDataArray).map(entry => {
+        Object.entries(waterConsumptionDataset).map(entry => {
             let waterConsumptionData = entry[1];
             let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionData["milliliters"]));
             let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
@@ -134,7 +134,7 @@ function updateAmountDrankMessages() {
 
     let totalAmountDrank = 0;
 
-    Object.entries(waterConsumptionDataArray).map(entry => {
+    Object.entries(waterConsumptionDataset).map(entry => {
         let waterConsumptionData = entry[1];
         totalAmountDrank += new Number(waterConsumptionData["milliliters"]);
     });
@@ -191,13 +191,13 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
 
 
     if (unitSelected === "mL") {
-        amountDrankInput.value = waterConsumptionDataArray[waterConsumptionID]["milliliters"];
+        amountDrankInput.value = waterConsumptionDataset[waterConsumptionID]["milliliters"];
     } else if (unitSelected === "L") {
-         amountDrankInput.value = convertMillilitersToLiters(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
+         amountDrankInput.value = convertMillilitersToLiters(new Number(waterConsumptionDataset[waterConsumptionID]['milliliters']));
     } else if (unitSelected === "oz") {
-        amountDrankInput.value = convertMillilitersToOunces(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
+        amountDrankInput.value = convertMillilitersToOunces(new Number(waterConsumptionDataset[waterConsumptionID]['milliliters']));
     }
-    timeInput.value = waterConsumptionDataArray[waterConsumptionID]["recordedOnTime"];
+    timeInput.value = waterConsumptionDataset[waterConsumptionID]["recordedOnTime"];
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');

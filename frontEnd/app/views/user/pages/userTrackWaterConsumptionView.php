@@ -2,11 +2,11 @@
 
 class UserTrackWaterConsumptionView {
     /** Water consumption data. */
-    private $waterConsumptionDataArray;
+    private $waterConsumptionDataset;
     
     /** Constructor for the object. */
-    public function __construct($waterConsumptionDataArray) {
-        $this->waterConsumptionDataArray = $waterConsumptionDataArray;
+    public function __construct($waterConsumptionDataset) {
+        $this->waterConsumptionDataset = $waterConsumptionDataset;
     }
 
     /** Renders the whole view. */
@@ -49,10 +49,10 @@ class UserTrackWaterConsumptionView {
     /** Renders water consumption data partial view. */
     private function renderWaterConsumptionDataPartialView() {?>
     <div class="flex min-h-192 max-h-192">
-        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->waterConsumptionDataArray) == 0) { echo "justify-center";}?>">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->waterConsumptionDataset) == 0) { echo "justify-center";}?>">
             <?php
-            if (sizeof($this->waterConsumptionDataArray) > 0) {
-                foreach ($this->waterConsumptionDataArray as $key => $value) {
+            if (sizeof($this->waterConsumptionDataset) > 0) {
+                foreach ($this->waterConsumptionDataset as $key => $value) {
                     $this->renderOneWaterConsumptionDataRow($value['waterConsumptionID']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
@@ -198,9 +198,9 @@ class UserTrackWaterConsumptionView {
         </style>
     
     <!-- Embed php array of ids of the water consumption data rows to be used to convert the amount drank based on unit. -->
-    <input type="hidden" id="phpArrayOfWaterConsumptionData" value="
+    <input type="hidden" id="phpWaterConsumptionDataset" value="
     <?php 
-    echo htmlspecialchars(json_encode($this->waterConsumptionDataArray));
+    echo htmlspecialchars(json_encode($this->waterConsumptionDataset));
     ?>
     ">
     <!-- Embed php current pagination. -->
