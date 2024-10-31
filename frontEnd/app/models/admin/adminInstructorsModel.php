@@ -68,4 +68,50 @@ class AdminInstructorsModel {
 
         return $result->fetch_assoc();
     }
+
+    public function getFilteredInstructors($filterType, $keywords, $limit, $offset) {
+        $query = "SELECT instructorID, firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth FROM " . $this->instructorsTable . " WHERE 1=1";
+
+        switch ($filterType) {
+            case 'instructorID':
+                $query .= " AND instructorID = ?";
+                break;
+            case 'name':
+                $query .= " AND (firstName LIKE ? OR lastName LIKE ?)";
+                $keywords = '%' . $keywords . '%';
+                break;
+            case 'phone':
+                $query .= " AND phoneNo LIKE ?";
+                $keywords = '%' . $keywords . '%';
+                break;
+            case 'email':
+                $query .= " AND email LIKE ?";
+                $keywords = '%' . $keywords . '%';
+                break;
+            case 'gender':
+                $query .= " AND gender = ?";
+                break;
+        }
+
+        if ($limit !== null && $offset !== null) {
+            $query .= " LIMIT ? OFFSET ?";
+        }
+
+        $stmt = $this->databaseConn->prepare($query);
+
+        if ($filterType === 'name') {
+            $stmt->bind_param("ssii", $keywords, $keywords, $limit, $offset);
+        } elseif ($filterType === 'phone' || $filterType === 'email') {
+            $stmt->bind_param("ssi", $keywords, $limit, $offset);
+        } elseif ($filterType === 'gender') {
+            $stmt->bind_param("ssi", $keywords, $limit, $offset);
+        } elseif ($filterType === 'instructorID') {
+            $stmt->bind_param("iii", $keywords, $limit, $offset);
+        } else {
+            $stmt->bind_param("ii", $limit, $offset);
+        }
+
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
