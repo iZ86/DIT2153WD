@@ -22,7 +22,7 @@ class NutritionistsView {
         if($this->nutritionistInformation) {
             foreach($this->nutritionistInformation as $nutritionistInformations) {
                 ?>
-                <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mb-20">
+                <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mt-20">
 
                 <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
                     <img src="<?=IMAGE_FILE_PATH?><?=$nutritionistInformations['nutritionistImageFilePath']?>" alt="Nutritionist.png">
@@ -89,7 +89,7 @@ class NutritionistsView {
     /** Renders the content */
     public function renderContent() {
         ?>
-    <section class="bg-white-bg">
+    <section class="bg-white-bg pb-48">
     <div class="flex flex-col items-center justify-center">
         <h1 class="mt-8 text-4xl font-bold text-[#02463E] font-montserrat">Meet Our Nutritionists</h1>
         <div class="flex items-center justify-center gap-x-10 mt-10">
@@ -120,7 +120,7 @@ class NutritionistsView {
         <?php
         }
         ?>
-        <div class="bg-white mt-32 flex flex-col items-center justify-center">
+        <div class="bg-white flex flex-col items-center justify-center">
             <div class="flex flex-col">
                     <div class="ml-10 font-montserrat">
                         <?=
