@@ -71,6 +71,6 @@ class UserFitnessClass {
         $stmt->bind_param("i", $fitnessClassID);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
 }
