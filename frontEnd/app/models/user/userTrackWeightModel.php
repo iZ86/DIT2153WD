@@ -70,12 +70,9 @@ class UserTrackWeightModel {
 
             $updateWeightDataSTMT = $this->databaseConn->prepare($updateWeightDataSQL);
             $updateWeightDataSTMT->bind_param("ssss", $weight, $recordedOn, $weightID, $userID);
-            $updateWeightDataSTMT->execute();
+            return $updateWeightDataSTMT->execute();
             
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($updateWeightDataSTMT->errno === 0) {
-                return true;
-            }
+            
         }
 
         return false;
@@ -95,12 +92,8 @@ class UserTrackWeightModel {
 
             $deleteWeightDataSTMT = $this->databaseConn->prepare($deleteWeightDataSQL);
             $deleteWeightDataSTMT->bind_param("ss", $weightID, $userID);
-            $deleteWeightDataSTMT->execute();
+            return $deleteWeightDataSTMT->execute();
 
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($deleteWeightDataSTMT->errno === 0) {
-                return true;
-            }
         }
         return false;
     }

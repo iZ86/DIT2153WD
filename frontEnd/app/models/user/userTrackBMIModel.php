@@ -71,12 +71,8 @@ class UserTrackBMIModel {
 
             $updateBMIDataSTMT = $this->databaseConn->prepare($updateBMIDataSQL);
             $updateBMIDataSTMT->bind_param("sssssss", $age, $gender, $height, $weight, $recordedOn, $bmiID, $userID);
-            $updateBMIDataSTMT->execute();
+            return $updateBMIDataSTMT->execute();
             
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($updateBMIDataSTMT->errno === 0) {
-                return true;
-            }
         }
 
         return false;
@@ -96,12 +92,9 @@ class UserTrackBMIModel {
 
             $deleteBMIDataSTMT = $this->databaseConn->prepare($deleteBMIDataSQL);
             $deleteBMIDataSTMT->bind_param("ss", $bmiID, $userID);
-            $deleteBMIDataSTMT->execute();
+            return $deleteBMIDataSTMT->execute();
 
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($deleteBMIDataSTMT->errno === 0) {
-                return true;
-            }
+            
         }
         return false;
     }

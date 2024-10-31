@@ -70,12 +70,8 @@ class UserTrackWaterConsumptionModel {
 
             $updateWaterConsumptionDataSTMT = $this->databaseConn->prepare($updateWaterConsumptionDataSQL);
             $updateWaterConsumptionDataSTMT->bind_param("ssss", $amountDrankInMilliliters, $recordedOn, $waterConsumptionID, $userID);
-            $updateWaterConsumptionDataSTMT->execute();
+            return $updateWaterConsumptionDataSTMT->execute();
             
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($updateWaterConsumptionDataSTMT->errno === 0) {
-                return true;
-            }
         }
 
         return false;
@@ -95,12 +91,7 @@ class UserTrackWaterConsumptionModel {
 
             $deleteWaterConsumptionDataSTMT = $this->databaseConn->prepare($deleteWaterConsumptionDataSQL);
             $deleteWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $userID);
-            $deleteWaterConsumptionDataSTMT->execute();
-
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($deleteWaterConsumptionDataSTMT->errno === 0) {
-                return true;
-            }
+            return $deleteWaterConsumptionDataSTMT->execute();
         }
         return false;
     }
