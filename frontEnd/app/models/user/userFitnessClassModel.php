@@ -39,13 +39,9 @@ class UserFitnessClass {
         }
 
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $instructor = $result->fetch_assoc();
+        $result->num_rows > 0 ? $instructor = $result->fetch_assoc() : array();
 
-            return $instructor['firstName'] . ' ' . $instructor['lastName'];
-        }
-
-        return null;
+        return $instructor['firstName'] . ' ' . $instructor['lastName'];
     }
 
     public function getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorID, $fitnessClassID) {
@@ -58,11 +54,7 @@ class UserFitnessClass {
         }
 
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc()['fitnessClassScheduleID'];
-        }
-
-        return null; // Return null if no record found
+        return $result->num_rows > 0 ? $result->fetch_assoc()['fitnessClassScheduleID'] : array();
     }
 
     public function getFitnessClassPriceByFitnessClassID($fitnessClassID) {
