@@ -52,11 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Insert payment record
                 $userPaymentModel->createUserPayment($type, $status, $createdOn, $userID);
 
-                // Retrieve the last inserted payment ID
-                $paymentIDResult = $userPaymentModel->getPaymentIDByTypeCreatedOnAndUserID($type, $createdOn, $userID);
+                $paymentID = $userPaymentModel->getPaymentIDByTypeCreatedOnAndUserID($type, $createdOn, $userID);
 
                 // Create booking record with the retrieved payment ID
-                $bookingResult = $userPaymentModel->createNutritionistBooking($nutritionistBookingDescription, $nutritionistScheduleID, $userID, $paymentID);
+                $bookingResult = $userPaymentModel->createNutritionistBooking($nutritionistBookingDescription, $nutritionistScheduleID, $userID, $paymentID['paymentID']);
 
                 if ($bookingResult === true) {
                     echo "<script>alert('Successfully booked the Nutritionist. Please make sure to be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
