@@ -2,15 +2,15 @@
 require('../../views/user/pages/userTrackWeightView.php');
 require('../../models/user/userTrackWeightModel.php');
 session_start();
-define("KILOGRAMSTOGRAMSCONVERSIONRATE", 1000);
-define("KILOGRAMSTOPOUNDSCONVERSIONRATE", 2.20462);
+define("KILOGRAMTOGRAMCONVERSIONRATE", 1000);
+define("POUNDTOGRAMCONVERSIONRATE", 453.6);
 $userTrackWeightModel = new UserTrackWeightModel(require "../../config/db_connection.php");
 
 // Regex to validate date format.
 $regexDateFormat = "/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/";
 
 // Regex to validate weight format.
-$regexWeightFormat = "/^[\d]*(.[\d]{1,2}$|$)/";
+$regexWeightFormat = "/^[\d]*(.[\d]{1,4}$|$)/";
 
 // Regex to validate ID.
 $regexIDFormat = "/^(0|[1-9][\d]*)$/";
@@ -21,16 +21,16 @@ $regexTimeFormat = "/(^[0-3]|^)[\d]:[0-5][\d]$/";
 // Regex to validate weight unit.
 $regexWeightUnitFormat = "/^(Kg|g|lb)$/";
 
-/** Converts Kilograms to whatever unit is inputted.
- * Return -1, if unit not supported.
+/** Converts any value of any weight unit to gram.
+ * Return -1, if unit is not supported.
  */
-function convertKilogramsToWeightInputted($kilograms, $weightUnit) {
-    if ($weightUnit === "Kg") {
-        return $kilograms;
-    } else if ($weightUnit === "g") {
-        return $kilograms * KILOGRAMSTOGRAMSCONVERSIONRATE;
+function convertValueOfWeightUnitToGram($value, $weightUnit) {
+    if ($weightUnit === "g") {
+        return $value;
+    } else if ($weightUnit === "Kg") {
+        return bcmul(KILOGRAMTOGRAMCONVERSIONRATE, $value, 4);
     } else if ($weightUnit === "lb") {
-        return $kilograms * KILOGRAMSTOPOUNDSCONVERSIONRATE;
+        return bcmul(POUNDTOGRAMCONVERSIONRATE, $value, 4);
     }
     return -1;
 }
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     
                     $weight = (float) $weight;
-                    $weight = convertKilogramsToWeightInputted($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     $dateTime = $date . " " . $time;
     
                     $addStatus = $userTrackWeightModel->addWeightData($_SESSION['userID'], $weight, $dateTime);
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     $weightID = (int) $weightID;
                     $weight = (float) $weight;
-                    $weight = convertKilogramsToWeightInputted($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackWeightModel->updateWeightData($weightID, $weight, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
