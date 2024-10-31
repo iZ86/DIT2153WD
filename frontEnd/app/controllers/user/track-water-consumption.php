@@ -149,6 +149,6 @@ if (isset($_POST['unit'])) {
     }
 }
 
-$userTrackWaterConsumptionView = new UserTrackWaterConsumptionView($userTrackWaterConsumptionModel->getWaterConsumptionDataFromDate($_SESSION['userID'], $date));
+$userTrackWaterConsumptionView = new UserTrackWaterConsumptionView($userTrackWaterConsumptionModel->getWaterConsumptionDatasetFromDate($_SESSION['userID'], $date));
 $userTrackWaterConsumptionView->renderView();
 

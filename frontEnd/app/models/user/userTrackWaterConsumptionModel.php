@@ -17,7 +17,7 @@ class UserTrackWaterConsumptionModel {
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getWaterConsumptionDataFromDate($userID, $recordedOn) {
+    public function getWaterConsumptionDatasetFromDate($userID, $recordedOn) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
