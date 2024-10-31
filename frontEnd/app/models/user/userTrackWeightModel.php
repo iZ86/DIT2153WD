@@ -13,11 +13,11 @@ class UserTrackWeightModel {
     /** Returns an array of arrays containing weight consumption data in a day.
      * Otherwise, return an empty array.
     */
-    public function getWeightDataFromDate($userID, $dateTime) {
+    public function getWeightDataFromDate($userID, $recordedOn) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($dateTime);
+        $endDate = date_create($recordedOn);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -26,7 +26,7 @@ class UserTrackWeightModel {
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $weightSTMT = $this->databaseConn->prepare($weightSQL);
-        $weightSTMT->bind_param("sss", $userID, $dateTime, $endDate);
+        $weightSTMT->bind_param("sss", $userID, $recordedOn, $endDate);
         $weightSTMT->execute();
         $weightResult = $weightSTMT->get_result();
         $weightResultDataArray = array();
@@ -44,11 +44,11 @@ class UserTrackWeightModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addWeightData($userID, $weightInKilograms, $dateTime) {
+    public function addWeightData($userID, $weightInKilograms, $recordedOn) {
 
         $insertWeightDataSQL = "INSERT INTO " . $this->weightTable . "(weight, recordedOn, userID) VALUES (?, ?, ?)";
         $insertWeightDataSTMT = $this->databaseConn->prepare($insertWeightDataSQL);
-        $insertWeightDataSTMT->bind_param("sss", $weightInKilograms, $dateTime, $userID);
+        $insertWeightDataSTMT->bind_param("sss", $weightInKilograms, $recordedOn, $userID);
         return $insertWeightDataSTMT->execute();
 
     }
@@ -57,7 +57,7 @@ class UserTrackWeightModel {
      * Returns true if success.
      * Otherwise, returns false.
     */
-    public function updateWeightData($weightID, $weight, $dateTime, $userID) {
+    public function updateWeightData($weightID, $weight, $recordedOn, $userID) {
         
         
         if ($this->verifyWeightDataIDToUserID($weightID, $userID)) {
@@ -65,7 +65,7 @@ class UserTrackWeightModel {
             " SET weight = ?, recordedOn = ? WHERE weightID = ? AND userID = ?";
 
             $updateWeightDataSTMT = $this->databaseConn->prepare($updateWeightDataSQL);
-            $updateWeightDataSTMT->bind_param("ssss", $weight, $dateTime, $weightID, $userID);
+            $updateWeightDataSTMT->bind_param("ssss", $weight, $recordedOn, $weightID, $userID);
             $updateWeightDataSTMT->execute();
             
             // Checks if there was any error running the sql statemnt, error number 0 is no errors.

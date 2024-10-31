@@ -13,11 +13,11 @@ class UserTrackWaterConsumptionModel {
     /** Returns an array of arrays containing water consumption data in a day.
      * Otherwise, return an empty array.
     */
-    public function getWaterConsumptionDataFromDate($userID, $dateTime) {
+    public function getWaterConsumptionDataFromDate($userID, $recordedOn) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($dateTime);
+        $endDate = date_create($recordedOn);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -26,7 +26,7 @@ class UserTrackWaterConsumptionModel {
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $waterConsumptionSTMT = $this->databaseConn->prepare($waterConsumptionSQL);
-        $waterConsumptionSTMT->bind_param("sss", $userID, $dateTime, $endDate);
+        $waterConsumptionSTMT->bind_param("sss", $userID, $recordedOn, $endDate);
         $waterConsumptionSTMT->execute();
         $waterConsumptionResult = $waterConsumptionSTMT->get_result();
         $waterConsumptionResultDataArray = array();
@@ -44,11 +44,11 @@ class UserTrackWaterConsumptionModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addWaterConsumptionData($userID, $amountDrankInMilliliters, $dateTime) {
+    public function addWaterConsumptionData($userID, $amountDrankInMilliliters, $recordedOn) {
 
         $insertWaterConsumptionDataSQL = "INSERT INTO " . $this->waterConsumptionTable . "(milliliters, recordedOn, userID) VALUES (?, ?, ?)";
         $insertWaterConsumptionDataSTMT = $this->databaseConn->prepare($insertWaterConsumptionDataSQL);
-        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrankInMilliliters, $dateTime, $userID);
+        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrankInMilliliters, $recordedOn, $userID);
         return $insertWaterConsumptionDataSTMT->execute();
 
     }
@@ -57,7 +57,7 @@ class UserTrackWaterConsumptionModel {
      * Returns true if success.
      * Otherwise, returns false.
     */
-    public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $dateTime, $userID) {
+    public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $recordedOn, $userID) {
         
         
         if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID)) {
@@ -65,7 +65,7 @@ class UserTrackWaterConsumptionModel {
             " SET milliliters = ?, recordedOn = ? WHERE waterConsumptionID = ? AND userID = ?";
 
             $updateWaterConsumptionDataSTMT = $this->databaseConn->prepare($updateWaterConsumptionDataSQL);
-            $updateWaterConsumptionDataSTMT->bind_param("ssss", $amountDrankInMilliliters, $dateTime, $waterConsumptionID, $userID);
+            $updateWaterConsumptionDataSTMT->bind_param("ssss", $amountDrankInMilliliters, $recordedOn, $waterConsumptionID, $userID);
             $updateWaterConsumptionDataSTMT->execute();
             
             // Checks if there was any error running the sql statemnt, error number 0 is no errors.
