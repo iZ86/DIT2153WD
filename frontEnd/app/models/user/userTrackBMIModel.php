@@ -49,11 +49,11 @@ class UserTrackBMIModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addBMIData($age, $gender, $height, $weight, $recordedOn, $userID) {
+    public function addBMIData($age, $gender, $height, $weightInGram, $recordedOn, $userID) {
 
-        $insertBMIDataSQL = "INSERT INTO " . $this->bmiTable . "(age, gender, height, weight, recordedOn, userID) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertBMIDataSQL = "INSERT INTO " . $this->bmiTable . "(age, gender, height, weightInGram, recordedOn, userID) VALUES (?, ?, ?, ?, ?, ?)";
         $insertBMIDataSTMT = $this->databaseConn->prepare($insertBMIDataSQL);
-        $insertBMIDataSTMT->bind_param("ssssss", $age, $gender, $height, $weight, $recordedOn, $userID);
+        $insertBMIDataSTMT->bind_param("ssssss", $age, $gender, $height, $weightInGram, $recordedOn, $userID);
         return $insertBMIDataSTMT->execute();
 
     }
@@ -62,15 +62,15 @@ class UserTrackBMIModel {
      * Returns true if success.
      * Otherwise, returns false.
     */
-    public function updateBMIData($bmiID, $age, $gender, $height, $weight, $recordedOn, $userID) {
+    public function updateBMIData($bmiID, $age, $gender, $height, $weightInGram, $recordedOn, $userID) {
         
         
         if ($this->verifyBMIIDToUserID($bmiID, $userID)) {
             $updateBMIDataSQL = "UPDATE " . $this->bmiTable .
-            " SET age = ?, gender = ?, height = ?, weight = ?, recordedOn = ? WHERE bmiID = ? AND userID = ?";
+            " SET age = ?, gender = ?, height = ?, weightInGram = ?, recordedOn = ? WHERE bmiID = ? AND userID = ?";
 
             $updateBMIDataSTMT = $this->databaseConn->prepare($updateBMIDataSQL);
-            $updateBMIDataSTMT->bind_param("sssssss", $age, $gender, $height, $weight, $recordedOn, $bmiID, $userID);
+            $updateBMIDataSTMT->bind_param("sssssss", $age, $gender, $height, $weightInGram, $recordedOn, $bmiID, $userID);
             return $updateBMIDataSTMT->execute();
             
         }
