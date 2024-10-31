@@ -33,17 +33,30 @@ class ClassesView {
     }
 
     public function renderClasses() {
-        foreach($this->data as $classes) {?>
+        if($this->data) {
+            foreach($this->data as $classes) {?>
+                <div class="mt-12">
+                    <a href="./fitness-class-details.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
+                        <div class="flex flex-row">
+                            <div class="mr-28">
+                                <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?><?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">
+                                <p class="text-center font-bold font-aoboshi mt-2 text-xl"><?= $classes['name'] ?></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <?php
+            }
+        } else {?>
         <div class="mt-12">
-                <a href="./fitness-class-details.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
+            <a>
                 <div class="flex flex-row">
                     <div class="mr-28">
-                        <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?><?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">
-                        <p class="text-center font-bold font-aoboshi mt-2 text-xl"><?= $classes['name'] ?></p>
+                        <p class="<?= $this->classesImageStyles ?> text-center flex justify-center items-center text-xl font-bold">Currently No Class!</p>
                     </div>
                 </div>
-                </a>
-            </div>
+            </a>
+        </div>
         <?php
         }
     }

@@ -31,8 +31,10 @@ require __DIR__ . '/../../../config/config.php';
     }
 
     public function renderFitnessClassImage() {
-        $fitnessClassImage = htmlspecialchars($this->data['fitnessClassImageFilePath']);
-        echo "<img class='object-cover' src='" . IMAGE_FILE_PATH . "{$fitnessClassImage}' alt='Fitness Class Image'>";
+        if($this->data) {
+            $fitnessClassImage = htmlspecialchars($this->data['fitnessClassImageFilePath']);
+            echo "<img class='object-cover' src='" . IMAGE_FILE_PATH . "{$fitnessClassImage}' alt='Fitness Class Image'>";
+        }
     }
 
     public function renderInstructors() {
@@ -84,7 +86,15 @@ require __DIR__ . '/../../../config/config.php';
                 <?= $this->renderFitnessClassImage(); ?>
                 <?= $this->renderFitnessClassName(); ?>
 
-                <p class='font-montserrat mt-3'><?= htmlspecialchars($this->data['description']) ?></p>
+                <?php
+                if($this->data) {?>
+                    <p class='font-montserrat mt-3'><?= htmlspecialchars($this->data['description']) ?></p>
+                <?php
+                } else {?>
+                    <p class='font-montserrat mt-3'>No Description</p>
+                <?php
+                }
+                ?>
 
                 <div class='grid grid-cols-3 gap-x-2 gap-y-4 mt-6 font-orelega'>
                     <div class='flex justify-start items-center'>
