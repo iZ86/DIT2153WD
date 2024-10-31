@@ -69,7 +69,7 @@ function validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUni
 
 // Ensures that there is a valid $_GET request.
 if (!(isset($_GET['date'])) || !preg_match($regexDateFormat, $_GET['date']) || (date($_GET['date']) > date("Y-m-d"))) {
-    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . date("Y-m-d")));
+    die(header('location: track-water-consumption.php?date=' . date("Y-m-d")));
 }
 
 $date = $_GET['date'];
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
                     $addStatus = $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
                     if ($addStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+                        die(header('location: track-water-consumption.php?date=' . $date));
                     }
                 }
             }
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackWaterConsumptionModel->updateWaterConsumptionData($waterConsumptionID, $amountDrank, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
-                        // die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+                        die(header('location: track-water-consumption.php?date=' . $date));
                     }
                 }
             }
@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $deleteStatus = $userTrackWaterConsumptionModel->deleteWaterConsumptionData($waterConsumptionID, $_SESSION['userID']);
                     if ($deleteStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+                        die(header('location: track-water-consumption.php?date=' . $date));
                     }
                 }
             }
