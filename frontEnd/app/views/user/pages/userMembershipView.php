@@ -73,7 +73,10 @@ class UserMembershipView {
             </div>
             <div class="flex items-end">
                 <div class="flex max-h-12 ml-7 mt-17">
-                    <button class="bg-orange-500 text-white px-6 py-3 font-semibold rounded-3xl hover:bg-orange-700 text-base">Get Membership</button>
+                    <input type="button" id="getMembershipButton"
+                    value="Get Membership"
+                    class="bg-orange-500 text-white px-6 py-3 font-semibold rounded-3xl hover:bg-orange-700 text-base cursor-pointer"
+                    onclick="getMembership()">
                 </div>
                     
             </div>
@@ -96,8 +99,8 @@ class UserMembershipView {
         }
             
         ?>
-        <div class="bg-gray-200 text-blue-600 p-6 rounded-2xl shadow-lg mx-auto mt-16 max-w-2xl">
-            <h1 class="text-4xl font-bold text-center">Body Transformation Program</h1>
+        <div id="membershipStandardBanner" class="bg-gray-200 text-blue-600 p-6 rounded-2xl shadow-lg mx-auto mt-16 max-w-2xl">
+            <h1 class="text-4xl font-bold text-center">Membership Standard</h1>
             <h1 class="font-black text-3xl text-center mt-2">RM50</h1>
             <ul class="list-disc list-inside mt-4">
                 <li>Body weight and water consumption data management</li>
@@ -113,6 +116,7 @@ class UserMembershipView {
             </div>
         </div>
     </section>
+    <script src="../../public/js/user/userMembershipScript.js"></script>
     <?php
     }
 }
