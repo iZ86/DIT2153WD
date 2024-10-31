@@ -107,10 +107,20 @@ class UserTrackWeightView {
         
         <div class="flex items-center mb-14">
             <div class="mx-auto flex items-center text-3xl justify-center basis-96">
-                <select name="unit" id="weightUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2" oninput="convertWeightOfAllWeightDataRow('weightUnit');createSessionForUnitSelected('weightUnit');updateWeightMessages()">
-                    <option value="Kg" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
-                    <option value="g" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "g") { echo "selected"; }?>>Grams (g)</option>
-                    <option value="lb" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+                <select name="weightUnitInUserTrackWeightView" 
+                id="weightUnitInUserTrackWeightView"
+                class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2"
+                oninput="convertWeightOfAllWeightDataRow('weightUnitInUserTrackWeightView');
+                createSessionForWeightUnitSelected();
+                updateWeightMessages()">
+                    
+                    <option value="Kg" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                    $_SESSION['weightUnitInUserTrackWeightView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
+                    <option value="g" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                    $_SESSION['weightUnitInUserTrackWeightView'] === "g") { echo "selected"; }?>>Grams (g)</option>
+                    <option value="lb" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                    $_SESSION['weightUnitInUserTrackWeightView'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+                    
                 </select>
             </div>
         </div>
@@ -143,10 +153,20 @@ class UserTrackWeightView {
                         <div class="flex">
                             
 
-                            <select name="unit" id="unit" class="bg-white rounded-lg border-2 text-shadow-dark text-black" oninput="convertWeightOfAllWeightDataRow('unit');createSessionForUnitSelected('unit');updateWeightMessages()">
-                                <option value="Kg" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
-                                <option value="g" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "g") { echo "selected"; }?>>Grams (g)</option>
-                                <option value="lb" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+                            <select name="weightUnitInWeightDataModalInUserTrackWeightView"
+                            id="weightUnitInWeightDataModalInUserTrackWeightView"
+                            class="bg-white rounded-lg border-2 text-shadow-dark text-black"
+                            oninput="convertWeightOfAllWeightDataRow('weightUnitInWeightDataModalInUserTrackWeightView');
+                            createSessionForWeightUnitSelected()
+                            ;updateWeightMessages()">
+
+                                <option value="Kg" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                                $_SESSION['weightUnitInUserTrackWeightView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
+                                <option value="g" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                                $_SESSION['weightUnitInUserTrackWeightView'] === "g") { echo "selected"; }?>>Grams (g)</option>
+                                <option value="lb" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                                $_SESSION['weightUnitInUserTrackWeightView'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+
                             </select>
                             <label for="weight" class="text-white drop-shadow-dark">:</label>
                         </div>

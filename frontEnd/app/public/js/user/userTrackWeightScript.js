@@ -68,13 +68,13 @@ function clearModalFields() {
 
 /** Converts the amount for every weight data rows. */
 function convertWeightOfAllWeightDataRow(unitDropDownBoxID) {
-    if (unitDropDownBoxID === "weightUnit") {
-        document.getElementById('unit').value = document.getElementById("weightUnit").value;
+    if (unitDropDownBoxID === "weightUnitInUserTrackWeightView") {
+        document.getElementById('weightUnitInWeightDataModalInUserTrackWeightView').value = document.getElementById("weightUnitInUserTrackWeightView").value;
         
-    } else if (unitDropDownBoxID === "unit") {
-        document.getElementById('weightUnit').value = document.getElementById("unit").value;
+    } else if (unitDropDownBoxID === "weightUnitInWeightDataModalInUserTrackWeightView") {
+        document.getElementById('weightUnitInUserTrackWeightView').value = document.getElementById("weightUnitInWeightDataModalInUserTrackWeightView").value;
     }
-    let unitSelected = document.getElementById('weightUnit').value;
+    let unitSelected = document.getElementById('weightUnitInUserTrackWeightView').value;
 
 
     if (unitSelected === "Kg") {
@@ -105,12 +105,15 @@ function convertWeightOfAllWeightDataRow(unitDropDownBoxID) {
 /** This function is used to send to track-weight.php?date=...,
  * to persist the unit selected by the user.
  */
-function createSessionForUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForWeightUnitSelected() {
+    
+    
+    let unitSelected = document.getElementById("weightUnitInUserTrackWeightView").value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("unit=" + unitSelected);
+    console.log(unitSelected);
+    xmlHttRequest.send("weightUnitInUserTrackWeightView=" + unitSelected);
 }
 
 /** Converts kilograms to grams */
@@ -149,7 +152,7 @@ function updateWeightMessages() {
     let weightEncouragementMessage = document.getElementById('weightEncouragementMessage');
 
     let weightInUnitText;
-    let unitSelected = document.getElementById('weightUnit').value;
+    let unitSelected = document.getElementById('weightUnitInUserTrackWeightView').value;
     if (unitSelected === "Kg") {
         weightInUnitText = latestWeight + "Kg";
     } else if (unitSelected === "g") {
@@ -192,7 +195,7 @@ function openEditWeightDataModal(weightID) {
     let timeInput = document.getElementById('time');
     let weightIDInput = document.getElementById("weightID");
 
-    unitSelected = document.getElementById("weightUnit").value;
+    unitSelected = document.getElementById("weightUnitInUserTrackWeightView").value;
 
     submitWeightDataButton.value="Save"
     modalTitle.innerText = 'Edit Weight Data';
@@ -249,5 +252,5 @@ function closeConfirmationModal() {
 
 
 
-convertWeightOfAllWeightDataRow("weightUnit");
+convertWeightOfAllWeightDataRow("weightUnitInUserTrackWeightView");
 updateWeightMessages();
