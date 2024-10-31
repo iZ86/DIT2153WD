@@ -73,7 +73,7 @@ class UserMembershipView {
             </div>
             <div class="flex items-end">
                 <div class="flex max-h-12 ml-7 mt-17">
-                    <button class="bg-orange-500 text-white px-6 py-3 font-semibold rounded-3xl hover:bg-orange-700 text-base">View Current Plan</button>
+                    <button class="bg-orange-500 text-white px-6 py-3 font-semibold rounded-3xl hover:bg-orange-700 text-base">Get Membership</button>
                 </div>
                     
             </div>
