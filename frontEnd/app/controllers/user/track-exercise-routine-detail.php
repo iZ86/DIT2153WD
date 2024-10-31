@@ -277,12 +277,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
+// Used to persist the weight unit chosen by user.
 if (isset($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "Kg" ||
-    $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "g" ||
-    $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "lb") {
+    if ($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] !== null &&
+    preg_match($regexWeightUnitFormat, $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'])) {
+        
         $_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] = $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'];
     }
 }
