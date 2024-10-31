@@ -2,7 +2,7 @@
 class UserTrackWeightModel {
     /** Database connection. */
     private $databaseConn;
-    /** Weight table */
+    /** WEIGHT table */
     private $weightTable = "WEIGHT";
 
     /** Constructor for model. */
@@ -10,7 +10,11 @@ class UserTrackWeightModel {
         $this->databaseConn = $databaseConn;
     }
     
-    /** Returns an array of arrays containing weight consumption data in a day.
+    
+    /** Returns an associate array of arrays where key is weightID attribute,
+     * and every value is an associate array representing a record in the WEIGHT table,
+     * where recordedOn attribute is $recordedOn,
+     * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
     public function getWeightDataFromDate($userID, $recordedOn) {
@@ -40,7 +44,7 @@ class UserTrackWeightModel {
         return $weightResultDataArray;
     }
 
-    /** Adds weight into the database.
+    /** Adds weight data into the database.
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
@@ -101,10 +105,13 @@ class UserTrackWeightModel {
         return false;
     }
 
-    /** Returns true if there is a record that belongs to the $weightID and $userID.
+    /** Returns true if there is a data in the WEIGHT table,
+     * where weightID attribute is $weightID,
+     * and userID attribute is $userID.
      * Otherwise, returns false.
-     * This function is used to prove that the $weightID sent by the $_POST in the controller
-     * actually belongs to the userID, and allows the userID to perform write actions on it.
+     * This function is used to verify that the data does exist, 
+     * and that the user has the permissions to manipulate the data,
+     * where weightID attribute is $weightID in the WEIGHT table.
     */
     private function verifyWeightDataIDToUserID($weightID, $userID) {
         $selectWeightDataSQL = "SELECT 1 FROM " . $this->weightTable . " WHERE weightID = ? AND userID = ?";

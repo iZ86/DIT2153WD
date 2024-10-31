@@ -10,8 +10,11 @@ class UserTrackBMIModel {
         $this->databaseConn = $databaseConn;
     }
     
-    /** Returns an array of arrays containing BMI data in a day.
-     * Selecting from the BMI table.
+    
+    /** Returns an associate array of arrays where key is bmiID attribute,
+     * and every value is an associate array representing a record in the BMI table,
+     * where recordedOn attribute is $recordedOn,
+     * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
     public function getBMIDataFromDate($userID, $recordedOn) {
@@ -42,7 +45,7 @@ class UserTrackBMIModel {
         return $selectBMIDataResultDataArray;
     }
 
-    /** Adds BMI record into the BMI table.
+    /** Adds BMI data into the BMI table.
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
@@ -103,10 +106,13 @@ class UserTrackBMIModel {
         return false;
     }
 
-    /** Returns true if there is a record in the BMI table with the id $bmiID that is linked to $userID.
+    /** Returns true if there is a data in the BMI table in BMI table,
+     * where bmiID attribute is $bmiID,
+     * and userID attribute is $userID.
      * Otherwise, returns false.
-     * This function is used to prove that the $bmiID sent by the $_POST in the controller
-     * actually belongs to the userID, and allows the userID to perform write actions on it.
+     * This function is used to verify that the data does exist, 
+     * and that the user has the permissions to manipulate the data,
+     * where bmiID attribute is $bmiID in the BMI table.
     */
     private function verifyBMIDataIDToUserID($bmiID, $userID) {
         $selectBMIDataSQL = "SELECT 1 FROM " . $this->bmiTable . " WHERE bmiID = ? AND userID = ?";

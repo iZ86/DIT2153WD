@@ -2,11 +2,11 @@
 class UserTrackExerciseRoutineDetailModel {
     /** Database connection. */
     private $databaseConn;
-    /** exercise_routine table. */
+    /** EXERCISE_ROUTINE table. */
     private $exerciseRoutineTable = "EXERCISE_ROUTINE";
-    /** exercise table. */
+    /** EXERCISE table. */
     private $exerciseTable = "EXERCISE";
-    /** exercise_routine_detail table. */
+    /** EXERCISE_ROUTINE_DETAIL table. */
     private $exerciseRoutineDetailTable = "EXERCISE_ROUTINE_DETAIL";
 
     /** Constructor for model. */
@@ -14,8 +14,8 @@ class UserTrackExerciseRoutineDetailModel {
         $this->databaseConn = $databaseConn;
     }
     
-    /** Returns an associate array of arrays where key is exerciseRoutineDetailID,
-     * and every value is an associate array representing a record in the exercise_routine_details table,
+    /** Returns an associate array of arrays where key is exerciseRoutineDetailID attribute,
+     * and every value is an associate array representing a record in the EXERCISE_ROUTINE_DETAIL table,
      * where recordedOnDate attribute is $recordedOnDate,
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
@@ -48,7 +48,7 @@ class UserTrackExerciseRoutineDetailModel {
     }
 
     /** Returns an associate array of associate arrays where key is exerciseID,
-     * and each value is an assoc array representing a record in the exercise table,
+     * and each value is an assoc array representing a record in the EXERCISE table,
      * and each userID attribute in the record is $userID,
      * Otherwise, return an empty array.
     */
@@ -86,7 +86,7 @@ class UserTrackExerciseRoutineDetailModel {
         return array();
     }
 
-    /** Adds exercise routine data into the exercise table.
+    /** Adds exercise routine data into the EXERCISE table.
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
@@ -102,7 +102,7 @@ class UserTrackExerciseRoutineDetailModel {
         
     }
 
-    /** Adds exercise data into the exercise table.
+    /** Adds exercise data into the EXERCISE table.
      * Returns true, if successful.
      * Otherwise, returns fasle.
      */
@@ -113,7 +113,7 @@ class UserTrackExerciseRoutineDetailModel {
         return $insertExercseDataSTMT->execute();
     }
 
-    /** Adds exercise routine detail data into exercise_routine_detail table.
+    /** Adds exercise routine detail data into EXERCISE_ROUTINE_DETAIL table.
      * Returns true, if successful.
      * Otherwise, returns false.
      */
@@ -130,7 +130,7 @@ class UserTrackExerciseRoutineDetailModel {
         }
     }
 
-    /** Updates exercise data in the exercise table.
+    /** Updates exercise data in the EXERCISE table.
      * Returns true, if success.
      * Otherewise, returns false
      */
@@ -144,7 +144,7 @@ class UserTrackExerciseRoutineDetailModel {
         }
     }
 
-    /** Update exercise routine detail data in the exercise_routine_detail table.
+    /** Update exercise routine detail data in the EXERCISE_ROUTINE_DETAIL table.
      * Returns true, if success.
      * Otherwise, returns false.
      */
@@ -162,7 +162,7 @@ class UserTrackExerciseRoutineDetailModel {
         }
     }
 
-    /** Deletes exercise data in the exercise table.
+    /** Deletes exercise data in the EXERCISE table.
      * Returns true, if success.
      * Otherwise, returns false.
      */
@@ -194,7 +194,7 @@ class UserTrackExerciseRoutineDetailModel {
         return $deleteExerciseRoutineDetailDataSTMT->execute();
     }
 
-    /** Delete exercise routine detail data in the exercise_routine_detail table.
+    /** Delete exercise routine detail data in the EXERCISE_ROUTINE_DETAIL table.
      * Returns true, if success.
      * Otherwise, returns false.
      */
@@ -215,7 +215,10 @@ class UserTrackExerciseRoutineDetailModel {
      * where exerciseRoutineDetailID attribute is $exerciseRoutineDetailID,
      * and exerciseRoutineID attribute is $exerciseRoutineID.
      * Otherwise, returns false.
-     * This function is used for ensuring that the data does exist, and it belongs to the user through the exerciseRoutineID attribute.
+     * This function is used to verify that the data does exist, 
+     * and the user has the permissions to manipulate the data,
+     * where the exerciseRoutineDetailID attribute is $exerciseRoutineDetailID,
+     * through the exerciseRoutineID attribute in the EXERCISE_ROUTINE_DETAIL table.
      */
     private function verifyExerciseRoutineDetailIDToExerciseRoutineID($exerciseRoutineDetailID, $exerciseRoutineID) {
         $selectExerciseRoutineDetailSQL = "SELECT * FROM " . $this->exerciseRoutineDetailTable . " WHERE exerciseRoutineID = ? AND exerciseRoutineDetailID = ?";
@@ -233,7 +236,9 @@ class UserTrackExerciseRoutineDetailModel {
      * where exerciseID attribute is $exerciseID,
      * and userID attribute is $userID.
      * Otherwise, returns false.
-     * This function is used to prove that the user has the permissions to manipulate the data of $exerciseID in the EXERCISE table.
+     * This function is used to verify that the data does exist, 
+     * and the user has the permissions to manipulate the data,
+     * where exerciseID attribute is $exerciseID in the EXERCISE table.
      */
     public function verifyExerciseIDToUserID($exerciseID, $userID) {
         $selectExercseDataSQL = "SELECT * FROM " . $this->exerciseTable . " WHERE exerciseID = ? AND userID = ?";
@@ -253,7 +258,9 @@ class UserTrackExerciseRoutineDetailModel {
      * where exerciseRoutineID attribute is $exerciseRoutineID,
      * AND userID attribute is $userID.
      * Otherwise, returns false.
-     * This function is used to prove that the user has the permissions to manipulate the data of $exerciseRoutineID in the EXERCISE_ROUTINE table.
+     * This function is used to verify that the data does exist,
+     * and that the user has the permissions to manipulate the data,
+     * where exerciseRoutineID attribute is $exerciseRoutineID in the EXERCISE_ROUTINE table.
      */
     private function verifyExerciseRoutineIDToUserID($exerciseRoutineID, $userID) {
         $selectExercseRoutineDataSQL = "SELECT * FROM " . $this->exerciseRoutineTable . " WHERE exerciseRoutineID = ? AND userID = ?";
@@ -269,7 +276,7 @@ class UserTrackExerciseRoutineDetailModel {
         return false;
     }
 
-    /** Returns true if there is data in the EXERCISE_ROUTINE table,
+    /** Returns true if there is a data in the EXERCISE_ROUTINE table,
      * where date attribute is $recordedOnDate,
      * and userID attribute is $userID.
      * Otherwise, returns false.

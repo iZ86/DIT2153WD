@@ -2,7 +2,7 @@
 class UserTrackWaterConsumptionModel {
     /** Database connection. */
     private $databaseConn;
-    /** Water_consumption table */
+    /** WATER_CONSUMPTION table */
     private $waterConsumptionTable = "WATER_CONSUMPTION";
 
     /** Constructor for model. */
@@ -10,7 +10,11 @@ class UserTrackWaterConsumptionModel {
         $this->databaseConn = $databaseConn;
     }
     
-    /** Returns an array of arrays containing water consumption data in a day.
+    
+    /** Returns an associate array of arrays where key is waterConsumptionID attribute,
+     * and every value is an associate array representing a record in the WATER_CONSUMPTION table,
+     * where recordedOn attribute is $recordedOn,
+     * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
     public function getWaterConsumptionDataFromDate($userID, $recordedOn) {
@@ -40,7 +44,7 @@ class UserTrackWaterConsumptionModel {
         return $waterConsumptionResultDataArray;
     }
 
-    /** Adds water consumption record into the database.
+    /** Adds water consumption data into the database.
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
@@ -101,10 +105,13 @@ class UserTrackWaterConsumptionModel {
         return false;
     }
 
-    /** Returns true if there is a record that belongs to the $waterConsumptionID and $userID.
+    /** Returns true if there is a data in the WATER_CONSUMPTION table,
+     * where waterConsumptionID attribute is $waterConsumptionID,
+     * and userID attribute is $userID.
      * Otherwise, returns false.
-     * This function is used to prove that the $waterConsumptionID sent by the $_POST in the controller
-     * actually belongs to the userID, and allows the userID to perform write actions on it.
+     * This function is used to verify that the data does exist, 
+     * and that the user has the permissions to manipulate the data,
+     * where waterConsumptionID attribute is $waterConsumptionID in the WATER_CONSUMPTION table.
     */
     private function verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID) {
         $selectWaterConsumptionDataSQL = "SELECT 1 FROM " . $this->waterConsumptionTable . " WHERE waterConsumptionID = ? AND userID = ?";
