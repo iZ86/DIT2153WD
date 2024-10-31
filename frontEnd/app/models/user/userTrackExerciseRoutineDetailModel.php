@@ -142,6 +142,7 @@ class UserTrackExerciseRoutineDetailModel {
             $updateExerciseDataSTMT->bind_param("sss", $exerciseName, $exerciseID, $userID);
             return $updateExerciseDataSTMT->execute();
         }
+        return false;
     }
 
     /** Update exercise routine detail data in the EXERCISE_ROUTINE_DETAIL table.
@@ -160,6 +161,7 @@ class UserTrackExerciseRoutineDetailModel {
             $updateExerciseRoutineDataSTMT->bind_param("sssssss", $weight, $rep, $note, $recordedOnTime, $exerciseID, $exerciseRoutineID, $exerciseRoutineDetailID);
             return $updateExerciseRoutineDataSTMT->execute();
         }
+        return false;
     }
 
     /** Deletes exercise data in the EXERCISE table.
@@ -177,6 +179,7 @@ class UserTrackExerciseRoutineDetailModel {
                 return $deleteExerciseDataSTMT->execute();
             }
         }
+        return false;
     }
 
     /** Deletes all the exercise routine detail data in the EXERCISE_ROUTINE_DETAIL table.
@@ -209,6 +212,7 @@ class UserTrackExerciseRoutineDetailModel {
             $deleteExerciseRoutineDetailDataSTMT->bind_param("s", $exerciseRoutineDetailID);
             return $deleteExerciseRoutineDetailDataSTMT->execute();
         }
+        return false;
     }
 
     /** Returns true if there is data in the EXERCISE_ROUTINE_DETAIL table,
