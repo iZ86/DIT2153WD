@@ -1,6 +1,8 @@
 let exerciseRoutineDetailDataset = JSON.parse(document.getElementById('phpExerciseRoutineDetailDataset').value);
 let exerciseDataset = JSON.parse(document.getElementById("phpExerciseDataset").value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
+const KILOGRAMSTOGRAMSCONVERSIONRATE = 1000;
+const KILOGRAMSTOPOUNDSCONVERSIONRATE = 2.20462;
 
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackExerciseRoutineDetailPage() {
@@ -92,12 +94,22 @@ function displayMessageOfAllExerciseRoutineDetailDataRow() {
 /** This function is used to send to track-exercise-routine-detail.php?date=...,
  * to persist the unit selected by the user.
  */
-function createSessionForUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForWeightUnitSelected() {
+    let unitSelected = document.getElementById('weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("unit=" + unitSelected);
+    xmlHttRequest.send("weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView=" + unitSelected);
+}
+
+/** Converts kilograms to grams */
+function convertKilogramsToGrams(kilograms) {
+    return Math.floor(kilograms * KILOGRAMSTOGRAMSCONVERSIONRATE * 100) / 100;
+}
+
+/** Converts kilograms to pounds. */
+function convertKilogramsToPounds(kilograms) {
+    return Math.floor(kilograms * KILOGRAMSTOPOUNDSCONVERSIONRATE * 100) / 100;
 }
 
 /** Updates exercise routine detail messages. */
@@ -162,7 +174,7 @@ function openEditExerciseRoutineDetailDataModal(exerciseRoutineDetailID) {
     let exerciseRoutineDetailIDInput = document.getElementById('exerciseRoutineDetailID');
     let exerciseInput = document.getElementById('exerciseIDForExerciseRoutineDetail');
     let weightInput = document.getElementById('weight');
-    let weightUnitInputSelected = document.getElementById('weightUnit').value;
+    let weightUnitInputSelected = document.getElementById('weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView').value;
     let repInput = document.getElementById('rep');
     let noteInput = document.getElementById('note');
     let timeInput = document.getElementById('time');

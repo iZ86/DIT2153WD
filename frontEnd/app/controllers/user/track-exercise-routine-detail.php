@@ -25,12 +25,12 @@ $regexWeightUnitFormat = "/^(Kg|g|lb)$/";
 /** Converts value of any unit for weight measurement to kilograms.
  * Return -1, if unit is not supported.
  */
-function convertValueOfUnitToKilograms($value, $unit) {
-    if ($unit === "Kg") {
+function convertValueOfWeightUnitToKilograms($value, $weightUnit) {
+    if ($weightUnit === "Kg") {
         return $value;
-    } else if ($unit === "g") {
+    } else if ($weightUnit === "g") {
         return floor($value * 10000 * GRAMSTOKILOGRAMSCONVERSIONRATE) / 10000;
-    } else if ($unit === "lb") {
+    } else if ($weightUnit === "lb") {
         return floor($value * 10000 * POUNDSTOKILOGRAMSCONVERSIONRATE) / 10000;
     }
     return -1;
@@ -48,7 +48,7 @@ function cleanData($data) {
  * Otherwise, return false.
  */
 function checkIsBasicPostExerciseRoutineDetailVariablesSet() {
-    if (isset($_POST['exerciseIDForExerciseRoutineDetail']) && isset($_POST['weight']) && isset($_POST['weightUnit']) && isset($_POST['rep']) && 
+    if (isset($_POST['exerciseIDForExerciseRoutineDetail']) && isset($_POST['weight']) && isset($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']) && isset($_POST['rep']) && 
     isset($_POST['time'])) {
         return true;
     }
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $exerciseIDForExerciseRoutineDetail = cleanData($_POST['exerciseIDForExerciseRoutineDetail']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']);
                 $rep = cleanData($_POST['rep']);
                 // Note is not needed to be checked if its empty because it is just a note that the user inputs, with no real value.
                 $note = isset($_POST['note']) ? cleanData($_POST['note']) : "";
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToKilograms($weight, $weightUnit);
                     
                     if ($userTrackExerciseRoutineDetailModel->verifyExerciseIDToUserID($exerciseIDForExerciseRoutineDetail, $_SESSION['userID'])) {
                         
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $exerciseRoutineDetailID = cleanData($_POST['exerciseRoutineDetailID']);
                 $exerciseIDForExerciseRoutineDetail = cleanData($_POST['exerciseIDForExerciseRoutineDetail']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']);
                 $rep = cleanData($_POST['rep']);
                 // Note is not needed to be checked if its empty because it is just a note that the user inputs, with no real value.
                 $note = isset($_POST['note']) ? cleanData($_POST['note']) : "";
@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToKilograms($weight, $weightUnit);
                     
                     $exerciseRoutineData = $userTrackExerciseRoutineDetailModel->getExerciseRoutineDataFromDate($date, $_SESSION['userID']);
                     if (sizeof($exerciseRoutineData) > 0) {
@@ -225,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $exerciseRoutineDetailID = cleanData($_POST['exerciseRoutineDetailID']);
                 $exerciseIDForExerciseRoutineDetail = cleanData($_POST['exerciseIDForExerciseRoutineDetail']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']);
                 $rep = cleanData($_POST['rep']);
                 // Note is not needed to be checked if its empty because it is just a note that the user inputs, with no real value.
                 $note = isset($_POST['note']) ? cleanData($_POST['note']) : "";
@@ -241,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToKilograms($weight, $weightUnit);
                     
                     $exerciseRoutineData = $userTrackExerciseRoutineDetailModel->getExerciseRoutineDataFromDate($date, $_SESSION['userID']);
                     if (sizeof($exerciseRoutineData) > 0) {
@@ -278,10 +278,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-if (isset($_POST['unit'])) {
+if (isset($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['unit'] === "mL" || $_POST['unit'] === "L" || $_POST['unit'] === "oz") {
-        $_SESSION['unit'] = $_POST['unit'];
+    if ($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "Kg" ||
+    $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "g" ||
+    $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "lb") {
+        $_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] = $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'];
     }
 }
 $userTrackExerciseRoutineDetailView = new UserTrackExerciseRoutineDetailView($userTrackExerciseRoutineDetailModel->getExerciseDatasetFromUserID($_SESSION['userID']), $userTrackExerciseRoutineDetailModel->getExerciseRoutineDetailDatasetFromDate($date, $_SESSION['userID']));
