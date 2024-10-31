@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($nutritionistBookingResult) {
                 echo "<script>alert('Successfully booked the Nutritionist! Please make sure to be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-nutritionist.php';</script>";
             } elseif($fitnessClassBookingResult) {
-                echo "<script>alert('Successfully booked the Class, Enjoy the Class!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/classes.php';</script>";
+                echo "<script>alert('Successfully booked the Class, Enjoy the Class!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/fitness-class.php';</script>";
             } else {
                 //TODO: Bring useer to errror page.
             }
