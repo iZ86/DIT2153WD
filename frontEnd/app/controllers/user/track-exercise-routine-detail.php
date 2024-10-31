@@ -2,8 +2,8 @@
 require('../../views/user/pages/userTrackExerciseRoutineDetailView.php');
 require('../../models/user/userTrackExerciseRoutineDetailModel.php');
 session_start();
-define("GRAMSTOKILOGRAMSCONVERSIONRATE", 1000);
-define("POUNDSTOKILOGRAMSCONVERSIONRATE", 2.20462);
+define("KILOGRAMTOGRAMCONVERSIONRATE", 1000);
+define("POUNDTOGRAMCONVERSIONRATE", 453.6);
 
 $userTrackExerciseRoutineDetailModel = new userTrackExerciseRoutineDetailModel(require "../../config/db_connection.php");
 
@@ -11,7 +11,7 @@ $userTrackExerciseRoutineDetailModel = new userTrackExerciseRoutineDetailModel(r
 $regexDateFormat = "/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/";
 
 // Regex to validate weight format.
-$regexWeightFormat = "/^[\d]*(.[\d]{1,2}$|$)/";
+$regexWeightFormat = "/^[\d]*(.[\d]{1,4}$|$)/";
 
 // Regex to validate ID.
 $regexIDAndRepFormat = "/^(0|[1-9][\d]*)$/";
@@ -22,16 +22,17 @@ $regexTimeFormat = "/(^[0-3]|^)[\d]:[0-5][\d]$/";
 // Regex to validate weight unit.
 $regexWeightUnitFormat = "/^(Kg|g|lb)$/";
 
-/** Converts value of any unit for weight measurement to kilograms.
+/** Converts any value of any weight unit to gram.
  * Return -1, if unit is not supported.
  */
-function convertValueOfWeightUnitToKilograms($value, $weightUnit) {
-    if ($weightUnit === "Kg") {
+function convertValueOfWeightUnitToGram($value, $weightUnit) {
+    if ($weightUnit === "g") {
         return $value;
-    } else if ($weightUnit === "g") {
-        return floor($value * 10000 * GRAMSTOKILOGRAMSCONVERSIONRATE) / 10000;
+    } else if ($weightUnit === "Kg") {
+        var_dump(bcmul(KILOGRAMTOGRAMCONVERSIONRATE, $value));
+        return bcmul(KILOGRAMTOGRAMCONVERSIONRATE, $value);
     } else if ($weightUnit === "lb") {
-        return floor($value * 10000 * POUNDSTOKILOGRAMSCONVERSIONRATE) / 10000;
+        return bcmul(POUNDTOGRAMCONVERSIONRATE, $value, 4);
     }
     return -1;
 }
@@ -115,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfWeightUnitToKilograms($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     
                     if ($userTrackExerciseRoutineDetailModel->verifyExerciseIDToUserID($exerciseIDForExerciseRoutineDetail, $_SESSION['userID'])) {
                         
@@ -163,15 +164,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfWeightUnitToKilograms($weight, $weightUnit);
-                    
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     $exerciseRoutineData = $userTrackExerciseRoutineDetailModel->getExerciseRoutineDataFromDate($date, $_SESSION['userID']);
                     if (sizeof($exerciseRoutineData) > 0) {
                         
                         $updateStatus = $userTrackExerciseRoutineDetailModel->updateExerciseRoutineDetailData($exerciseRoutineDetailID, $weight, $rep, $note, $time, $exerciseIDForExerciseRoutineDetail, $exerciseRoutineData["exerciseRoutineID"], $_SESSION['userID']);
                         if ($updateStatus) {
                             
-                            die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                            //die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
                         }
                     }
 
@@ -241,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfWeightUnitToKilograms($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     
                     $exerciseRoutineData = $userTrackExerciseRoutineDetailModel->getExerciseRoutineDataFromDate($date, $_SESSION['userID']);
                     if (sizeof($exerciseRoutineData) > 0) {

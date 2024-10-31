@@ -1,8 +1,22 @@
 let exerciseRoutineDetailDataset = JSON.parse(document.getElementById('phpExerciseRoutineDetailDataset').value);
 let exerciseDataset = JSON.parse(document.getElementById("phpExerciseDataset").value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
-const KILOGRAMSTOGRAMSCONVERSIONRATE = 1000;
-const KILOGRAMSTOPOUNDSCONVERSIONRATE = 2.20462;
+const GRAMTOKILOGRAMCONVERSIONRATE = 1000;
+const GRAMTOPOUNDCONVERSIONRATE = 453.6;
+
+/** Converts any value of gram to any value of weight unit.
+ * Returns -1, if the unit is not supported.
+ */
+function convertValueOfGramToWeightUnit(value, weightUnit) {
+    if (weightUnit === "g") {
+        return value;
+    } else if (weightUnit === "Kg") {
+        return Math.floor((value / GRAMTOKILOGRAMCONVERSIONRATE) * 10000) / 10000;
+    } else if (weightUnit === "lb") {
+        return Math.floor((value / GRAMTOPOUNDCONVERSIONRATE) * 10000) / 10000;
+    }
+    return -1;
+}
 
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackExerciseRoutineDetailPage() {
@@ -102,16 +116,6 @@ function createSessionForWeightUnitSelected() {
     xmlHttRequest.send("weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView=" + unitSelected);
 }
 
-/** Converts kilograms to grams */
-function convertKilogramsToGrams(kilograms) {
-    return Math.floor(kilograms * KILOGRAMSTOGRAMSCONVERSIONRATE * 100) / 100;
-}
-
-/** Converts kilograms to pounds. */
-function convertKilogramsToPounds(kilograms) {
-    return Math.floor(kilograms * KILOGRAMSTOPOUNDSCONVERSIONRATE * 100) / 100;
-}
-
 /** Updates exercise routine detail messages. */
 function updateExerciseRoutineDetailMessages() {
     
@@ -133,9 +137,12 @@ function updateExerciseRoutineDetailMessages() {
         // It will be defined later on, in the for loop, and it is guranteed, since it is not empty due to the check earlier.
         let exerciseRoutineDetailID;
 
+        // exerciseRoutineDetailDataID is exerciseRoutineDetailID, just a placeholder name.
+        // Trying to get the most latest exerciseRoutineLatestID.
         for (let exerciseRoutineDetailDataID in exerciseRoutineDetailDataset) {
             if (exerciseRoutineDetailDataset.hasOwnProperty(exerciseRoutineDetailDataID)) {
                 if (exerciseRoutineDetailDataset[exerciseRoutineDetailDataID]["recordedOnTime"] > exerciseRoutineDetailTime) {
+                    exerciseRoutineDetailTime = exerciseRoutineDetailDataset[exerciseRoutineDetailDataID]["recordedOnTime"];
                     exerciseRoutineDetailID = exerciseRoutineDetailDataID;
                 }
             }
@@ -174,7 +181,7 @@ function openEditExerciseRoutineDetailDataModal(exerciseRoutineDetailID) {
     let exerciseRoutineDetailIDInput = document.getElementById('exerciseRoutineDetailID');
     let exerciseInput = document.getElementById('exerciseIDForExerciseRoutineDetail');
     let weightInput = document.getElementById('weight');
-    let weightUnitInputSelected = document.getElementById('weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView').value;
+    let weightUnitSelected = document.getElementById('weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView').value;
     let repInput = document.getElementById('rep');
     let noteInput = document.getElementById('note');
     let timeInput = document.getElementById('time');
@@ -195,15 +202,7 @@ function openEditExerciseRoutineDetailDataModal(exerciseRoutineDetailID) {
         noteInput.value = exerciseRoutineDetailDataset[exerciseRoutineDetailID]["note"];
     }
     
-
-    
-    if (weightUnitInputSelected === "Kg") {
-        weightInput.value = exerciseRoutineDetailDataset[exerciseRoutineDetailID]["weight"];
-    } else if (weightUnitInputSelected === "g") {
-        weightInput.value = convertKilogramsToGrams(Number(exerciseRoutineDetailDataset[exerciseRoutineDetailID]["weight"]));
-    } else if (weightUnitInputSelected === "lb") {
-        weightInput.value = convertKilogramsToPounds(Number(exerciseRoutineDetailDataset[exerciseRoutineDetailID]["weight"]));
-    }
+    weightInput.value = convertValueOfGramToWeightUnit(Number(exerciseRoutineDetailDataset[exerciseRoutineDetailID]["weightInGram"]), weightUnitSelected);
 
     
     timeInput.value = exerciseRoutineDetailDataset[exerciseRoutineDetailID]["recordedOnTime"];
