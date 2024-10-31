@@ -6,14 +6,18 @@ class AdminClassesView {
     private $totalPagesClasses;
     private $totalPagesSchedules;
     private $currentPage;
+    private $noClassesFound;
+    private $noSchedulesFound;
 
-    public function __construct($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage) {
+    public function __construct($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage, $noClassesFound, $noSchedulesFound) {
         $this->classes = $classes;
         $this->schedules = $schedules;
         $this->instructors = $instructors;
         $this->totalPagesClasses = $totalPagesClasses;
         $this->totalPagesSchedules = $totalPagesSchedules;
         $this->currentPage = $currentPage;
+        $this->noClassesFound = $noClassesFound;
+        $this->noSchedulesFound = $noSchedulesFound;
     }
 
     public function renderView() : void {
@@ -62,7 +66,7 @@ class AdminClassesView {
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Classes</h2>
                     <div class="flex items-center space-x-4">
-                        <button onclick="openFilterModal()" class="bg-gray-400 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                        <button onclick="openFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
                             <i class='bx bx-filter-alt'></i>
                             <span>Filter</span>
                         </button>
@@ -85,18 +89,24 @@ class AdminClassesView {
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
-                    <?php while ($class = $this->classes->fetch_assoc()): ?>
-                        <tr class="bg-white class-row">
-                            <td class="p-3"><?php echo $class['fitnessClassID']; ?></td>
-                            <td class="p-3"><?php echo $class['name']; ?></td>
-                            <td class="p-3"><?php echo $class['description']; ?></td>
-                            <td class="p-3 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>')">
-                                    <i class="bx bx-pencil"></i>
-                                </button>
-                            </td>
+                    <?php if ($this->noClassesFound): ?>
+                        <tr>
+                            <td colspan="4" class="py-4">No records found.</td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <?php while ($class = $this->classes->fetch_assoc()): ?>
+                            <tr class="bg-white class-row">
+                                <td class="p-3"><?php echo $class['fitnessClassID']; ?></td>
+                                <td class="p-3"><?php echo $class['name']; ?></td>
+                                <td class="p-3"><?php echo $class['description']; ?></td>
+                                <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>')">
+                                        <i class="bx bx-pencil"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -123,10 +133,10 @@ class AdminClassesView {
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Classes Schedule</h2>
                     <div class="flex items-center space-x-4">
-                        <div class="relative">
-                            <input type="text" id="classSearch" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
-                            <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
+                        <button onclick="openScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                            <i class='bx bx-filter-alt'></i>
+                            <span>Filter</span>
+                        </button>
                         <button onclick="openScheduleModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
                             <i class="bx bxs-plus-circle"></i>
                             <span>Add Schedule</span>
@@ -149,25 +159,31 @@ class AdminClassesView {
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
-                    <?php while ($schedule = $this->schedules->fetch_assoc()): ?>
-                        <tr class="bg-white">
-                            <td class="p-3"><?php echo $schedule['fitnessClassScheduleID']; ?></td>
-                            <td class="p-3"><?php echo $schedule['className']; ?></td>
-                            <td class="p-3"><?php echo $schedule['instructor']; ?></td>
-                            <td class="p-3"><?php echo $schedule['pax']; ?></td>
-                            <td class="p-3"><?php echo date('d M Y h:i A', strtotime($schedule['scheduledOn'])); ?></td>
-                            <td class="p-3 mt-4">
-                                <span class="bg-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-100 text-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
-                                    <?php echo $schedule['status']; ?>
-                                </span>
-                            </td>
-                            <td class="p-3 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['fitnessClassScheduleID']; ?>, '<?php echo $schedule['fitnessClassID']; ?>', '<?php echo $schedule['instructorID']; ?>', <?php echo $schedule['pax']; ?>, '<?php echo $schedule['scheduledOn']; ?>')">
-                                    <i class="bx bx-pencil"></i>
-                                </button>
-                            </td>
+                    <?php if ($this->noSchedulesFound): ?>
+                        <tr>
+                            <td colspan="7" class="py-4">No records found.</td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <?php while ($schedule = $this->schedules->fetch_assoc()): ?>
+                            <tr class="bg-white">
+                                <td class="p-3"><?php echo $schedule['fitnessClassScheduleID']; ?></td>
+                                <td class="p-3"><?php echo $schedule['className']; ?></td>
+                                <td class="p-3"><?php echo $schedule['instructor']; ?></td>
+                                <td class="p-3"><?php echo $schedule['pax']; ?></td>
+                                <td class="p-3"><?php echo date('d M Y h:i A', strtotime($schedule['scheduledOn'])); ?></td>
+                                <td class="p-3 mt-4">
+                                        <span class="bg-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-100 text-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
+                                            <?php echo $schedule['status']; ?>
+                                        </span>
+                                </td>
+                                <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['fitnessClassScheduleID']; ?>, '<?php echo $schedule['fitnessClassID']; ?>', '<?php echo $schedule['instructorID']; ?>', '<?php echo $schedule['pax']; ?>', '<?php echo date('Y-m-d', strtotime($schedule['scheduledOn'])); ?>', '<?php echo date('H:i', strtotime($schedule['scheduledOn'])); ?>')">
+                                        <i class="bx bx-pencil"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -207,8 +223,35 @@ class AdminClassesView {
                     <input name="keywords" type="text" id="keywords" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <div class="flex justify-end mt-10">
-                        <a href="#" class="bg-indigo-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="button" onclick="closeFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <a href="../admin/classes.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="scheduleFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 class="text-2xl font-semibold mb-4">Filter Schedule</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                    <label class="block text-gray-700 text-sm font-medium">Filter By <span class="text-red-500">*</span></label>
+                    <select name="scheduleFilterType" id="scheduleFilterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Please Select a Type</option>
+                        <option value="className">Class Name</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="pax">Pax</option>
+                        <option value="status">Status</option>
+                        <option value="scheduledOn">Scheduled On</option>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
+                    <input name="scheduleKeywords" type="text" id="scheduleKeywords" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="button" onclick="closeScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <a href="../admin/classes.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -293,6 +336,30 @@ class AdminClassesView {
 
             function closeFilterModal() {
                 const modal = document.getElementById('filterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
+            function openScheduleFilterModal() {
+                const modal = document.getElementById('scheduleFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeScheduleFilterModal() {
+                const modal = document.getElementById('scheduleFilterModal');
                 const overlay = document.getElementById('modalOverlay');
 
                 modal.classList.remove('show');
