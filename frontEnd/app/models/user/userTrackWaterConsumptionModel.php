@@ -48,11 +48,11 @@ class UserTrackWaterConsumptionModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addWaterConsumptionData($userID, $amountDrankInMilliliters, $recordedOn) {
+    public function addWaterConsumptionData($userID, $volumeInMilliliter, $recordedOn) {
 
-        $insertWaterConsumptionDataSQL = "INSERT INTO " . $this->waterConsumptionTable . "(milliliters, recordedOn, userID) VALUES (?, ?, ?)";
+        $insertWaterConsumptionDataSQL = "INSERT INTO " . $this->waterConsumptionTable . "(volumeInMilliliter, recordedOn, userID) VALUES (?, ?, ?)";
         $insertWaterConsumptionDataSTMT = $this->databaseConn->prepare($insertWaterConsumptionDataSQL);
-        $insertWaterConsumptionDataSTMT->bind_param("sss", $amountDrankInMilliliters, $recordedOn, $userID);
+        $insertWaterConsumptionDataSTMT->bind_param("sss", $volumeInMilliliter, $recordedOn, $userID);
         return $insertWaterConsumptionDataSTMT->execute();
 
     }
@@ -61,15 +61,15 @@ class UserTrackWaterConsumptionModel {
      * Returns true if success.
      * Otherwise, returns false.
     */
-    public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $recordedOn, $userID) {
+    public function updateWaterConsumptionData($waterConsumptionID, $volumeInMilliliter, $recordedOn, $userID) {
         
         
         if ($this->verifyWaterConsumptionIDToUserID($waterConsumptionID, $userID)) {
             $updateWaterConsumptionDataSQL = "UPDATE " . $this->waterConsumptionTable .
-            " SET milliliters = ?, recordedOn = ? WHERE waterConsumptionID = ? AND userID = ?";
+            " SET volumeInMilliliter = ?, recordedOn = ? WHERE waterConsumptionID = ? AND userID = ?";
 
             $updateWaterConsumptionDataSTMT = $this->databaseConn->prepare($updateWaterConsumptionDataSQL);
-            $updateWaterConsumptionDataSTMT->bind_param("ssss", $amountDrankInMilliliters, $recordedOn, $waterConsumptionID, $userID);
+            $updateWaterConsumptionDataSTMT->bind_param("ssss", $volumeInMilliliter, $recordedOn, $waterConsumptionID, $userID);
             return $updateWaterConsumptionDataSTMT->execute();
             
         }
