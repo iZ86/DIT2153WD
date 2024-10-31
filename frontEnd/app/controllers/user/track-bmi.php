@@ -70,8 +70,8 @@ function cleanData($data) {
  * Otherwise, return false.
  */
 function checkIsBasicPostVariablesSet() {
-    if (isset($_POST['age']) && isset($_POST['gender']) && isset($_POST['height']) && isset($_POST['heightUnit']) && 
-    isset($_POST['weight']) && isset($_POST['weightUnit']) && isset($_POST['time'])) {
+    if (isset($_POST['age']) && isset($_POST['gender']) && isset($_POST['height']) && isset($_POST['heightUnitInBMIDataModalInUserTrackBMIView']) && 
+    isset($_POST['weight']) && isset($_POST['weightUnitInBMIDataModalInUserTrackBMIView']) && isset($_POST['time'])) {
         return true;
     }
     return false;
@@ -115,9 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $age = cleanData($_POST['age']);
                 $gender = cleanData($_POST['gender']);
                 $height = cleanData($_POST['height']);
-                $heightUnit = cleanData($_POST['heightUnit']);
+                $heightUnit = cleanData($_POST['heightUnitInBMIDataModalInUserTrackBMIView']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInBMIDataModalInUserTrackBMIView']);
                 $time = cleanData($_POST['time']);
 
                 if (validateBasicPostData($age, $gender, $height, $heightUnit,
@@ -149,9 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $age = cleanData($_POST['age']);
                 $gender = cleanData($_POST['gender']);
                 $height = cleanData($_POST['height']);
-                $heightUnit = cleanData($_POST['heightUnit']);
+                $heightUnit = cleanData($_POST['heightUnitInBMIDataModalInUserTrackBMIView']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInBMIDataModalInUserTrackBMIView']);
                 $time = cleanData($_POST['time']);
 
 
@@ -188,9 +188,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $age = cleanData($_POST['age']);
                 $gender = cleanData($_POST['gender']);
                 $height = cleanData($_POST['height']);
-                $heightUnit = cleanData($_POST['heightUnit']);
+                $heightUnit = cleanData($_POST['heightUnitInBMIDataModalInUserTrackBMIView']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInBMIDataModalInUserTrackBMIView']);
                 $time = cleanData($_POST['time']);
 
                 if ((validateBasicPostData($age, $gender, $height, $heightUnit, 
@@ -215,10 +215,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-if (isset($_POST['unit'])) {
+// Used to persist the height units chosen.
+if (isset($_POST['heightUnitInBMIDataModalInUserTrackBMIView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['unit'] === "mL" || $_POST['unit'] === "L" || $_POST['unit'] === "oz") {
-        $_SESSION['unit'] = $_POST['unit'];
+    if ($_POST['heightUnitInBMIDataModalInUserTrackBMIView'] === "m" ||
+    $_POST['heightUnitInBMIDataModalInUserTrackBMIView'] === "cm" ||
+    $_POST['heightUnitInBMIDataModalInUserTrackBMIView'] === "ft") {
+        $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] = $_POST['heightUnitInBMIDataModalInUserTrackBMIView'];
+    }
+}
+
+// Used to persist the weight units chosen.
+if (isset($_POST['weightUnitInBMIDataModalInUserTrackBMIView'])) {
+    // Ensure that the value is the correct values, so that it won't crash the server.
+    if ($_POST['weightUnitInBMIDataModalInUserTrackBMIView'] === "Kg" ||
+    $_POST['weightUnitInBMIDataModalInUserTrackBMIView'] === "g" ||
+    $_POST['weightUnitInBMIDataModalInUserTrackBMIView'] === "lb") {
+        $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] = $_POST['weightUnitInBMIDataModalInUserTrackBMIView'];
     }
 }
 

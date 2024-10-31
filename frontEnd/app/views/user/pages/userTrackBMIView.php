@@ -145,19 +145,35 @@ class UserTrackBMIView {
                         </div>
                         <div class="flex">
                             <input type="text" id="height" name="height" class="border-2 rounded-lg">
-                            <select name="heightUnit" id="heightUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black">
-                                <option value="m" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "m") { echo "selected"; }?>>Meters (m)</option>
-                                <option value="cm" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "cm") { echo "selected"; }?>>Centimeters (cm)</option>
-                                <option value="ft" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "ft") { echo "selected"; }?>>Foot (ft)</option>
+                            <select name="heightUnitInBMIDataModalInUserTrackBMIView"
+                            id="heightUnitInBMIDataModalInUserTrackBMIView"
+                            class="bg-white rounded-lg border-2 text-shadow-dark text-black"
+                            onclick="createSessionForHeightUnitSelected()">
+
+                                <option value="m" <?php if (isset($_SESSION['heightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] === "m") { echo "selected"; }?>>Meters (m)</option>
+                                <option value="cm" <?php if (isset($_SESSION['heightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] === "cm") { echo "selected"; }?>>Centimeters (cm)</option>
+                                <option value="ft" <?php if (isset($_SESSION['heightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] === "ft") { echo "selected"; }?>>Foot (ft)</option>
+
                             </select>
                         </div>
                         <div class="flex">
                             <input type="text" id="weight" name="weight" class="border-2 rounded-lg">
-                            <select name="weightUnit" id="weightUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black">
-                                <option value="Kg" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
-                                <option value="g" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "g") { echo "selected"; }?>>Grams (g)</option>
-                                <option value="lb" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "lb") { echo "selected"; }?>>Foot (ft)</option>
+                            <select name="weightUnitInBMIDataModalInUserTrackBMIView"
+                            id="weightUnitInBMIDataModalInUserTrackBMIView"
+                            class="bg-white rounded-lg border-2 text-shadow-dark text-black"
+                            onclick="createSessionForHeightUnitSelected()">
+
+                                <option value="Kg" <?php if (isset($_SESSION['weightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
+                                <option value="g" <?php if (isset($_SESSION['weightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] === "g") { echo "selected"; }?>>Grams (g)</option>
+                                <option value="lb" <?php if (isset($_SESSION['weightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
                             </select>
+
                         </div>
                         <input type="time" id="time" name="time" class="rounded-lg border2">
                     </div>

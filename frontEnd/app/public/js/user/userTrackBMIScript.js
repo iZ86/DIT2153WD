@@ -84,23 +84,23 @@ function displayDataOfAllBMIDataRow() {
 /** This function is used to send to track-bmi.php?date=...,
  * to persist the height unit selected by the user.
  */
-function createSessionForHeightUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForHeightUnitSelected() {
+    let unitSelected = document.getElementById('heightUnitInBMIDataModalInUserTrackBMIView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("bmiHeightUnit=" + unitSelected);
+    xmlHttRequest.send("heightUnitInBMIDataModalInUserTrackBMIView=" + unitSelected);
 }
 
 /** This function is used to send to track-bmi.php?date=...,
  * to persist the weight unit selected by the user.
  */
-function createSessionForweightUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForweightUnitSelected() {
+    let unitSelected = document.getElementById('weightUnitInBMIDataModalInUserTrackBMIView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("bmiWeightUnit=" + unitSelected);
+    xmlHttRequest.send("weightUnitInBMIDataModalInUserTrackBMIView=" + unitSelected);
 }
 
 /** Converts kilograms to grams */
@@ -194,9 +194,9 @@ function openEditBMIDataModal(bmiID) {
     let maleRadioInput = document.getElementById("maleRadio");
     let femaleRadioInput = document.getElementById("femaleRadio");
     let heightInput = document.getElementById("height");
-    let heightUnitInput = document.getElementById("heightUnit").value;
+    let heightUnitInput = document.getElementById("heightUnitInBMIDataModalInUserTrackBMIView").value;
     let weightInput = document.getElementById("weight");
-    let weightUnitInput = document.getElementById("weightUnit").value;
+    let weightUnitInput = document.getElementById("weightUnitInBMIDataModalInUserTrackBMIView").value;
     let timeInput = document.getElementById('time');
 
 
@@ -219,7 +219,7 @@ function openEditBMIDataModal(bmiID) {
     if (heightUnitInput === "m") {
         heightInput.value = bmiDataset[bmiID]["height"];
     } else if (heightUnitInput === "cm") {
-        heightInput.value = convertMetersToCentimeter(bmiDataset[bmiID]["height"]);
+        heightInput.value = convertMetersToCentimeters(bmiDataset[bmiID]["height"]);
     } else if (heightUnitInput === "ft") {
         heightInput.value = convertMetersToFoot(bmiDataset[bmiID]["height"]);
     }
