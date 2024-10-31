@@ -1,10 +1,27 @@
 <?php
+session_start();
 ob_start();
 require '../../models/nutritionistModel.php';
 require '../../views/user/pages/userNutritionistsView.php';
 
 $nutritionistModel = new NutritionistModel(require '../../config/db_connection.php');
 $nutritionistAvailableDateTime = [];
+
+/** Cleans the data. */
+function cleanData($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+function checkIsBasicPostVariablesSet() {
+    if (isset($_POST['nutritionist']) && isset($_POST['date-time']) && isset($_POST['desc'])) {
+        return true;
+    }
+    return false;
+}
+
 // Check if only 'nutritionistID' is set for fetching dates
 if (isset($_POST['nutritionistID'])) {
     $nutritionistID = $_POST['nutritionistID'];
@@ -29,29 +46,32 @@ if (isset($_POST['nutritionistID'])) {
  */
 function getBookingInformation() {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $nutritionistID = $_POST['nutritionist'] ?? null;
-        $nutritionistSchedule = $_POST['date-time'] ?? null;
-        $description = $_POST['desc'] ?? null;
-        $username = $_SESSION['userID'];
-        if (!empty($nutritionistID) && !empty($nutritionistSchedule) && !empty($username)) {
-            global $nutritionistModel;
-            echo $nutritionistID . $nutritionistSchedule . $description . $username;
-            $nutritionistScheduleData = $nutritionistModel->getNutritionistScheduleIaByNutritionistIdAndScheduleDateTime($nutritionistID, $nutritionistSchedule);
+        if($_POST['confirm-booking-nutritionist']) {
+            if($_POST['confirm-booking-nutritionist'] === "Confirm") {
+                if(checkIsBasicPostVariablesSet()) {
+                    $nutritionistID = cleanData($_POST['nutritionist']) ?? null;
+                    $nutritionistSchedule = cleanData($_POST['date-time']) ?? null;
+                    $description = cleanData($_POST['desc']) ?? null;
+                    $username = $_SESSION['userID'];
+                    if (!empty($nutritionistID) && !empty($nutritionistSchedule) && !empty($username)) {
+                        global $nutritionistModel;
+                        echo $nutritionistID . $nutritionistSchedule . $description . $username;
+                        $nutritionistScheduleData = $nutritionistModel->getNutritionistScheduleIdByNutritionistIdAndScheduleDateTime($nutritionistID, $nutritionistSchedule);
 
-            if ($nutritionistScheduleData) {
-                $nutritionistScheduleID = $nutritionistScheduleData ? $nutritionistScheduleData['nutritionistScheduleID'] : null;
-                echo $nutritionistScheduleID;
-                echo "<script>alert('Successfully Made a Reservation!!');</script>";
-                header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=20");
-                $nutritionistModel->createNutritionistBooking($description, $nutritionistScheduleID, $username, 1);
-                exit();
-
-            } else {
-                echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
+                        if ($nutritionistScheduleData) {
+                            $nutritionistScheduleID = $nutritionistScheduleData ? $nutritionistScheduleData['nutritionistScheduleID'] : null;
+                            $_SESSION['description'] = $description;
+                            $_SESSION['nutritionistScheduleID'] = $nutritionistScheduleID;
+                            header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=20");
+                            exit();
+                        } else {
+                            echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
+                        }
+                    } else {
+                        echo "<script>alert('Please fill in all required fields.');</script>";
+                    }
+                }
             }
-
-        } else {
-            echo "<script>alert('Please fill in all required fields.');</script>";
         }
     }
 }
@@ -62,3 +82,5 @@ $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionis
 $nutritionistsView->renderView();
 getBookingInformation();
 ob_end_flush();
+unset($_SESSION['description']);
+unset($_SESSION['nutritionistScheduleID']);

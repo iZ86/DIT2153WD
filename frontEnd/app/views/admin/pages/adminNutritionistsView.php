@@ -134,18 +134,14 @@ class AdminNutritionistsView {
                         </th>
                         <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Nutritionist Name</th>
-                        <th class="py-4 px-6 border-b border-gray-200">Scheduled Date & Time</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Scheduled On</th>
                         <th class="py-4 px-6 border-b border-gray-200">Price</th>
                         <th class="py-4 px-6 border-b border-gray-200">Status</th>
                         <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
-                    <?php while ($schedule = $this->schedules->fetch_assoc()):
-                        $currentDate = new DateTime();
-                        $scheduleDateTime = new DateTime($schedule['scheduleDateTime']);
-                        $status = ($scheduleDateTime < $currentDate) ? "Inactive" : "Active";
-                        ?>
+                    <?php while ($schedule = $this->schedules->fetch_assoc()): ?>
                         <tr class="bg-white">
                             <td class="p-3">
                                 <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
@@ -155,9 +151,9 @@ class AdminNutritionistsView {
                             <td class="p-3"><?php echo date('d M Y H:i', strtotime($schedule['scheduleDateTime'])); ?></td>
                             <td class="p-3"><?php echo number_format($schedule['price'], 2); ?></td>
                             <td class="p-3 mt-4">
-                            <span class="bg-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $status === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
-                                <?php echo $status; ?>
-                            </span>
+                                <span class="bg-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-100 text-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
+                                    <?php echo $schedule['status']; ?>
+                                </span>
                             </td>
                             <td class="p-3 flex justify-center space-x-2">
                                 <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['nutritionistScheduleID']; ?>, '<?php echo addslashes($schedule['scheduleDateTime']); ?>', '<?php echo number_format($schedule['price'], 2); ?>', '<?php echo $schedule['nutritionistID']; ?>')">
@@ -258,17 +254,22 @@ class AdminNutritionistsView {
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <input type="hidden" id="nutritionistID" name="nutritionistID">
-                    <label class="block text-gray-700 text-sm font-medium">First Name <span class="text-red-500">*</span></label>
-                    <input name="firstName" type="text" id="firstName" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Last Name <span class="text-red-500">*</span></label>
-                    <input name="lastName" type="text" id="lastName" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone No <span class="text-red-500">*</span></label>
-                    <input name="phoneNo" type="text" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                    <div class="flex space-x-4 mt-4">
+                        <div class="flex-1">
+                            <label class="block text-gray-700 text-sm font-medium">First Name <span class="text-red-500">*</span></label>
+                            <input name="firstName" type="text" id="firstName" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-gray-700 text-sm font-medium">Last Name <span class="text-red-500">*</span></label>
+                            <input name="lastName" type="text" id="lastName" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        </div>
+                    </div>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Email <span class="text-red-500">*</span></label>
                     <input name="email" type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
+                    <input name="phoneNo" type="text" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Gender <span class="text-red-500">*</span></label>
                     <select name="gender" id="gender" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
@@ -414,6 +415,8 @@ class AdminNutritionistsView {
                 document.getElementById('email').value = email;
                 document.getElementById('gender').value = gender;
                 document.getElementById('type').value = type;
+                document.getElementById('submitNutritionistButton').name = 'editNutritionistButton';
+                document.getElementById('submitNutritionistButton').value = 'Edit Nutritionist';
                 document.getElementById('nutritionistModalTitle').innerText = 'Edit Nutritionist';
 
                 setTimeout(() => {
@@ -458,6 +461,8 @@ class AdminNutritionistsView {
                 document.querySelector('select[name="nutritionistID"]').value = nutritionistID;
                 document.getElementById('scheduleDateTime').value = scheduleDateTime;
                 document.getElementById('price').value = price;
+                document.getElementById('submitScheduleButton').name = 'editScheduleButton';
+                document.getElementById('submitScheduleButton').value = 'Edit Schedule';
                 document.getElementById('scheduleModalTitle').innerText = 'Edit Schedule';
 
                 setTimeout(() => {

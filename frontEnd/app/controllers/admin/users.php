@@ -13,10 +13,15 @@ $adminUsersModel = new AdminUsersModel(require '../../config/db_connection.php')
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['editUserButton']) && $_POST['editUserButton'] === "Edit User") {
         $registeredUserID = $_POST['registeredUserID'];
-        $adminUsersModel->editUser($registeredUserID, $_POST['firstName'], $_POST['lastName'], $_POST['username'], $_POST['email'], $_POST['phoneNo'], $_POST['gender'], $_POST['dateOfBirth']);
+        $adminUsersModel->editUser($registeredUserID, $_POST['firstName'], $_POST['lastName'], $_POST['phoneNo'], $_POST['gender'], $_POST['dateOfBirth']);
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
+}
+
+if (isset($_GET['registeredUserID'])) {
+    $registeredUserID = $_GET['registeredUserID'];
+    $userDetails = $adminUsersModel->getUserDetails($registeredUserID);
 }
 
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';

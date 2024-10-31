@@ -39,7 +39,12 @@ class AdminNutritionistsModel {
                      n.nutritionistID, 
                      CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName, 
                      ns.scheduleDateTime, 
-                     ns.price 
+                     ns.price,
+                     CASE 
+                         WHEN ns.scheduleDateTime > NOW() THEN 'Upcoming'
+                         WHEN ns.scheduleDateTime <= NOW() AND ns.scheduleDateTime > NOW() - INTERVAL 2  HOUR THEN 'In Progress'
+                         ELSE 'Completed'
+                     END as status
               FROM " . $this->scheduleTable . " AS ns
               JOIN " . $this->nutritionistsTable . " AS n ON ns.nutritionistID = n.nutritionistID
               ORDER BY ns.nutritionistScheduleID ASC
@@ -49,6 +54,7 @@ class AdminNutritionistsModel {
         $stmt->execute();
         return $stmt->get_result();
     }
+
 
     public function addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type) {
         $query = "INSERT INTO " . $this->nutritionistsTable . " (firstName, lastName, gender, phoneNo, email, type) VALUES (?, ?, ?, ?, ?, ?)";

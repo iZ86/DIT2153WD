@@ -39,11 +39,6 @@ class FitnessClassView {
         $weekOffset = isset($_GET['week']) ? intval($_GET['week']) : 0;
         $instructorOffset = isset($_GET['instructor']) ? intval($_GET['instructor']) : null;
 
-        if ($instructorOffset === null) {
-            echo "<p>Error: Instructor ID is missing.</p>";
-            return;
-        }
-
         // Calculate the start of the week based on the current date and the week offset
         $currentDate = new DateTime();
         $currentDate->modify("Monday this week");
@@ -107,8 +102,8 @@ class FitnessClassView {
 
                     <div class="flex justify-end mt-3 gap-x-5 items-center">
                         <p class="font-bold font-montserrat">Week: <?= $weekOffset + 1 ?></p>
-                        <a href="?instructor=<?= $instructorOffset ?>&week=<?= $weekOffset - 1 ?>" class="bx bx-chevron-left bx-md"></a>
-                        <a href="?instructor=<?= $instructorOffset ?>&week=<?= $weekOffset + 1 ?>" class="bx bx-chevron-right bx-md"></a>
+                        <a href="?instructor=<?= $instructorOffset ?>&week=<?= $weekOffset - 1 ?>&fitnessClassID=<?= $_GET['fitnessClassID'] ?>" class="bx bx-chevron-left bx-md"></a>
+                        <a href="?instructor=<?= $instructorOffset ?>&week=<?= $weekOffset + 1 ?>&fitnessClassID=<?= $_GET['fitnessClassID'] ?>" class="bx bx-chevron-right bx-md"></a>
                     </div>
                 </div>
             </div>
@@ -124,10 +119,16 @@ class FitnessClassView {
                 <hr class="py-2">
                 <div class="flex flex-col justify-center items-center">
                     <p class="font-montserrat text-xl mt-4 font-semibold">Are you sure you want to confirm the booking?</p>
-                    <div class="flex gap-x-10 mt-8">
-                        <button class="rounded-md px-8 py-2 bg-blue-button text-white font-bold" onclick="confirmBookingCloseModal()" name="confirm-fitness-class-booking" id="confirmed">Yes</button>
-                        <button class="rounded-md px-8 py-2 bg-gray-mid text-white font-bold" onclick="closeModal()">No</button>
-                    </div>
+                        <form action="<?=$_SERVER['PHP_SELF']?>?instructor=<?= urlencode($_GET['instructor']) ?>&fitnessClassID=<?= urlencode($_GET['fitnessClassID']) ?>" method="POST">
+                        <div class="flex gap-x-10 mt-8">
+                            <button class="rounded-md px-8 py-2 bg-blue-button text-white font-bold" onclick="confirmBookingCloseModal()" name="confirm-fitness-class-booking" id="confirmed">Yes</button>
+                            <input type="hidden" name="scheduledOn" value="<?= $class['scheduledOn'] ?>">
+                            <input type="hidden" name="fitnessClassID" value="<?= $_GET['fitnessClassID'] ?>">
+                            <input type="hidden" name="instructorID" value="<?= $_GET['instructor'] ?>">
+                            <button class="rounded-md px-8 py-2 bg-gray-mid text-white font-bold" onclick="closeModal()">No</button>
+                        </div>
+                        </form>
+
                 </div>
             </div>
         </div>
@@ -176,8 +177,8 @@ class FitnessClassView {
 
             function confirmBookingCloseModal() {
                 closeModal();
+                window.location.href = 'http://localhost/DIT2153WD/frontEnd/app/controllers/user/classes.php';
                 alert("Booking has been made, you're good to go!");
-                window.location.href = './classes.php';
             }
         </script>
         <?php

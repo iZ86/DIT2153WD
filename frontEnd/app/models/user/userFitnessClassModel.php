@@ -2,6 +2,7 @@
 class UserFitnessClass {
     /** Fitness Class Schedule Table */
     private $fitnessClassScheduleTable = 'fitness_class_schedule';
+    private $fitnessClassBookingTable = 'fitness_class_booking';
     private $instructorTable = 'instructor';
     /** Database connection */
     private $databaseConn;
@@ -11,15 +12,15 @@ class UserFitnessClass {
         $this->databaseConn = $databaseConn;
     }
 
-    public function createUserFitnessClassBooking($fitnessClassScheduleId, $userID) {
-        $sql = "INSERT INTO " . $this->fitnessClassScheduleTable . " (fitnessClassScheduleID, userID) VALUES (?,?)";
+    public function createUserFitnessClassBooking($status, $fitnessClassScheduleId, $userID) {
+        $sql = "INSERT INTO " . $this->fitnessClassBookingTable . " (status, fitnessClassScheduleId, userID) VALUES (?,?,?)";
         $stmt = $this->databaseConn->prepare($sql);
-        $stmt->bind_param("is", $fitnessClassScheduleId, $userID);
+        $stmt->bind_param("sii", $status, $fitnessClassScheduleId, $userID);
         return $stmt->execute();
     }
 
     /** Function of getting the fitness class information by using ID */
-    public function getClassesByInstructorById(int $instructorId) {
+    public function getClassesByInstructorById($instructorId) {
         $sql = "SELECT * FROM " . $this->fitnessClassScheduleTable . " WHERE instructorID=?";
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->bind_param("i", $instructorId);
@@ -29,7 +30,7 @@ class UserFitnessClass {
     }
 
     /** Function of getting the instructor name by using ID */
-    public function getInstructorNameById(int $instructorId): ?string {
+    public function getInstructorNameById($instructorId) {
         $sql = "SELECT firstName, lastName FROM " . $this->instructorTable . " WHERE instructorID=?";
         $stmt = $this->databaseConn->prepare($sql);
 
