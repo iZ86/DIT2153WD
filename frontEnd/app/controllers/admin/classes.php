@@ -73,7 +73,7 @@ $offset = ($currentPage - 1) * $limit;
 $filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
 $keywords = isset($_GET['keywords']) ? $_GET['keywords'] : '';
 
-if (!empty($filterType) && $filterType !== 'all') {
+if (!empty($filterType)) {
     if ($filterType === 'name') {
         $classes = $adminClassesModel->getFilteredClassesByName($keywords, $limit, $offset);
     } elseif ($filterType === 'description') {
@@ -83,7 +83,18 @@ if (!empty($filterType) && $filterType !== 'all') {
     $classes = $adminClassesModel->getClasses($limit, $offset);
 }
 
-$schedules = $adminClassesModel->getSchedules($limit, $offset);
+$scheduleFilterType = isset($_GET['scheduleFilterType']) ? $_GET['scheduleFilterType'] : '';
+$scheduleKeywords = isset($_GET['scheduleKeywords']) ? $_GET['scheduleKeywords'] : '';
+
+if (!empty($scheduleFilterType)) {
+    $schedules = $adminClassesModel->getFilteredSchedules($limit, $offset, $scheduleFilterType, $scheduleKeywords);
+} else {
+    $schedules = $adminClassesModel->getSchedules($limit, $offset);
+}
+
+$noClassesFound = $classes->num_rows === 0;
+$noSchedulesFound = $schedules->num_rows === 0;
+
 $instructors = $adminClassesModel->getAllInstructors();
 
 $totalClasses = $adminClassesModel->getTotalClasses();
@@ -91,5 +102,5 @@ $totalSchedules = $adminClassesModel->getTotalSchedules();
 $totalPagesClasses = ceil($totalClasses / $limit);
 $totalPagesSchedules = ceil($totalSchedules / $limit);
 
-$adminClassesView = new AdminClassesView($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage);
+$adminClassesView = new AdminClassesView($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage, $noClassesFound, $noSchedulesFound);
 $adminClassesView->renderView();
