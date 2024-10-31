@@ -2,11 +2,11 @@
 
 class UserTrackBMIView {
     /** BMI data. */
-    private $bmiDataArray;
+    private $bmiDataset;
     
     /** Constructor for the object. */
-    public function __construct($bmiDataArray) {
-        $this->bmiDataArray = $bmiDataArray;
+    public function __construct($bmiDataset) {
+        $this->bmiDataset = $bmiDataset;
     }
 
     /** Renders the whole view. */
@@ -49,10 +49,10 @@ class UserTrackBMIView {
     /** Renders bmi data partial view. */
     private function renderBMIDataPartialView() {?>
     <div class="flex min-h-192 max-h-192">
-        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->bmiDataArray) == 0) { echo "justify-center";}?>">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->bmiDataset) == 0) { echo "justify-center";}?>">
             <?php
-            if (sizeof($this->bmiDataArray) > 0) {
-                foreach ($this->bmiDataArray as $key => $value) {
+            if (sizeof($this->bmiDataset) > 0) {
+                foreach ($this->bmiDataset as $key => $value) {
                     $this->renderOneBMIDataRow($value['bmiID']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
@@ -145,19 +145,35 @@ class UserTrackBMIView {
                         </div>
                         <div class="flex">
                             <input type="text" id="height" name="height" class="border-2 rounded-lg">
-                            <select name="heightUnit" id="heightUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black">
-                                <option value="m" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "m") { echo "selected"; }?>>Meters (m)</option>
-                                <option value="cm" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "cm") { echo "selected"; }?>>Centimeters (cm)</option>
-                                <option value="ft" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "ft") { echo "selected"; }?>>Foot (ft)</option>
+                            <select name="heightUnitInBMIDataModalInUserTrackBMIView"
+                            id="heightUnitInBMIDataModalInUserTrackBMIView"
+                            class="bg-white rounded-lg border-2 text-shadow-dark text-black"
+                            onclick="createSessionForHeightUnitSelected()">
+
+                                <option value="m" <?php if (isset($_SESSION['heightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] === "m") { echo "selected"; }?>>Meters (m)</option>
+                                <option value="cm" <?php if (isset($_SESSION['heightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] === "cm") { echo "selected"; }?>>Centimeters (cm)</option>
+                                <option value="ft" <?php if (isset($_SESSION['heightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] === "ft") { echo "selected"; }?>>Foot (ft)</option>
+
                             </select>
                         </div>
                         <div class="flex">
                             <input type="text" id="weight" name="weight" class="border-2 rounded-lg">
-                            <select name="weightUnit" id="weightUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black">
-                                <option value="Kg" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
-                                <option value="g" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "g") { echo "selected"; }?>>Grams (g)</option>
-                                <option value="lb" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "lb") { echo "selected"; }?>>Foot (ft)</option>
+                            <select name="weightUnitInBMIDataModalInUserTrackBMIView"
+                            id="weightUnitInBMIDataModalInUserTrackBMIView"
+                            class="bg-white rounded-lg border-2 text-shadow-dark text-black"
+                            onclick="createSessionForWeightUnitSelected()">
+
+                                <option value="Kg" <?php if (isset($_SESSION['weightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
+                                <option value="g" <?php if (isset($_SESSION['weightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] === "g") { echo "selected"; }?>>Grams (g)</option>
+                                <option value="lb" <?php if (isset($_SESSION['weightUnitInBMIDataModalInUserTrackBMIView']) &&
+                                $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
                             </select>
+
                         </div>
                         <input type="time" id="time" name="time" class="rounded-lg border2">
                     </div>
@@ -201,9 +217,9 @@ class UserTrackBMIView {
         </style>
     
     <!-- Embed php array of ids of the bmi data rows to be used to convert the amount drank based on unit. -->
-    <input type="hidden" id="phpArrayOfBMIData" value="
+    <input type="hidden" id="phpBMIDataset" value="
     <?php 
-    echo htmlspecialchars(json_encode($this->bmiDataArray));
+    echo htmlspecialchars(json_encode($this->bmiDataset));
     ?>
     ">
     <!-- Embed php current pagination. -->

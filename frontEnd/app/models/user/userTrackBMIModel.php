@@ -17,11 +17,11 @@ class UserTrackBMIModel {
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getBMIDataFromDate($userID, $recordedOn) {
+    public function getBMIDatasetFromDate($date, $userID) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($recordedOn);
+        $endDate = date_create($date);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -30,7 +30,7 @@ class UserTrackBMIModel {
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $selectBMIDataSTMT = $this->databaseConn->prepare($selectBMIDataSQL);
-        $selectBMIDataSTMT->bind_param("sss", $userID, $recordedOn, $endDate);
+        $selectBMIDataSTMT->bind_param("sss", $userID, $date, $endDate);
         $selectBMIDataSTMT->execute();
         $selectBMIDataResult = $selectBMIDataSTMT->get_result();
         $selectBMIDataResultDataArray = array();
@@ -49,11 +49,11 @@ class UserTrackBMIModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addBMIData($age, $gender, $height, $weight, $recordedOn, $userID) {
+    public function addBMIData($age, $gender, $heightInCentimeter, $weightInGram, $recordedOn, $userID) {
 
-        $insertBMIDataSQL = "INSERT INTO " . $this->bmiTable . "(age, gender, height, weight, recordedOn, userID) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertBMIDataSQL = "INSERT INTO " . $this->bmiTable . "(age, gender, heightInCentimeter, weightInGram, recordedOn, userID) VALUES (?, ?, ?, ?, ?, ?)";
         $insertBMIDataSTMT = $this->databaseConn->prepare($insertBMIDataSQL);
-        $insertBMIDataSTMT->bind_param("ssssss", $age, $gender, $height, $weight, $recordedOn, $userID);
+        $insertBMIDataSTMT->bind_param("ssssss", $age, $gender, $heightInCentimeter, $weightInGram, $recordedOn, $userID);
         return $insertBMIDataSTMT->execute();
 
     }
@@ -62,15 +62,15 @@ class UserTrackBMIModel {
      * Returns true if success.
      * Otherwise, returns false.
     */
-    public function updateBMIData($bmiID, $age, $gender, $height, $weight, $recordedOn, $userID) {
+    public function updateBMIData($bmiID, $age, $gender, $heightInCentimeter, $weightInGram, $recordedOn, $userID) {
         
         
         if ($this->verifyBMIIDToUserID($bmiID, $userID)) {
             $updateBMIDataSQL = "UPDATE " . $this->bmiTable .
-            " SET age = ?, gender = ?, height = ?, weight = ?, recordedOn = ? WHERE bmiID = ? AND userID = ?";
+            " SET age = ?, gender = ?, heightInCentimeter = ?, weightInGram = ?, recordedOn = ? WHERE bmiID = ? AND userID = ?";
 
             $updateBMIDataSTMT = $this->databaseConn->prepare($updateBMIDataSQL);
-            $updateBMIDataSTMT->bind_param("sssssss", $age, $gender, $height, $weight, $recordedOn, $bmiID, $userID);
+            $updateBMIDataSTMT->bind_param("sssssss", $age, $gender, $heightInCentimeter, $weightInGram, $recordedOn, $bmiID, $userID);
             return $updateBMIDataSTMT->execute();
             
         }
@@ -108,12 +108,12 @@ class UserTrackBMIModel {
      * where bmiID attribute is $bmiID in the BMI table.
     */
     private function verifyBMIIDToUserID($bmiID, $userID) {
-        $selectBMIDataSQL = "SELECT 1 FROM " . $this->bmiTable . " WHERE bmiID = ? AND userID = ?";
+        $selectBMIDataSQL = "SELECT * FROM " . $this->bmiTable . " WHERE bmiID = ? AND userID = ?";
         $selectBMIDataSTMT= $this->databaseConn->prepare($selectBMIDataSQL);
         $selectBMIDataSTMT->bind_param("ss", $bmiID, $userID);
         $selectBMIDataSTMT->execute();
         $selecBMIDataResult = $selectBMIDataSTMT->get_result();
-        if ($selecBMIDataResult->num_rows === 1) {
+        if ($selecBMIDataResult->num_rows >= 1) {
             return true;
         }
         return false;

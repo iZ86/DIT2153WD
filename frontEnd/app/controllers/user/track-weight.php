@@ -2,15 +2,15 @@
 require('../../views/user/pages/userTrackWeightView.php');
 require('../../models/user/userTrackWeightModel.php');
 session_start();
-define("KILOGRAMSTOGRAMSCONVERSIONRATE", 1000);
-define("KILOGRAMSTOPOUNDSCONVERSIONRATE", 2.20462);
+define("KILOGRAMTOGRAMCONVERSIONRATE", 1000);
+define("POUNDTOGRAMCONVERSIONRATE", 453.6);
 $userTrackWeightModel = new UserTrackWeightModel(require "../../config/db_connection.php");
 
 // Regex to validate date format.
 $regexDateFormat = "/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/";
 
 // Regex to validate weight format.
-$regexWeightFormat = "/^[\d]*(.[\d]{1,2}$|$)/";
+$regexWeightFormat = "/^[\d]*(.[\d]{1,4}$|$)/";
 
 // Regex to validate ID.
 $regexIDFormat = "/^(0|[1-9][\d]*)$/";
@@ -18,19 +18,19 @@ $regexIDFormat = "/^(0|[1-9][\d]*)$/";
 // Regex to validate time.
 $regexTimeFormat = "/(^[0-3]|^)[\d]:[0-5][\d]$/";
 
-// Regex to validate unit.
-$regexUnitFormat = "/^(Kg|g|lb)$/";
+// Regex to validate weight unit.
+$regexWeightUnitFormat = "/^(Kg|g|lb)$/";
 
-/** Converts Kilograms to whatever unit is inputted.
- * Return -1, if unit not supported.
+/** Converts any value of any weight unit to gram.
+ * Return -1, if unit is not supported.
  */
-function convertKilogramsToWeightInputted($kilograms, $unit) {
-    if ($unit === "Kg") {
-        return $kilograms;
-    } else if ($unit === "g") {
-        return $kilograms * KILOGRAMSTOGRAMSCONVERSIONRATE;
-    } else if ($unit === "lb") {
-        return $kilograms * KILOGRAMSTOPOUNDSCONVERSIONRATE;
+function convertValueOfWeightUnitToGram($value, $weightUnit) {
+    if ($weightUnit === "g") {
+        return $value;
+    } else if ($weightUnit === "Kg") {
+        return bcmul(KILOGRAMTOGRAMCONVERSIONRATE, $value, 4);
+    } else if ($weightUnit === "lb") {
+        return bcmul(POUNDTOGRAMCONVERSIONRATE, $value, 4);
     }
     return -1;
 }
@@ -47,7 +47,7 @@ function cleanData($data) {
  * Otherwise, return false.
  */
 function checkIsBasicPostVariablesSet() {
-    if (isset($_POST['unit']) && isset($_POST['weight']) && isset($_POST['time'])) {
+    if (isset($_POST['weightUnitInWeightDataModalInUserTrackWeightView']) && isset($_POST['weight']) && isset($_POST['time'])) {
         return true;
     }
     return false;
@@ -57,9 +57,9 @@ function checkIsBasicPostVariablesSet() {
  * Returns true if valid.
  * Otherwise, return false.
  */
-function validateBasicPostData($unit, $weight, $time, $regexUnitFormat, $regexWeightFormat, $regexTimeFormat) {
+function validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitFormat, $regexWeightFormat, $regexTimeFormat) {
     
-    if ((($unit !== null) && preg_match($regexUnitFormat, $unit)) &&
+    if ((($weightUnit !== null) && preg_match($regexWeightUnitFormat, $weightUnit)) &&
     (($weight !== null) && (preg_match($regexWeightFormat, $weight))) &&
     (($time !==null) && (preg_match($regexTimeFormat, $time)))) {
         return true;
@@ -70,7 +70,7 @@ function validateBasicPostData($unit, $weight, $time, $regexUnitFormat, $regexWe
 
 // Ensures that there is a valid $_GET request.
 if (!(isset($_GET['date'])) || !preg_match($regexDateFormat, $_GET['date']) || (date($_GET['date']) > date("Y-m-d"))) {
-    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . date("Y-m-d")));
+    die(header('location: track-weight.php?date=' . date("Y-m-d")));
 }
 
 $date = $_GET['date'];
@@ -82,55 +82,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if (checkIsBasicPostVariablesSet()) {
                 
-                $unit = cleanData($_POST['unit']);
+                $weightUnit = cleanData($_POST['weightUnitInWeightDataModalInUserTrackWeightView']);
                 $weight = cleanData($_POST['weight']);
                 $time = cleanData($_POST['time']);
-                if (validateBasicPostData($unit, $weight, $time, $regexUnitFormat, $regexWeightFormat, $regexTimeFormat)) {
+                if (validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitFormat, $regexWeightFormat, $regexTimeFormat)) {
                     
                     
                     
                     $weight = (float) $weight;
-                    $weight = convertKilogramsToWeightInputted($weight, $unit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     $dateTime = $date . " " . $time;
     
                     $addStatus = $userTrackWeightModel->addWeightData($_SESSION['userID'], $weight, $dateTime);
                     if ($addStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . $date));
+                        die(header('location: track-weight.php?date=' . $date));
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         } else if ($_POST['submitWeightDataButton'] === "Save") {
             
             if (checkIsBasicPostVariablesSet() && isset($_POST['weightID'])) {
                 $weightID = cleanData($_POST['weightID']);
-                $unit = cleanData($_POST['unit']);
+                $weightUnit = cleanData($_POST['weightUnitInWeightDataModalInUserTrackWeightView']);
                 $weight = cleanData($_POST['weight']);
                 $time = cleanData($_POST['time']);
                 
-                if (validateBasicPostData($unit, $weight, $time, $regexUnitFormat, $regexWeightFormat, $regexTimeFormat) &&
+                if (validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitFormat, $regexWeightFormat, $regexTimeFormat) &&
                 (($weightID !== null) &&
                 preg_match($regexIDFormat, $weightID))) {
                     
                     $weightID = (int) $weightID;
                     $weight = (float) $weight;
-                    $weight = convertKilogramsToWeightInputted($weight, $unit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackWeightModel->updateWeightData($weightID, $weight, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . $date));
+                        die(header('location: track-weight.php?date=' . $date));
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         }
     } else if (isset($_POST['submitDeleteWeightDataButton'])) {
         
         if ($_POST['submitDeleteWeightDataButton'] === "Delete") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['weightID'])) {
                 $weightID = cleanData($_POST['weightID']);
-                $unit = cleanData($_POST['unit']);
+                $weightUnit = cleanData($_POST['weightUnitInWeightDataModalInUserTrackWeightView']);
                 $weight = cleanData($_POST['weight']);
                 $time = cleanData($_POST['time']);
-                if (validateBasicPostData($unit, $weight, $time, $regexUnitFormat, $regexWeightFormat, $regexTimeFormat) &&
+                if (validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitFormat, $regexWeightFormat, $regexTimeFormat) &&
                 (($weight !== null) &&
                 preg_match($regexIDFormat, $weightID))) {
                     $weightID = (int) $weightID;
@@ -141,23 +149,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     
                     if ($deleteStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=' . $date));
+                        die(header('location: track-weight.php?date=' . $date));
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         }
 
     }
 }
 
-
-if (isset($_POST['unit'])) {
+// Used to persist the weight units chosen by user.
+if (isset($_POST['weightUnitInUserTrackWeightView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['unit'] === "Kg" || $_POST['unit'] === "g" || $_POST['unit'] === "lb") {
-        $_SESSION['unit'] = $_POST['unit'];
+    if ($_POST['weightUnitInUserTrackWeightView'] !== null && preg_match($regexWeightUnitFormat, $_POST['weightUnitInUserTrackWeightView'])) {
+        $_SESSION['weightUnitInUserTrackWeightView'] = $_POST['weightUnitInUserTrackWeightView'];
     }
 }
 
-$userTrackWeightView = new UserTrackWeightView($userTrackWeightModel->getWeightDataFromDate($_SESSION['userID'], $date));
+$userTrackWeightView = new UserTrackWeightView($userTrackWeightModel->getWeightDatasetFromDate($date, $_SESSION['userID']));
 $userTrackWeightView->renderView();
 

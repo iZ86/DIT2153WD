@@ -1,5 +1,4 @@
 <?php
-
 class AdminClassesView {
     private $classes;
     private $schedules;
@@ -63,10 +62,10 @@ class AdminClassesView {
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Classes</h2>
                     <div class="flex items-center space-x-4">
-                        <div class="relative">
-                            <input type="text" id="classSearch" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
-                            <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
+                        <button onclick="openFilterModal()" class="bg-gray-400 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                            <i class='bx bx-filter-alt'></i>
+                            <span>Filter</span>
+                        </button>
                         <button onclick="openClassModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
                             <i class="bx bxs-plus-circle"></i>
                             <span>Add Class</span>
@@ -139,7 +138,6 @@ class AdminClassesView {
             <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 600px;">
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
-
                     <tr class="text-gray-500 font-medium text-center">
                         <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Class Name</th>
@@ -192,6 +190,30 @@ class AdminClassesView {
         </section>
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+        <div id="filterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 class="text-2xl font-semibold mb-4">Filter Classes</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET"">
+                    <label class="block text-gray-700 text-sm font-medium">Filter By <span class="text-red-500">*</span></label>
+                    <select name="filterType" id="filterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Please Select a Type</option>
+                        <option value="name">Name</option>
+                        <option value="description">Description</option>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
+                    <input name="keywords" type="text" id="keywords" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <div class="flex justify-end mt-10">
+                        <a href="#" class="bg-indigo-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <button type="button" onclick="closeFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div id="classModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
@@ -257,6 +279,30 @@ class AdminClassesView {
         </div>
 
         <script>
+            function openFilterModal() {
+                const modal = document.getElementById('filterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeFilterModal() {
+                const modal = document.getElementById('filterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openClassModal() {
                 const modal = document.getElementById('classModal');
                 const overlay = document.getElementById('modalOverlay');

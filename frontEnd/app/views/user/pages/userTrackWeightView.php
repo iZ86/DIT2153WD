@@ -2,11 +2,11 @@
 
 class UserTrackWeightView {
     /** Weight data. */
-    private $weightDataArray;
+    private $weightDataset;
     
     /** Constructor for the object. */
-    public function __construct($weightDataArray) {
-        $this->weightDataArray = $weightDataArray;
+    public function __construct($weightDataset) {
+        $this->weightDataset = $weightDataset;
     }
 
     /** Renders the whole view. */
@@ -49,10 +49,10 @@ class UserTrackWeightView {
     /** Renders weight data partial view. */
     private function renderWeightDataPartialView() {?>
     <div class="flex min-h-192 max-h-192">
-        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->weightDataArray) == 0) { echo "justify-center";}?>">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->weightDataset) == 0) { echo "justify-center";}?>">
             <?php
-            if (sizeof($this->weightDataArray) > 0) {
-                foreach ($this->weightDataArray as $key => $value) {
+            if (sizeof($this->weightDataset) > 0) {
+                foreach ($this->weightDataset as $key => $value) {
                     $this->renderOneWeightDataRow($value['weightID']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
@@ -107,10 +107,20 @@ class UserTrackWeightView {
         
         <div class="flex items-center mb-14">
             <div class="mx-auto flex items-center text-3xl justify-center basis-96">
-                <select name="unit" id="weightUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2" oninput="convertWeightOfAllWeightDataRow('weightUnit');createSessionForUnitSelected('weightUnit');updateWeightMessages()">
-                    <option value="Kg" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
-                    <option value="g" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "g") { echo "selected"; }?>>Grams (g)</option>
-                    <option value="lb" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+                <select name="weightUnitInUserTrackWeightView" 
+                id="weightUnitInUserTrackWeightView"
+                class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2"
+                oninput="convertWeightOfAllWeightDataRow('weightUnitInUserTrackWeightView');
+                createSessionForWeightUnitSelected();
+                updateWeightMessages()">
+                    
+                    <option value="Kg" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                    $_SESSION['weightUnitInUserTrackWeightView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
+                    <option value="g" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                    $_SESSION['weightUnitInUserTrackWeightView'] === "g") { echo "selected"; }?>>Grams (g)</option>
+                    <option value="lb" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                    $_SESSION['weightUnitInUserTrackWeightView'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+                    
                 </select>
             </div>
         </div>
@@ -143,10 +153,20 @@ class UserTrackWeightView {
                         <div class="flex">
                             
 
-                            <select name="unit" id="unit" class="bg-white rounded-lg border-2 text-shadow-dark text-black" oninput="convertWeightOfAllWeightDataRow('unit');createSessionForUnitSelected('unit');updateWeightMessages()">
-                                <option value="Kg" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
-                                <option value="g" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "g") { echo "selected"; }?>>Grams (g)</option>
-                                <option value="lb" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+                            <select name="weightUnitInWeightDataModalInUserTrackWeightView"
+                            id="weightUnitInWeightDataModalInUserTrackWeightView"
+                            class="bg-white rounded-lg border-2 text-shadow-dark text-black"
+                            oninput="convertWeightOfAllWeightDataRow('weightUnitInWeightDataModalInUserTrackWeightView');
+                            createSessionForWeightUnitSelected();
+                            updateWeightMessages()">
+
+                                <option value="Kg" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                                $_SESSION['weightUnitInUserTrackWeightView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
+                                <option value="g" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                                $_SESSION['weightUnitInUserTrackWeightView'] === "g") { echo "selected"; }?>>Grams (g)</option>
+                                <option value="lb" <?php if (isset($_SESSION['weightUnitInUserTrackWeightView']) &&
+                                $_SESSION['weightUnitInUserTrackWeightView'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+
                             </select>
                             <label for="weight" class="text-white drop-shadow-dark">:</label>
                         </div>
@@ -198,9 +218,9 @@ class UserTrackWeightView {
         </style>
     
     <!-- Embed php array of ids of the weight data rows to be used to convert the amount drank based on unit. -->
-    <input type="hidden" id="phpArrayOfWeightData" value="
+    <input type="hidden" id="phpWeightDataset" value="
     <?php 
-    echo htmlspecialchars(json_encode($this->weightDataArray));
+    echo htmlspecialchars(json_encode($this->weightDataset));
     ?>
     ">
     <!-- Embed php current pagination. -->

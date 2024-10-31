@@ -2,8 +2,8 @@
 require('../../views/user/pages/userTrackExerciseRoutineDetailView.php');
 require('../../models/user/userTrackExerciseRoutineDetailModel.php');
 session_start();
-define("GRAMSTOKILOGRAMSCONVERSIONRATE", 1000);
-define("POUNDSTOKILOGRAMSCONVERSIONRATE", 2.20462);
+define("KILOGRAMTOGRAMCONVERSIONRATE", 1000);
+define("POUNDTOGRAMCONVERSIONRATE", 453.6);
 
 $userTrackExerciseRoutineDetailModel = new userTrackExerciseRoutineDetailModel(require "../../config/db_connection.php");
 
@@ -11,7 +11,7 @@ $userTrackExerciseRoutineDetailModel = new userTrackExerciseRoutineDetailModel(r
 $regexDateFormat = "/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/";
 
 // Regex to validate weight format.
-$regexWeightFormat = "/^[\d]*(.[\d]{1,2}$|$)/";
+$regexWeightFormat = "/^[\d]*(.[\d]{1,4}$|$)/";
 
 // Regex to validate ID.
 $regexIDAndRepFormat = "/^(0|[1-9][\d]*)$/";
@@ -22,16 +22,17 @@ $regexTimeFormat = "/(^[0-3]|^)[\d]:[0-5][\d]$/";
 // Regex to validate weight unit.
 $regexWeightUnitFormat = "/^(Kg|g|lb)$/";
 
-/** Converts value of any unit for weight measurement to kilograms.
+/** Converts any value of any weight unit to gram.
  * Return -1, if unit is not supported.
  */
-function convertValueOfUnitToKilograms($value, $unit) {
-    if ($unit === "Kg") {
+function convertValueOfWeightUnitToGram($value, $weightUnit) {
+    if ($weightUnit === "g") {
         return $value;
-    } else if ($unit === "g") {
-        return floor($value * 10000 * GRAMSTOKILOGRAMSCONVERSIONRATE) / 10000;
-    } else if ($unit === "lb") {
-        return floor($value * 10000 * POUNDSTOKILOGRAMSCONVERSIONRATE) / 10000;
+    } else if ($weightUnit === "Kg") {
+        var_dump(bcmul(KILOGRAMTOGRAMCONVERSIONRATE, $value));
+        return bcmul(KILOGRAMTOGRAMCONVERSIONRATE, $value);
+    } else if ($weightUnit === "lb") {
+        return bcmul(POUNDTOGRAMCONVERSIONRATE, $value, 4);
     }
     return -1;
 }
@@ -48,7 +49,7 @@ function cleanData($data) {
  * Otherwise, return false.
  */
 function checkIsBasicPostExerciseRoutineDetailVariablesSet() {
-    if (isset($_POST['exerciseIDForExerciseRoutineDetail']) && isset($_POST['weight']) && isset($_POST['weightUnit']) && isset($_POST['rep']) && 
+    if (isset($_POST['exerciseIDForExerciseRoutineDetail']) && isset($_POST['weight']) && isset($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']) && isset($_POST['rep']) && 
     isset($_POST['time'])) {
         return true;
     }
@@ -83,7 +84,7 @@ $regexWeightFormat, $regexWeightUnitFormat, $regexTimeFormat) {
 
 // Ensures that there is a valid $_GET request.
 if (!(isset($_GET['date'])) || !preg_match($regexDateFormat, $_GET['date']) || (date($_GET['date']) > date("Y-m-d"))) {
-    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . date("Y-m-d")));
+    die(header('location: track-exercise-routine-detail.php?date=' . date("Y-m-d")));
 }
 
 $date = $_GET['date'];
@@ -101,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $exerciseIDForExerciseRoutineDetail = cleanData($_POST['exerciseIDForExerciseRoutineDetail']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']);
                 $rep = cleanData($_POST['rep']);
                 // Note is not needed to be checked if its empty because it is just a note that the user inputs, with no real value.
                 $note = isset($_POST['note']) ? cleanData($_POST['note']) : "";
@@ -115,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     
                     if ($userTrackExerciseRoutineDetailModel->verifyExerciseIDToUserID($exerciseIDForExerciseRoutineDetail, $_SESSION['userID'])) {
                         
@@ -128,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             
                                 if ($addStatus) {
                                     
-                                    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                                    die(header('location: track-exercise-routine-detail.php?date=' . $date));
                                 }
                             }
                             
@@ -139,6 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         } else if ($_POST['submitExerciseRoutineDetailDataButton'] === "Save") {
             
             if (checkIsBasicPostExerciseRoutineDetailVariablesSet() && isset($_POST['exerciseRoutineDetailID'])) {
@@ -147,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $exerciseRoutineDetailID = cleanData($_POST['exerciseRoutineDetailID']);
                 $exerciseIDForExerciseRoutineDetail = cleanData($_POST['exerciseIDForExerciseRoutineDetail']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']);
                 $rep = cleanData($_POST['rep']);
                 // Note is not needed to be checked if its empty because it is just a note that the user inputs, with no real value.
                 $note = isset($_POST['note']) ? cleanData($_POST['note']) : "";
@@ -163,21 +167,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
-                    
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     $exerciseRoutineData = $userTrackExerciseRoutineDetailModel->getExerciseRoutineDataFromDate($date, $_SESSION['userID']);
                     if (sizeof($exerciseRoutineData) > 0) {
                         
                         $updateStatus = $userTrackExerciseRoutineDetailModel->updateExerciseRoutineDetailData($exerciseRoutineDetailID, $weight, $rep, $note, $time, $exerciseIDForExerciseRoutineDetail, $exerciseRoutineData["exerciseRoutineID"], $_SESSION['userID']);
                         if ($updateStatus) {
                             
-                            die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                            die(header('location: track-exercise-routine-detail.php?date=' . $date));
                         }
                     }
 
                     
                 }
             }
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
         }
     } else if (isset($_POST['submitExerciseDataButton'])) {
         
@@ -190,9 +195,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $addStatus = $userTrackExerciseRoutineDetailModel->addExerciseData($exerciseName, $_SESSION['userID']);
                 if ($addStatus) {
-                    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                    die(header('location: track-exercise-routine-detail.php?date=' . $date));
                 }
             }
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
 
         } else if ($_POST['submitExerciseDataButton'] === "Save") {
             
@@ -207,12 +214,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $updateStatus = $userTrackExerciseRoutineDetailModel->updateExerciseData($exerciseID, $exerciseName, $_SESSION['userID']);
                     echo "<script>console.log(" . $exerciseID . ");</script>";
                     if ($updateStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                        die(header('location: track-exercise-routine-detail.php?date=' . $date));
                     }
                 }
                 
                 
             }
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
         }
 
     } else if (isset($_POST['submitDeleteExerciseRoutineDetailDataButton'])) {
@@ -225,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $exerciseRoutineDetailID = cleanData($_POST['exerciseRoutineDetailID']);
                 $exerciseIDForExerciseRoutineDetail = cleanData($_POST['exerciseIDForExerciseRoutineDetail']);
                 $weight = cleanData($_POST['weight']);
-                $weightUnit = cleanData($_POST['weightUnit']);
+                $weightUnit = cleanData($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']);
                 $rep = cleanData($_POST['rep']);
                 // Note is not needed to be checked if its empty because it is just a note that the user inputs, with no real value.
                 $note = isset($_POST['note']) ? cleanData($_POST['note']) : "";
@@ -241,20 +250,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
                     $rep = (int) $rep;
 
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     
                     $exerciseRoutineData = $userTrackExerciseRoutineDetailModel->getExerciseRoutineDataFromDate($date, $_SESSION['userID']);
                     if (sizeof($exerciseRoutineData) > 0) {
                         $deleteStatus = $userTrackExerciseRoutineDetailModel->deleteExerciseRoutineDetailData($exerciseRoutineDetailID, $exerciseIDForExerciseRoutineDetail, $exerciseRoutineData["exerciseRoutineID"], $_SESSION['userID']);
                         if ($deleteStatus) {
                             
-                            die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                            die(header('location: track-exercise-routine-detail.php?date=' . $date));
                         }
                     }
 
                     
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
 
         }
 
@@ -269,19 +281,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $deleteStatus = $userTrackExerciseRoutineDetailModel->deleteExerciseData($exerciseID, $_SESSION['userID']);
                     
                     if ($deleteStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                        die(header('location: track-exercise-routine-detail.php?date=' . $date));
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
         }
     }
 }
 
-
-if (isset($_POST['unit'])) {
+// Used to persist the weight unit chosen by user.
+if (isset($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['unit'] === "mL" || $_POST['unit'] === "L" || $_POST['unit'] === "oz") {
-        $_SESSION['unit'] = $_POST['unit'];
+    if ($_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] !== null &&
+    preg_match($regexWeightUnitFormat, $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'])) {
+        
+        $_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] = $_POST['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'];
     }
 }
 $userTrackExerciseRoutineDetailView = new UserTrackExerciseRoutineDetailView($userTrackExerciseRoutineDetailModel->getExerciseDatasetFromUserID($_SESSION['userID']), $userTrackExerciseRoutineDetailModel->getExerciseRoutineDetailDatasetFromDate($date, $_SESSION['userID']));

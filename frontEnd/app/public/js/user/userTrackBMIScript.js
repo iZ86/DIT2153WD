@@ -1,9 +1,39 @@
-let bmiDataArray = JSON.parse(document.getElementById('phpArrayOfBMIData').value);
+let bmiDataset = JSON.parse(document.getElementById('phpBMIDataset').value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
-const KILOGRAMSTOGRAMSCONVERSIONRATE = 1000;
-const KILOGRAMSTOPOUNDSCONVERSIONRATE = 2.20462;
-const METERSTOCENTIMETERSCONVERSATIONRATE = 100;
-const METERSTOFOOTCONVERSIONRATE = 3.28084;
+const CENTIMETERTOMETERCONVERSIONRATE = 100;
+const CENTIMETERTOFOOTCONVERSIONRATE = 30.48;
+const GRAMTOKILOGRAMCONVERSIONRATE = 1000;
+const GRAMTOPOUNDCONVERSIONRATE = 453.6;
+
+
+
+/** Converts any value of centimeter to any value of height unit.
+ * Returns -1, if the unit is not supported.
+ */
+function convertValueOfCentimeterToHeightUnit(value, heightUnit) {
+    if (heightUnit === "cm") {
+        return value;
+    } else if (heightUnit === "m") {
+        return Math.floor((value / CENTIMETERTOMETERCONVERSIONRATE) * 10000) / 10000;
+    } else if (heightUnit === "ft") {
+        return Math.floor((value / CENTIMETERTOFOOTCONVERSIONRATE) * 10000) / 10000;
+    }
+    return -1;
+}
+
+/** Converts any value of gram to any value of weight unit.
+ * Returns -1, if the unit is not supported.
+ */
+function convertValueOfGramToWeightUnit(value, weightUnit) {
+    if (weightUnit === "g") {
+        return value;
+    } else if (weightUnit === "Kg") {
+        return Math.floor((value / GRAMTOKILOGRAMCONVERSIONRATE) * 10000) / 10000;
+    } else if (weightUnit === "lb") {
+        return Math.floor((value / GRAMTOPOUNDCONVERSIONRATE) * 10000) / 10000;
+    }
+    return -1;
+}
 
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackBMIPage() {
@@ -25,6 +55,17 @@ function nextDate() {
     let date = new Date(dateInput.value);
     date.setDate(date.getDate() + 1);
     location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
+}
+
+/** Checks if the datasets are empty. */
+function isDatasetEmpty(dataset) {
+    for (let data in dataset) {
+        if (dataset.hasOwnProperty(data)) {
+            return false;
+        }
+        return true;
+    }
+    return true;
 }
 
 /** Opens bmiDataModal to add data. */
@@ -74,53 +115,37 @@ function clearModalFields() {
 
 /** Display all the necessary data. */
 function displayDataOfAllBMIDataRow() {
-    Object.entries(bmiDataArray).map(entry => {
-        let bmiData = entry[1];
-        let bmiDataRowText =  document.getElementById(bmiData["bmiID"] + "Text");
-        bmiDataRowText.innerText = "Your calculated BMI is " + calculateBMI(new Number(bmiData["weight"]), new Number(bmiData["height"])) + " at " + bmiData["recordedOnTime"];
-    });
+    for (let bmiID in bmiDataset) {
+        if (bmiDataset.hasOwnProperty(bmiID)) {
+            let bmiDataRowText =  document.getElementById(bmiID+ "Text");
+            bmiDataRowText.innerText = "Your calculated BMI is " + 
+            calculateBMI(convertValueOfGramToWeightUnit(Number(bmiDataset[bmiID]["weightInGram"]), "Kg"),
+            convertValueOfCentimeterToHeightUnit(Number(bmiDataset[bmiID]["heightInCentimeter"]), "m")) +
+            " at " + bmiDataset[bmiID]["recordedOnTime"];
+        }
+    }
 }
 
 /** This function is used to send to track-bmi.php?date=...,
  * to persist the height unit selected by the user.
  */
-function createSessionForHeightUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForHeightUnitSelected() {
+    let unitSelected = document.getElementById('heightUnitInBMIDataModalInUserTrackBMIView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("bmiHeightUnit=" + unitSelected);
+    xmlHttRequest.send("heightUnitInBMIDataModalInUserTrackBMIView=" + unitSelected);
 }
 
 /** This function is used to send to track-bmi.php?date=...,
  * to persist the weight unit selected by the user.
  */
-function createSessionForweightUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForWeightUnitSelected() {
+    let unitSelected = document.getElementById('weightUnitInBMIDataModalInUserTrackBMIView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("bmiWeightUnit=" + unitSelected);
-}
-
-/** Converts kilograms to grams */
-function convertKilogramsToGrams(kilograms) {
-    return Math.floor(kilograms * KILOGRAMSTOGRAMSCONVERSIONRATE * 100) / 100;
-}
-
-/** Converts kilograms to pounds. */
-function convertKilogramsToPounds(kilograms) {
-    return Math.floor(kilograms * KILOGRAMSTOPOUNDSCONVERSIONRATE * 100) / 100;
-}
-
-/** Converts meters to centimeters. */
-function convertMetersToCentimeters(meters) {
-    return Math.floor(meters * METERSTOCENTIMETERSCONVERSATIONRATE * 100) / 100;
-}
-
-/** Converts meters to foot. */
-function convertMetersToFoot(meters) {
-    return Math.floor(meters * METERSTOFOOTCONVERSIONRATE * 100) / 100;
+    xmlHttRequest.send("weightUnitInBMIDataModalInUserTrackBMIView=" + unitSelected);
 }
 
 /** Calculate bmi and returns it. */
@@ -138,30 +163,36 @@ function updateBMIMessages() {
     let currentDateString = currentDate.getDate() + "-" + (currentDate.getMonth() +  1) + "-" + currentDate.getFullYear();
     let paginationDate = new Date(currentPaginationDate);
     let paginationDateString = paginationDate.getDate() + "-" + (paginationDate.getMonth() +  1) + "-" + paginationDate.getFullYear();
-
-
-    let bodyHeight = -1;
-    let bodyWeight = -1;
-
-
-    // Start of time.
-    let bmiTime = "00:00:00";
-
-    Object.entries(bmiDataArray).map(entry => {
-        let bmiData = entry[1];
-        if (bmiData["recordedOnTime"] > bmiTime) {
-            bodyHeight = bmiData["height"];
-            bodyWeight = bmiData["weight"];
-            bmiTime = bmiData["recordedOnTime"];
-        }
-    })
-
-    let bmiValue = calculateBMI(new Number(bodyWeight), new Number(bodyHeight));
     let bmiStatusMessage = document.getElementById('bmiStatusMessage');
     let bmiEncouragementMessage = document.getElementById('bmiEncouragementMessage');
 
 
-    if (bodyHeight > 0 && bodyWeight > 0) {
+
+
+    if (!isDatasetEmpty(bmiDataset)) {
+
+        
+
+        let bmiID = -1;
+
+        // Start of time.
+        let bmiTime = "00:00:00";
+
+        // bmiDataID is bmiID, just a placeholder name.
+        // Trying to get the most latest bmiID.
+        for (let bmiDataID in bmiDataset) {
+            if (bmiDataset.hasOwnProperty(bmiDataID)) {
+                if (bmiDataset[bmiDataID]["recordedOnTime"] > bmiTime) {
+                    bmiTime = bmiDataset[bmiDataID]["recordedOnTime"];
+                    bmiID = bmiDataID;
+                }
+            }
+        }
+
+        let bmiValue = calculateBMI(convertValueOfGramToWeightUnit(Number(bmiDataset[bmiID]["weightInGram"]), "Kg"),
+        convertValueOfCentimeterToHeightUnit(Number(bmiDataset[bmiID]["heightInCentimeter"]), "m"));
+
+
         if (paginationDateString === currentDateString) {
             bmiStatusMessage.innerText = "Your latest BMI calculated today is " + bmiValue + "!";
             bmiEncouragementMessage.innerText = "Keep up the good work!";
@@ -194,9 +225,9 @@ function openEditBMIDataModal(bmiID) {
     let maleRadioInput = document.getElementById("maleRadio");
     let femaleRadioInput = document.getElementById("femaleRadio");
     let heightInput = document.getElementById("height");
-    let heightUnitInput = document.getElementById("heightUnit").value;
+    let heightUnitSelected = document.getElementById("heightUnitInBMIDataModalInUserTrackBMIView").value;
     let weightInput = document.getElementById("weight");
-    let weightUnitInput = document.getElementById("weightUnit").value;
+    let weightUnitSelected = document.getElementById("weightUnitInBMIDataModalInUserTrackBMIView").value;
     let timeInput = document.getElementById('time');
 
 
@@ -207,33 +238,19 @@ function openEditBMIDataModal(bmiID) {
 
 
     bmiIDInput.value = bmiID;
-    ageInput.value = bmiDataArray[bmiID]["age"];
+    ageInput.value = bmiDataset[bmiID]["age"];
 
-    let gender = bmiDataArray[bmiID]["gender"];
+    let gender = bmiDataset[bmiID]["gender"];
     if (gender === "male") {
         maleRadioInput.checked = true;
     } else if (gender === "female") {
         femaleRadioInput.checked = true;
     }
 
-    if (heightUnitInput === "m") {
-        heightInput.value = bmiDataArray[bmiID]["height"];
-    } else if (heightUnitInput === "cm") {
-        heightInput.value = convertMetersToCentimeter(bmiDataArray[bmiID]["height"]);
-    } else if (heightUnitInput === "ft") {
-        heightInput.value = convertMetersToFoot(bmiDataArray[bmiID]["height"]);
-    }
+    heightInput.value = convertValueOfCentimeterToHeightUnit(Number(bmiDataset[bmiID]["heightInCentimeter"]), heightUnitSelected)
+    weightInput.value = convertValueOfGramToWeightUnit(Number(bmiDataset[bmiID]["weightInGram"]), weightUnitSelected);
     
-
-    if (weightUnitInput === "Kg") {
-        weightInput.value = bmiDataArray[bmiID]["weight"];
-    } else if (weightUnitInput === "g") {
-        weightInput.value = convertKilogramsToGrams(bmiDataArray[bmiID]["weight"]);
-    } else if (weightUnitInput === "lb") {
-        weightInput.value = convertKilogramsToPounds(bmiDataArray[bmiID]["weight"]);
-    }
-    
-    timeInput.value = bmiDataArray[bmiID]["recordedOnTime"];
+    timeInput.value = bmiDataset[bmiID]["recordedOnTime"];
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');

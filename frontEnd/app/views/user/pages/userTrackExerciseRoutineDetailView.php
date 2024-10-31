@@ -193,10 +193,16 @@ class UserTrackExerciseRoutineDetailView {
                         <div class="flex">
 
                             <input type="number" id="weight" name="weight" class="rounded-lg border-2">
-                            <select name="weightUnit" id="weightUnit" class="bg-white rounded-lg border-2 text-shadow-dark text-black" oninput="createSessionForUnitSelected('unit');">
-                                <option value="Kg" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
-                                <option value="g" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "g") { echo "selected"; }?>>Grams (g)</option>
-                                <option value="lb" <?php if (isset($_SESSION['unit']) && $_SESSION['unit'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
+                            <select name="weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView"
+                            id="weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView"
+                            class="bg-white rounded-lg border-2 text-shadow-dark text-black"
+                            oninput="createSessionForWeightUnitSelected();">
+                                <option value="Kg" <?php if (isset($_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']) &&
+                                $_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "Kg") { echo "selected"; }?>>Kilograms (Kg)</option>
+                                <option value="g" <?php if (isset($_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']) &&
+                                $_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "g") { echo "selected"; }?>>Grams (g)</option>
+                                <option value="lb" <?php if (isset($_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView']) &&
+                                $_SESSION['weightUnitInExerciseRoutineDetailDataModalInUserTrackExerciseRoutineDetailView'] === "lb") { echo "selected"; }?>>Pounds (lb)</option>
                             </select>
                         </div>
                         <input type="rep" id="rep" name="rep" class="rounded-lg border-2">
