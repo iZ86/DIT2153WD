@@ -105,8 +105,8 @@ function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
 /** This function is used to send to track-water-consumption.php?date=...,
  * to persist the unit selected by the user.
  */
-function createSessionForUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForUnitSelected() {
+    let unitSelected = document.getElementById('volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

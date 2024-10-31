@@ -157,7 +157,7 @@ class UserTrackWaterConsumptionView {
                             id="volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView"
                             class="bg-white rounded-lg border-2 text-shadow-dark text-black"
                             oninput="convertAmountDrankOfAllWaterConsumptionDataRow('volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView');
-                            createSessionForUnitSelected('volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView');
+                            createSessionForUnitSelected();
                             updateAmountDrankMessages()">
 
                                 <option value="mL" <?php if (isset($_SESSION['volumeUnitInTrackWaterConsumptionView']) &&
