@@ -3,6 +3,7 @@ class NutritionistModel {
     /** Nutritionist Table */
     private $nutritionistTable = 'nutritionist';
     private $nutritionitsScheduleTable = 'nutritionist_schedule';
+    private $nutritionistBookingTable = 'nutritionist_booking';
     /** Database connection */
     private $databaseConn;
 
@@ -72,5 +73,24 @@ class NutritionistModel {
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : false;
-}
+    }
+
+    public function isScheduleIDBooked($nutritionistScheduleID) {
+        $sql = "SELECT COUNT(*) as count FROM " . $this->nutritionistBookingTable . " WHERE nutritionistScheduleID = ?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("i", $nutritionistScheduleID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['count'] > 0; // Returns true if the schedule ID is already booked
+    }
+
+    public function getNutritionistSchedulePriceByNutritionistScheduleID($nutritionistScheduleID) {
+        $sql = "SELECT price FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistScheduleID=?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("i", $nutritionistScheduleID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+    }
 }

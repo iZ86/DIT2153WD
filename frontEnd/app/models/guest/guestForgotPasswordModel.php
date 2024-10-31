@@ -12,10 +12,12 @@ class GuestForgotPasswordModel {
         $this->databaseConn = $databaseConn;
     }
 
+    // Check if email is connected to a user, return true if exist, false if doesn't.
     public function verifyUserExist($email) {
         // verify if email exist in registered_user db
-        $registeredUserSQL = "SELECT email FROM " . $this->registeredUserTable;
+        $registeredUserSQL = "SELECT * FROM " . $this->registeredUserTable . " WHERE email = ?";
         $registeredUserSTMT = $this->databaseConn->prepare($registeredUserSQL);
+        $registeredUserSTMT->bind_param("s", $email);
         $registeredUserSTMT->execute();
         $registeredUserResult = $registeredUserSTMT->get_result();
         if ($registeredUserResult->num_rows > 0) {
@@ -25,6 +27,7 @@ class GuestForgotPasswordModel {
         }
     }
 
+    // generates a token, stores it in password_reset db and returns the token
     public function generateToken($email) {
         // generate token
         $token = bin2hex(random_bytes(50));
@@ -33,8 +36,9 @@ class GuestForgotPasswordModel {
         $createdOn = date("Y-m-d H:i:s");
 
         // check if email in password reset
-        $checkEmailSQL = "SELECT email FROM " . $this->passwordResetsTable;
+        $checkEmailSQL = "SELECT email FROM " . $this->passwordResetsTable . " WHERE email = ?";
         $checkEmailSTMT = $this->databaseConn->prepare($checkEmailSQL);
+        $checkEmailSTMT->bind_param("s", $email);
         $checkEmailSTMT->execute();
         $checkEmailResult = $checkEmailSTMT->get_result();
 
@@ -57,6 +61,7 @@ class GuestForgotPasswordModel {
 
     }
 
+    // creates and sends and email with the token, returns true if successful, false if unsuccessful.
     public function sendEmail($email, $token) {
         $resetLink = "http://localhost/DIT2153WD/frontEnd/app/controllers/changePassword.php?token=" . $token;
 

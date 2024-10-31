@@ -26,20 +26,26 @@ function checkIsBasicPostVariablesSet() {
 if (isset($_POST['nutritionistID'])) {
     $nutritionistID = $_POST['nutritionistID'];
 
-    // Fetch available date and time
+    // Fetch available date and time slots for the nutritionist
     $nutritionistAvailableDateTime = $nutritionistModel->getAllNutritionistAvailableDateTimeById($nutritionistID);
 
     $availableDateTimes = [];
+
     if ($nutritionistAvailableDateTime) {
         foreach ($nutritionistAvailableDateTime as $dateTime) {
-            $availableDateTimes[] = $dateTime['scheduleDateTime']; // Store datetime values
+            // Check if the slot is already booked using the schedule ID
+            if (!$nutritionistModel->isScheduleIDBooked($dateTime['nutritionistScheduleID'])) {
+                // Add the date and time to available slots if not booked
+                $availableDateTimes[] = $dateTime['scheduleDateTime'];
+            }
         }
     }
 
-    // Return available datetime slots
+    // Return available datetime slots as JSON
     echo json_encode(['success' => true, 'data' => $availableDateTimes]);
     exit;
 }
+
 
 /** Retrieve booking information from view by using $_POST.
  * Use ?? to provide a default null value, if the $_POST doesn't retrieve it.
@@ -62,7 +68,9 @@ function getBookingInformation() {
                             $nutritionistScheduleID = $nutritionistScheduleData ? $nutritionistScheduleData['nutritionistScheduleID'] : null;
                             $_SESSION['description'] = $description;
                             $_SESSION['nutritionistScheduleID'] = $nutritionistScheduleID;
-                            header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=20");
+                            $price = $nutritionistModel->getNutritionistSchedulePriceByNutritionistScheduleID($nutritionistScheduleID);
+                            $price = $price['price'];
+                            header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Nutritionist Booking&price=$price");
                             exit();
                         } else {
                             echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
@@ -75,7 +83,6 @@ function getBookingInformation() {
         }
     }
 }
-
 
 /** Fetch nutritionists for display in the view. */
 $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionist(), $nutritionistAvailableDateTime);

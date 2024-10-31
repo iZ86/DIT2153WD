@@ -2,7 +2,7 @@
 class UserTrackWeightModel {
     /** Database connection. */
     private $databaseConn;
-    /** Weight table */
+    /** WEIGHT table */
     private $weightTable = "WEIGHT";
 
     /** Constructor for model. */
@@ -10,14 +10,18 @@ class UserTrackWeightModel {
         $this->databaseConn = $databaseConn;
     }
     
-    /** Returns an array of arrays containing weight consumption data in a day.
+    
+    /** Returns an associate array of arrays where key is weightID attribute,
+     * and every value is an associate array representing a record in the WEIGHT table,
+     * where recordedOn attribute is $recordedOn,
+     * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getWeightDataFromDate($userID, $dateTime) {
+    public function getWeightDatasetFromDate($date, $userID) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($dateTime);
+        $endDate = date_create($date);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -26,7 +30,7 @@ class UserTrackWeightModel {
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $weightSTMT = $this->databaseConn->prepare($weightSQL);
-        $weightSTMT->bind_param("sss", $userID, $dateTime, $endDate);
+        $weightSTMT->bind_param("sss", $userID, $date, $endDate);
         $weightSTMT->execute();
         $weightResult = $weightSTMT->get_result();
         $weightResultDataArray = array();
@@ -40,15 +44,15 @@ class UserTrackWeightModel {
         return $weightResultDataArray;
     }
 
-    /** Adds weight into the database.
+    /** Adds weight data into the database.
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addWeightData($userID, $weightInKilograms, $dateTime) {
+    public function addWeightData($userID, $weightInGram, $recordedOn) {
 
-        $insertWeightDataSQL = "INSERT INTO " . $this->weightTable . "(weight, recordedOn, userID) VALUES (?, ?, ?)";
+        $insertWeightDataSQL = "INSERT INTO " . $this->weightTable . "(weightInGram, recordedOn, userID) VALUES (?, ?, ?)";
         $insertWeightDataSTMT = $this->databaseConn->prepare($insertWeightDataSQL);
-        $insertWeightDataSTMT->bind_param("sss", $weightInKilograms, $dateTime, $userID);
+        $insertWeightDataSTMT->bind_param("sss", $weightInGram, $recordedOn, $userID);
         return $insertWeightDataSTMT->execute();
 
     }
@@ -57,33 +61,30 @@ class UserTrackWeightModel {
      * Returns true if success.
      * Otherwise, returns false.
     */
-    public function updateWeightData($weightID, $weight, $dateTime, $userID) {
+    public function updateWeightData($weightID, $weightInGram, $recordedOn, $userID) {
         
         
-        if ($this->verifyWeightDataIDToUserID($weightID, $userID)) {
+        if ($this->verifyWeightIDToUserID($weightID, $userID)) {
             $updateWeightDataSQL = "UPDATE " . $this->weightTable .
             " SET weight = ?, recordedOn = ? WHERE weightID = ? AND userID = ?";
 
             $updateWeightDataSTMT = $this->databaseConn->prepare($updateWeightDataSQL);
-            $updateWeightDataSTMT->bind_param("ssss", $weight, $dateTime, $weightID, $userID);
-            $updateWeightDataSTMT->execute();
+            $updateWeightDataSTMT->bind_param("ssss", $weightInGram, $recordedOn, $weightID, $userID);
+            return $updateWeightDataSTMT->execute();
             
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($updateWeightDataSTMT->errno === 0) {
-                return true;
-            }
+            
         }
 
         return false;
     }
 
     /** Deletes the weight data in WEIGHT table.
-     * return true if success.
+     * returns true if success.
      * Otherwise, returns false.
      */
     public function deleteWeightData($weightID, $userID) {
 
-        if ($this->verifyWeightDataIDToUserID($weightID, $userID)) {
+        if ($this->verifyWeightIDToUserID($weightID, $userID)) {
             
             
             $deleteWeightDataSQL = "DELETE FROM " . $this->weightTable .
@@ -91,28 +92,27 @@ class UserTrackWeightModel {
 
             $deleteWeightDataSTMT = $this->databaseConn->prepare($deleteWeightDataSQL);
             $deleteWeightDataSTMT->bind_param("ss", $weightID, $userID);
-            $deleteWeightDataSTMT->execute();
+            return $deleteWeightDataSTMT->execute();
 
-            // Checks if there was any error running the sql statemnt, error number 0 is no errors.
-            if ($deleteWeightDataSTMT->errno === 0) {
-                return true;
-            }
         }
         return false;
     }
 
-    /** Returns true if there is a record that belongs to the $weightID and $userID.
+    /** Returns true if there is a data in the WEIGHT table,
+     * where weightID attribute is $weightID,
+     * and userID attribute is $userID.
      * Otherwise, returns false.
-     * This function is used to prove that the $weightID sent by the $_POST in the controller
-     * actually belongs to the userID, and allows the userID to perform write actions on it.
+     * This function is used to verify that the data does exist, 
+     * and that the user has the permissions to manipulate the data,
+     * where weightID attribute is $weightID in the WEIGHT table.
     */
-    private function verifyWeightDataIDToUserID($weightID, $userID) {
-        $selectWeightDataSQL = "SELECT 1 FROM " . $this->weightTable . " WHERE weightID = ? AND userID = ?";
+    private function verifyWeightIDToUserID($weightID, $userID) {
+        $selectWeightDataSQL = "SELECT * FROM " . $this->weightTable . " WHERE weightID = ? AND userID = ?";
         $selectWeightDataSTMT= $this->databaseConn->prepare($selectWeightDataSQL);
         $selectWeightDataSTMT->bind_param("ss", $weightID, $userID);
         $selectWeightDataSTMT->execute();
         $selectWeightDataResult = $selectWeightDataSTMT->get_result();
-        if ($selectWeightDataResult->num_rows === 1) {
+        if ($selectWeightDataResult->num_rows >= 1) {
             return true;
         }
         return false;

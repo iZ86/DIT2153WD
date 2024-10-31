@@ -42,10 +42,10 @@ class GuestIndexView {
             <img src="../public/images/guestIndex3.png" style="height: 600px">
             <img src="../public/images/guestIndex4.png" style="height: 600px">
         </div>
-        <div class="font-medium text-center p-6 mt-4 flex flex-col">
+        <form class="font-medium text-center p-6 mt-4 flex flex-col" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
             At Huan Fitness center, we empower individuals to achieve holistic health through personalized fitness plans, nutrition guidance, and continuous support. Our mission is to create a welcoming community where everyone can thrive, track their progress, and embrace a healthier lifestyle. Together, we strive to inspire and motivate each other on the journey to wellness.
-            <a href="guestSignUpView.php" class="bg-orange-400 hover:bg-orange-500 text-white text-sm font-medium py-2 px-4 rounded-full w-40 mx-auto mt-4">Join Us Today!</a>
-        </div>
+            <input type="submit" name="submit" value="Join Us Today!" class="bg-orange-400 hover:bg-orange-500 text-white text-sm font-medium py-2 px-4 rounded-full w-40 mx-auto mt-4">
+        </form>
     </div>
 </section>
 <?php

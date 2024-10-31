@@ -1,7 +1,21 @@
-let weightDataArray = JSON.parse(document.getElementById('phpArrayOfWeightData').value);
+let weightDataset = JSON.parse(document.getElementById('phpWeightDataset').value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
-const KILOGRAMSTOGRAMSCONVERSIONRATE = 1000;
-const KILOGRAMSTOPOUNDSCONVERSIONRATE = 2.20462;
+const GRAMTOKILOGRAMCONVERSIONRATE = 1000;
+const GRAMTOPOUNDCONVERSIONRATE = 453.6;
+
+/** Converts any value of gram to any value of weight unit.
+ * Returns -1, if the unit is not supported.
+ */
+function convertValueOfGramToWeightUnit(value, weightUnit) {
+    if (weightUnit === "g") {
+        return value;
+    } else if (weightUnit === "Kg") {
+        return Math.floor((value / GRAMTOKILOGRAMCONVERSIONRATE) * 10000) / 10000;
+    } else if (weightUnit === "lb") {
+        return Math.floor((value / GRAMTOPOUNDCONVERSIONRATE) * 10000) / 10000;
+    }
+    return -1;
+}
 
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackWeightPage() {
@@ -23,6 +37,17 @@ function nextDate() {
     let date = new Date(dateInput.value);
     date.setDate(date.getDate() + 1);
     location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-weight.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
+}
+
+/** Checks if the datasets are empty. */
+function isDatasetEmpty(dataset) {
+    for (let data in dataset) {
+        if (dataset.hasOwnProperty(data)) {
+            return false;
+        }
+        return true;
+    }
+    return true;
 }
 
 /** Opens weightDataModal to add data. */
@@ -68,59 +93,35 @@ function clearModalFields() {
 
 /** Converts the amount for every weight data rows. */
 function convertWeightOfAllWeightDataRow(unitDropDownBoxID) {
-    if (unitDropDownBoxID === "weightUnit") {
-        document.getElementById('unit').value = document.getElementById("weightUnit").value;
+    if (unitDropDownBoxID === "weightUnitInUserTrackWeightView") {
+        document.getElementById('weightUnitInWeightDataModalInUserTrackWeightView').value = document.getElementById("weightUnitInUserTrackWeightView").value;
         
-    } else if (unitDropDownBoxID === "unit") {
-        document.getElementById('weightUnit').value = document.getElementById("unit").value;
+    } else if (unitDropDownBoxID === "weightUnitInWeightDataModalInUserTrackWeightView") {
+        document.getElementById('weightUnitInUserTrackWeightView').value = document.getElementById("weightUnitInWeightDataModalInUserTrackWeightView").value;
     }
-    let unitSelected = document.getElementById('weightUnit').value;
+    let unitSelected = document.getElementById('weightUnitInUserTrackWeightView').value;
 
-
-    if (unitSelected === "Kg") {
-        Object.entries(weightDataArray).map(entry => {
-            let weightData = entry[1];
-            let weight = new Number(weightData["weight"]);
-            let weightDataRow = document.getElementById(weightData["weightID"] + "Text");
-            weightDataRow.innerText = "You weigh " + weight + unitSelected + " at " + weightData["recordedOnTime"];
-        });
-    
-    } else if (unitSelected === "g") {
-        Object.entries(weightDataArray).map(entry => {
-            let weightData = entry[1];
-            let weight = convertKilogramsToGrams(Number(weightData["weight"]));
-            let weightDataRow = document.getElementById(weightData["weightID"] + "Text");
-            weightDataRow.innerText = "You weigh " + weight + unitSelected + " at " + weightData["recordedOnTime"];
-        });
-    } else if (unitSelected === "lb") {
-        Object.entries(weightDataArray).map(entry => {
-            let weightData = entry[1];
-            let weight = convertKilogramsToPounds(new Number(weightData["weight"]));
-            let weightDataRow = document.getElementById(weightData["weightID"] + "Text");
-            weightDataRow.innerText = "You weigh " + weight + unitSelected + " at " + weightData["recordedOnTime"];
-        });
+    // The loop gets the key, and the key of the dataset is the ID.
+    for (let weightID in weightDataset) {
+        if (weightDataset.hasOwnProperty(weightID)) {
+            let weightDataRow = document.getElementById(weightID + "Text");
+            weightDataRow.innerText = "You weigh " + convertValueOfGramToWeightUnit(Number(weightDataset[weightID]["weightInGram"]), unitSelected) +
+            unitSelected + " at " + weightDataset[weightID]["recordedOnTime"];
+        }
     }
 }
 
 /** This function is used to send to track-weight.php?date=...,
  * to persist the unit selected by the user.
  */
-function createSessionForUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForWeightUnitSelected() {
+    
+    
+    let unitSelected = document.getElementById("weightUnitInUserTrackWeightView").value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("unit=" + unitSelected);
-}
-
-/** Converts kilograms to grams */
-function convertKilogramsToGrams(kilograms) {
-    return Math.floor(kilograms * KILOGRAMSTOGRAMSCONVERSIONRATE * 100) / 100;
-}
-
-/** Converts kilograms to pounds. */
-function convertKilogramsToPounds(kilograms) {
-    return Math.floor(kilograms * KILOGRAMSTOPOUNDSCONVERSIONRATE * 100) / 100;
+    xmlHttRequest.send("weightUnitInUserTrackWeightView=" + unitSelected);
 }
 
 /** Updates weight messages. */
@@ -131,38 +132,40 @@ function updateWeightMessages() {
     let currentDateString = currentDate.getDate() + "-" + (currentDate.getMonth() +  1) + "-" + currentDate.getFullYear();
     let paginationDate = new Date(currentPaginationDate);
     let paginationDateString = paginationDate.getDate() + "-" + (paginationDate.getMonth() +  1) + "-" + paginationDate.getFullYear();
-
-    let latestWeight = -1;
-
-    Object.entries(weightDataArray).map(entry => {
-        let weightData = entry[1];
-        weight = new Number(weightData["weight"]);
-        if (weight > latestWeight) {
-            latestWeight = weight;
-        }
-    });
-
     let weightStatusMessage = document.getElementById('weightStatusMessage');
     let weightEncouragementMessage = document.getElementById('weightEncouragementMessage');
 
-    let weightInUnitText;
-    let unitSelected = document.getElementById('weightUnit').value;
-    if (unitSelected === "Kg") {
-        weightInUnitText = latestWeight + "Kg";
-    } else if (unitSelected === "g") {
-        weightInUnitText = convertKilogramsToGrams(latestWeight) + "g";
-    } else if (unitSelected === "lb") {
-        weightInUnitText = convertKilogramsToPounds(latestWeight) + "lb";
-    } else {
-        weightInUnitText = "Error"
-    }
 
-    if (latestWeight > 0) {
+    if (!isDatasetEmpty(weightDataset)) {
+
+        
+
+        // Start of time.
+        let weightTime = "00:00";
+        
+        let weightID = -1;
+
+        // weightDataID is weightID, just a placeholder name.
+        // Trying to get the most latest weightID.
+        for (let weightDataID in weightDataset) {
+            if (weightDataset.hasOwnProperty(weightDataID)) {
+                if (weightDataset[weightDataID]["recordedOnTime"] > weightTime) {
+                    weightTime = weightDataset[weightDataID]["recordedOnTime"];
+                    weightID = weightDataID;
+                }
+            }
+        }
+
+        let unitSelected = document.getElementById('weightUnitInUserTrackWeightView').value;
+
+        let weightWithUnitText = convertValueOfGramToWeightUnit(Number(weightDataset[weightID]["weightInGram"]), unitSelected);
+        weightWithUnitText += unitSelected;
+
         if (paginationDateString === currentDateString) {
-            weightStatusMessage.innerText = "You weigh " + weightInUnitText + " today!";
+            weightStatusMessage.innerText = "Your latest weight is " + weightWithUnitText + " today!";
             weightEncouragementMessage.innerText = "Keep up the good work!";
         } else {
-            weightStatusMessage.innerText = "Your weight was " + weightInUnitText + " on " + paginationDateString;
+            weightStatusMessage.innerText = "Your latest weight on " + paginationDateString + " is " + weightWithUnitText;
             weightEncouragementMessage.innerText = "";
         }
     } else {
@@ -189,21 +192,15 @@ function openEditWeightDataModal(weightID) {
     let timeInput = document.getElementById('time');
     let weightIDInput = document.getElementById("weightID");
 
-    unitSelected = document.getElementById("weightUnit").value;
+    weightUnitSelected = document.getElementById("weightUnitInUserTrackWeightView").value;
 
     submitWeightDataButton.value="Save"
     modalTitle.innerText = 'Edit Weight Data';
     weightIDInput.value = weightID;
 
+    weightInput.value = convertValueOfGramToWeightUnit(Number(weightDataset[weightID]["weightInGram"]), weightUnitSelected);
 
-    if (unitSelected === "Kg") {
-        weightInput.value = weightDataArray[weightID]["weight"];
-    } else if (unitSelected === "g") {
-        weightInput.value = convertKilogramsToGrams(new Number(weightDataArray[weightID]['weight']));
-    } else if (unitSelected === "lb") {
-        weightInput.value = convertKilogramsToPounds(new Number(weightDataArray[weightID]['weight']));
-    }
-    timeInput.value = weightDataArray[weightID]["recordedOnTime"];
+    timeInput.value = weightDataset[weightID]["recordedOnTime"];
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
@@ -240,12 +237,9 @@ function closeConfirmationModal() {
 
     setTimeout(() => {
         confirmationModal.classList.add('hidden');
-        clearModalFields();
     }, 300);
 }
 
 
-
-
-convertWeightOfAllWeightDataRow("weightUnit");
+convertWeightOfAllWeightDataRow("weightUnitInUserTrackWeightView");
 updateWeightMessages();

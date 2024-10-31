@@ -1,7 +1,22 @@
-let waterConsumptionDataArray = JSON.parse(document.getElementById('phpArrayOfWaterConsumptionData').value);
+let waterConsumptionDataset = JSON.parse(document.getElementById('phpWaterConsumptionDataset').value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
-const MILLILITERSTOLITERSCONVERSIONRATE = 1000;
-const MILLILITERSTOOUNCESCONVERSIONRATE = 29.5735;
+const MILLILITERTOLITERCONVERSIONRATE = 1000;
+const MILLILITERTOOUNCECONVERSIONRATE = 29.574;
+
+/** Converts any value of milliliter to any value of volume unit.
+ * Returns -1, if the unit is not supported.
+ */
+function convertValueOfMilliliterToValueUnit(value, volumeUnit) {
+    if (volumeUnit === "mL") {
+        return value;
+    } else if (volumeUnit === "L") {
+        return Math.floor((value / MILLILITERTOLITERCONVERSIONRATE) * 10000) / 10000;
+    } else if (volumeUnit === "oz") {
+        return Math.floor((value / MILLILITERTOOUNCECONVERSIONRATE) * 10000) / 10000;
+    }
+    return -1;
+}
+
 
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackWaterConsumptionPage() {
@@ -23,6 +38,17 @@ function nextDate() {
     let date = new Date(dateInput.value);
     date.setDate(date.getDate() + 1);
     location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
+}
+
+/** Checks if the datasets are empty. */
+function isDatasetEmpty(dataset) {
+    for (let data in dataset) {
+        if (dataset.hasOwnProperty(data)) {
+            return false;
+        }
+        return true;
+    }
+    return true;
 }
 
 /** Opens waterConsumptionDataModal to add data. */
@@ -68,59 +94,33 @@ function clearModalFields() {
 
 /** Converts the amount for every water consumption data rows. */
 function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
-    if (unitDropDownBoxID === "amountDrankUnit") {
-        document.getElementById('unit').value = document.getElementById("amountDrankUnit").value;
+    if (unitDropDownBoxID === "volumeUnitInUserTrackWaterConsumptionView") {
+        document.getElementById('volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView').value = document.getElementById("volumeUnitInUserTrackWaterConsumptionView").value;
         
-    } else if (unitDropDownBoxID === "unit") {
-        document.getElementById('amountDrankUnit').value = document.getElementById("unit").value;
+    } else if (unitDropDownBoxID === "volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView") {
+        document.getElementById('volumeUnitInUserTrackWaterConsumptionView').value = document.getElementById("volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView").value;
     }
-    let unitSelected = document.getElementById('amountDrankUnit').value;
+    let unitSelected = document.getElementById('volumeUnitInUserTrackWaterConsumptionView').value;
 
-
-    if (unitSelected === "L") {
-        Object.entries(waterConsumptionDataArray).map(entry => {
-            let waterConsumptionData = entry[1];
-            let amountDrank = convertMillilitersToLiters(new Number(waterConsumptionData["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
-        });
-    
-    } else if (unitSelected === "mL") {
-        Object.entries(waterConsumptionDataArray).map(entry => {
-            let waterConsumptionData = entry[1];
-            let amountDrank = Number(waterConsumptionData["milliliters"]);
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
-        });
-    } else if (unitSelected === "oz") {
-        Object.entries(waterConsumptionDataArray).map(entry => {
-            let waterConsumptionData = entry[1];
-            let amountDrank = convertMillilitersToOunces(new Number(waterConsumptionData["milliliters"]));
-            let waterConsumptionDataRow = document.getElementById(waterConsumptionData["waterConsumptionID"] + "Text");
-            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionData["recordedOnTime"];
-        });
+    // The loop gets the key, and the key of the dataset is the ID.
+    for (let waterConsumptionID in waterConsumptionDataset) {
+        if (waterConsumptionDataset.hasOwnProperty(waterConsumptionID)) {
+            let waterConsumptionDataRow = document.getElementById(waterConsumptionID + "Text");
+            let amountDrank = convertValueOfMilliliterToValueUnit(Number(waterConsumptionDataset[waterConsumptionID]["amountDrankInMilliliter"]), unitSelected);
+            waterConsumptionDataRow.innerText = "You have drank " + amountDrank + unitSelected + " at " + waterConsumptionDataset[waterConsumptionID]["recordedOnTime"];
+        }
     }
 }
 
 /** This function is used to send to track-water-consumption.php?date=...,
  * to persist the unit selected by the user.
  */
-function createSessionForUnitSelected(unitDropDownBoxID) {
-    let unitSelected = document.getElementById(unitDropDownBoxID).value;
+function createSessionForVolumeUnitSelected() {
+    let unitSelected = document.getElementById('volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView').value;
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("unit=" + unitSelected);
-}
-
-/** Converts milliliters to liters. */
-function convertMillilitersToLiters(milliliters) {
-    return Math.floor(milliliters / MILLILITERSTOLITERSCONVERSIONRATE * 100) / 100;
-}
-
-/** Converts milliliters to ounces. */
-function convertMillilitersToOunces(milliliters) {
-    return Math.floor((milliliters / MILLILITERSTOOUNCESCONVERSIONRATE) * 100) / 100;
+    xmlHttRequest.send("volumeUnitInUserTrackWaterConsumptionView=" + unitSelected);
 }
 
 /** Updates amount drank messages. */
@@ -131,29 +131,26 @@ function updateAmountDrankMessages() {
     let currentDateString = currentDate.getDate() + "-" + (currentDate.getMonth() +  1) + "-" + currentDate.getFullYear();
     let paginationDate = new Date(currentPaginationDate);
     let paginationDateString = paginationDate.getDate() + "-" + (paginationDate.getMonth() +  1) + "-" + paginationDate.getFullYear();
-
-    let totalAmountDrank = 0;
-
-    Object.entries(waterConsumptionDataArray).map(entry => {
-        let waterConsumptionData = entry[1];
-        totalAmountDrank += new Number(waterConsumptionData["milliliters"]);
-    });
     let amountDrankStatusMessage = document.getElementById('amountDrankStatusMessage');
     let amountDrankEncouragementMessage = document.getElementById('amountDrankEncouragementMessage');
 
-    let amountDrankInUnitText;
-    let unitSelected = document.getElementById('amountDrankUnit').value;
-    if (unitSelected === "mL") {
-        amountDrankInUnitText = totalAmountDrank + "mL";
-    } else if (unitSelected === "L") {
-        amountDrankInUnitText = convertMillilitersToLiters(totalAmountDrank) + "L";
-    } else if (unitSelected === "oz") {
-        amountDrankInUnitText = convertMillilitersToOunces(totalAmountDrank) + "oz";
-    } else {
-        amountDrankInUnitText = "Error"
+
+    let amountDrankVolumeUnitSelected = document.getElementById("volumeUnitInUserTrackWaterConsumptionView").value;
+    let totalAmountDrank = 0;
+
+    for (let waterConsumptionID in waterConsumptionDataset) {
+        if (waterConsumptionDataset.hasOwnProperty(waterConsumptionID)) {
+            totalAmountDrank += Number(waterConsumptionDataset[waterConsumptionID]["amountDrankInMilliliter"]);
+        }
     }
 
-    if (totalAmountDrank > 0) {
+    let amountDrankInUnitText = convertValueOfMilliliterToValueUnit(Number(totalAmountDrank), amountDrankVolumeUnitSelected) + amountDrankVolumeUnitSelected;
+    
+
+    if (!isDatasetEmpty(waterConsumptionDataset)) {
+
+        
+
         if (paginationDateString === currentDateString) {
             amountDrankStatusMessage.innerText = "You have drank " + amountDrankInUnitText + " today!";
             amountDrankEncouragementMessage.innerText = "Keep up the good work!";
@@ -183,21 +180,15 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     let timeInput = document.getElementById('time');
     let waterConsumptionIDInput = document.getElementById('waterConsumptionID');
 
-    unitSelected = document.getElementById("amountDrankUnit").value;
+    volumeUnitSelected = document.getElementById("volumeUnitInUserTrackWaterConsumptionView").value;
 
     submitWaterConsumptionDataButton.value="Save"
     modalTitle.innerText = 'Edit Water Consumption Data';
     waterConsumptionIDInput.value = waterConsumptionID;
 
+    amountDrankInput.value = convertValueOfMilliliterToValueUnit(Number(waterConsumptionDataset[waterConsumptionID]['amountDrankInMilliliter']), volumeUnitSelected);
 
-    if (unitSelected === "mL") {
-        amountDrankInput.value = waterConsumptionDataArray[waterConsumptionID]["milliliters"];
-    } else if (unitSelected === "L") {
-         amountDrankInput.value = convertMillilitersToLiters(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
-    } else if (unitSelected === "oz") {
-        amountDrankInput.value = convertMillilitersToOunces(new Number(waterConsumptionDataArray[waterConsumptionID]['milliliters']));
-    }
-    timeInput.value = waterConsumptionDataArray[waterConsumptionID]["recordedOnTime"];
+    timeInput.value = waterConsumptionDataset[waterConsumptionID]["recordedOnTime"];
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
@@ -234,12 +225,11 @@ function closeConfirmationModal() {
 
     setTimeout(() => {
         confirmationModal.classList.add('hidden');
-        clearModalFields();
     }, 300);
 }
 
 
 
 
-convertAmountDrankOfAllWaterConsumptionDataRow("amountDrankUnit");
+convertAmountDrankOfAllWaterConsumptionDataRow("volumeUnitInUserTrackWaterConsumptionView");
 updateAmountDrankMessages();

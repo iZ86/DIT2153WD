@@ -39,6 +39,26 @@ class GuestForgotPasswordView {
         </div>
 
         <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto mx-auto flex flex-col items-center" style="width: 500px;">
+            <?php
+                // If there is error, display error message
+                if (isset($_SESSION['forgotPasswordError'])) {
+                    if ($_SESSION['forgotPasswordError'] === 1) {
+                        $errorMsg = "Unsuccessful reset. Please do not leave empty fields.";
+                    } else if ($_SESSION['forgotPasswordError'] === 2) {
+                        $errorMsg = "Unsuccessful reset. Email not registered.";
+                    } else if ($_SESSION['forgotPasswordError'] === 3) {
+                        $errorMsg = "Unsuccessful reset. Unable to send email, please try again.";
+                    }
+                    echo "<div class='bg-red-200 text-center mb-6 text-gray-600 p-3 w-full rounded-lg'>$errorMsg</div>";
+                }
+
+                // if successful registration, display success message
+                if (isset($_SESSION['forgotPasswordSuccess'])) {
+                    $errorMsg = "Reset email successfully sent, check your email to complete reset.";
+                    echo "<div class='bg-green-200 text-center mb-6 text-gray-600 p-3 w-full rounded-lg'>$errorMsg</div>";
+                }
+            ?>
+
             <form method="post" class="flex flex-col pb-4">
                 <p class="w-fit mb-4">Email</p>
                 <input type="text" name="email" class="bg-slate-100 w-72 rounded py-1 px-2 mb-6">

@@ -45,8 +45,16 @@ if (isset($_POST['loginButton']) && $_POST['loginButton'] === "Log In") {
 
     // No errors, redirect to user or admin page
     if ($accType === 1) {
+        unset($_SESSION['loginError']);
+        unset($_SESSION['loginVerificationError']);
+        unset($_SESSION['usernameInput']);
+        unset($_SESSION['passwordInput']);
         die(header("location: ../controllers/user/"));
     } else if ($accType === 2) {
+        unset($_SESSION['loginError']);
+        unset($_SESSION['loginVerificationError']);
+        unset($_SESSION['usernameInput']);
+        unset($_SESSION['passwordInput']);
         die(header("location: ../controllers/admin/"));
     }
 }
