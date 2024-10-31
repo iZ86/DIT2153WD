@@ -72,10 +72,10 @@ class ClassView {
             <p class="absolute top-72 left-64 font-montserrat w-1/3">To inspire and transform individuals through fun, high-energy fitness classes that promote physical
                 strength, mental well-being, and a sense of community for all fitness levels.
             </p>
-            <a href="" class="px-5 py-2 bg-[#F4F3E5] absolute top-1/2 mt-10 left-64 rounded-2xl font-medium">VIEW CLASSES</a>
+            <a href="#our-classes" class="px-5 py-2 bg-[#F4F3E5] absolute top-1/2 mt-10 left-64 rounded-2xl font-medium">VIEW CLASSES</a>
         </div>
 
-        <div class="flex flex-col mt-10 ml-20">
+        <div class="flex flex-col mt-10 ml-20" id="our-classes">
             <div class="relative">
                 <input type="text" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
                 <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -103,6 +103,10 @@ class ClassView {
     .class:active {
     transform: scale(0.95) rotateZ(1.7deg);
     box-shadow: 30px 30px 51px rgba(0,0,0,0.3);
+    }
+
+    html {
+        scroll-behavior: smooth;
     }
     </style>
     <?php
