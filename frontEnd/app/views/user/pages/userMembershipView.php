@@ -43,7 +43,7 @@ class UserMembershipView {
         <div class="flex-col justify-start basis-144">
             <img src="../../public/images/white_title.png" alt="HUAN white title" class="w-52">
             <h1 class="text-4xl font-bold ml-7">Membership Active</h1>
-            <p class="text-lg font-semibold ml-7"><?php echo $this->activeMembershipSubscriptionData["membershipType"] . " " . $this->activeMembershipSubscriptionData["membershipType"]?></p>
+            <p class="text-lg font-semibold ml-7"><?php echo $this->activeMembershipSubscriptionData["membershipType"] . " " . $this->activeMembershipSubscriptionData["name"]?></p>
             <div class="flex">
                 <p class="ml-7 basis-128">Your subscription will expire on <b><?php echo $this->activeMembershipSubscriptionData["endOn"]?></b>.</p>
             </div>
