@@ -2,10 +2,10 @@
 require('../../views/user/pages/userTrackBMIView.php');
 require('../../models/user/userTrackBMIModel.php');
 session_start();
-define("CENTIMETERSTOMETERSCONVERSIONRATE", 100);
-define("FOOTTOMETERSCONVERSIONRATE", 3.28084);
-define("GRAMSTOKILOGRAMSCONVERSIONRATE", 1000);
-define("POUNDSTOKILOGRAMSCONVERSIONRATE", 2.20462);
+define("CENTIMETERTOMETERCONVERSIONRATE", 100);
+define("FOOTTOMETERCONVERSIONRATE", 3.28084);
+define("GRAMTOKILOGRAMCONVERSIONRATE", 1000);
+define("POUNDTOKILOGRAMCONVERSIONRATE", 2.20462);
 
 $userTrackBMIModel = new UserTrackBMIModel(require "../../config/db_connection.php");
 
@@ -30,16 +30,16 @@ $regexHeightUnitFormat = "/^(m|cm|ft)$/";
 // Regex to validate gender.
 $regexGenderFormat = "/^male|female$/";
 
-/** Converts value of any unit for weight measurement to kilograms.
+/** Converts value of any unit for weight measurement to kilogram.
  * Return -1, if unit is not supported.
  */
-function convertValueOfUnitToKilograms($value, $unit) {
+function convertValueOfUnitToKilogram($value, $unit) {
     if ($unit === "Kg") {
         return $value;
     } else if ($unit === "g") {
-        return floor($value * 10000 * GRAMSTOKILOGRAMSCONVERSIONRATE) / 10000;
+        return floor(($value / GRAMTOKILOGRAMCONVERSIONRATE) * 10000) / 10000;
     } else if ($unit === "lb") {
-        return floor($value * 10000 * POUNDSTOKILOGRAMSCONVERSIONRATE) / 10000;
+        return floor(($value / POUNDTOKILOGRAMCONVERSIONRATE) * 10000) / 10000;
     }
     return -1;
 }
@@ -47,13 +47,13 @@ function convertValueOfUnitToKilograms($value, $unit) {
 /** Converts value of any unit for height measurement to meters.
  * Return -1, if unit is not supported.
  */
-function convertValueOfUnitToMeters($value, $unit) {
+function convertValueOfUnitToMeter($value, $unit) {
     if ($unit === "m") {
         return $value;
     } else if ($unit === "cm") {
-        return floor($value * 10000 * CENTIMETERSTOMETERSCONVERSIONRATE) / 10000;
-    } else if ($unit === "lb") {
-        return floor($value * 10000 * FOOTTOMETERSCONVERSIONRATE) / 10000;
+        return floor(($value / CENTIMETERTOMETERCONVERSIONRATE) * 10000) / 10000;
+    } else if ($unit === "ft") {
+        return floor(($value / FOOTTOMETERCONVERSIONRATE) * 10000) / 10000;
     }
     return -1;
 }
@@ -130,8 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
 
                 
-                    $height = convertValueOfUnitToMeters($height, $heightUnit);
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
+                    $height = convertValueOfUnitToMeter($height, $heightUnit);
+                    $weight = convertValueOfUnitToKilogram($weight, $weightUnit);
                     
 
                     $dateTime = $date . " " . $time;
@@ -167,8 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
 
                     
-                    $height = convertValueOfUnitToMeters($height, $heightUnit);
-                    $weight = convertValueOfUnitToKilograms($weight, $weightUnit);
+                    $height = convertValueOfUnitToMeter($height, $heightUnit);
+                    $weight = convertValueOfUnitToKilogram($weight, $weightUnit);
 
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackBMIModel->updateBMIData($bmiID, $age, $gender, $height, $weight, $dateTime, $_SESSION['userID']);
