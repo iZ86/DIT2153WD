@@ -19,39 +19,54 @@ class NutritionistsView {
         $this->renderFooter();
     }
     public function renderNutritionists() {
-        foreach($this->nutritionistInformation as $nutritionistInformations) {
-            ?>
-             <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mb-20">
+        if($this->nutritionistInformation) {
+            foreach($this->nutritionistInformation as $nutritionistInformations) {
+                ?>
+                <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mb-20">
 
-            <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
-                <img src="<?=IMAGE_FILE_PATH?><?=$nutritionistInformations['nutritionistImageFilePath']?>" alt="Nutritionist.png">
-            </div>
-            <div class="ml-10 font-montserrat">
-            <p>Name: <?= htmlspecialchars($nutritionistInformations['firstName']) . ' ' . htmlspecialchars($nutritionistInformations['lastName']) ?></p>
-            <p>Qualification: <?= htmlspecialchars($nutritionistInformations['type']) ?> </p>
-            <br>
-            <p>Bio:</p>
-            <p class="w-3/5"><?= htmlspecialchars($nutritionistInformations['description']) ?></p>
-            </div>
-            </div>
-            <?php
-        }
+                <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
+                    <img src="<?=IMAGE_FILE_PATH?><?=$nutritionistInformations['nutritionistImageFilePath']?>" alt="Nutritionist.png">
+                </div>
+                <div class="ml-10 font-montserrat">
+                <p>Name: <?= htmlspecialchars($nutritionistInformations['firstName']) . ' ' . htmlspecialchars($nutritionistInformations['lastName']) ?></p>
+                <p>Qualification: <?= htmlspecialchars($nutritionistInformations['type']) ?> </p>
+                <br>
+                <p>Bio:</p>
+                <p class="w-3/5"><?= htmlspecialchars($nutritionistInformations['description']) ?></p>
+                </div>
+                </div>
+                <?php
+            }
+        } else {?>
+            <h1 class="text-2xl font-bold text-center">Currently No Nutritionist!</h1>
+        <?php
+    }
     }
 
     /** Fetches the nutritionists name from database and renders it in dropdown. */
     public function renderNutritionistsName() {
-        foreach($this->nutritionistInformation as $nutritionist) {
-            ?>
-            <option value="<?= strtolower(htmlspecialchars($nutritionist['nutritionistID'])) ?>">
-                <?= htmlspecialchars($nutritionist['firstName']) . ' ' . htmlspecialchars($nutritionist['lastName']) ?>
-            </option>
-            <?php
+        if($this->nutritionistInformation) {
+            foreach($this->nutritionistInformation as $nutritionist) {
+                ?>
+                <option value="<?= strtolower(htmlspecialchars($nutritionist['nutritionistID'])) ?>">
+                    <?= htmlspecialchars($nutritionist['firstName']) . ' ' . htmlspecialchars($nutritionist['lastName']) ?>
+                </option>
+                <?php
+            }
+        } else {?>
+            <option value="">Currently No Nutritionist!</option>
+        <?php
         }
     }
 
     public function getAvailableDateTime() {
-        foreach ($this->nutritionistDateTime as $nutritionistDateTimes) {
-            echo "<option value='" . htmlspecialchars($nutritionistDateTimes['nutritionistScheduleID']) . "'>" . htmlspecialchars($nutritionistDateTimes['scheduleDateTime']) . "</option>";
+        if($this->nutritionistDateTime) {
+            foreach ($this->nutritionistDateTime as $nutritionistDateTimes) {
+                echo "<option value='" . htmlspecialchars($nutritionistDateTimes['nutritionistScheduleID']) . "'>" . htmlspecialchars($nutritionistDateTimes['scheduleDateTime']) . "</option>";
+            }
+        } else {?>
+            <p>Currently No Schedule!</p>
+        <?php
         }
     }
 
@@ -92,10 +107,19 @@ class NutritionistsView {
                 </p>
             </div>
         </div>
-        <button onclick="openModal()" class="mt-5 bg-indigo-500 hover:bg-indigo-600 text-white hover:text-gray-mid font-bold py-3 px-5 rounded-lg flex items-center space-x-2">
+        <?php
+        if($this->nutritionistInformation) {?>
+        <button onclick="openModal()" class="mt-5 bg-indigo-500 hover:bg-indigo-600 text-white hover:text-gray-mid font-bold py-3 px-5 rounded-lg items-center space-x-2 flex">
             <span>Book a Nutritionist</span>
         </button>
-
+        <?php
+        } else {?>
+         <button class="mt-5 bg-indigo-500 hover:bg-indigo-600 text-white hover:text-gray-mid font-bold py-3 px-5 rounded-lg items-center space-x-2 flex">
+            <span>Currently No Nutritionist!</span>
+        </button>
+        <?php
+        }
+        ?>
         <div class="bg-white mt-32 flex flex-col items-center justify-center">
             <div class="flex flex-col">
                     <div class="ml-10 font-montserrat">
