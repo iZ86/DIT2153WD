@@ -39,22 +39,7 @@ class NutritionistModel {
         $result = $stmt->get_result();
         return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
-    public function nutritionistsBookingHandler($nutritionist, $bookingDate, $bookingTime, $description, $makeReservationButton) {
-        if(isset($makeReservationButton) && !empty($nutritionist) && !empty($bookingDate) && !empty($bookingTime)) {
-
-            return true;
-        }
-        return false;
-    }
-
-    public function getAllNutritionistScheduleInformation() {
-        $sql = "SELECT * FROM " . $this->nutritionitsScheduleTable;
-        $stmt = $this->databaseConn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : array();
-    }
-
+    
     public function getAllNutritionistAvailableDateTimeById($id) {
     $sql = "SELECT * FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
     $stmt = $this->databaseConn->prepare($sql);
