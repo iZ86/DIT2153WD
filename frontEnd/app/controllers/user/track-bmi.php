@@ -2,10 +2,10 @@
 require('../../views/user/pages/userTrackBMIView.php');
 require('../../models/user/userTrackBMIModel.php');
 session_start();
-define("CENTIMETERTOMETERCONVERSIONRATE", 100);
-define("FOOTTOMETERCONVERSIONRATE", 3.28084);
-define("GRAMTOKILOGRAMCONVERSIONRATE", 1000);
-define("POUNDTOKILOGRAMCONVERSIONRATE", 2.20462);
+define("METERTOCENTIMETERCONVERSIONRATE", 100);
+define("FOOTTOCENTIMETERCONVERSIONRATE", 30.48);
+define("KILOGRAMTOGRAMCONVERSIONRATE", 1000);
+define("POUNDTOGRAMCONVERSIONRATE", 453.6);
 
 $userTrackBMIModel = new UserTrackBMIModel(require "../../config/db_connection.php");
 
@@ -13,7 +13,7 @@ $userTrackBMIModel = new UserTrackBMIModel(require "../../config/db_connection.p
 $regexDateFormat = "/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/";
 
 // Regex to validate weight, height format.
-$regexWeightAndHeightFormat = "/^[\d]*(.[\d]{1,2}$|$)/";
+$regexWeightAndHeightFormat = "/^[\d]*(.[\d]{1,4}$|$)/";
 
 // Regex to validate ID.
 $regexIDAndAgeFormat = "/^(0|[1-9][\d]*)$/";
@@ -30,30 +30,30 @@ $regexHeightUnitFormat = "/^(m|cm|ft)$/";
 // Regex to validate gender.
 $regexGenderFormat = "/^male|female$/";
 
-/** Converts value of any unit for weight measurement to kilogram.
+/** Converts any value of any height unit to centimeter.
  * Return -1, if unit is not supported.
  */
-function convertValueOfUnitToKilogram($value, $unit) {
-    if ($unit === "Kg") {
+function convertValueOfHeightUnitToCentimeter($value, $heightUnit) {
+    if ($heightUnit === "cm") {
         return $value;
-    } else if ($unit === "g") {
-        return floor(($value / GRAMTOKILOGRAMCONVERSIONRATE) * 10000) / 10000;
-    } else if ($unit === "lb") {
-        return floor(($value / POUNDTOKILOGRAMCONVERSIONRATE) * 10000) / 10000;
+    } else if ($heightUnit === "m") {
+        return bcmul(METERTOCENTIMETERCONVERSIONRATE, $value, 4);
+    } else if ($heightUnit === "ft") {
+        return bcmul(FOOTTOCENTIMETERCONVERSIONRATE, $value, 4);
     }
     return -1;
 }
 
-/** Converts value of any unit for height measurement to meters.
+/** Converts any value of any weight unit to gram.
  * Return -1, if unit is not supported.
  */
-function convertValueOfUnitToMeter($value, $unit) {
-    if ($unit === "m") {
+function convertValueOfWeightUnitToGram($value, $weightUnit) {
+    if ($weightUnit === "g") {
         return $value;
-    } else if ($unit === "cm") {
-        return floor(($value / CENTIMETERTOMETERCONVERSIONRATE) * 10000) / 10000;
-    } else if ($unit === "ft") {
-        return floor(($value / FOOTTOMETERCONVERSIONRATE) * 10000) / 10000;
+    } else if ($weightUnit === "Kg") {
+        return bcmul(KILOGRAMTOGRAMCONVERSIONRATE, $value, 4);
+    } else if ($weightUnit === "lb") {
+        return bcmul(POUNDTOGRAMCONVERSIONRATE, $value, 4);
     }
     return -1;
 }
@@ -130,8 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
 
                 
-                    $height = convertValueOfUnitToMeter($height, $heightUnit);
-                    $weight = convertValueOfUnitToKilogram($weight, $weightUnit);
+                    $height = convertValueOfHeightUnitToCentimeter($height, $heightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     
 
                     $dateTime = $date . " " . $time;
@@ -167,8 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $weight = (float) $weight;
 
                     
-                    $height = convertValueOfUnitToMeter($height, $heightUnit);
-                    $weight = convertValueOfUnitToKilogram($weight, $weightUnit);
+                    $height = convertValueOfHeightUnitToCentimeter($height, $heightUnit);
+                    $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
 
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackBMIModel->updateBMIData($bmiID, $age, $gender, $height, $weight, $dateTime, $_SESSION['userID']);
