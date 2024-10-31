@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Used to persist the weight units chosen by user.
 if (isset($_POST['weightUnitInUserTrackWeightView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['weightUnitInUserTrackWeightView'] !== null && preg_match($regexWeightFormat, $_POST['weightUnitInUserTrackWeightView'])) {
+    if ($_POST['weightUnitInUserTrackWeightView'] !== null && preg_match($regexWeightUnitFormat, $_POST['weightUnitInUserTrackWeightView'])) {
         $_SESSION['weightUnitInUserTrackWeightView'] = $_POST['weightUnitInUserTrackWeightView'];
     }
 }
