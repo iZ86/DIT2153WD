@@ -143,6 +143,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         } else if ($_POST['submitBMIDataButton'] === "Save") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['bmiID'])) {
                 $bmiID = cleanData($_POST['bmiID']);
@@ -177,6 +180,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+            
         }
     } else if (isset($_POST['submitDeleteBMIDataButton'])) {
         
@@ -209,6 +216,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
         }
 
     }

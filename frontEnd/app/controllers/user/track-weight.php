@@ -99,6 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         } else if ($_POST['submitWeightDataButton'] === "Save") {
             
             if (checkIsBasicPostVariablesSet() && isset($_POST['weightID'])) {
@@ -121,6 +125,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         }
     } else if (isset($_POST['submitDeleteWeightDataButton'])) {
         
@@ -145,6 +153,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         }
 
     }

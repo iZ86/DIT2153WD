@@ -94,6 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         } else if ($_POST['submitWaterConsumptionDataButton'] === "Save") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['waterConsumptionID'])) {
                 $waterConsumptionID = cleanData($_POST['waterConsumptionID']);
@@ -114,6 +118,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
+
         }
     } else if (isset($_POST['submitDeleteWaterConsumptionDataButton'])) {
         
@@ -137,6 +146,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         }
 
     }

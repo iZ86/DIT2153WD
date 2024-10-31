@@ -140,6 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         } else if ($_POST['submitExerciseRoutineDetailDataButton'] === "Save") {
             
             if (checkIsBasicPostExerciseRoutineDetailVariablesSet() && isset($_POST['exerciseRoutineDetailID'])) {
@@ -178,6 +181,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                 }
             }
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
         }
     } else if (isset($_POST['submitExerciseDataButton'])) {
         
@@ -193,6 +198,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     die(header('location: track-exercise-routine-detail.php?date=' . $date));
                 }
             }
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
 
         } else if ($_POST['submitExerciseDataButton'] === "Save") {
             
@@ -213,6 +220,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 
             }
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
         }
 
     } else if (isset($_POST['submitDeleteExerciseRoutineDetailDataButton'])) {
@@ -256,6 +265,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
+
         }
 
     } else if (isset($_POST['submitDeleteExerciseDataButton'])) {
@@ -273,6 +285,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // If there is any error with the database request or the data received.
+            die(header('location: error.php'));
         }
     }
 }
