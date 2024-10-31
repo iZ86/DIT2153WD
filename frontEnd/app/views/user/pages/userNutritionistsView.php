@@ -222,7 +222,7 @@ function fetchOptions() {
 
     if (nutritionistID !== "") {
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "nutritionist.php", true);
+        xhr.open("POST", "user-nutritionist.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
