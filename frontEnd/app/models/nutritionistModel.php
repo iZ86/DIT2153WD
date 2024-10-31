@@ -84,4 +84,13 @@ class NutritionistModel {
         $row = $result->fetch_assoc();
         return $row['count'] > 0; // Returns true if the schedule ID is already booked
     }
+
+    public function getNutritionistSchedulePriceByNutritionistScheduleID($nutritionistScheduleID) {
+        $sql = "SELECT price FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistScheduleID=?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("i", $nutritionistScheduleID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+    }
 }
