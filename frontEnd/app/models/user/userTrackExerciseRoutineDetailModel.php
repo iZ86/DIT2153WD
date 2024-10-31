@@ -16,15 +16,15 @@ class UserTrackExerciseRoutineDetailModel {
     
     /** Returns an associate array of arrays where key is exerciseRoutineDetailID,
      * and every value is an associate array representing a record in the exercise_routine_details table,
-     * where recordedOn attribute is $date,
+     * where recordedOnDate attribute is $recordedOnDate,
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getExerciseRoutineDetailDatasetFromDate($date, $userID) {
+    public function getExerciseRoutineDetailDatasetFromDate($recordedOnDate, $userID) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($date);
+        $endDate = date_create($recordedOnDate);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -33,7 +33,7 @@ class UserTrackExerciseRoutineDetailModel {
         " er WHERE erd.exerciseID = e.exerciseID AND erd.exerciseRoutineID = er.exerciseRoutineID AND er.recordedOnDate BETWEEN ? AND ? AND er.userID = ?;";
         
         $exerciseRoutineDetailDatasetSTMT = $this->databaseConn->prepare($exerciseRoutineDetailDatasetSQL);
-        $exerciseRoutineDetailDatasetSTMT->bind_param("sss", $date, $endDate, $userID);
+        $exerciseRoutineDetailDatasetSTMT->bind_param("sss", $recordedOnDate, $endDate, $userID);
         $exerciseRoutineDetailDatasetSTMT->execute();
         $exerciseRoutineDetailDatasetResult = $exerciseRoutineDetailDatasetSTMT->get_result();
         $exerciseRoutineDetailDataset = array();
@@ -68,15 +68,15 @@ class UserTrackExerciseRoutineDetailModel {
     }
 
     /** Returns one associate array of exerciseRoutine data from EXERCISE_ROUTINE table,
-     * where recordedOnDate attribute is $date and userID attribute is $userID.
-     * Otherwise, return an empty array, but this shouldnt happen due to incorrect $date and $userID.
+     * where recordedOnDate attribute is $recordedOnDate and userID attribute is $userID.
+     * Otherwise, return an empty array, but this shouldnt happen due to incorrect $recordedOnDate and $userID.
      */
-    public function getExerciseRoutineDataFromDate($date, $userID) {
+    public function getExerciseRoutineDataFromDate($recordedOnDate, $userID) {
         
         $selectExerciseRoutineDataSQL = "SELECT * FROM " . $this->exerciseRoutineTable . " WHERE recordedOnDate = ? AND userID = ?";
 
         $selectExerciseRoutineDataSTMT = $this->databaseConn->prepare($selectExerciseRoutineDataSQL);
-        $selectExerciseRoutineDataSTMT->bind_param("ss", $date, $userID);
+        $selectExerciseRoutineDataSTMT->bind_param("ss", $recordedOnDate, $userID);
         $selectExerciseRoutineDataSTMT->execute();
         $selectExerciseRoutineDataResult = $selectExerciseRoutineDataSTMT->get_result();
         if ($selectExerciseRoutineDataResult->num_rows > 0) {
@@ -89,14 +89,14 @@ class UserTrackExerciseRoutineDetailModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addExerciseRoutineData($date, $userID) {
-        if ($this->verifyExerciseRoutineDataExist($date, $userID)) {
+    public function addExerciseRoutineData($recordedOnDate, $userID) {
+        if ($this->verifyExerciseRoutineDataExist($recordedOnDate, $userID)) {
             return true;
         }
         
         $insertExerciseRoutineDataSQL = "INSERT INTO " . $this->exerciseRoutineTable . " (recordedOnDate, userID) VALUES (?, ?)";
         $insertExerciseRoutineDataSTMT = $this->databaseConn->prepare($insertExerciseRoutineDataSQL);
-        $insertExerciseRoutineDataSTMT->bind_param("ss", $date, $userID);
+        $insertExerciseRoutineDataSTMT->bind_param("ss", $recordedOnDate, $userID);
         return $insertExerciseRoutineDataSTMT->execute();
         
     }
@@ -252,7 +252,7 @@ class UserTrackExerciseRoutineDetailModel {
     }
 
     /** Returns true if there is data in the EXERCISE_ROUTINE table,
-     * where date attribute is $date,
+     * where date attribute is $recordedOnDate,
      * and userID attribute is $userID.
      * Otherwise, returns false.
      * Data in the EXERCISE_ROUTINE is ONE date per data, and since the data in EXERCISE_ROUTINE_DETAIL is being track by date,
@@ -261,10 +261,10 @@ class UserTrackExerciseRoutineDetailModel {
      * If user wants to add a new EXERCISE_ROUTINE_DETAIL on the same date twice.
      * It is needed to check if there is already an exisitng data in the EXERCISE_ROUTINE table, and if it exist, no need to add it again.
      */
-    private function verifyExerciseRoutineDataExist($date, $userID) {
+    private function verifyExerciseRoutineDataExist($recordedOnDate, $userID) {
         $selectExercseRoutineDataSQL = "SELECT * FROM " . $this->exerciseRoutineTable . " WHERE recordedOnDate = ? AND userID = ?";
         $selectExercseRoutineDataSTMT = $this->databaseConn->prepare($selectExercseRoutineDataSQL);
-        $selectExercseRoutineDataSTMT->bind_param("ss", $date, $userID);
+        $selectExercseRoutineDataSTMT->bind_param("ss", $recordedOnDate, $userID);
         $selectExercseRoutineDataSTMT->execute();
         $selectExercseRoutineDataResult = $selectExercseRoutineDataSTMT->get_result();
         if ($selectExercseRoutineDataResult->num_rows >= 1) {
