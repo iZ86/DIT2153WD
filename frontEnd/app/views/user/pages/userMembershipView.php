@@ -43,14 +43,14 @@ class UserMembershipView {
         <div class="flex-col justify-start basis-144">
             <img src="../../public/images/white_title.png" alt="HUAN white title" class="w-52">
             <h1 class="text-4xl font-bold ml-7">Membership Active</h1>
-            <p class="text-lg font-semibold font-nunito ml-7"><?php echo $this->activeMembershipSubscriptionData["membershipType"] . " " . $this->activeMembershipSubscriptionData["membershipType"]?></p>
+            <p class="text-lg font-semibold ml-7"><?php echo $this->activeMembershipSubscriptionData["membershipType"] . " " . $this->activeMembershipSubscriptionData["membershipType"]?></p>
             <div class="flex">
                 <p class="ml-7 basis-128">Your subscription will expire on <b><?php echo $this->activeMembershipSubscriptionData["endOn"]?></b>.</p>
             </div>
             <div class="flex items-end">
                 <div class="flex max-h-12 ml-7 mt-16">
-                    <button class="bg-white text-orange-500 px-6 py-3 font-semibold rounded-3xl hover:bg-gray-200 text-base font-nunito mr-4">View Current Plan</button>
-                    <button class="bg-white text-orange-500 px-6 py-3 font-semibold rounded-3xl hover:bg-gray-200 text-base font-nunito">Switch Plans</button>
+                    <button class="bg-white text-orange-500 px-6 py-3 font-semibold rounded-3xl hover:bg-gray-200 text-base mr-4">View Current Plan</button>
+                    <button class="bg-white text-orange-500 px-6 py-3 font-semibold rounded-3xl hover:bg-gray-200 text-base">Switch Plans</button>
                 </div>
                     
             </div>
@@ -74,7 +74,7 @@ class UserMembershipView {
             </div>
             <div class="flex items-end">
                 <div class="flex max-h-12 ml-7 mt-17">
-                    <button class="bg-orange-500 text-white px-6 py-3 font-semibold rounded-3xl hover:bg-orange-700 text-base font-nunito">View Current Plan</button>
+                    <button class="bg-orange-500 text-white px-6 py-3 font-semibold rounded-3xl hover:bg-orange-700 text-base">View Current Plan</button>
                 </div>
                     
             </div>
@@ -97,7 +97,7 @@ class UserMembershipView {
         }
             
         ?>
-        <div class="bg-gray-200 text-blue-600 font-nunito p-6 rounded-2xl shadow-lg mx-auto mt-16 max-w-2xl">
+        <div class="bg-gray-200 text-blue-600 p-6 rounded-2xl shadow-lg mx-auto mt-16 max-w-2xl">
             <h1 class="text-4xl font-bold text-center">Body Transformation Program</h1>
             <h1 class="font-black text-3xl text-center mt-2">RM50</h1>
             <ul class="list-disc list-inside mt-4">
