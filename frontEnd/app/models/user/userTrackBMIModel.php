@@ -108,12 +108,12 @@ class UserTrackBMIModel {
      * where bmiID attribute is $bmiID in the BMI table.
     */
     private function verifyBMIIDToUserID($bmiID, $userID) {
-        $selectBMIDataSQL = "SELECT 1 FROM " . $this->bmiTable . " WHERE bmiID = ? AND userID = ?";
+        $selectBMIDataSQL = "SELECT * FROM " . $this->bmiTable . " WHERE bmiID = ? AND userID = ?";
         $selectBMIDataSTMT= $this->databaseConn->prepare($selectBMIDataSQL);
         $selectBMIDataSTMT->bind_param("ss", $bmiID, $userID);
         $selectBMIDataSTMT->execute();
         $selecBMIDataResult = $selectBMIDataSTMT->get_result();
-        if ($selecBMIDataResult->num_rows === 1) {
+        if ($selecBMIDataResult->num_rows >= 1) {
             return true;
         }
         return false;

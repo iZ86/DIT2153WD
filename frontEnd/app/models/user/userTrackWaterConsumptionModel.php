@@ -105,12 +105,12 @@ class UserTrackWaterConsumptionModel {
      * where waterConsumptionID attribute is $waterConsumptionID in the WATER_CONSUMPTION table.
     */
     private function verifyWaterConsumptionIDToUserID($waterConsumptionID, $userID) {
-        $selectWaterConsumptionDataSQL = "SELECT 1 FROM " . $this->waterConsumptionTable . " WHERE waterConsumptionID = ? AND userID = ?";
+        $selectWaterConsumptionDataSQL = "SELECT * FROM " . $this->waterConsumptionTable . " WHERE waterConsumptionID = ? AND userID = ?";
         $selectWaterConsumptionDataSTMT= $this->databaseConn->prepare($selectWaterConsumptionDataSQL);
         $selectWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $userID);
         $selectWaterConsumptionDataSTMT->execute();
         $selectWaterConsumptionDataResult = $selectWaterConsumptionDataSTMT->get_result();
-        if ($selectWaterConsumptionDataResult->num_rows === 1) {
+        if ($selectWaterConsumptionDataResult->num_rows >= 1) {
             return true;
         }
         return false;

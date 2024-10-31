@@ -107,12 +107,12 @@ class UserTrackWeightModel {
      * where weightID attribute is $weightID in the WEIGHT table.
     */
     private function verifyWeightIDToUserID($weightID, $userID) {
-        $selectWeightDataSQL = "SELECT 1 FROM " . $this->weightTable . " WHERE weightID = ? AND userID = ?";
+        $selectWeightDataSQL = "SELECT * FROM " . $this->weightTable . " WHERE weightID = ? AND userID = ?";
         $selectWeightDataSTMT= $this->databaseConn->prepare($selectWeightDataSQL);
         $selectWeightDataSTMT->bind_param("ss", $weightID, $userID);
         $selectWeightDataSTMT->execute();
         $selectWeightDataResult = $selectWeightDataSTMT->get_result();
-        if ($selectWeightDataResult->num_rows === 1) {
+        if ($selectWeightDataResult->num_rows >= 1) {
             return true;
         }
         return false;
