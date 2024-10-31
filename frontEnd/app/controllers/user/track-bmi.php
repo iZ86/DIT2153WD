@@ -215,22 +215,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-// Used to persist the height units chosen.
+// Used to persist the height unit chosen by user.
 if (isset($_POST['heightUnitInBMIDataModalInUserTrackBMIView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['heightUnitInBMIDataModalInUserTrackBMIView'] === "m" ||
-    $_POST['heightUnitInBMIDataModalInUserTrackBMIView'] === "cm" ||
-    $_POST['heightUnitInBMIDataModalInUserTrackBMIView'] === "ft") {
+    if ($_POST['heightUnitInBMIDataModalInUserTrackBMIView'] !== null && preg_match($regexHeightUnitFormat, $_POST['heightUnitInBMIDataModalInUserTrackBMIView'])) {
         $_SESSION['heightUnitInBMIDataModalInUserTrackBMIView'] = $_POST['heightUnitInBMIDataModalInUserTrackBMIView'];
     }
 }
 
-// Used to persist the weight units chosen.
+// Used to persist the weight unit chosen by user.
 if (isset($_POST['weightUnitInBMIDataModalInUserTrackBMIView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['weightUnitInBMIDataModalInUserTrackBMIView'] === "Kg" ||
-    $_POST['weightUnitInBMIDataModalInUserTrackBMIView'] === "g" ||
-    $_POST['weightUnitInBMIDataModalInUserTrackBMIView'] === "lb") {
+    if ($_POST['weightUnitInBMIDataModalInUserTrackBMIView'] !== null && preg_match($regexWeightUnitFormat, $_POST['weightUnitInBMIDataModalInUserTrackBMIView'])) {
         $_SESSION['weightUnitInBMIDataModalInUserTrackBMIView'] = $_POST['weightUnitInBMIDataModalInUserTrackBMIView'];
     }
 }
