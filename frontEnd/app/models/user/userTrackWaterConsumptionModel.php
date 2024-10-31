@@ -78,7 +78,7 @@ class UserTrackWaterConsumptionModel {
     }
 
     /** Deletes the water consumption data in WATER_CONSUMPTION table.
-     * return true if success.
+     * returns true if success.
      * Otherwise, returns false.
      */
     public function deleteWaterConsumptionData($waterConsumptionID, $userID) {

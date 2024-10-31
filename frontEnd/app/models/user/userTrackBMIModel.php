@@ -79,7 +79,7 @@ class UserTrackBMIModel {
     }
 
     /** Deletes the BMI data in BMI table.
-     * return true if success.
+     * returns true if success.
      * Otherwise, returns false.
      */
     public function deleteBMIData($bmiID, $userID) {

@@ -79,7 +79,7 @@ class UserTrackWeightModel {
     }
 
     /** Deletes the weight data in WEIGHT table.
-     * return true if success.
+     * returns true if success.
      * Otherwise, returns false.
      */
     public function deleteWeightData($weightID, $userID) {
