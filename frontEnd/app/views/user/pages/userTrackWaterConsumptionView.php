@@ -110,7 +110,7 @@ class UserTrackWaterConsumptionView {
                 <select name="volumeUnitInUserTrackWaterConsumptionView" id="volumeUnitInUserTrackWaterConsumptionView"
                 class="bg-white rounded-lg border-2 text-shadow-dark text-black bg-slate-100 w-72 rounded py-1 border-2"
                 oninput="convertAmountDrankOfAllWaterConsumptionDataRow('volumeUnitInUserTrackWaterConsumptionView');
-                createSessionForUnitSelected('volumeUnitInUserTrackWaterConsumptionView');
+                createSessionForVolumeUnitSelected();
                 updateAmountDrankMessages()">
 
                     <option value="mL" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
@@ -157,7 +157,7 @@ class UserTrackWaterConsumptionView {
                             id="volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView"
                             class="bg-white rounded-lg border-2 text-shadow-dark text-black"
                             oninput="convertAmountDrankOfAllWaterConsumptionDataRow('volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView');
-                            createSessionForUnitSelected();
+                            createSessionForVolumeUnitSelected();
                             updateAmountDrankMessages()">
 
                                 <option value="mL" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
