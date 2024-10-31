@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['fitnessClassScheduleID'] = $fitnessClassScheduleID;
             $_SESSION['status'] = $status;
 
-            header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-payment.php?order=Fitness Class Booking&price=$price");
+            header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/payment.php?order=Fitness Class Booking&price=$price");
             exit();
         }
     }
