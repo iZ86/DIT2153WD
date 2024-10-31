@@ -160,12 +160,12 @@ class UserTrackWaterConsumptionView {
                             createSessionForUnitSelected();
                             updateAmountDrankMessages()">
 
-                                <option value="mL" <?php if (isset($_SESSION['volumeUnitInTrackWaterConsumptionView']) &&
-                                $_SESSION['volumeUnitInTrackWaterConsumptionView'] === "mL") { echo "selected"; }?>>Milliliters (mL)</option>
-                                <option value="L" <?php if (isset($_SESSION['volumeUnitInTrackWaterConsumptionView']) &&
-                                $_SESSION['volumeUnitInTrackWaterConsumptionView'] === "L") { echo "selected"; }?>>Liters (L)</option>
-                                <option value="oz" <?php if (isset($_SESSION['volumeUnitInTrackWaterConsumptionView']) &&
-                                $_SESSION['volumeUnitInTrackWaterConsumptionView'] === "oz") { echo "selected"; }?>>Ounces (oz)</option>
+                                <option value="mL" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
+                                $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] === "mL") { echo "selected"; }?>>Milliliters (mL)</option>
+                                <option value="L" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
+                                $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] === "L") { echo "selected"; }?>>Liters (L)</option>
+                                <option value="oz" <?php if (isset($_SESSION['volumeUnitInUserTrackWaterConsumptionView']) &&
+                                $_SESSION['volumeUnitInUserTrackWaterConsumptionView'] === "oz") { echo "selected"; }?>>Ounces (oz)</option>
 
                             </select>
                             <label for="amountDrank" class="text-white drop-shadow-dark">:</label>
