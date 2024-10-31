@@ -3,11 +3,13 @@ class AdminInstructorsView {
     private $instructors;
     private $totalPagesInstructors;
     private $currentPage;
+    private $noInstructorsFound;
 
-    public function __construct($instructors, $totalPagesInstructors, $currentPage) {
+    public function __construct($instructors, $totalPagesInstructors, $currentPage, $noInstructorsFound) {
         $this->instructors = $instructors;
         $this->totalPagesInstructors = $totalPagesInstructors;
         $this->currentPage = $currentPage;
+        $this->noInstructorsFound = $noInstructorsFound;
     }
 
     public function renderView() : void {
@@ -36,17 +38,15 @@ class AdminInstructorsView {
 
     public function renderContent() : void {
         ?>
-            <!--TODO: AJAX Button Page-->
         <section class="p-6 space-y-6">
             <div class="mx-4">
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Instructors</h2>
                     <div class="flex items-center space-x-4">
-                        <div class="relative">
-                            <input type="text" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
-                            <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
-
+                        <button onclick="openInstructorFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                            <i class='bx bx-filter-alt'></i>
+                            <span>Filter</span>
+                        </button>
                         <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openInstructorModal()">
                             <i class="bx bxs-plus-circle"></i>
                             <span>Add Instructor</span>
@@ -71,6 +71,11 @@ class AdminInstructorsView {
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
+                    <?php if ($this->noInstructorsFound): ?>
+                        <tr>
+                            <td colspan="7" class="py-4">No records found.</td>
+                        </tr>
+                    <?php else: ?>
                         <?php while ($instructor = $this->instructors->fetch_assoc()): ?>
                             <tr class="bg-white">
                                 <td class="p-3">
@@ -88,6 +93,7 @@ class AdminInstructorsView {
                                 </td>
                             </tr>
                         <?php endwhile; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -110,6 +116,34 @@ class AdminInstructorsView {
         </section>
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+        <div id="instructorFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 class="text-2xl font-semibold mb-4">Filter Instructors</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                    <input type="hidden" name="action" value="filterInstructors">
+                    <label class="block text-gray-700 text-sm font-medium">Filter By <span class="text-red-500">*</span></label>
+                    <select name="instructorFilterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Please Select a Type</option>
+                        <option value="instructorID">Instructor ID</option>
+                        <option value="name">Name</option>
+                        <option value="phone">Phone</option>
+                        <option value="email">Email</option>
+                        <option value="gender">Gender</option>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
+                    <input name="instructorKeywords" type="text" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="button" onclick="closeInstructorFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <a href="../admin/instructors.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div id="instructorModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
@@ -192,6 +226,30 @@ class AdminInstructorsView {
         </style>
 
         <script>
+            function openInstructorFilterModal() {
+                const modal = document.getElementById('instructorFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeInstructorFilterModal() {
+                const modal = document.getElementById('instructorFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openInstructorModal() {
                 const modal = document.getElementById('instructorModal');
                 const overlay = document.getElementById('modalOverlay');
