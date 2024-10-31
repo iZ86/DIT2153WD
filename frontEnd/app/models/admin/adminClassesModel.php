@@ -8,19 +8,32 @@ class AdminClassesModel {
         $this->databaseConn = $databaseConn;
     }
 
-    public function addClass($name, $description) {
-        $query = "INSERT INTO " . $this->classesTable . " (name, description) VALUES (?, ?)";
+    public function addClass($name, $description, $imagePath = null) {
+        $query = "INSERT INTO " . $this->classesTable . " (name, description, fitnessClassImageFilePath) VALUES (?, ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ss", $name, $description);
+        $stmt->bind_param("sss", $name, $description, $imagePath);
+
         if (!$stmt->execute()) {
             throw new Exception("Failed to add class: " . $stmt->error);
         }
     }
 
-    public function editClass($fitnessClassID, $name, $description) {
-        $query = "UPDATE " . $this->classesTable . " SET name = ?, description = ? WHERE fitnessClassID = ?";
+    public function editClass($fitnessClassID, $name, $description, $imagePath = null) {
+        $query = "UPDATE " . $this->classesTable . " SET name = ?, description = ?";
+
+        if ($imagePath) {
+            $query .= ", fitnessClassImageFilePath = ?";
+        }
+
+        $query .= " WHERE fitnessClassID = ?";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ssi", $name, $description, $fitnessClassID);
+
+        if ($imagePath) {
+            $stmt->bind_param("sssi", $name, $description, $imagePath, $fitnessClassID);
+        } else {
+            $stmt->bind_param("ssi", $name, $description, $fitnessClassID);
+        }
+
         if (!$stmt->execute()) {
             throw new Exception("Failed to update class: " . $stmt->error);
         }
@@ -52,7 +65,7 @@ class AdminClassesModel {
     }
 
     public function getClasses($limit, $offset) {
-        $query = "SELECT fitnessClassID, name, description FROM " . $this->classesTable . " LIMIT ? OFFSET ?";
+        $query = "SELECT fitnessClassID, name, description, fitnessClassImageFilePath FROM " . $this->classesTable . " LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
