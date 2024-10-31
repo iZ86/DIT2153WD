@@ -2,11 +2,11 @@
 
 class UserTrackBMIView {
     /** BMI data. */
-    private $bmiDataArray;
+    private $bmiDataset;
     
     /** Constructor for the object. */
-    public function __construct($bmiDataArray) {
-        $this->bmiDataArray = $bmiDataArray;
+    public function __construct($bmiDataset) {
+        $this->bmiDataset = $bmiDataset;
     }
 
     /** Renders the whole view. */
@@ -49,10 +49,10 @@ class UserTrackBMIView {
     /** Renders bmi data partial view. */
     private function renderBMIDataPartialView() {?>
     <div class="flex min-h-192 max-h-192">
-        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->bmiDataArray) == 0) { echo "justify-center";}?>">
+        <div class="mx-auto basis-192 border-2 bg-white flex flex-col border-gray-dove overflow-auto <?php if (sizeof($this->bmiDataset) == 0) { echo "justify-center";}?>">
             <?php
-            if (sizeof($this->bmiDataArray) > 0) {
-                foreach ($this->bmiDataArray as $key => $value) {
+            if (sizeof($this->bmiDataset) > 0) {
+                foreach ($this->bmiDataset as $key => $value) {
                     $this->renderOneBMIDataRow($value['bmiID']);
                 }
             } else if (date($_GET['date']) === date('Y-m-d')) {
@@ -201,9 +201,9 @@ class UserTrackBMIView {
         </style>
     
     <!-- Embed php array of ids of the bmi data rows to be used to convert the amount drank based on unit. -->
-    <input type="hidden" id="phpArrayOfBMIData" value="
+    <input type="hidden" id="phpBMIDataset" value="
     <?php 
-    echo htmlspecialchars(json_encode($this->bmiDataArray));
+    echo htmlspecialchars(json_encode($this->bmiDataset));
     ?>
     ">
     <!-- Embed php current pagination. -->

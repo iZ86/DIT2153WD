@@ -1,4 +1,4 @@
-let bmiDataArray = JSON.parse(document.getElementById('phpArrayOfBMIData').value);
+let bmiDataset = JSON.parse(document.getElementById('phpBMIDataset').value);
 let currentPaginationDate = JSON.parse(document.getElementById('currentPaginationDate').value);
 const KILOGRAMSTOGRAMSCONVERSIONRATE = 1000;
 const KILOGRAMSTOPOUNDSCONVERSIONRATE = 2.20462;
@@ -74,7 +74,7 @@ function clearModalFields() {
 
 /** Display all the necessary data. */
 function displayDataOfAllBMIDataRow() {
-    Object.entries(bmiDataArray).map(entry => {
+    Object.entries(bmiDataset).map(entry => {
         let bmiData = entry[1];
         let bmiDataRowText =  document.getElementById(bmiData["bmiID"] + "Text");
         bmiDataRowText.innerText = "Your calculated BMI is " + calculateBMI(new Number(bmiData["weight"]), new Number(bmiData["height"])) + " at " + bmiData["recordedOnTime"];
@@ -147,7 +147,7 @@ function updateBMIMessages() {
     // Start of time.
     let bmiTime = "00:00:00";
 
-    Object.entries(bmiDataArray).map(entry => {
+    Object.entries(bmiDataset).map(entry => {
         let bmiData = entry[1];
         if (bmiData["recordedOnTime"] > bmiTime) {
             bodyHeight = bmiData["height"];
@@ -207,9 +207,9 @@ function openEditBMIDataModal(bmiID) {
 
 
     bmiIDInput.value = bmiID;
-    ageInput.value = bmiDataArray[bmiID]["age"];
+    ageInput.value = bmiDataset[bmiID]["age"];
 
-    let gender = bmiDataArray[bmiID]["gender"];
+    let gender = bmiDataset[bmiID]["gender"];
     if (gender === "male") {
         maleRadioInput.checked = true;
     } else if (gender === "female") {
@@ -217,23 +217,23 @@ function openEditBMIDataModal(bmiID) {
     }
 
     if (heightUnitInput === "m") {
-        heightInput.value = bmiDataArray[bmiID]["height"];
+        heightInput.value = bmiDataset[bmiID]["height"];
     } else if (heightUnitInput === "cm") {
-        heightInput.value = convertMetersToCentimeter(bmiDataArray[bmiID]["height"]);
+        heightInput.value = convertMetersToCentimeter(bmiDataset[bmiID]["height"]);
     } else if (heightUnitInput === "ft") {
-        heightInput.value = convertMetersToFoot(bmiDataArray[bmiID]["height"]);
+        heightInput.value = convertMetersToFoot(bmiDataset[bmiID]["height"]);
     }
     
 
     if (weightUnitInput === "Kg") {
-        weightInput.value = bmiDataArray[bmiID]["weight"];
+        weightInput.value = bmiDataset[bmiID]["weight"];
     } else if (weightUnitInput === "g") {
-        weightInput.value = convertKilogramsToGrams(bmiDataArray[bmiID]["weight"]);
+        weightInput.value = convertKilogramsToGrams(bmiDataset[bmiID]["weight"]);
     } else if (weightUnitInput === "lb") {
-        weightInput.value = convertKilogramsToPounds(bmiDataArray[bmiID]["weight"]);
+        weightInput.value = convertKilogramsToPounds(bmiDataset[bmiID]["weight"]);
     }
     
-    timeInput.value = bmiDataArray[bmiID]["recordedOnTime"];
+    timeInput.value = bmiDataset[bmiID]["recordedOnTime"];
 
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
