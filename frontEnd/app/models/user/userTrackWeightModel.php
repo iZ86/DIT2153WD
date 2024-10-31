@@ -48,11 +48,11 @@ class UserTrackWeightModel {
      * Returns true, if succeesful.
      * Otherwise, returns false.
      */
-    public function addWeightData($userID, $weightInKilograms, $recordedOn) {
+    public function addWeightData($userID, $weightInGram, $recordedOn) {
 
-        $insertWeightDataSQL = "INSERT INTO " . $this->weightTable . "(weight, recordedOn, userID) VALUES (?, ?, ?)";
+        $insertWeightDataSQL = "INSERT INTO " . $this->weightTable . "(weightInGram, recordedOn, userID) VALUES (?, ?, ?)";
         $insertWeightDataSTMT = $this->databaseConn->prepare($insertWeightDataSQL);
-        $insertWeightDataSTMT->bind_param("sss", $weightInKilograms, $recordedOn, $userID);
+        $insertWeightDataSTMT->bind_param("sss", $weightInGram, $recordedOn, $userID);
         return $insertWeightDataSTMT->execute();
 
     }
@@ -61,7 +61,7 @@ class UserTrackWeightModel {
      * Returns true if success.
      * Otherwise, returns false.
     */
-    public function updateWeightData($weightID, $weight, $recordedOn, $userID) {
+    public function updateWeightData($weightID, $weightInGram, $recordedOn, $userID) {
         
         
         if ($this->verifyWeightIDToUserID($weightID, $userID)) {
@@ -69,7 +69,7 @@ class UserTrackWeightModel {
             " SET weight = ?, recordedOn = ? WHERE weightID = ? AND userID = ?";
 
             $updateWeightDataSTMT = $this->databaseConn->prepare($updateWeightDataSQL);
-            $updateWeightDataSTMT->bind_param("ssss", $weight, $recordedOn, $weightID, $userID);
+            $updateWeightDataSTMT->bind_param("ssss", $weightInGram, $recordedOn, $weightID, $userID);
             return $updateWeightDataSTMT->execute();
             
             
