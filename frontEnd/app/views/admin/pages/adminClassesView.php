@@ -275,7 +275,7 @@ class AdminClassesView {
                     <label class="block text-gray-700 text-sm font-medium mt-4 mb-2">Current Image</label>
                     <img id="imagePreview" src="https://placehold.co/640x360/png?text=No+Image+Available" alt="Current Class Image" class="w-full rounded-xl h-auto mb-2" />
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Change Image</label>
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
                     <input type="file" name="classImage" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
 
                     <div class="flex justify-end mt-10">
