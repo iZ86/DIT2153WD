@@ -6,7 +6,9 @@
         <div class="px-11 flex items-center gap-x-14">
             <div class="flex font-bold space-x-14 text-lg">
                 <a href="index.php" class="<?php echo $currentPage === "index.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>" >Home</a>
+                <a href="fitness-class.php" class="<?php echo $currentPage === "fitness-class.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Fitness Classes</a>
                 <a href="nutritionist.php" class="<?php echo $currentPage === "nutritionist.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Nutritionists</a>
+                <a href="membership.php" class="<?php echo $currentPage === "membership.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Membership</a>
             </div>
 
             <div class="flex justify-center items-center">
