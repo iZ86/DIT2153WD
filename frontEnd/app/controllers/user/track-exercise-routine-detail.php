@@ -84,7 +84,7 @@ $regexWeightFormat, $regexWeightUnitFormat, $regexTimeFormat) {
 
 // Ensures that there is a valid $_GET request.
 if (!(isset($_GET['date'])) || !preg_match($regexDateFormat, $_GET['date']) || (date($_GET['date']) > date("Y-m-d"))) {
-    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . date("Y-m-d")));
+    die(header('location: track-exercise-routine-detail.php?date=' . date("Y-m-d")));
 }
 
 $date = $_GET['date'];
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             
                                 if ($addStatus) {
                                     
-                                    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                                    die(header('location: track-exercise-routine-detail.php?date=' . $date));
                                 }
                             }
                             
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $updateStatus = $userTrackExerciseRoutineDetailModel->updateExerciseRoutineDetailData($exerciseRoutineDetailID, $weight, $rep, $note, $time, $exerciseIDForExerciseRoutineDetail, $exerciseRoutineData["exerciseRoutineID"], $_SESSION['userID']);
                         if ($updateStatus) {
                             
-                            //die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                            die(header('location: track-exercise-routine-detail.php?date=' . $date));
                         }
                     }
 
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $addStatus = $userTrackExerciseRoutineDetailModel->addExerciseData($exerciseName, $_SESSION['userID']);
                 if ($addStatus) {
-                    die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                    die(header('location: track-exercise-routine-detail.php?date=' . $date));
                 }
             }
 
@@ -207,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $updateStatus = $userTrackExerciseRoutineDetailModel->updateExerciseData($exerciseID, $exerciseName, $_SESSION['userID']);
                     echo "<script>console.log(" . $exerciseID . ");</script>";
                     if ($updateStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                        die(header('location: track-exercise-routine-detail.php?date=' . $date));
                     }
                 }
                 
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $deleteStatus = $userTrackExerciseRoutineDetailModel->deleteExerciseRoutineDetailData($exerciseRoutineDetailID, $exerciseIDForExerciseRoutineDetail, $exerciseRoutineData["exerciseRoutineID"], $_SESSION['userID']);
                         if ($deleteStatus) {
                             
-                            die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                            die(header('location: track-exercise-routine-detail.php?date=' . $date));
                         }
                     }
 
@@ -269,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $deleteStatus = $userTrackExerciseRoutineDetailModel->deleteExerciseData($exerciseID, $_SESSION['userID']);
                     
                     if ($deleteStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-exercise-routine-detail.php?date=' . $date));
+                        die(header('location: track-exercise-routine-detail.php?date=' . $date));
                     }
                 }
             }
