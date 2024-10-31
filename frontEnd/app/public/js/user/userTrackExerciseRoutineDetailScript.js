@@ -72,6 +72,11 @@ function closeExerciseRoutineDetailDataModal() {
 /** Clear modal fields. */
 function clearModalFields() {
     document.getElementById('exerciseRoutineDetailID').value = "";
+    document.getElementById('exerciseIDForExerciseRoutineDetail').value = -1;
+    document.getElementById('weight').value = "";
+    document.getElementById('rep').value = "";
+    document.getElementById('note').value = "";
+    document.getElementById('time').value = "";
 }
 
 /** Display message for all the exercise routine detail data row. */
