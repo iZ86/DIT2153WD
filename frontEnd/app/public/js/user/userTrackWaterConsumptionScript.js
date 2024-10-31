@@ -68,13 +68,13 @@ function clearModalFields() {
 
 /** Converts the amount for every water consumption data rows. */
 function convertAmountDrankOfAllWaterConsumptionDataRow(unitDropDownBoxID) {
-    if (unitDropDownBoxID === "amountDrankUnit") {
-        document.getElementById('unit').value = document.getElementById("amountDrankUnit").value;
+    if (unitDropDownBoxID === "volumeUnitInTrackWaterConsumptionView") {
+        document.getElementById('volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView').value = document.getElementById("volumeUnitInTrackWaterConsumptionView").value;
         
-    } else if (unitDropDownBoxID === "unit") {
-        document.getElementById('amountDrankUnit').value = document.getElementById("unit").value;
+    } else if (unitDropDownBoxID === "volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView") {
+        document.getElementById('volumeUnitInTrackWaterConsumptionView').value = document.getElementById("volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView").value;
     }
-    let unitSelected = document.getElementById('amountDrankUnit').value;
+    let unitSelected = document.getElementById('volumeUnitInTrackWaterConsumptionView').value;
 
 
     if (unitSelected === "L") {
@@ -110,7 +110,7 @@ function createSessionForUnitSelected(unitDropDownBoxID) {
     xmlHttRequest = new XMLHttpRequest();
     xmlHttRequest.open("POST", window.location.href, true);
     xmlHttRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttRequest.send("unit=" + unitSelected);
+    xmlHttRequest.send("volumeUnitInTrackWaterConsumptionView=" + unitSelected);
 }
 
 /** Converts milliliters to liters. */
@@ -142,7 +142,7 @@ function updateAmountDrankMessages() {
     let amountDrankEncouragementMessage = document.getElementById('amountDrankEncouragementMessage');
 
     let amountDrankInUnitText;
-    let unitSelected = document.getElementById('amountDrankUnit').value;
+    let unitSelected = document.getElementById('volumeUnitInTrackWaterConsumptionView').value;
     if (unitSelected === "mL") {
         amountDrankInUnitText = totalAmountDrank + "mL";
     } else if (unitSelected === "L") {
@@ -183,7 +183,7 @@ function openEditWaterConsumptionDataModal(waterConsumptionID) {
     let timeInput = document.getElementById('time');
     let waterConsumptionIDInput = document.getElementById('waterConsumptionID');
 
-    unitSelected = document.getElementById("amountDrankUnit").value;
+    unitSelected = document.getElementById("volumeUnitInTrackWaterConsumptionView").value;
 
     submitWaterConsumptionDataButton.value="Save"
     modalTitle.innerText = 'Edit Water Consumption Data';
@@ -240,5 +240,5 @@ function closeConfirmationModal() {
 
 
 
-convertAmountDrankOfAllWaterConsumptionDataRow("amountDrankUnit");
+convertAmountDrankOfAllWaterConsumptionDataRow("volumeUnitInTrackWaterConsumptionView");
 updateAmountDrankMessages();

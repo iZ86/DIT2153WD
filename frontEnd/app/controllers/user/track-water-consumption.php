@@ -18,18 +18,18 @@ $regexIDFormat = "/^(0|[1-9][\d]*)$/";
 // Regex to validate time.
 $regexTimeFormat = "/(^[0-3]|^)[\d]:[0-5][\d]$/";
 
-// Regex to validate unit.
-$regexUnitFormat = "/^(mL|L|oz)$/";
+// Regex to validate volume unit.
+$regexVolumeUnitFormat = "/^(mL|L|oz)$/";
 
 /** Converts Milliliters to whatever unit is inputted.
  * Return -1, if unit not supported.
  */
-function convertMillilitersToUnitInputted($milliliters, $unit) {
-    if ($unit === "mL") {
+function convertMillilitersToVolumeUnitInputted($milliliters, $volumeUnit) {
+    if ($volumeUnit === "mL") {
         return $milliliters;
-    } else if ($unit === "L") {
+    } else if ($volumeUnit === "L") {
         return $milliliters * MILLILITERSTOLITERSCONVERSIONRATE;
-    } else if ($unit === "oz") {
+    } else if ($volumeUnit === "oz") {
         return bcmul(MILLILITERSTOOUNCECONVERSIONRATE, $milliliters, 2);
     }
     return -1;
@@ -47,7 +47,7 @@ function cleanData($data) {
  * Otherwise, return false.
  */
 function checkIsBasicPostVariablesSet() {
-    if (isset($_POST['unit']) && isset($_POST['amountDrank']) && isset($_POST['time'])) {
+    if (isset($_POST['volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView']) && isset($_POST['amountDrank']) && isset($_POST['time'])) {
         return true;
     }
     return false;
@@ -57,8 +57,8 @@ function checkIsBasicPostVariablesSet() {
  * Returns true if valid.
  * Otherwise, return false.
  */
-function validateBasicPostData($unit, $amountDrank, $time, $regexUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) {
-    if ((($unit !== null) && preg_match($regexUnitFormat, $unit)) &&
+function validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) {
+    if ((($volumeUnit !== null) && preg_match($regexVolumeUnitFormat, $volumeUnit)) &&
     (($amountDrank !== null) && (preg_match($regexAmountDrankFormat, $amountDrank))) &&
     (($time !==null) && (preg_match($regexTimeFormat, $time)))) {
         return true;
@@ -79,13 +79,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submitWaterConsumptionDataButton'])) {
         if ($_POST['submitWaterConsumptionDataButton'] === "Add") {
             if (checkIsBasicPostVariablesSet()) {
-                $unit = cleanData($_POST['unit']);
+                $volumeUnit = cleanData($_POST['volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView']);
                 $amountDrank = cleanData($_POST['amountDrank']);
                 $time = cleanData($_POST['time']);
-                if (validateBasicPostData($unit, $amountDrank, $time, $regexUnitFormat, $regexAmountDrankFormat, $regexTimeFormat)) {
+                if (validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUnitFormat, $regexAmountDrankFormat, $regexTimeFormat)) {
                     
                     $amountDrank = (float) $amountDrank;
-                    $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
+                    $amountDrank = convertMillilitersToVolumeUnitInputted($amountDrank, $volumeUnit);
                     $dateTime = $date . " " . $time;
     
                     $addStatus = $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
@@ -97,15 +97,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else if ($_POST['submitWaterConsumptionDataButton'] === "Save") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['waterConsumptionID'])) {
                 $waterConsumptionID = cleanData($_POST['waterConsumptionID']);
-                $unit = cleanData($_POST['unit']);
+                $volumeUnit = cleanData($_POST['volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView']);
                 $amountDrank = cleanData($_POST['amountDrank']);
                 $time = cleanData($_POST['time']);
-                if (validateBasicPostData($unit, $amountDrank, $time, $regexUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) &&
+                if (validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) &&
                 (($waterConsumptionID !== null) &&
                 preg_match($regexIDFormat, $waterConsumptionID))) {
                     $waterConsumptionID = (int) $waterConsumptionID;
                     $amountDrank = (float) $amountDrank;
-                    $amountDrank = convertMillilitersToUnitInputted($amountDrank, $unit);
+                    $amountDrank = convertMillilitersToVolumeUnitInputted($amountDrank, $volumeUnit);
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackWaterConsumptionModel->updateWaterConsumptionData($waterConsumptionID, $amountDrank, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
@@ -119,10 +119,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_POST['submitDeleteWaterConsumptionDataButton'] === "Delete") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['waterConsumptionID'])) {
                 $waterConsumptionID = cleanData($_POST['waterConsumptionID']);
-                $unit = cleanData($_POST['unit']);
+                $volumeUnit = cleanData($_POST['volumeUnitInWaterConsumptionModalInUserTrackWaterConsumptionView']);
                 $amountDrank = cleanData($_POST['amountDrank']);
                 $time = cleanData($_POST['time']);
-                if (validateBasicPostData($unit, $amountDrank, $time, $regexUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) &&
+                if (validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUnitFormat, $regexAmountDrankFormat, $regexTimeFormat) &&
                 (($waterConsumptionID !== null) &&
                 preg_match($regexIDFormat, $waterConsumptionID))) {
 
@@ -142,10 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-if (isset($_POST['unit'])) {
+if (isset($_POST['volumeUnitInTrackWaterConsumptionView'])) {
     // Ensure that the value is the correct values, so that it won't crash the server.
-    if ($_POST['unit'] === "mL" || $_POST['unit'] === "L" || $_POST['unit'] === "oz") {
-        $_SESSION['unit'] = $_POST['unit'];
+    if ($_POST['volumeUnitInTrackWaterConsumptionView'] === "mL" || $_POST['volumeUnitInTrackWaterConsumptionView'] === "L" || $_POST['volumeUnitInTrackWaterConsumptionView'] === "oz") {
+        $_SESSION['volumeUnitInTrackWaterConsumptionView'] = $_POST['volumeUnitInTrackWaterConsumptionView'];
     }
 }
 
