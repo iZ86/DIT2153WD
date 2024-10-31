@@ -1,5 +1,6 @@
 <?php
 class UserFitnessClass {
+    private $fitnessClassTable = 'fitness_class';
     /** Fitness Class Schedule Table */
     private $fitnessClassScheduleTable = 'fitness_class_schedule';
     private $fitnessClassBookingTable = 'fitness_class_booking';
@@ -10,13 +11,6 @@ class UserFitnessClass {
     /** Constructor */
     public function __construct($databaseConn) {
         $this->databaseConn = $databaseConn;
-    }
-
-    public function createUserFitnessClassBooking($status, $fitnessClassScheduleId, $userID) {
-        $sql = "INSERT INTO " . $this->fitnessClassBookingTable . " (status, fitnessClassScheduleId, userID) VALUES (?,?,?)";
-        $stmt = $this->databaseConn->prepare($sql);
-        $stmt->bind_param("sii", $status, $fitnessClassScheduleId, $userID);
-        return $stmt->execute();
     }
 
     /** Function of getting the fitness class information by using ID */
@@ -45,13 +39,9 @@ class UserFitnessClass {
         }
 
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $instructor = $result->fetch_assoc();
+        $result->num_rows > 0 ? $instructor = $result->fetch_assoc() : array();
 
-            return $instructor['firstName'] . ' ' . $instructor['lastName'];
-        }
-
-        return null;
+        return $instructor['firstName'] . ' ' . $instructor['lastName'];
     }
 
     public function getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorID, $fitnessClassID) {
@@ -64,10 +54,15 @@ class UserFitnessClass {
         }
 
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc()['fitnessClassScheduleID'];
-        }
+        return $result->num_rows > 0 ? $result->fetch_assoc()['fitnessClassScheduleID'] : array();
+    }
 
-        return null; // Return null if no record found
+    public function getFitnessClassPriceByFitnessClassID($fitnessClassID) {
+        $sql = "SELECT price FROM " . $this->fitnessClassTable . " WHERE fitnessClassID=?";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("i", $fitnessClassID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
 }

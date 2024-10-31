@@ -1,7 +1,7 @@
 <?php
 // Include necessary file path.
 require __DIR__ . '/../../../config/config.php';
-class ClassesView {
+class ClassView {
     private $data;
     private $classesImageStyles = "class h-96 w-64 object-cover rounded-2xl mt-4 box-border border border-solid border-white shadow-[12px_17px_51px_rgba(0,0,0,0.22)] backdrop-blur transition-all-[0.5s]";
 
@@ -33,17 +33,30 @@ class ClassesView {
     }
 
     public function renderClasses() {
-        foreach($this->data as $classes) {?>
+        if($this->data) {
+            foreach($this->data as $classes) {?>
+                <div class="mt-12">
+                    <a href="./fitness-class-details.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
+                        <div class="flex flex-row">
+                            <div class="mr-28">
+                                <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?><?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">
+                                <p class="text-center font-bold font-aoboshi mt-2 text-xl"><?= $classes['name'] ?></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <?php
+            }
+        } else {?>
         <div class="mt-12">
-                <a href="./instructor.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
+            <a>
                 <div class="flex flex-row">
                     <div class="mr-28">
-                        <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?><?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">
-                        <p class="text-center font-bold font-aoboshi mt-2 text-xl"><?= $classes['name'] ?></p>
+                        <p class="<?= $this->classesImageStyles ?> text-center flex justify-center items-center text-xl font-bold">Currently No Class!</p>
                     </div>
                 </div>
-                </a>
-            </div>
+            </a>
+        </div>
         <?php
         }
     }
@@ -51,7 +64,7 @@ class ClassesView {
     public function renderContent() {?>
     <?php  ?>
 
-    <section class="bg-white">
+    <section class="bg-white pb-48">
         <div class="w-full relative">
             <img class="w-full" src="<?=IMAGE_FILE_PATH?>Yoga_header.png" alt="Yoga.png">
             <h1 class="absolute top-40 left-64 text-5xl font-bold text-[#59485b] font-orelega">Transform with</h1>
@@ -59,10 +72,10 @@ class ClassesView {
             <p class="absolute top-72 left-64 font-montserrat w-1/3">To inspire and transform individuals through fun, high-energy fitness classes that promote physical
                 strength, mental well-being, and a sense of community for all fitness levels.
             </p>
-            <a href="" class="px-5 py-2 bg-[#F4F3E5] absolute top-1/2 mt-10 left-64 rounded-2xl font-medium">VIEW CLASSES</a>
+            <a href="#our-classes" class="px-5 py-2 bg-[#F4F3E5] absolute top-1/2 mt-10 left-64 rounded-2xl font-medium">VIEW CLASSES</a>
         </div>
 
-        <div class="flex flex-col mt-10 ml-20">
+        <div class="flex flex-col mt-10 ml-20" id="our-classes">
             <div class="relative">
                 <input type="text" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
                 <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -91,8 +104,11 @@ class ClassesView {
     transform: scale(0.95) rotateZ(1.7deg);
     box-shadow: 30px 30px 51px rgba(0,0,0,0.3);
     }
+
+    html {
+        scroll-behavior: smooth;
+    }
     </style>
     <?php
-
     }
 }

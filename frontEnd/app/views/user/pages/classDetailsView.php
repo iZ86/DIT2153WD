@@ -21,17 +21,25 @@ require __DIR__ . '/../../../config/config.php';
     }
 
     public function renderFitnessClassName() {
-        $fitnessClassName = htmlspecialchars($this->data['name']);
-        echo "<p class='font-orelega text-7xl self-start mt-4'>{$fitnessClassName}</p>";
+        if($this->data) {
+            $fitnessClassName = htmlspecialchars($this->data['name']);
+            echo "<p class='font-orelega text-7xl self-start mt-4'>{$fitnessClassName}</p>";
+        } else {?>
+            <p class='font-orelega text-7xl self-start mt-4'>Currently No Class!</p>
+        <?php
+        }
     }
 
     public function renderFitnessClassImage() {
-        $fitnessClassImage = htmlspecialchars($this->data['fitnessClassImageFilePath']);
-        echo "<img class='object-cover' src='" . IMAGE_FILE_PATH . "{$fitnessClassImage}' alt='Fitness Class Image'>";
+        if($this->data) {
+            $fitnessClassImage = htmlspecialchars($this->data['fitnessClassImageFilePath']);
+            echo "<img class='object-cover' src='" . IMAGE_FILE_PATH . "{$fitnessClassImage}' alt='Fitness Class Image'>";
+        }
     }
 
     public function renderInstructors() {
         // Fetch instructors related to the fitness class
+       if($this->instructor) {
         foreach ($this->instructor as $datas) {
             $dob = new DateTime($datas['dateOfBirth']);
             $currentDate = new DateTime();
@@ -48,15 +56,15 @@ require __DIR__ . '/../../../config/config.php';
                                     <div class='flex gap-x-36 border-b border-[#676767] border-dashed text-xl font-bold pb-2'><p class='text-red-500'>HEIGHT </p><p class='ml-3 text-[#676767] font-normal'><?= htmlspecialchars($datas['height']) ?></p></div>
                                         <div class='flex gap-x-16 border-b border-[#676767] border-dashed text-xl font-bold pb-2'><p class='text-red-500'>CERTIFICATION </p><p class='ml-2 text-[#676767] font-normal'><?= htmlspecialchars($datas['certification']) ?></p></div>
                         </div>
-                        <a href='./fitness-class.php?instructor=<?=htmlspecialchars($datas['instructorID'])?>&fitnessClassID=<?=htmlspecialchars($this->fitnessClassID)?>' class='w-fit p-2 rounded-lg mt-4 text-white font-semibold font-nunito bg-blue-button'>View Schedule</a>
+                        <a href='./fitness-class-schedule.php?instructor=<?=htmlspecialchars($datas['instructorID'])?>&fitnessClassID=<?=htmlspecialchars($this->fitnessClassID)?>' class='w-fit p-2 rounded-lg mt-4 text-white font-semibold font-nunito bg-blue-button hover:bg-blue-600'>View Schedule</a>
                     </div>
             </div>
             <?php
         }
-    }
-
-    public function renderClassDescription() {
-        // Implement class description rendering if needed
+       } else {?>
+            <p class="text-2xl font-bold">Currently No Instructor!</p>
+        <?php
+       }
     }
 
     public function renderNavbar() {
@@ -73,12 +81,20 @@ require __DIR__ . '/../../../config/config.php';
 
     public function renderContent() {
         ?>
-        <section class='flex justify-center items-center'>
+        <section class='flex justify-center items-center pb-36'>
             <div class='flex flex-col mt-10 justify-center items-center w-3/5'>
                 <?= $this->renderFitnessClassImage(); ?>
                 <?= $this->renderFitnessClassName(); ?>
 
-                <p class='font-montserrat mt-3'><?= htmlspecialchars($this->data['description']) ?></p>
+                <?php
+                if($this->data) {?>
+                    <p class='font-montserrat mt-3'><?= htmlspecialchars($this->data['description']) ?></p>
+                <?php
+                } else {?>
+                    <p class='font-montserrat mt-3'>No Description</p>
+                <?php
+                }
+                ?>
 
                 <div class='grid grid-cols-3 gap-x-2 gap-y-4 mt-6 font-orelega'>
                     <div class='flex justify-start items-center'>
@@ -103,6 +119,8 @@ require __DIR__ . '/../../../config/config.php';
                     </div>
                 </div>
 
+                <i onclick="topFunction()" id="myBtn" title="Back to top" class='bx bxs-up-arrow-circle bx-md fixed bottom-5 right-8 z-50 bg-green-500 cursor-pointer text-white p-2 rounded-xl hover:bg-green-700 hover:text-pink-300 bx-fade-up-hover'></i>
+
                 <div class='flex flex-col w-full justify-start mt-20'>
                     <div class='font-montserrat'>
                         <p class='text-red-500'>CLASSES</p>
@@ -115,6 +133,21 @@ require __DIR__ . '/../../../config/config.php';
                 </div>
             </div>
         </section>
+        <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        </style>
+        <script>
+        // Get the button
+        let mybutton = document.getElementById("myBtn");
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+        </script>
         <?php
     }
 }
