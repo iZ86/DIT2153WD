@@ -1,7 +1,7 @@
 <?php
 session_start();
 require '../../models/classesModel.php';
-require '../../views/user/pages/classesView.php';
+require '../../views/user/pages/classView.php';
 
 $classesModel = new ClassesModel(require '../../config/db_connection.php');
 
@@ -9,5 +9,5 @@ $classesModel = new ClassesModel(require '../../config/db_connection.php');
 $classesData = $classesModel->getClasses();
 
 // Pass the data to the view
-$classesView = new ClassesView($classesData);
+$classesView = new ClassView($classesData);
 $classesView->renderView();
