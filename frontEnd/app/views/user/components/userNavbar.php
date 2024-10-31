@@ -9,9 +9,31 @@
                 <a href="user-nutritionist.php" class="<?php echo $currentPage === "user-nutritionist.php" ? "text-orange-400" : "text-black hover:text-orange-400"?>">Nutritionists</a>
             </div>
 
-            <div class="flex justify-center items-center">
-                <p><?= isset($_SESSION['username']) ? $_SESSION['username'] : "Guest"; ?></p>
-                <div class="border border-black border-solid rounded-full w-10 h-10 ml-4"></div>
+            <div class="flex justify-center items-center relative">
+            <div class="relative">
+                <button id="dropdownToggle" class="flex items-center space-x-2 mr-2">
+                    <span class="font-semibold text-gray-700 mr-2"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></span>
+                    <img src="../../public/images/avatar.png" alt="User Avatar" class="w-10 h-10 rounded-full">
+                </button>
+
+                <div id="dropdownMenu" class="absolute right-0 mt-2 p-2 w-48 bg-white border border-gray-200 rounded-lg hidden">
+                    <a href=""
+                       class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
+                        <i class='bx bxs-user text-base'></i>
+                        <span class="font-medium">View Profile</span>
+                    </a>
+                    <a href=""
+                       class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
+                        <i class='bx bxs-user text-base'></i>
+                        <span class="font-medium">Billing</span>
+                    </a>
+                    <a href="../logout.php"
+                       class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
+                        <i class='bx bx-log-out text-base'></i>
+                        <span class="font-medium">Log Out</span>
+                    </a>
+                </div>
+            </div>
             </div>
 
         </div>
@@ -19,3 +41,17 @@
 
     </div>
 </nav>
+<script>
+        document.getElementById('dropdownToggle').addEventListener('click', function () {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function (e) {
+            const toggleButton = document.getElementById('dropdownToggle');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            if (!toggleButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+</script>
