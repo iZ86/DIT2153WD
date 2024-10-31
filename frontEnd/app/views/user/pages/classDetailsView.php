@@ -21,8 +21,13 @@ require __DIR__ . '/../../../config/config.php';
     }
 
     public function renderFitnessClassName() {
-        $fitnessClassName = htmlspecialchars($this->data['name']);
-        echo "<p class='font-orelega text-7xl self-start mt-4'>{$fitnessClassName}</p>";
+        if($this->data) {
+            $fitnessClassName = htmlspecialchars($this->data['name']);
+            echo "<p class='font-orelega text-7xl self-start mt-4'>{$fitnessClassName}</p>";
+        } else {?>
+            <p class='font-orelega text-7xl self-start mt-4'>Currently No Class!</p>
+        <?php
+        }
     }
 
     public function renderFitnessClassImage() {
@@ -32,6 +37,7 @@ require __DIR__ . '/../../../config/config.php';
 
     public function renderInstructors() {
         // Fetch instructors related to the fitness class
+       if($this->instructor) {
         foreach ($this->instructor as $datas) {
             $dob = new DateTime($datas['dateOfBirth']);
             $currentDate = new DateTime();
@@ -53,10 +59,10 @@ require __DIR__ . '/../../../config/config.php';
             </div>
             <?php
         }
-    }
-
-    public function renderClassDescription() {
-        // Implement class description rendering if needed
+       } else {?>
+            <p class="text-2xl font-bold">Currently No Instructor!</p>
+        <?php
+       }
     }
 
     public function renderNavbar() {
