@@ -2,15 +2,15 @@
 require('../../views/user/pages/userTrackWaterConsumptionView.php');
 require('../../models/user/userTrackWaterConsumptionModel.php');
 session_start();
-define("MILLILITERSTOLITERSCONVERSIONRATE", 1000);
-define("MILLILITERSTOOUNCECONVERSIONRATE", 29.5735);
+define("LITERTOMILLILITERCONVERSIONRATE", 1000);
+define("OUNCETOMILLILITERCONVERSIONRATE", 29.574);
 $userTrackWaterConsumptionModel = new UserTrackWaterConsumptionModel(require "../../config/db_connection.php");
 
 // Regex to validate date format.
 $regexDateFormat = "/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/";
 
 // Regex to validate amount drank format.
-$regexAmountDrankFormat = "/^[\d]*(.[\d]{1,2}$|$)/";
+$regexAmountDrankFormat = "/^[\d]*(.[\d]{1,4}$|$)/";
 
 // Regex to validate ID.
 $regexIDFormat = "/^(0|[1-9][\d]*)$/";
@@ -21,16 +21,16 @@ $regexTimeFormat = "/(^[0-3]|^)[\d]:[0-5][\d]$/";
 // Regex to validate volume unit.
 $regexVolumeUnitFormat = "/^(mL|L|oz)$/";
 
-/** Converts Milliliters to whatever unit is inputted.
- * Return -1, if unit not supported.
+/** Converts any value of any volume unit to milliliter.
+ * Return -1, if unit is not supported.
  */
-function convertMillilitersToVolumeUnitInputted($milliliters, $volumeUnit) {
+function convertValueOfVolumeUnitToMilliliter($value, $volumeUnit) {
     if ($volumeUnit === "mL") {
-        return $milliliters;
+        return $value;
     } else if ($volumeUnit === "L") {
-        return $milliliters * MILLILITERSTOLITERSCONVERSIONRATE;
+        return bcmul(LITERTOMILLILITERCONVERSIONRATE, $value, 4);
     } else if ($volumeUnit === "oz") {
-        return bcmul(MILLILITERSTOOUNCECONVERSIONRATE, $milliliters, 2);
+        return bcmul(OUNCETOMILLILITERCONVERSIONRATE, $value, 4);
     }
     return -1;
 }
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUnitFormat, $regexAmountDrankFormat, $regexTimeFormat)) {
                     
                     $amountDrank = (float) $amountDrank;
-                    $amountDrank = convertMillilitersToVolumeUnitInputted($amountDrank, $volumeUnit);
+                    $amountDrank = convertValueOfVolumeUnitToMilliliter($amountDrank, $volumeUnit);
                     $dateTime = $date . " " . $time;
     
                     $addStatus = $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
@@ -105,11 +105,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 preg_match($regexIDFormat, $waterConsumptionID))) {
                     $waterConsumptionID = (int) $waterConsumptionID;
                     $amountDrank = (float) $amountDrank;
-                    $amountDrank = convertMillilitersToVolumeUnitInputted($amountDrank, $volumeUnit);
+                    $amountDrank = convertValueOfVolumeUnitToMilliliter($amountDrank, $volumeUnit);
+                    var_dump($amountDrank);
                     $dateTime = $date . " " . $time;
                     $updateStatus = $userTrackWaterConsumptionModel->updateWaterConsumptionData($waterConsumptionID, $amountDrank, $dateTime, $_SESSION['userID']);
                     if ($updateStatus) {
-                        die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
+                        // die(header('location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-water-consumption.php?date=' . $date));
                     }
                 }
             }
