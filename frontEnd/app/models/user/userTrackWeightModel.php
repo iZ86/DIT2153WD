@@ -64,7 +64,7 @@ class UserTrackWeightModel {
     public function updateWeightData($weightID, $weight, $recordedOn, $userID) {
         
         
-        if ($this->verifyWeightDataIDToUserID($weightID, $userID)) {
+        if ($this->verifyWeightIDToUserID($weightID, $userID)) {
             $updateWeightDataSQL = "UPDATE " . $this->weightTable .
             " SET weight = ?, recordedOn = ? WHERE weightID = ? AND userID = ?";
 
@@ -84,7 +84,7 @@ class UserTrackWeightModel {
      */
     public function deleteWeightData($weightID, $userID) {
 
-        if ($this->verifyWeightDataIDToUserID($weightID, $userID)) {
+        if ($this->verifyWeightIDToUserID($weightID, $userID)) {
             
             
             $deleteWeightDataSQL = "DELETE FROM " . $this->weightTable .
@@ -106,7 +106,7 @@ class UserTrackWeightModel {
      * and that the user has the permissions to manipulate the data,
      * where weightID attribute is $weightID in the WEIGHT table.
     */
-    private function verifyWeightDataIDToUserID($weightID, $userID) {
+    private function verifyWeightIDToUserID($weightID, $userID) {
         $selectWeightDataSQL = "SELECT 1 FROM " . $this->weightTable . " WHERE weightID = ? AND userID = ?";
         $selectWeightDataSTMT= $this->databaseConn->prepare($selectWeightDataSQL);
         $selectWeightDataSTMT->bind_param("ss", $weightID, $userID);

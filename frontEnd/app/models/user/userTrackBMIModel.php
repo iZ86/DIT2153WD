@@ -65,7 +65,7 @@ class UserTrackBMIModel {
     public function updateBMIData($bmiID, $age, $gender, $height, $weight, $recordedOn, $userID) {
         
         
-        if ($this->verifyBMIDataIDToUserID($bmiID, $userID)) {
+        if ($this->verifyBMIIDToUserID($bmiID, $userID)) {
             $updateBMIDataSQL = "UPDATE " . $this->bmiTable .
             " SET age = ?, gender = ?, height = ?, weight = ?, recordedOn = ? WHERE bmiID = ? AND userID = ?";
 
@@ -84,7 +84,7 @@ class UserTrackBMIModel {
      */
     public function deleteBMIData($bmiID, $userID) {
 
-        if ($this->verifyBMIDataIDToUserID($bmiID, $userID)) {
+        if ($this->verifyBMIIDToUserID($bmiID, $userID)) {
             
             
             $deleteBMIDataSQL = "DELETE FROM " . $this->bmiTable .
@@ -107,7 +107,7 @@ class UserTrackBMIModel {
      * and that the user has the permissions to manipulate the data,
      * where bmiID attribute is $bmiID in the BMI table.
     */
-    private function verifyBMIDataIDToUserID($bmiID, $userID) {
+    private function verifyBMIIDToUserID($bmiID, $userID) {
         $selectBMIDataSQL = "SELECT 1 FROM " . $this->bmiTable . " WHERE bmiID = ? AND userID = ?";
         $selectBMIDataSTMT= $this->databaseConn->prepare($selectBMIDataSQL);
         $selectBMIDataSTMT->bind_param("ss", $bmiID, $userID);

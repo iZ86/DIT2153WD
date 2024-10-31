@@ -64,7 +64,7 @@ class UserTrackWaterConsumptionModel {
     public function updateWaterConsumptionData($waterConsumptionID, $amountDrankInMilliliters, $recordedOn, $userID) {
         
         
-        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID)) {
+        if ($this->verifyWaterConsumptionIDToUserID($waterConsumptionID, $userID)) {
             $updateWaterConsumptionDataSQL = "UPDATE " . $this->waterConsumptionTable .
             " SET milliliters = ?, recordedOn = ? WHERE waterConsumptionID = ? AND userID = ?";
 
@@ -83,7 +83,7 @@ class UserTrackWaterConsumptionModel {
      */
     public function deleteWaterConsumptionData($waterConsumptionID, $userID) {
 
-        if ($this->verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID)) {
+        if ($this->verifyWaterConsumptionIDToUserID($waterConsumptionID, $userID)) {
             
             
             $deleteWaterConsumptionDataSQL = "DELETE FROM " . $this->waterConsumptionTable .
@@ -104,7 +104,7 @@ class UserTrackWaterConsumptionModel {
      * and that the user has the permissions to manipulate the data,
      * where waterConsumptionID attribute is $waterConsumptionID in the WATER_CONSUMPTION table.
     */
-    private function verifyWaterConsumptionDataIDToUserID($waterConsumptionID, $userID) {
+    private function verifyWaterConsumptionIDToUserID($waterConsumptionID, $userID) {
         $selectWaterConsumptionDataSQL = "SELECT 1 FROM " . $this->waterConsumptionTable . " WHERE waterConsumptionID = ? AND userID = ?";
         $selectWaterConsumptionDataSTMT= $this->databaseConn->prepare($selectWaterConsumptionDataSQL);
         $selectWaterConsumptionDataSTMT->bind_param("ss", $waterConsumptionID, $userID);
