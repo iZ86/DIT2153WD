@@ -158,6 +158,6 @@ if (isset($_POST['unit'])) {
     }
 }
 
-$userTrackWeightView = new UserTrackWeightView($userTrackWeightModel->getWeightDatasetFromDate($_SESSION['userID'], $date));
+$userTrackWeightView = new UserTrackWeightView($userTrackWeightModel->getWeightDatasetFromDate($date, $_SESSION['userID']));
 $userTrackWeightView->renderView();
 

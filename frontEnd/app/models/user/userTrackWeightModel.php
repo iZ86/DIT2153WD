@@ -17,11 +17,11 @@ class UserTrackWeightModel {
      * and userID attribute is $userID.
      * Otherwise, return an empty array.
     */
-    public function getWeightDatasetFromDate($userID, $recordedOn) {
+    public function getWeightDatasetFromDate($date, $userID) {
 
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
-        $endDate = date_create($recordedOn);
+        $endDate = date_create($date);
         date_modify($endDate, "+1 days");
         $endDate = $endDate->format('Y-m-d');
 
@@ -30,7 +30,7 @@ class UserTrackWeightModel {
         " WHERE userID = ? AND recordedOn BETWEEN ? AND ? ORDER BY recordedOn DESC";
         
         $weightSTMT = $this->databaseConn->prepare($weightSQL);
-        $weightSTMT->bind_param("sss", $userID, $recordedOn, $endDate);
+        $weightSTMT->bind_param("sss", $userID, $date, $endDate);
         $weightSTMT->execute();
         $weightResult = $weightSTMT->get_result();
         $weightResultDataArray = array();
