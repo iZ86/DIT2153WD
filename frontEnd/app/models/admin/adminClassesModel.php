@@ -99,4 +99,79 @@ class AdminClassesModel {
         $result = $stmt->get_result();
         return $result->fetch_assoc()['total'];
     }
+
+    public function getFilteredClassesByName($name, $limit, $offset) {
+        $query = "SELECT fitnessClassID, name, description FROM " . $this->classesTable . " WHERE name LIKE ? LIMIT ? OFFSET ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $searchTerm = '%' . $name . '%';
+        $stmt->bind_param("sii", $searchTerm, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function getFilteredClassesByDescription($description, $limit, $offset) {
+        $query = "SELECT fitnessClassID, name, description FROM " . $this->classesTable . " WHERE description LIKE ? LIMIT ? OFFSET ?";
+        $stmt = $this->databaseConn->prepare($query);
+        $searchTerm = '%' . $description . '%';
+        $stmt->bind_param("sii", $searchTerm, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function getFilteredSchedules($limit, $offset, $filterType, $keywords) {
+        $query = "SELECT fcs.fitnessClassScheduleID, 
+                     fcs.fitnessClassID,
+                     fcs.instructorID,
+                     fc.name AS className, 
+                     CONCAT(i.firstName, ' ', i.lastName) AS instructor, 
+                     fcs.scheduledOn, 
+                     fcs.pax,
+                     CASE 
+                         WHEN fcs.scheduledOn > NOW() THEN 'Upcoming'
+                         WHEN fcs.scheduledOn <= NOW() AND fcs.scheduledOn > NOW() - INTERVAL 2 HOUR THEN 'In Progress'
+                         ELSE 'Completed'
+                     END as status
+              FROM " . $this->scheduleTable . " AS fcs
+              JOIN " . $this->classesTable . " AS fc ON fcs.fitnessClassID = fc.fitnessClassID
+              JOIN INSTRUCTOR AS i ON fcs.instructorID = i.instructorID
+              WHERE 1=1";
+
+        if ($filterType === 'className') {
+            $query .= " AND fc.name LIKE ?";
+        } elseif ($filterType === 'instructor') {
+            $query .= " AND i.instructorID = (SELECT instructorID FROM INSTRUCTOR WHERE CONCAT(firstName, ' ', lastName) LIKE ?)";
+        } elseif ($filterType === 'pax') {
+            $query .= " AND fcs.pax = ?";
+        } elseif ($filterType === 'status') {
+            $query .= " AND CASE 
+                         WHEN fcs.scheduledOn > NOW() THEN 'Upcoming'
+                         WHEN fcs.scheduledOn <= NOW() AND fcs.scheduledOn > NOW() - INTERVAL 2 HOUR THEN 'In Progress'
+                         ELSE 'Completed'
+                     END = ?";
+        } elseif ($filterType === 'scheduledOn') {
+            $query .= " AND DATE(fcs.scheduledOn) = ?";
+        }
+
+        $query .= " ORDER BY fcs.fitnessClassScheduleID ASC LIMIT ? OFFSET ?";
+
+        $stmt = $this->databaseConn->prepare($query);
+        $params = [];
+
+        if ($filterType === 'className' || $filterType === 'instructor') {
+            $params[] = '%' . $keywords . '%';
+        } elseif ($filterType === 'pax') {
+            $params[] = (int)$keywords;
+        } elseif ($filterType === 'status') {
+            $params[] = $keywords;
+        } elseif ($filterType === 'scheduledOn') {
+            $params[] = $keywords;
+        }
+
+        $params[] = $limit;
+        $params[] = $offset;
+
+        $stmt->bind_param(str_repeat('s', count($params) - 2) . 'ii', ...$params);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }

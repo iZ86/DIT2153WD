@@ -43,26 +43,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nutritionistBookingDescription = isset($_SESSION['description']) ? cleanData($_SESSION['description']) : null;
         $nutritionistScheduleID = isset($_SESSION['nutritionistScheduleID']) ? cleanData($_SESSION['nutritionistScheduleID']) : null;
         $userID = $_SESSION['userID'];
+        $fitnessClassScheduleID = isset($_SESSION['fitnessClassScheduleID']) ? cleanData($_SESSION['fitnessClassScheduleID']) : null;
+        $fitnessClassBookingStatus = isset($_SESSION['status']) ? cleanData($_SESSION['status']) : null;
 
-            // Check if the schedule is already booked
-            if ($userPaymentModel->isScheduleIDBooked($nutritionistScheduleID)) {
+        // Check if the schedule is already booked
+        if ($userPaymentModel->isScheduleIDBooked($nutritionistScheduleID)) {
+            echo "<script>alert('This schedule is already booked. Please select a different schedule.'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
+        } else {
+            // Insert payment record
+            $userPaymentModel->createUserPayment($type, $status, $createdOn, $userID);
 
-                echo "<script>alert('This schedule is already booked. Please select a different schedule.'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
-            } else {
-                // Insert payment record
-                $userPaymentModel->createUserPayment($type, $status, $createdOn, $userID);
+            $paymentID = $userPaymentModel->getPaymentIDByTypeCreatedOnAndUserID($type, $createdOn, $userID);
 
-                $paymentID = $userPaymentModel->getPaymentIDByTypeCreatedOnAndUserID($type, $createdOn, $userID);
-
-                // Create booking record with the retrieved payment ID
-                $bookingResult = $userPaymentModel->createNutritionistBooking($nutritionistBookingDescription, $nutritionistScheduleID, $userID, $paymentID['paymentID']);
-
-                if ($bookingResult === true) {
-                    echo "<script>alert('Successfully booked the Nutritionist. Please make sure to be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/nutritionist.php';</script>";
-                } else {
-                    echo "<script>alert('Error: " . htmlspecialchars($bookingResult) . "');</script>";
-                }
+            // Create booking record with the retrieved payment ID
+            if($nutritionistScheduleID) {
+                $nutritionistBookingResult = $userPaymentModel->createNutritionistBooking($nutritionistBookingDescription, $nutritionistScheduleID, $userID, $paymentID['paymentID']);
             }
+            elseif($fitnessClassScheduleID) {
+                $fitnessClassBookingResult = $userPaymentModel->createFitnessClassBooking($fitnessClassBookingStatus, $fitnessClassScheduleID, $_SESSION['userID'], $paymentID['paymentID']);
+            } else {
+                //TODO: Bring user to error page.
+            }
+
+            if ($nutritionistBookingResult) {
+                echo "<script>alert('Successfully booked the Nutritionist! Please make sure to be on time!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/user-nutritionist.php';</script>";
+            } elseif($fitnessClassBookingResult) {
+                echo "<script>alert('Successfully booked the Class, Enjoy the Class!'); window.location.href='http://localhost/DIT2153WD/frontEnd/app/controllers/user/fitness-class.php';</script>";
+            } else {
+                //TODO: Bring useer to errror page.
+            }
+        }
     }
 }
 

@@ -54,7 +54,7 @@ class FitnessClassView {
 
         <section class="bg-[#F1FAFF] pb-48">
             <div class="flex justify-center items-center relative">
-                <a href="./classes.php" class="bx bx-chevron-left bx-lg ml-20 absolute left-20 top-10"></a>
+                <a href="./fitness-class.php" class="bx bx-chevron-left bx-lg ml-20 absolute left-20 top-10"></a>
 
                 <div class="flex flex-col">
                     <div class="flex flex-col font-bold font-montserrat text-4xl items-center my-5">
@@ -121,7 +121,7 @@ class FitnessClassView {
                     <p class="font-montserrat text-xl mt-4 font-semibold">Are you sure you want to confirm the booking?</p>
                         <form action="<?=$_SERVER['PHP_SELF']?>?instructor=<?= urlencode($_GET['instructor']) ?>&fitnessClassID=<?= urlencode($_GET['fitnessClassID']) ?>" method="POST">
                         <div class="flex gap-x-10 mt-8">
-                            <button class="rounded-md px-8 py-2 bg-blue-button text-white font-bold" onclick="confirmBookingCloseModal()" name="confirm-fitness-class-booking" id="confirmed">Yes</button>
+                            <button class="rounded-md px-8 py-2 bg-blue-button text-white font-bold" onclick="closeModal()" name="confirm-fitness-class-booking" id="confirmed">Yes</button>
                             <input type="hidden" name="scheduledOn" value="<?= $class['scheduledOn'] ?>">
                             <input type="hidden" name="fitnessClassID" value="<?= $_GET['fitnessClassID'] ?>">
                             <input type="hidden" name="instructorID" value="<?= $_GET['instructor'] ?>">
@@ -173,12 +173,6 @@ class FitnessClassView {
                     modal.classList.add('hidden');
                     overlay.classList.add('hidden');
                 }, 300);
-            }
-
-            function confirmBookingCloseModal() {
-                closeModal();
-                window.location.href = 'http://localhost/DIT2153WD/frontEnd/app/controllers/user/classes.php';
-                alert("Booking has been made, you're good to go!");
             }
         </script>
         <?php

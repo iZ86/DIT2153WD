@@ -34,13 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (isset($_POST['deleteClassButton'])) {
-        $fitnessClassID = $_POST['fitnessClassID'];
-        $adminClassesModel->deleteClass($fitnessClassID);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    }
-
     if (isset($_POST['addScheduleButton']) && $_POST['addScheduleButton'] === "Add Schedule") {
         $fitnessClassID = $_POST['fitnessClassID'];
         $scheduledOnDate = $_POST['scheduledOnDate'];
@@ -71,21 +64,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
-
-    if (isset($_POST['deleteScheduleButton'])) {
-        $fitnessClassScheduleID = $_POST['fitnessClassScheduleID'];
-        $adminClassesModel->deleteSchedule($fitnessClassScheduleID);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    }
 }
 
 $limit = 10;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $limit;
 
-$classes = $adminClassesModel->getClasses($limit, $offset);
-$schedules = $adminClassesModel->getSchedules($limit, $offset);
+$filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
+$keywords = isset($_GET['keywords']) ? $_GET['keywords'] : '';
+
+if (!empty($filterType)) {
+    if ($filterType === 'name') {
+        $classes = $adminClassesModel->getFilteredClassesByName($keywords, $limit, $offset);
+    } elseif ($filterType === 'description') {
+        $classes = $adminClassesModel->getFilteredClassesByDescription($keywords, $limit, $offset);
+    }
+} else {
+    $classes = $adminClassesModel->getClasses($limit, $offset);
+}
+
+$scheduleFilterType = isset($_GET['scheduleFilterType']) ? $_GET['scheduleFilterType'] : '';
+$scheduleKeywords = isset($_GET['scheduleKeywords']) ? $_GET['scheduleKeywords'] : '';
+
+if (!empty($scheduleFilterType)) {
+    $schedules = $adminClassesModel->getFilteredSchedules($limit, $offset, $scheduleFilterType, $scheduleKeywords);
+} else {
+    $schedules = $adminClassesModel->getSchedules($limit, $offset);
+}
+
+$noClassesFound = $classes->num_rows === 0;
+$noSchedulesFound = $schedules->num_rows === 0;
+
 $instructors = $adminClassesModel->getAllInstructors();
 
 $totalClasses = $adminClassesModel->getTotalClasses();
@@ -93,5 +102,5 @@ $totalSchedules = $adminClassesModel->getTotalSchedules();
 $totalPagesClasses = ceil($totalClasses / $limit);
 $totalPagesSchedules = ceil($totalSchedules / $limit);
 
-$adminClassesView = new AdminClassesView($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage);
+$adminClassesView = new AdminClassesView($classes, $schedules, $instructors, $totalPagesClasses, $totalPagesSchedules, $currentPage, $noClassesFound, $noSchedulesFound);
 $adminClassesView->renderView();

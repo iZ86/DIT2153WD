@@ -74,10 +74,19 @@ $limit = 6;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $limit;
 
-$instructors = $adminInstructorsModel->getAllInstructors($limit, $offset);
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'filterInstructors') {
+    $filterType = $_GET['instructorFilterType'] ?? null;
+    $keywords = $_GET['instructorKeywords'] ?? '';
+
+    $instructors = $adminInstructorsModel->getFilteredInstructors($filterType, $keywords, $limit, $offset);
+} else {
+    $instructors = $adminInstructorsModel->getAllInstructors($limit, $offset);
+}
+
+$noInstructorsFound = $instructors->num_rows === 0;
 
 $totalInstructors = $adminInstructorsModel->getTotalInstructors();
 $totalPagesInstructors = ceil($totalInstructors / $limit);
 
-$adminInstructorsView = new AdminInstructorsView($instructors, $totalPagesInstructors, $currentPage);
+$adminInstructorsView = new AdminInstructorsView($instructors, $totalPagesInstructors, $currentPage, $noInstructorsFound);
 $adminInstructorsView->renderView();

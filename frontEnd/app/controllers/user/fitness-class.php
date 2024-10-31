@@ -1,48 +1,13 @@
 <?php
 session_start();
-require '../../models/user/userFitnessClassModel.php';
-require '../../views/user/pages/classScheduleView.php';
+require '../../models/classesModel.php';
+require '../../views/user/pages/classView.php';
 
-$instructorIdForOffSet = isset($_GET['instructor']) ? intval($_GET['instructor']) : null;
+$classesModel = new ClassesModel(require '../../config/db_connection.php');
 
-$fitnessClassModel = new UserFitnessClass(require '../../config/db_connection.php');
-$scheduledOn = null;
-$instructorIdForPost = null;
-$fitnessClassID = null;
-$userID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
-
-// Fetch instructor name and class data
-$instructorName = $fitnessClassModel->getInstructorNameById($instructorIdForOffSet);
-$classData = $fitnessClassModel->getClassesByInstructorById($instructorIdForOffSet);
+// Fetch classes data.
+$classesData = $classesModel->getClasses();
 
 // Pass the data to the view
-$fitnessClassView = new FitnessClassView($classData, $instructorName);
-
-/** Cleans the data. */
-function cleanData($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if(isset($_POST['confirm-fitness-class-booking'])) {
-        if(isset($_POST['scheduledOn']) && isset($_POST['instructorID']) && isset($_POST['fitnessClassID'])){
-            $scheduledOn = cleanData($_POST['scheduledOn']);
-            $instructorIdForPost = cleanData($_POST['instructorID']);
-            $fitnessClassID = cleanData($_POST['fitnessClassID']);
-            $fitnessClassScheduleID = $fitnessClassModel->getFitnessClassScheduleIdByClassInfo($scheduledOn, $instructorIdForPost, $fitnessClassID);
-
-            date_default_timezone_set('Asia/Kuala_Lumpur');
-            $currentDateTime = new DateTime(); // Get current date and time in Malaysia
-            $scheduledDateTime = new DateTime($scheduledOn);
-
-            $status = ($scheduledDateTime < $currentDateTime) ? "Completed" : "Pending";
-
-            $fitnessClassModel->createUserFitnessClassBooking($status, $fitnessClassScheduleID, $userID);
-        }
-    }
-}
-
-$fitnessClassView->renderView();
+$classesView = new ClassView($classesData);
+$classesView->renderView();

@@ -19,10 +19,7 @@ class NutritionistModel {
         $stmt->bind_param("s", $id);
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc();
-        }
-        return false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
 
     /** Function of getting all the nutritionists information by returning an associative array */
@@ -31,11 +28,7 @@ class NutritionistModel {
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return false;
-        }
+        return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : array();
     }
 
     public function getNutritionistScheduleIdByNutritionistIdAndScheduleDateTime($nutritionistID, $scheduleDateTime) {
@@ -44,35 +37,16 @@ class NutritionistModel {
         $stmt->bind_param("is", $nutritionistID, $scheduleDateTime);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
-    public function nutritionistsBookingHandler($nutritionist, $bookingDate, $bookingTime, $description, $makeReservationButton) {
-        if(isset($makeReservationButton) && !empty($nutritionist) && !empty($bookingDate) && !empty($bookingTime)) {
-
-            return true;
-        }
-        return false;
-    }
-
-    public function getAllNutritionistScheduleInformation() {
-        $sql = "SELECT * FROM " . $this->nutritionitsScheduleTable;
-        $stmt = $this->databaseConn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return false;
-        }
-    }
-
+    
     public function getAllNutritionistAvailableDateTimeById($id) {
     $sql = "SELECT * FROM " . $this->nutritionitsScheduleTable . " WHERE nutritionistID=?";
     $stmt = $this->databaseConn->prepare($sql);
     $stmt->bind_param("s", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : false;
+    return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : array();
     }
 
     public function isScheduleIDBooked($nutritionistScheduleID) {

@@ -93,4 +93,38 @@ class AdminPaymentsModel {
             throw new Exception("Failed to update payment: " . $stmt->error);
         }
     }
+
+    public function getFilteredPayments($limit, $offset, $filterType, $keywords) {
+        $query = "SELECT p.paymentID, p.type, p.status, p.createdOn, p.userID, ru.username 
+              FROM " . $this->paymentsTable . " AS p
+              JOIN " . $this->usersTable . " AS ru ON p.userID = ru.registeredUserID
+              WHERE 1=1";
+
+        if ($filterType === 'paymentID') {
+            $query .= " AND p.paymentID = ?";
+        } elseif ($filterType === 'details') {
+            $query .= " AND p.type LIKE ?";
+        } elseif ($filterType === 'username') {
+            $query .= " AND ru.username LIKE ?";
+        } elseif ($filterType === 'status') {
+            $query .= " AND p.status LIKE ?";
+        }
+
+        $query .= " LIMIT ? OFFSET ?";
+
+        $stmt = $this->databaseConn->prepare($query);
+
+        $searchTerm = '%' . $keywords . '%';
+
+        if ($filterType === 'paymentID') {
+            $stmt->bind_param("iii", $keywords, $limit, $offset);
+        } elseif ($filterType === 'details' || $filterType === 'username' || $filterType === 'status') {
+            $stmt->bind_param("ssi", $searchTerm, $limit, $offset);
+        } else {
+            $stmt->bind_param("ii", $limit, $offset);
+        }
+
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }

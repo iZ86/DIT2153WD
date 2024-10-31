@@ -4,6 +4,8 @@ class UserPaymentModel {
     private $userPaymentTable = 'payment';
     /** Nutritionist Booking Table */
     private $nutritionistBookingTable = 'nutritionist_booking';
+    /** Fitness class Booking Table */
+    private $fitnessClassBookingTable = 'fitness_class_booking';
     /** Database connection */
     private $databaseConn;
 
@@ -18,7 +20,7 @@ class UserPaymentModel {
         $stmt = $this->databaseConn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
 
     public function createUserPayment($type, $status, $createdOn, $userID) {
@@ -34,7 +36,7 @@ class UserPaymentModel {
         $stmt->bind_param("ssi", $type, $createdOn, $userID);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->num_rows > 0 ? $result->fetch_assoc() : false;
+        return $result->num_rows > 0 ? $result->fetch_assoc() : array();
     }
 
     /** Function of creating a booking for user's reservation */
@@ -53,6 +55,13 @@ class UserPaymentModel {
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         return $row['count'] > 0; // Returns true if the schedule ID is already booked
+    }
+
+    public function createFitnessClassBooking($status, $fitnessClassScheduleID, $userID, $paymentID) {
+        $sql = "INSERT INTO " . $this->fitnessClassBookingTable . " (status,fitnessClassScheduleID,userID,paymentID) VALUES (?,?,?,?)";
+        $stmt = $this->databaseConn->prepare($sql);
+        $stmt->bind_param("siii", $status, $fitnessClassScheduleID, $userID, $paymentID);
+        return $stmt->execute();
     }
 
 }

@@ -8,8 +8,11 @@ class AdminNutritionistsView {
     private $totalPagesSchedules;
     private $totalPagesBookings;
     private $currentPage;
+    private $noNutritionistsFound;
+    private $noSchedulesFound;
+    private $noBookingsFound;
 
-    public function __construct($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBookings, $currentPage) {
+    public function __construct($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBookings, $currentPage, $noNutritionistsFound, $noSchedulesFound, $noBookingsFound) {
         $this->nutritionists = $nutritionists;
         $this->schedules = $schedules;
         $this->bookings = $bookings;
@@ -17,6 +20,9 @@ class AdminNutritionistsView {
         $this->totalPagesSchedules = $totalPagesSchedules;
         $this->totalPagesBookings = $totalPagesBookings;
         $this->currentPage = $currentPage;
+        $this->noNutritionistsFound = $noNutritionistsFound;
+        $this->noSchedulesFound = $noSchedulesFound;
+        $this->noBookingsFound = $noBookingsFound;
     }
 
     public function renderView() : void {
@@ -49,10 +55,16 @@ class AdminNutritionistsView {
             <div class="mx-4">
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Nutritionists</h2>
-                    <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openNutritionistModal()">
-                        <i class="bx bxs-plus-circle"></i>
-                        <span>Add Nutritionist</span>
-                    </button>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="openNutritionistFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                            <i class='bx bx-filter-alt'></i>
+                            <span>Filter</span>
+                        </button>
+                        <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openNutritionistModal()">
+                            <i class="bx bxs-plus-circle"></i>
+                            <span>Add Nutritionist</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -60,9 +72,6 @@ class AdminNutritionistsView {
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
-                        <th class="py-4 px-6 w-12 border-b border-gray-200">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                        </th>
                         <th class="py-4 px-6 border-b border-gray-200">ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Name</th>
                         <th class="py-4 px-6 border-b border-gray-200">Phone</th>
@@ -73,26 +82,29 @@ class AdminNutritionistsView {
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
-                    <?php while ($nutritionist = $this->nutritionists->fetch_assoc()): ?>
-                        <tr class="bg-white">
-                            <td class="p-3">
-                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                            </td>
-                            <td class="p-3"><?php echo $nutritionist['nutritionistID']; ?></td>
-                            <td class="p-3"><?php echo $nutritionist['firstName'] . ' ' . $nutritionist['lastName']; ?></td>
-                            <td class="p-3"><?php echo $nutritionist['phoneNo']; ?></td>
-                            <td class="p-3"><?php echo $nutritionist['email']; ?></td>
-                            <td class="p-3"><?php echo $nutritionist['gender']; ?></td>
-                            <td class="p-3">
-                                <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $nutritionist['type']; ?></span>
-                            </td>
-                            <td class="p-3 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditNutritionistModal(<?php echo $nutritionist['nutritionistID']; ?>, '<?php echo addslashes($nutritionist['firstName']); ?>', '<?php echo addslashes($nutritionist['lastName']); ?>', '<?php echo addslashes($nutritionist['phoneNo']); ?>', '<?php echo addslashes($nutritionist['email']); ?>', '<?php echo addslashes($nutritionist['gender']); ?>', '<?php echo addslashes($nutritionist['type']); ?>')">
-                                    <i class="bx bx-pencil"></i>
-                                </button>
-                            </td>
+                    <?php if ($this->noNutritionistsFound): ?>
+                        <tr>
+                            <td colspan="7" class="py-4">No records found.</td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <?php while ($nutritionist = $this->nutritionists->fetch_assoc()): ?>
+                            <tr class="bg-white">
+                                <td class="p-3"><?php echo $nutritionist['nutritionistID']; ?></td>
+                                <td class="p-3"><?php echo $nutritionist['firstName'] . ' ' . $nutritionist['lastName']; ?></td>
+                                <td class="p-3"><?php echo $nutritionist['phoneNo']; ?></td>
+                                <td class="p-3"><?php echo $nutritionist['email']; ?></td>
+                                <td class="p-3"><?php echo $nutritionist['gender']; ?></td>
+                                <td class="p-3">
+                                    <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $nutritionist['type']; ?></span>
+                                </td>
+                                <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditNutritionistModal(<?php echo $nutritionist['nutritionistID']; ?>, '<?php echo addslashes($nutritionist['firstName']); ?>', '<?php echo addslashes($nutritionist['lastName']); ?>', '<?php echo addslashes($nutritionist['phoneNo']); ?>', '<?php echo addslashes($nutritionist['email']); ?>', '<?php echo addslashes($nutritionist['gender']); ?>', '<?php echo addslashes($nutritionist['type']); ?>')">
+                                        <i class="bx bx-pencil"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -118,10 +130,16 @@ class AdminNutritionistsView {
             <div class="mx-4">
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Nutritionists Schedule</h2>
-                    <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openScheduleModal()">
-                        <i class="bx bxs-plus-circle"></i>
-                        <span>Add Schedule</span>
-                    </button>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="openScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                            <i class='bx bx-filter-alt'></i>
+                            <span>Filter</span>
+                        </button>
+                        <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openScheduleModal()">
+                            <i class="bx bxs-plus-circle"></i>
+                            <span>Add Schedule</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -129,9 +147,6 @@ class AdminNutritionistsView {
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
-                        <th class="py-4 px-6 w-12 border-b border-gray-200">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                        </th>
                         <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Nutritionist Name</th>
                         <th class="py-4 px-6 border-b border-gray-200">Scheduled On</th>
@@ -141,27 +156,30 @@ class AdminNutritionistsView {
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
-                    <?php while ($schedule = $this->schedules->fetch_assoc()): ?>
-                        <tr class="bg-white">
-                            <td class="p-3">
-                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                            </td>
-                            <td class="p-3"><?php echo $schedule['nutritionistScheduleID']; ?></td>
-                            <td class="p-3"><?php echo $schedule['nutritionistName']; ?></td>
-                            <td class="p-3"><?php echo date('d M Y H:i', strtotime($schedule['scheduleDateTime'])); ?></td>
-                            <td class="p-3"><?php echo number_format($schedule['price'], 2); ?></td>
-                            <td class="p-3 mt-4">
-                                <span class="bg-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-100 text-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
-                                    <?php echo $schedule['status']; ?>
-                                </span>
-                            </td>
-                            <td class="p-3 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['nutritionistScheduleID']; ?>, '<?php echo addslashes($schedule['scheduleDateTime']); ?>', '<?php echo number_format($schedule['price'], 2); ?>', '<?php echo $schedule['nutritionistID']; ?>')">
-                                    <i class="bx bx-pencil"></i>
-                                </button>
-                            </td>
+                    <?php if ($this->noSchedulesFound): ?>
+                        <tr>
+                            <td colspan="6" class="py-4">No records found.</td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <?php while ($schedule = $this->schedules->fetch_assoc()): ?>
+                            <tr class="bg-white">
+                                <td class="p-3"><?php echo $schedule['nutritionistScheduleID']; ?></td>
+                                <td class="p-3"><?php echo $schedule['nutritionistName']; ?></td>
+                                <td class="p-3"><?php echo date('d M Y H:i', strtotime($schedule['scheduleDateTime'])); ?></td>
+                                <td class="p-3"><?php echo number_format($schedule['price'], 2); ?></td>
+                                <td class="p-3">
+                                    <span class="bg-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-100 text-<?php echo $schedule['status'] === 'Upcoming' ? 'blue' : ($schedule['status'] === 'In Progress' ? 'green' : 'gray'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg">
+                                        <?php echo $schedule['status']; ?>
+                                    </span>
+                                </td>
+                                <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditScheduleModal(<?php echo $schedule['nutritionistScheduleID']; ?>, '<?php echo addslashes($schedule['scheduleDateTime']); ?>', '<?php echo number_format($schedule['price'], 2); ?>', '<?php echo $schedule['nutritionistID']; ?>')">
+                                        <i class="bx bx-pencil"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -187,10 +205,16 @@ class AdminNutritionistsView {
             <div class="mx-4">
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Nutritionist Bookings</h2>
-                    <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openBookingModal()">
-                        <i class="bx bxs-plus-circle"></i>
-                        <span>Add Booking</span>
-                    </button>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="openBookingFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                            <i class='bx bx-filter-alt'></i>
+                            <span>Filter</span>
+                        </button>
+                        <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openBookingModal()">
+                            <i class="bx bxs-plus-circle"></i>
+                            <span>Add Booking</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -207,24 +231,26 @@ class AdminNutritionistsView {
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
-                    <?php while ($booking = $this->bookings->fetch_assoc()): ?>
-                        <tr class="bg-white">
-                            <td class="p-3"><?php echo $booking['nutritionistBookingID']; ?></td>
-                            <td class="p-3"><?php echo $booking['nutritionistName']; ?></td>
-                            <td class="p-3"><?php echo $booking['nutritionistScheduleID']; ?></td>
-                            <td class="p-3"><?php echo $booking['username']; ?></td>
-                            <td class="p-3"><?php echo $booking['description']; ?></td>
-                            <td class="p-3 flex justify-center">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditBookingModal(
-                                <?php echo $booking['nutritionistBookingID']; ?>,
-                                        '<?php echo addslashes($booking['description']); ?>',
-                                        '<?php echo $booking['nutritionistScheduleID']; ?>'
-                                        )">
-                                    <i class="bx bx-pencil"></i>
-                                </button>
-                            </td>
+                    <?php if ($this->noBookingsFound): ?>
+                        <tr>
+                            <td colspan="6" class="py-4">No records found.</td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <?php while ($booking = $this->bookings->fetch_assoc()): ?>
+                            <tr class="bg-white">
+                                <td class="p-3"><?php echo $booking['nutritionistBookingID']; ?></td>
+                                <td class="p-3"><?php echo $booking['nutritionistName']; ?></td>
+                                <td class="p-3"><?php echo $booking['nutritionistScheduleID']; ?></td>
+                                <td class="p-3"><?php echo $booking['username']; ?></td>
+                                <td class="p-3"><?php echo $booking['description']; ?></td>
+                                <td class="p-3 flex justify-center">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditBookingModal(<?php echo $booking['nutritionistBookingID']; ?>, '<?php echo addslashes($booking['description']); ?>', '<?php echo $booking['nutritionistScheduleID']; ?>')">
+                                        <i class="bx bx-pencil"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -247,6 +273,91 @@ class AdminNutritionistsView {
         </section>
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+        <!-- Nutritionist Filter Modal -->
+        <div id="nutritionistFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 class="text-2xl font-semibold mb-4">Filter Nutritionists</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                    <label class="block text-gray-700 text-sm font-medium">Filter By <span class="text-red-500">*</span></label>
+                    <select name="nutritionistFilterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Please Select a Type</option>
+                        <option value="nutritionistID">Nutritionist ID</option>
+                        <option value="name">Name</option>
+                        <option value="phone">Phone</option>
+                        <option value="email">Email</option>
+                        <option value="gender">Gender</option>
+                        <option value="type">Type</option>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
+                    <input name="nutritionistKeywords" type="text" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="button" onclick="closeNutritionistFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Schedule Filter Modal -->
+        <div id="scheduleFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 class="text-2xl font-semibold mb-4">Filter Schedule</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                    <label class="block text-gray-700 text-sm font-medium">Filter By <span class="text-red-500">*</span></label>
+                    <select name="scheduleFilterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Please Select a Type</option>
+                        <option value="scheduleID">Schedule ID</option>
+                        <option value="nutritionistName">Nutritionist Name</option>
+                        <option value="scheduledOn">Scheduled On (YYYY-MM-DD)</option>
+                        <option value="price">Price</option>
+                        <option value="status">Status</option>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
+                    <input name="scheduleKeywords" type="text" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="button" onclick="closeScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Booking Filter Modal -->
+        <div id="bookingFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 class="text-2xl font-semibold mb-4">Filter Bookings</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                    <label class="block text-gray-700 text-sm font-medium">Filter By <span class="text-red-500">*</span></label>
+                    <select name="bookingFilterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Please Select a Type</option>
+                        <option value="bookingID">Booking ID</option>
+                        <option value="nutritionistName">Nutritionist Name</option>
+                        <option value="scheduleID">Schedule ID</option>
+                        <option value="username">Username</option>
+                        <option value="description">Description</option>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
+                    <input name="bookingKeywords" type="text" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="button" onclick="closeBookingFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div id="nutritionistModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
@@ -376,6 +487,78 @@ class AdminNutritionistsView {
             </style>
 
         <script>
+            function openNutritionistFilterModal() {
+                const modal = document.getElementById('nutritionistFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeNutritionistFilterModal() {
+                const modal = document.getElementById('nutritionistFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
+            function openScheduleFilterModal() {
+                const modal = document.getElementById('scheduleFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeScheduleFilterModal() {
+                const modal = document.getElementById('scheduleFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
+            function openBookingFilterModal() {
+                const modal = document.getElementById('bookingFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeBookingFilterModal() {
+                const modal = document.getElementById('bookingFilterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openNutritionistModal() {
                 const modal = document.getElementById('nutritionistModal');
                 const overlay = document.getElementById('modalOverlay');

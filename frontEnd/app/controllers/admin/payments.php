@@ -30,7 +30,17 @@ $limit = 10;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $limit;
 
-$payments = $adminPaymentsModel->getAllPayments($limit, $offset);
+$filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
+$keywords = isset($_GET['keywords']) ? $_GET['keywords'] : '';
+
+if (!empty($filterType) && !empty($keywords)) {
+    $payments = $adminPaymentsModel->getFilteredPayments($limit, $offset, $filterType, $keywords);
+} else {
+    $payments = $adminPaymentsModel->getAllPayments($limit, $offset);
+}
+
+$noPaymentsFound = $payments->num_rows === 0;
+
 $totalPagesPayments = ceil($payments->num_rows / $limit);
 
 $users = $adminPaymentsModel->getAllUsers();

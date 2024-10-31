@@ -46,10 +46,10 @@ class AdminPaymentsView {
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Payments</h2>
                     <div class="flex items-center space-x-4">
-                        <div class="relative">
-                            <input type="text" class="pl-12 pr-4 py-2 border border-gray-300 rounded-full shadow-sm focus:ring-1 focus:ring-indigo-200 focus:border-indigo-500 outline-none text-gray-700 w-64" placeholder="Search...">
-                            <i class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
+                        <button onclick="openFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2">
+                            <i class='bx bx-filter-alt'></i>
+                            <span>Filter</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -117,6 +117,33 @@ class AdminPaymentsView {
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
+        <div id="filterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+                <h2 class="text-2xl font-semibold mb-4">Filter Payments</h2>
+                <hr class="py-2">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                    <label class="block text-gray-700 text-sm font-medium">Filter By <span class="text-red-500">*</span></label>
+                    <select name="filterType" id="scheduleFilterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        <option value="">Please Select a Type</option>
+                        <option value="paymentID">Payment ID</option>
+                        <option value="details">Details</option>
+                        <option value="username">Username</option>
+                        <option value="date">Date</option>
+                        <option value="status">Status</option>
+                    </select>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
+                    <input name="keywords" type="text" id="scheduleKeywords" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="button" onclick="closeFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
+                        <a href="../admin/payments.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div id="paymentModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
                 <h2 id="paymentModalTitle" class="text-2xl font-semibold mb-4">Edit Payment</h2>
@@ -176,8 +203,20 @@ class AdminPaymentsView {
         </style>
 
         <script>
-            function closePaymentModal() {
-                const modal = document.getElementById('paymentModal');
+            function openFilterModal() {
+                const modal = document.getElementById('filterModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closeFilterModal() {
+                const modal = document.getElementById('filterModal');
                 const overlay = document.getElementById('modalOverlay');
 
                 modal.classList.remove('show');
@@ -185,7 +224,6 @@ class AdminPaymentsView {
                     modal.classList.add('hidden');
                     overlay.classList.add('hidden');
                 }, 300);
-                clearPaymentModalFields();
             }
 
             function openEditPaymentModal(paymentID, type, amount, createdOn, status, userID) {
@@ -204,6 +242,18 @@ class AdminPaymentsView {
                 setTimeout(() => {
                     modal.classList.add('show');
                 }, 10);
+            }
+
+            function closePaymentModal() {
+                const modal = document.getElementById('paymentModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+                clearPaymentModalFields();
             }
 
             function clearPaymentModalFields() {
