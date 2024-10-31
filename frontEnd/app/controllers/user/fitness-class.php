@@ -53,3 +53,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $fitnessClassView->renderView();
+unset($_SESSION['fitnessClassScheduleID']);
+unset($_SESSION['status']);
