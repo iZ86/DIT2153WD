@@ -21,7 +21,6 @@ class UserTrackExerciseRoutineDetailModel {
      * Otherwise, return an empty array.
     */
     public function getExerciseRoutineDetailDatasetFromDate($recordedOnDate, $userID) {
-        date_default_timezone_set("Asia/Kuala_Lumpur");
         // To be used in SQL BETWEEN statement, BETWEEN does not include the end date
         // So increment by one.
         $endDate = date_create($recordedOnDate);
