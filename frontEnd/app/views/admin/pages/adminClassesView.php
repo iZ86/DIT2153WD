@@ -100,6 +100,9 @@ class AdminClassesView {
                                 <td class="p-3"><?php echo $class['name']; ?></td>
                                 <td class="p-3"><?php echo $class['description']; ?></td>
                                 <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openPhotoModal('<?php echo addslashes($class['fitnessClassImageFilePath']); ?>')">
+                                        <i class="bx bx-image"></i>
+                                    </button>
                                     <button class="text-gray-500 hover:text-blue-600"
                                             onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>', '<?php echo addslashes($class['fitnessClassImageFilePath']); ?>')">
                                         <i class="bx bx-pencil"></i>
@@ -208,6 +211,13 @@ class AdminClassesView {
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
+        <div id="photoModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl p-6">
+                <img id="photoModalImage" src="" alt="Classes Photo" class="rounded-lg">
+                <button onclick="closePhotoModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mt-4">Close</button>
+            </div>
+        </div>
+
         <div id="filterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
                 <h2 class="text-2xl font-semibold mb-4">Filter Classes</h2>
@@ -272,9 +282,6 @@ class AdminClassesView {
                     <label class="block text-gray-700 text-sm font-medium mt-4">Description <span class="text-red-500">*</span></label>
                     <textarea name="description" id="classDescription" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required></textarea>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4 mb-2">Current Image</label>
-                    <img id="imagePreview" src="https://placehold.co/640x360/png?text=No+Image+Available" alt="Current Class Image" class="w-full rounded-xl h-auto mb-2" />
-
                     <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
                     <input type="file" name="classImage" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
 
@@ -330,6 +337,32 @@ class AdminClassesView {
         </div>
 
         <script>
+            function openPhotoModal(imagePath) {
+                document.getElementById('photoModalImage').src = imagePath;
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                // Trigger the transition
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closePhotoModal() {
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openFilterModal() {
                 const modal = document.getElementById('filterModal');
                 const overlay = document.getElementById('modalOverlay');
@@ -439,9 +472,6 @@ class AdminClassesView {
                 document.getElementById('fitnessClassID').value = id;
                 document.getElementById('className').value = name;
                 document.getElementById('classDescription').value = description;
-
-                const imagePreview = document.getElementById('imagePreview');
-                imagePreview.src = fitnessClassImageFilePath ? fitnessClassImageFilePath : 'default-image-path.jpg';
 
                 document.getElementById('submitClassButton').name = 'editClassButton';
                 document.getElementById('submitClassButton').value = 'Edit Class';
