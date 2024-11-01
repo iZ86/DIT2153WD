@@ -53,10 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
             $adminNutritionistsModel->addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
+
+            $_SESSION['successMessage'] = "Added new nutritionist successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
-        } else {
-            echo "Please fill in all required fields.";
         }
     }
 
@@ -103,13 +104,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
             $adminNutritionistsModel->editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
+
+            $_SESSION['successMessage'] = "Edited nutritionist record successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
-        } else {
-            echo "Please fill in all required fields.";
         }
     }
 
+    #TODO:Delete this function
     if (isset($_POST['deleteNutritionistButton'])) {
         $nutritionistID = $_POST['nutritionistID'];
         $adminNutritionistsModel->deleteNutritionist($nutritionistID);
@@ -125,6 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($nutritionistID) && !empty($scheduleDateTime) && !empty($price)) {
             try {
                 $adminNutritionistsModel->addSchedule($nutritionistID, $scheduleDateTime, $price);
+
+                $_SESSION['successMessage'] = "Added new nutritionist schedule successfully.";
+
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit;
             } catch (Exception $e) {
@@ -143,6 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($nutritionistScheduleID) && !empty($nutritionistID) && !empty($scheduleDateTime) && !empty($price)) {
             $adminNutritionistsModel->editSchedule($nutritionistScheduleID, $nutritionistID, $scheduleDateTime, $price);
+
+            $_SESSION['successMessage'] = "Edited class schedule successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
