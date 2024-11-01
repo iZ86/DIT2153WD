@@ -85,7 +85,7 @@ class AdminUsersView {
                                     <span class="bg-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $user['membershipStatus']; ?></span>
                                 </td>
                                 <td class="p-3 mt-4 flex justify-center space-x-2">
-                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>')">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>', '<?php echo $user['startOn']; ?>', '<?php echo $user['endOn']; ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
                                 </td>
@@ -269,8 +269,8 @@ class AdminUsersView {
                 document.getElementById('phoneNo').value = phoneNo;
                 document.getElementById('gender').value = gender;
                 document.getElementById('dateOfBirth').value = dateOfBirth;
-                document.getElementById('membershipStart').value = membershipStart ? membershipStart: '-';
-                document.getElementById('membershipEnd').value = membershipEnd ? membershipEnd: '-';
+                document.getElementById('membershipStart').value = membershipStart ? membershipStart : 'N/A';
+                document.getElementById('membershipEnd').value = membershipEnd ? membershipEnd : 'N/A';
 
                 setTimeout(() => {
                     modal.classList.add('show');
