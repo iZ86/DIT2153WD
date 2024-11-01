@@ -34,8 +34,11 @@ class UserPaymentView {
 
     /** Render one order. */
     public function renderOneOrderContent($orderName, $price) {?> 
-    
-        <h3 class="pb-2 font-normal text-2xl"><?php echo $orderName;?> <span class="float-right">RM <?php echo $price ?></span></h3>
+    <div class="flex pb-2 font-normal justify-between text-2xl">
+        <h3><?php echo $orderName;?></h3>
+        <h3>RM <?php echo $price ?></h3>
+    </div>
+        
     
     <?php
     }
@@ -62,7 +65,7 @@ class UserPaymentView {
                 $this->renderOneOrderContent("Booking schedule ID " .
                 $this->dataForPaymentView['nutritionistScheduleData']['nutritionistScheduleID'] .
                 " with " .
-                $this->dataForPaymentView['nutritionistData']['firstName'] . " " . $this->dataForPaymentView['nutritionistData']['lastname'] . 
+                $this->dataForPaymentView['nutritionistData']['firstName'] . " " . $this->dataForPaymentView['nutritionistData']['lastName'] . 
                 " at " . $this->dataForPaymentView['nutritionistScheduleData']['scheduleDateTime'],
                 $this->dataForPaymentView['nutritionistScheduleData']['price']);
             }
@@ -70,7 +73,16 @@ class UserPaymentView {
             ?>
 
             <div class="border border-gray-500 border-solid mb-6"></div>
-            <h2 class="text-2xl font-semibold">Grand Total <span class="float-right">RM<?php echo $this->dataForPaymentView['totalPrice'];  ?> </span></h2>
+            <h2 class="text-2xl font-semibold">Grand Total <span class="float-right">RM<?php
+            if (isset($this->dataForPaymentView['membershipData'])) {
+                echo $this->dataForPaymentView['totalPrice']; 
+            } else if (isset($this->dataForPaymentView['nutritionistScheduleData'])) {
+                echo $this->dataForPaymentView['nutritionistScheduleData']['price'];
+
+            }
+            
+            
+            ?> </span></h2>
     </div>
     <?php
     }

@@ -67,7 +67,7 @@ class UserBillingModel {
                     " scheduled on " .
                     $nutrionistBookingTransactionData["scheduleDateTime"] . " (RM" . $nutrionistBookingTransactionData["price"] . ")";
 
-                    $itemp[] = $item;
+                    $items[] = $item;
                     $totalAmount += $nutrionistBookingTransactionData["price"];
 
                 }
@@ -162,7 +162,6 @@ class UserBillingModel {
         $selectNutrionistBookingTransactionDataSQL = "SELECT * FROM " . $this->nutritionistBookingTable . " nb, " .
         $this->nutritionistScheduleTable . " ns, " . $this->nutritionistTable . " n WHERE nb.nutritionistScheduleID = ns.nutritionistScheduleID AND ns.nutritionistID = n.nutritionistID
         AND nb.paymentID = ?";
-
         $selectNutrionistBookingTransactionDataSTMT = $this->databaseConn->prepare($selectNutrionistBookingTransactionDataSQL);
         $selectNutrionistBookingTransactionDataSTMT->bind_param("s", $paymentID);
         $selectNutrionistBookingTransactionDataSTMT->execute();

@@ -3,6 +3,11 @@ session_start();
 require '../../models/user/userPaymentModel.php';
 require '../../views/user/pages/userPaymentView.php';
 
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 /** Set the timezone for Malaysia. */
 date_default_timezone_set('Asia/Kuala_Lumpur');
 $userPaymentModel = new UserPaymentModel(require '../../config/db_connection.php');
@@ -101,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         if ($paymentStatus) {
 
                             // Redirect nicely.
-                            die(header('location: index.php'));
+                            die(header('location: paymentSuccess.php'));
 
                         } else {
                             die(header('location: error.php'));
@@ -109,13 +114,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     }     
             
                 } else if (isset($_GET['nutritionistScheduleID'])) {
-                    $nutritionistScheduleID = cleanData($nutritionistScheduleID);
+                    $nutritionistScheduleID = cleanData($_GET['nutritionistScheduleID']);
+                    echo $nutritionistScheduleID;
                     if (validateData($nutritionistScheduleID, $regexIDFormat)) {
-
-                        $paymentStatus = $userPaymentModel->userMakeNutritionistSchedulePurchase($nutritionistScheduleID);
+                        $paymentStatus = $userPaymentModel->userMakeNutritionistSchedulePurchase($nutritionistScheduleID, $_SESSION['userID'], "card");
                         
                         if ($paymentStatus) {
-                            die(header('location: index.php'));
+                            
+                            die(header('location: paymentSuccess.php'));
                         } else {
                             die(header("location: error.php"));
                         }
@@ -166,11 +172,10 @@ if (isGetRequestFormatValid()) {
         }
         
     } else if (isset($_GET['nutritionistScheduleID'])) {
-        $nutritionistScheduleID = cleanData($nutritionistScheduleID);
+        $nutritionistScheduleID = cleanData($_GET['nutritionistScheduleID']);
         if (validateData($nutritionistScheduleID, $regexIDFormat)) {
 
             $nutritionistSchedulePurchaseData = $userPaymentModel->GetNutritionistSchedulePurchaseData($nutritionistScheduleID);
-            
             if (sizeof($nutritionistSchedulePurchaseData) > 0) {
                 $paymentView = new UserPaymentView($nutritionistSchedulePurchaseData);
                 $paymentView->renderView();

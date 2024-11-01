@@ -2,6 +2,10 @@
 require('../../views/user/pages/userErrorRequestView.php');
 session_start();
 
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submitReturnToIndexButton'])) {
