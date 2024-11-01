@@ -260,7 +260,7 @@ class AdminClassesView {
         </div>
 
         <div id="classModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="classModalTitle" class="text-2xl font-semibold mb-4">Add Class</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
@@ -287,7 +287,7 @@ class AdminClassesView {
         </div>
 
         <div id="scheduleModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="scheduleModalTitle" class="text-2xl font-semibold mb-4">Add Schedule</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
