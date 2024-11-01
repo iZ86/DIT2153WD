@@ -23,7 +23,7 @@
                         <i class='bx bxs-user text-base'></i>
                         <span class="font-medium">View Profile</span>
                     </a>
-                    <a href=""
+                    <a href="billing.php"
                        class="flex items-center space-x-5 py-3 px-5 hover:bg-gray-100 rounded-md">
                         <i class='bx bxs-user text-base'></i>
                         <span class="font-medium">Billing</span>
