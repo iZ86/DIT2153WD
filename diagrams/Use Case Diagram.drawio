@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.3" pages="9">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.3" pages="10">
   <diagram id="UvEfXt0v__yHU1YcHUCF" name="Account">
     <mxGraphModel dx="1328" dy="260" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -293,33 +293,66 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Water Consumption Tracking" id="oOB7m9ggzSfHnKzs69mt">
-    <mxGraphModel dx="683" dy="-729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="-320" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="pBcG-dfRgkgK5ZM0dJeX-0" />
         <mxCell id="pBcG-dfRgkgK5ZM0dJeX-1" parent="pBcG-dfRgkgK5ZM0dJeX-0" />
-        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-7" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="pBcG-dfRgkgK5ZM0dJeX-1">
+        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-7" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="pBcG-dfRgkgK5ZM0dJeX-1" vertex="1">
           <mxGeometry x="350" y="1210" width="199.5" height="220" as="geometry" />
         </mxCell>
         <mxCell id="pBcG-dfRgkgK5ZM0dJeX-6" value="&lt;div&gt;Huan Fitness Centre&amp;nbsp;&lt;/div&gt;&lt;div&gt;Water Consumption&lt;br&gt;&lt;/div&gt;&lt;div&gt;Tracking Subsystem&lt;/div&gt;&lt;div&gt;Actor: Member and Non-Member&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="pBcG-dfRgkgK5ZM0dJeX-1" vertex="1">
           <mxGeometry x="350" y="1210" width="200" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="Vn7liZgt7kTDC8L7tEHm-5" value="Non-Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="pBcG-dfRgkgK5ZM0dJeX-1">
+        <mxCell id="Vn7liZgt7kTDC8L7tEHm-5" value="Non-Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="pBcG-dfRgkgK5ZM0dJeX-1" vertex="1">
           <mxGeometry x="610" y="1315" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-8" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="pBcG-dfRgkgK5ZM0dJeX-1" source="5_Y4yyYvlzy2MUtuTQAK-9">
+        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-8" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="pBcG-dfRgkgK5ZM0dJeX-1" source="5_Y4yyYvlzy2MUtuTQAK-9" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="600" y="1345" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-9" value="&lt;div&gt;Manage Water&amp;nbsp;&lt;/div&gt;&lt;div&gt;Consumption Data&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="pBcG-dfRgkgK5ZM0dJeX-1">
+        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-9" value="&lt;div&gt;Manage Water&amp;nbsp;&lt;/div&gt;&lt;div&gt;Consumption Data&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="pBcG-dfRgkgK5ZM0dJeX-1" vertex="1">
           <mxGeometry x="377.75" y="1320" width="144" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-11" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="pBcG-dfRgkgK5ZM0dJeX-1" target="5_Y4yyYvlzy2MUtuTQAK-9">
+        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-11" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="pBcG-dfRgkgK5ZM0dJeX-1" target="5_Y4yyYvlzy2MUtuTQAK-9" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="280" y="1345" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-13" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="pBcG-dfRgkgK5ZM0dJeX-1">
+        <mxCell id="5_Y4yyYvlzy2MUtuTQAK-13" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="pBcG-dfRgkgK5ZM0dJeX-1" vertex="1">
+          <mxGeometry x="250" y="1315" width="30" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="BMI Tracking" id="IEXaU4rBEdWsDfrv2WkT">
+    <mxGraphModel dx="989" dy="-562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-0" />
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-1" parent="9wsHQHkOOyqqx-XYQfYR-0" />
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="9wsHQHkOOyqqx-XYQfYR-1">
+          <mxGeometry x="350" y="1210" width="199.5" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-3" value="&lt;div&gt;Huan Fitness Centre&amp;nbsp;&lt;/div&gt;&lt;div&gt;BMI&lt;/div&gt;&lt;div&gt;Tracking Subsystem&lt;/div&gt;&lt;div&gt;Actor: Member and Non-Member&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="9wsHQHkOOyqqx-XYQfYR-1">
+          <mxGeometry x="350" y="1210" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-4" value="Non-Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="9wsHQHkOOyqqx-XYQfYR-1">
+          <mxGeometry x="610" y="1315" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="9wsHQHkOOyqqx-XYQfYR-1" source="9wsHQHkOOyqqx-XYQfYR-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="1345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-6" value="&lt;div&gt;Manage BMI&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;Data&lt;/span&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="9wsHQHkOOyqqx-XYQfYR-1">
+          <mxGeometry x="377.75" y="1320" width="144" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-7" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="9wsHQHkOOyqqx-XYQfYR-1" target="9wsHQHkOOyqqx-XYQfYR-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="1345" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9wsHQHkOOyqqx-XYQfYR-8" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="9wsHQHkOOyqqx-XYQfYR-1">
           <mxGeometry x="250" y="1315" width="30" height="60" as="geometry" />
         </mxCell>
       </root>
