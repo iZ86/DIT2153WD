@@ -15,6 +15,9 @@ $classesCount = $adminIndexModel->countClasses();
 $nutritionistsCount = $adminIndexModel->countNutritionists();
 $instructorsCount = $adminIndexModel->countInstructors();
 
+$upcomingClassSchedules = $adminIndexModel->getUpcomingClassSchedules();
+$upcomingNutritionistSchedules = $adminIndexModel->getUpcomingNutritionistSchedules();
+$latestTransactions = $adminIndexModel->getLatestTransactions();
 
-$adminIndexView = new AdminIndexView($usersCount, $classesCount, $nutritionistsCount, $instructorsCount);
+$adminIndexView = new AdminIndexView($usersCount, $classesCount, $nutritionistsCount, $instructorsCount, $upcomingClassSchedules, $upcomingNutritionistSchedules, $latestTransactions);
 $adminIndexView->renderView();

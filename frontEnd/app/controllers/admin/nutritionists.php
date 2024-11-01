@@ -53,10 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
             $adminNutritionistsModel->addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
+
+            $_SESSION['successMessage'] = "Added new nutritionist successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
-        } else {
-            echo "Please fill in all required fields.";
         }
     }
 
@@ -103,18 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
             $adminNutritionistsModel->editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
+
+            $_SESSION['successMessage'] = "Edited nutritionist record successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
-        } else {
-            echo "Please fill in all required fields.";
         }
-    }
-
-    if (isset($_POST['deleteNutritionistButton'])) {
-        $nutritionistID = $_POST['nutritionistID'];
-        $adminNutritionistsModel->deleteNutritionist($nutritionistID);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
     }
 
     if (isset($_POST['addScheduleButton']) && $_POST['addScheduleButton'] === "Add Schedule") {
@@ -125,6 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($nutritionistID) && !empty($scheduleDateTime) && !empty($price)) {
             try {
                 $adminNutritionistsModel->addSchedule($nutritionistID, $scheduleDateTime, $price);
+
+                $_SESSION['successMessage'] = "Added new nutritionist schedule successfully.";
+
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit;
             } catch (Exception $e) {
@@ -143,19 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($nutritionistScheduleID) && !empty($nutritionistID) && !empty($scheduleDateTime) && !empty($price)) {
             $adminNutritionistsModel->editSchedule($nutritionistScheduleID, $nutritionistID, $scheduleDateTime, $price);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
-        }
-    }
 
-    if (isset($_POST['addBookingButton']) && $_POST['addBookingButton'] === "Add Booking") {
-        $description = trim($_POST['description']);
-        $nutritionistScheduleID = $_POST['nutritionistScheduleID'];
-        $userID = $_SESSION['userID'];
-        $paymentID = $_POST['paymentID'];
+            $_SESSION['successMessage'] = "Edited class schedule successfully.";
 
-        if (!empty($description) && !empty($nutritionistScheduleID) && !empty($userID) && !empty($paymentID)) {
-            $adminNutritionistsModel->addBooking($description, $nutritionistScheduleID, $userID, $paymentID);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }

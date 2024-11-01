@@ -90,7 +90,7 @@ class AdminUsersModel {
         } elseif ($filterType === 'gender') {
             $query .= " AND ru.gender LIKE ?";
         } elseif ($filterType === 'membership') {
-            $query .= " AND IF(ms.endOn IS NULL OR ms.endOn < NOW(), 'Inactive', 'Active') = ?";
+            $query .= " AND IF(ms.endOn IS NULL OR ms.endOn > NOW(), 'Active', 'Inactive') = ?";
         }
 
         $query .= " LIMIT ? OFFSET ?";
@@ -100,10 +100,10 @@ class AdminUsersModel {
 
         // Prepare parameters based on filter type
         if ($filterType === 'userID') {
-            $params[] = (int)$keywords; // Exact match for userID
+            $params[] = (int)$keywords;
         } elseif ($filterType === 'membership') {
             // Direct match for membership status
-            $params[] = $keywords; // Expecting 'Active' or 'Inactive'
+            $params[] = $keywords;
         } else {
             // Use LIKE for other filters
             $params[] = '%' . $keywords . '%';
@@ -112,7 +112,6 @@ class AdminUsersModel {
         $params[] = $limit;
         $params[] = $offset;
 
-        // Bind parameters dynamically
         $stmt->bind_param(str_repeat('s', count($params) - 2) . 'ii', ...$params);
         $stmt->execute();
         return $stmt->get_result();
