@@ -3,6 +3,11 @@ session_start();
 require '../../models/user/userPaymentModel.php';
 require '../../views/user/pages/userPaymentView.php';
 
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 /** Set the timezone for Malaysia. */
 date_default_timezone_set('Asia/Kuala_Lumpur');
 $userPaymentModel = new UserPaymentModel(require '../../config/db_connection.php');
