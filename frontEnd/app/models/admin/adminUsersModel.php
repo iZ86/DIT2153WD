@@ -69,13 +69,13 @@ class AdminUsersModel {
 
     public function getFilteredUsers($limit, $offset, $filterType, $keywords) {
         $query = "SELECT ru.registeredUserID, ru.firstName, ru.lastName, CONCAT(ru.firstName, ' ', ru.lastName) AS fullName,
-                         ru.phoneNo, ru.username, ru.email, ru.gender, ru.dateOfBirth,
-                         ms.startOn, ms.endOn, 
-                         IF(ms.endOn IS NULL OR ms.endOn < NOW(), 'Inactive', 'Active') AS membershipStatus 
-                  FROM " . $this->registeredUserTable . " AS ru
-                  JOIN " . $this->userTable . " AS u ON ru.registeredUserID = u.userID
-                  LEFT JOIN " . $this->memberSubscriptionTable . " AS ms ON ms.membershipID = u.userID
-                  WHERE u.userID IS NOT NULL";
+                     ru.phoneNo, ru.username, ru.email, ru.gender, ru.dateOfBirth,
+                     ms.startOn, ms.endOn, 
+                     IF(ms.endOn IS NULL OR ms.endOn < NOW(), 'Inactive', 'Active') AS membershipStatus 
+              FROM " . $this->registeredUserTable . " AS ru
+              JOIN " . $this->userTable . " AS u ON ru.registeredUserID = u.userID
+              LEFT JOIN " . $this->memberSubscriptionTable . " AS ms ON ms.membershipID = u.userID
+              WHERE u.userID IS NOT NULL";
 
         if ($filterType === 'userID') {
             $query .= " AND ru.registeredUserID = ?";
@@ -98,15 +98,21 @@ class AdminUsersModel {
         $stmt = $this->databaseConn->prepare($query);
         $params = [];
 
+        // Prepare parameters based on filter type
         if ($filterType === 'userID') {
-            $params[] = (int)$keywords;
+            $params[] = (int)$keywords; // Exact match for userID
+        } elseif ($filterType === 'membership') {
+            // Direct match for membership status
+            $params[] = $keywords; // Expecting 'Active' or 'Inactive'
         } else {
+            // Use LIKE for other filters
             $params[] = '%' . $keywords . '%';
         }
 
         $params[] = $limit;
         $params[] = $offset;
 
+        // Bind parameters dynamically
         $stmt->bind_param(str_repeat('s', count($params) - 2) . 'ii', ...$params);
         $stmt->execute();
         return $stmt->get_result();
