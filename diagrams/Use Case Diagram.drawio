@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.3" pages="8">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.3" pages="9">
   <diagram id="UvEfXt0v__yHU1YcHUCF" name="Account">
-    <mxGraphModel dx="2045" dy="650" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1328" dy="260" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="345" y="40" width="222" height="590" as="geometry" />
+          <mxGeometry x="345" y="40" width="222" height="670" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="UMMh5vF_zlfM2lWgeUB0-1" target="UMMh5vF_zlfM2lWgeUB0-3" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -25,75 +25,75 @@
           <mxGeometry x="412" y="370" width="144" height="51" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-6" value="Delete Account" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="398" y="430" width="144" height="51" as="geometry" />
+          <mxGeometry x="410" y="430" width="144" height="51" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-7" value="Log In" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="384" y="190" width="144" height="51" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-8" value="Change Password" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="384" y="490" width="144" height="51" as="geometry" />
+          <mxGeometry x="390" y="490" width="144" height="51" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-9" value="Log Out" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="370" y="550" width="144" height="51" as="geometry" />
+          <mxGeometry x="380" y="550" width="144" height="51" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-10" value="&lt;div&gt;Huan Fitness Centre&amp;nbsp;&lt;/div&gt;&lt;div&gt;Account Subsystem&lt;/div&gt;&lt;div&gt;All Actors&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="388" y="40" width="140" height="60" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-27" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="UMMh5vF_zlfM2lWgeUB0-4" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="370" as="sourcePoint" />
+            <mxPoint x="220" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-28" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="UMMh5vF_zlfM2lWgeUB0-5" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="370" as="sourcePoint" />
+            <mxPoint x="220" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-29" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="UMMh5vF_zlfM2lWgeUB0-6" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="370" as="sourcePoint" />
+            <mxPoint x="220" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-31" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="UMMh5vF_zlfM2lWgeUB0-8" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="370" as="sourcePoint" />
+            <mxPoint x="220" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-32" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="UMMh5vF_zlfM2lWgeUB0-9" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="370" as="sourcePoint" />
+            <mxPoint x="220" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="giz9P1ZeP90XBQUPUcil-13" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="giz9P1ZeP90XBQUPUcil-2" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="370" as="sourcePoint" />
+            <mxPoint x="220" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="giz9P1ZeP90XBQUPUcil-14" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="UMMh5vF_zlfM2lWgeUB0-7" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="210" y="370" as="sourcePoint" />
+            <mxPoint x="220" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-17" value="Registered User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="180" y="341" width="30" height="60" as="geometry" />
+          <mxGeometry x="180" y="365.5" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-24" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;" parent="1" source="UMMh5vF_zlfM2lWgeUB0-20" target="UMMh5vF_zlfM2lWgeUB0-17" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-20" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="90" y="281" width="30" height="60" as="geometry" />
+          <mxGeometry x="90" y="290" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-25" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;" parent="1" source="UMMh5vF_zlfM2lWgeUB0-21" target="UMMh5vF_zlfM2lWgeUB0-17" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-21" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="90" y="401" width="30" height="60" as="geometry" />
+          <mxGeometry x="90" y="421" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;" parent="1" source="UMMh5vF_zlfM2lWgeUB0-36" target="UMMh5vF_zlfM2lWgeUB0-17" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-36" value="Non-Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="10" y="341" width="30" height="60" as="geometry" />
+          <mxGeometry x="10" y="365.5" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="UMMh5vF_zlfM2lWgeUB0-39" value="Admin can do them on all Member and Non-Member accounts, but Non-Member and Member can only do it on their own account" style="shape=note;size=20;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="610" y="340" width="190" height="121" as="geometry" />
@@ -112,6 +112,14 @@
         </mxCell>
         <mxCell id="giz9P1ZeP90XBQUPUcil-2" value="Reset Password" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="398" y="250" width="144" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="wcYVotjQEINTRqdpL-4Y-2" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="wcYVotjQEINTRqdpL-4Y-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wcYVotjQEINTRqdpL-4Y-1" value="View Billing" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="610" width="144" height="51" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
@@ -187,7 +195,7 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="WUzvtm-olWEOtWcOqcAx-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="345" y="590" width="235" height="520" as="geometry" />
+          <mxGeometry x="345" y="590" width="235" height="450" as="geometry" />
         </mxCell>
         <mxCell id="WUzvtm-olWEOtWcOqcAx-3" value="Select Fitness Class" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="353" y="679" width="144" height="51" as="geometry" />
@@ -225,9 +233,6 @@
         <mxCell id="rsabWdAyQLvSF-sQv-Db-4" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="680" y="867.5" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="rsabWdAyQLvSF-sQv-Db-6" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="210" y="990" width="30" height="60" as="geometry" />
-        </mxCell>
         <mxCell id="DJT2G0IXBK_LxP5EniVI-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" target="WUzvtm-olWEOtWcOqcAx-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="240" y="900" as="sourcePoint" />
@@ -250,26 +255,6 @@
         </mxCell>
         <mxCell id="rsabWdAyQLvSF-sQv-Db-8" value="Non-Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="210" y="867.5" width="30" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="UAXVyyDNQae7GgLdqQZB-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="yu1MMa6tBs_NguSalVcu-2" edge="1" target="rsabWdAyQLvSF-sQv-Db-6">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="240" y="1110" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="UAXVyyDNQae7GgLdqQZB-2" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="yu1MMa6tBs_NguSalVcu-2" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="679.9999999999998" y="900" as="targetPoint" />
-            <mxPoint x="450" y="1150" as="sourcePoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="yu1MMa6tBs_NguSalVcu-2" value="View Billing" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="353.5" y="1020" width="144" height="51" as="geometry" />
-        </mxCell>
-        <mxCell id="UAXVyyDNQae7GgLdqQZB-3" value="Admin can view billing for all members. While, member can only view their own." style="shape=note;size=20;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="342" y="1130" width="167" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="UAXVyyDNQae7GgLdqQZB-4" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;dashed=1;" parent="1" source="yu1MMa6tBs_NguSalVcu-2" target="UAXVyyDNQae7GgLdqQZB-3" edge="1">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
@@ -387,7 +372,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Fitness Class Participation" id="fpzGJYmJm0yZ95BRYXMV">
-    <mxGraphModel dx="1195" dy="-450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1147" dy="-476" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="P4w1qfhurbP1mYHBAhKP-0" />
         <mxCell id="P4w1qfhurbP1mYHBAhKP-1" parent="P4w1qfhurbP1mYHBAhKP-0" />
@@ -444,7 +429,7 @@
         <mxCell id="P4w1qfhurbP1mYHBAhKP-14" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="P4w1qfhurbP1mYHBAhKP-1" vertex="1">
           <mxGeometry x="204" y="1440" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="1tK8dV2ESJZORTpAqH68-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="P4w1qfhurbP1mYHBAhKP-1" source="BwWuFHgmVDn2bfSrEePK-0">
+        <mxCell id="1tK8dV2ESJZORTpAqH68-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=1;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="P4w1qfhurbP1mYHBAhKP-1" source="BwWuFHgmVDn2bfSrEePK-0">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="620" y="1480" as="targetPoint" />
           </mxGeometry>
@@ -459,7 +444,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Nutrionist Booking" id="L9OC5RcmWj4cJKFkvtak">
-    <mxGraphModel dx="2049" dy="1114" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1195" dy="650" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="kck3oQJdlhWTeIDru22B-0" />
         <mxCell id="kck3oQJdlhWTeIDru22B-1" parent="kck3oQJdlhWTeIDru22B-0" />
@@ -482,8 +467,8 @@
         <mxCell id="MrKuKJT4KIM3_79XEGGB-32" value="View Nutrionist Details" style="ellipse;whiteSpace=wrap;html=1;" parent="kck3oQJdlhWTeIDru22B-1" vertex="1">
           <mxGeometry x="420" y="825" width="144" height="51" as="geometry" />
         </mxCell>
-        <mxCell id="MrKuKJT4KIM3_79XEGGB-35" value="&lt;div&gt;Huan Fitness Centre&amp;nbsp;&lt;/div&gt;&lt;div&gt;Nutrionist Booking Subsystem&lt;/div&gt;&lt;div&gt;Actor: Member&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="kck3oQJdlhWTeIDru22B-1" vertex="1">
-          <mxGeometry x="382.5" y="680" width="180" height="60" as="geometry" />
+        <mxCell id="MrKuKJT4KIM3_79XEGGB-35" value="&lt;div&gt;Huan Fitness Centre&amp;nbsp;&lt;/div&gt;&lt;div&gt;Nutrionist Booking Subsystem&lt;/div&gt;&lt;div&gt;Actor:&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Member and Non-Member&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="kck3oQJdlhWTeIDru22B-1" vertex="1">
+          <mxGeometry x="372.5" y="680" width="200" height="60" as="geometry" />
         </mxCell>
         <mxCell id="fu5w2TrwXDaqHF1meQLr-3" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="kck3oQJdlhWTeIDru22B-1" source="MrKuKJT4KIM3_79XEGGB-36">
           <mxGeometry relative="1" as="geometry">
@@ -521,11 +506,68 @@
             <mxPoint x="270" y="880" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="MrKuKJT4KIM3_79XEGGB-50" value="Non-Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="kck3oQJdlhWTeIDru22B-1" vertex="1">
+        <mxCell id="MrKuKJT4KIM3_79XEGGB-50" value="Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="kck3oQJdlhWTeIDru22B-1" vertex="1">
           <mxGeometry x="230" y="850" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="fu5w2TrwXDaqHF1meQLr-0" value="Non-Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="kck3oQJdlhWTeIDru22B-1">
           <mxGeometry x="670" y="850" width="30" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="hXv9wOmpnboFjaA1hLDO" name="Admin Subsystem">
+    <mxGraphModel dx="989" dy="538" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="405xSgeT07M36VYNJvAm-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="355" y="670" width="235" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="405xSgeT07M36VYNJvAm-2" value="&lt;div&gt;Huan Fitness Centre&amp;nbsp;&lt;/div&gt;&lt;div&gt;Admin Subsystem&lt;/div&gt;&lt;div&gt;Actor: Admin&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="402.5" y="680" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="405xSgeT07M36VYNJvAm-3" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="875.5" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="lQEb2a5DiAfQzCNRXvL9-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-1" value="Manage Users" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="760" width="144" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-6" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="lQEb2a5DiAfQzCNRXvL9-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-2" value="Manage Fitness Classes" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="820" width="144" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-7" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="lQEb2a5DiAfQzCNRXvL9-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-3" value="Manage Nutritionists" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="880" width="144" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-8" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="lQEb2a5DiAfQzCNRXvL9-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-4" value="Manage Instructors" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="940" width="144" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-10" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="lQEb2a5DiAfQzCNRXvL9-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lQEb2a5DiAfQzCNRXvL9-9" value="Manage Billing" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="999" width="144" height="51" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
