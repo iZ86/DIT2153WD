@@ -76,7 +76,7 @@ function getBookingInformation() {
                             $_SESSION['nutritionistScheduleID'] = $nutritionistScheduleID;
                             $price = $nutritionistModel->getNutritionistSchedulePriceByNutritionistScheduleID($nutritionistScheduleID);
                             $price = $price['price'];
-                            header("Location: http://localhost/DIT2153WD/frontEnd/app/controllers/user/payment.php?order=Nutritionist Booking&price=$price");
+                            header("Location: payment.php?nutritionistScheduleID=" . $nutritionistScheduleID);
                             exit();
                         } else {
                             echo "<script>alert('Failed to Make a Reservation. Please try again.');</script>";
