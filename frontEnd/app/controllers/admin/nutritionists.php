@@ -70,16 +70,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $type = trim($_POST['type']);
         $imagePath = '';
 
-        if (!empty($_FILES['nutritionistsImage']['name'])) {
-            $targetDir = "../../public/images/nutritionistsImage/";
+        if (!empty($_FILES['nutritionistsImages']['name'])) {
+            $targetDir = "../../public/images/nutritionistsImages/";
             if (!file_exists($targetDir)) {
                 mkdir($targetDir, 0777, true);
             }
 
-            $originalFileName = basename($_FILES['nutritionistsImage']['name']);
+            $originalFileName = basename($_FILES['nutritionistsImages']['name']);
             $targetFilePath = $targetDir . $originalFileName;
 
-            $check = getimagesize($_FILES['nutritionistsImage']['tmp_name']);
+            $check = getimagesize($_FILES['nutritionistsImages']['tmp_name']);
             if ($check === false) {
                 echo "File is not an image.";
                 exit;
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            if (move_uploaded_file($_FILES['nutritionistsImage']['tmp_name'], $targetFilePath)) {
+            if (move_uploaded_file($_FILES['nutritionistsImages']['tmp_name'], $targetFilePath)) {
                 $imagePath = $targetFilePath;
             } else {
                 echo "Sorry, there was an error uploading your file.";
