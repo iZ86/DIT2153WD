@@ -66,7 +66,7 @@ class UserTrackWeightModel {
         
         if ($this->verifyWeightIDToUserID($weightID, $userID)) {
             $updateWeightDataSQL = "UPDATE " . $this->weightTable .
-            " SET weight = ?, recordedOn = ? WHERE weightID = ? AND userID = ?";
+            " SET weightInGram = ?, recordedOn = ? WHERE weightID = ? AND userID = ?";
 
             $updateWeightDataSTMT = $this->databaseConn->prepare($updateWeightDataSQL);
             $updateWeightDataSTMT->bind_param("ssss", $weightInGram, $recordedOn, $weightID, $userID);
