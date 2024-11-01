@@ -110,7 +110,7 @@ class UserMembershipView {
                 <li>Online support</li>
             </ul>
             <div class="flex justify-center mt-6">
-                <a href="subscriptionDetails.php">
+                <a href="subscription-detail.php?membershipID=1">
                     <button class="bg-blue-600 text-white text-xl font-black px-6 py-4 rounded-xl hover:bg-blue-700">JOIN NOW</button>
                 </a>
             </div>

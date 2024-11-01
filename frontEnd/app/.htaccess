@@ -1,6 +1,10 @@
 RewriteEngine On
-RewriteBase /DIT2153WD/frontEnd/app/public/
+RewriteBase /DIT2153WD/frontEnd/app/
+
+# Exclude the index.php file from being rewritten
 RewriteRule ^index\.php$ - [L]
+
+# If the requested filename does not exist as a file or directory, rewrite to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
+RewriteRule ^(.*)$ index.php [L]

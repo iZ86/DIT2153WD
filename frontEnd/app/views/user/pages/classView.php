@@ -39,7 +39,7 @@ class ClassView {
                     <a href="./fitness-class-detail.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
                         <div class="flex flex-row">
                             <div class="mr-28">
-                                <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?><?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">
+                                <img class="<?= $this->classesImageStyles ?>" src="<?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">
                                 <p class="text-center font-bold font-aoboshi mt-2 text-xl"><?= $classes['name'] ?></p>
                             </div>
                         </div>
