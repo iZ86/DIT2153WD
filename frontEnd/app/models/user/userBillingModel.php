@@ -4,8 +4,8 @@ class UserBillingModel {
 
     /** Database connection. */
     private $databaseConn;
-    /** MEMBER_SUBSCRIPTION Table. */
-    private $memberSubscriptionTable = "MEMBER_SUBSCRIPTION";
+    /** MEMBERSHIP_SUBSCRIPTION Table. */
+    private $memberSubscriptionTable = "MEMBERSHIP_SUBSCRIPTION";
     /** MEMBERSHIP Table. */
     private $membershipTable = "MEMBERSHIP";
     /** PAYMENT Table */
@@ -106,7 +106,7 @@ class UserBillingModel {
     }
 
     /** Returns one associate array of member subscription data joined with membership data,
-     * from MEMBER_SUBSCRIPTION table and MEMBERSHIP table,
+     * from MEMBERSHIP_SUBSCRIPTION table and MEMBERSHIP table,
      * where paymentID attribute is $paymentID.
      * Otherwise, return an empty array, but this shouldnt happen,
      * as functions that calls this function verifies its arguements.

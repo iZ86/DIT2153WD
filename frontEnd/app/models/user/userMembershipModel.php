@@ -2,8 +2,8 @@
 class UserMembershipModel {
     /** Database connection */
     private $databaseConn;
-    /** MEMBER_SUBSCRIPTION Table. */
-    private $memberSubscriptionTable = "MEMBER_SUBSCRIPTION";
+    /** MEMBERSHIP_SUBSCRIPTION Table. */
+    private $memberSubscriptionTable = "MEMBERSHIP_SUBSCRIPTION";
     /** MEMBERSHIP Table. */
     private $membershipTable = "MEMBERSHIP";
     /** PAYMENT Table */
