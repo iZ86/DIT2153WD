@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 mkdir($targetDir, 0777, true);
             }
 
-            $originalFileName = basename($_FILES['classImage']['name']); // Keep the original file name
+            $originalFileName = basename($_FILES['classImage']['name']);
             $targetFilePath = $targetDir . $originalFileName;
 
             $check = getimagesize($_FILES['classImage']['tmp_name']);
