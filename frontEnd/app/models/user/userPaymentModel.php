@@ -4,6 +4,10 @@ class UserPaymentModel {
     private $paymentTable = 'PAYMENT';
     /** NUTRITIONIST_BOOKING Table. */
     private $nutritionistBookingTable = 'NUTRITIONIST_BOOKING';
+    /** NUTRTIONIST_SCHEDULE Table */
+    private $nutritionistScheduleTable ='NUTRITIONIST_SCHEDULE';
+    /** NUTRTITIONIST Table. */
+    private $nutritionistTable = 'NUTRITIONIST';
     /** FITNESS_CLASS Table. */
     private $fitnessClassTable = 'FITNESS_CLASS';
     /** FITNESS_CLASS_SUBSCRIPTION Table. */
@@ -117,6 +121,23 @@ class UserPaymentModel {
         return $createFitnessClassSubscriptionDataSTMT->insert_id;
     }
 
+    /** Creates a new nutritionist booking data in the NUTRITIONIST_BOOKING table,
+     * where all the attributes are the function's parameters,
+     * and returns the nutritionistBookingID.
+     * If fail, returns 0.
+     */
+    public function createNutritionistBookingDataAndReturnID($nutritionistScheduleID, $userID, $paymentID) {
+        $createNutritionistBookingDataSQL = "INSERT INTO " . $this->nutritionistBookingTable . " (nutritionistScheduleID, userID, paymentID) VALUES (?, ?, ?)";
+
+        $createNutritionistBookingDataSTMT = $this->databaseConn->prepare($createNutritionistBookingDataSQL);
+
+        $createNutritionistBookingDataSTMT->bind_param("sss", $nutritionistScheduleID, $userID, $paymentID);
+
+        $createNutritionistBookingDataSTMT->execute();
+
+        return $createNutritionistBookingDataSTMT->insert_id;
+    }
+
     
     
     /** Returns an associate array where the array is data in the NUTRITIONIST_SCHEDULE Table,
@@ -127,7 +148,7 @@ class UserPaymentModel {
         $selectNutritionistScheduleDataSQL = "SELECT * FROM " . $this->nutritionistScheduleTable . " WHERE nutritionistScheduleID = ?";
 
         $selectNutritionistScheduleDataSTMT = $this->databaseConn->prepare($selectNutritionistScheduleDataSQL);
-        $selectNutritionistScheduleDataSTMT->bind_param("s", $fitnessClassName);
+        $selectNutritionistScheduleDataSTMT->bind_param("s", $nutritionistScheduleID);
         $selectNutritionistScheduleDataSTMT->execute();
         $selectNutritionistScheduleDataResult = $selectNutritionistScheduleDataSTMT->get_result();
         if ($selectNutritionistScheduleDataResult->num_rows > 0) {
@@ -144,7 +165,7 @@ class UserPaymentModel {
         $selectNutritionistDataSQL = "SELECT * FROM " . $this->nutritionistTable . " WHERE nutritionistID = ?";
 
         $selectNutritionistDataSTMT = $this->databaseConn->prepare($selectNutritionistDataSQL);
-        $selectNutritionistDataSTMT->bind_param("s", $fitnessClassName);
+        $selectNutritionistDataSTMT->bind_param("s", $nutritionistID);
         $selectNutritionistDataSTMT->execute();
         $selectNutritionistDataResult = $selectNutritionistDataSTMT->get_result();
         if ($selectNutritionistDataResult->num_rows > 0) {
@@ -191,13 +212,14 @@ class UserPaymentModel {
         $nutritionistSchedulePurchaseData = array();
 
         $nutritionistScheduleData = $this->getNutritionistScheduleData($nutritionistScheduleID);
-
+        
         if (sizeof($nutritionistScheduleData) > 0) {
             $nutritionistData = $this->getNutritionistData($nutritionistScheduleData['nutritionistID']);
-
-            if (sizeof($nutritionistData)) {
+            
+            if (sizeof($nutritionistData) > 0) {
+                
                 $nutritionistSchedulePurchaseData['nutritionistScheduleData'] = $nutritionistScheduleData;
-                $nutritionistSchedulePurchaseData['nutritionist'] = $nutritionistData;
+                $nutritionistSchedulePurchaseData['nutritionistData'] = $nutritionistData;
                 return $nutritionistSchedulePurchaseData;
             } else {
                 return array();
@@ -244,7 +266,30 @@ class UserPaymentModel {
         return false;
     }
 
-    /** */
+    public function userMakeNutritionistSchedulePurchase($nutritionistScheduleID, $userID, $type) {
+        
+        echo $nutritionistScheduleID;
+        $nutritionistSchedulePurchaseData = $this->getNutritionistSchedulePurchaseData($nutritionistScheduleID);
+        if (sizeof($nutritionistSchedulePurchaseData) > 0) {
+            
+            
+            $currentDateTime = date('Y-m-d H:i:s');
+            
+        
+            $paymentID = $this->createPaymentAndReturnID($type, "confirmed", $currentDateTime, $userID);
+
+            if ($paymentID !== 0) {
+                $nutritionistBookingID = $this->createNutritionistBookingDataAndReturnID($nutritionistScheduleID, $userID, $paymentID);
+
+                if ($nutritionistBookingID !== 0) {
+                    return true;
+                }
+                
+            }
+
+        }
+        return false;
+    }
 
 
 

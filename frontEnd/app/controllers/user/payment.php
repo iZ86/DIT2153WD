@@ -109,12 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     }     
             
                 } else if (isset($_GET['nutritionistScheduleID'])) {
-                    $nutritionistScheduleID = cleanData($nutritionistScheduleID);
+                    $nutritionistScheduleID = cleanData($_GET['nutritionistScheduleID']);
+                    echo $nutritionistScheduleID;
                     if (validateData($nutritionistScheduleID, $regexIDFormat)) {
-
-                        $paymentStatus = $userPaymentModel->userMakeNutritionistSchedulePurchase($nutritionistScheduleID);
+                        $paymentStatus = $userPaymentModel->userMakeNutritionistSchedulePurchase($nutritionistScheduleID, $_SESSION['userID'], "card");
                         
                         if ($paymentStatus) {
+                            
                             die(header('location: index.php'));
                         } else {
                             die(header("location: error.php"));
@@ -166,16 +167,15 @@ if (isGetRequestFormatValid()) {
         }
         
     } else if (isset($_GET['nutritionistScheduleID'])) {
-        $nutritionistScheduleID = cleanData($nutritionistScheduleID);
+        $nutritionistScheduleID = cleanData($_GET['nutritionistScheduleID']);
         if (validateData($nutritionistScheduleID, $regexIDFormat)) {
 
             $nutritionistSchedulePurchaseData = $userPaymentModel->GetNutritionistSchedulePurchaseData($nutritionistScheduleID);
-            
             if (sizeof($nutritionistSchedulePurchaseData) > 0) {
                 $paymentView = new UserPaymentView($nutritionistSchedulePurchaseData);
                 $paymentView->renderView();
             } else {
-                die(header("location: error.php"));
+                //die(header("location: error.php"));
             }
         }
 
