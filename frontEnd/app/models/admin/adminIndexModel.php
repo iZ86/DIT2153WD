@@ -49,8 +49,20 @@ class AdminIndexModel {
     }
 
     public function getUpcomingNutritionistSchedules($limit = 2) {
-        $query = "SELECT * FROM NUTRITIONIST_SCHEDULE WHERE scheduleDateTime > NOW() ORDER BY scheduleDateTime LIMIT ?";
+        $query = "SELECT ns.nutritionistScheduleID, ns.scheduleDateTime, 
+                   n.firstName AS nutritionistFirstName, n.lastName AS nutritionistLastName, 
+                   n.nutritionistID, ns.price
+            FROM NUTRITIONIST_SCHEDULE ns
+            JOIN NUTRITIONIST n ON ns.nutritionistID = n.nutritionistID
+            WHERE ns.scheduleDateTime > NOW()
+            ORDER BY ns.scheduleDateTime
+            LIMIT ?";
+
         $stmt = $this->databaseConn->prepare($query);
+        if ($stmt === false) {
+            die("Error preparing statement: " . $this->databaseConn->error);
+        }
+
         $stmt->bind_param("i", $limit);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
