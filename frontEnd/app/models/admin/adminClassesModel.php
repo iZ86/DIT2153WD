@@ -114,7 +114,7 @@ class AdminClassesModel {
     }
 
     public function getFilteredClassesByName($name, $limit, $offset) {
-        $query = "SELECT fitnessClassID, name, description FROM " . $this->classesTable . " WHERE name LIKE ? LIMIT ? OFFSET ?";
+        $query = "SELECT fitnessClassID, name, description, fitnessClassImageFilePath FROM " . $this->classesTable . " WHERE name LIKE ? LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
         $searchTerm = '%' . $name . '%';
         $stmt->bind_param("sii", $searchTerm, $limit, $offset);
@@ -123,7 +123,7 @@ class AdminClassesModel {
     }
 
     public function getFilteredClassesByDescription($description, $limit, $offset) {
-        $query = "SELECT fitnessClassID, name, description FROM " . $this->classesTable . " WHERE description LIKE ? LIMIT ? OFFSET ?";
+        $query = "SELECT fitnessClassID, name, description, fitnessClassImageFilePath FROM " . $this->classesTable . " WHERE description LIKE ? LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
         $searchTerm = '%' . $description . '%';
         $stmt->bind_param("sii", $searchTerm, $limit, $offset);
