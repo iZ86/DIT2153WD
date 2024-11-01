@@ -152,7 +152,7 @@ function updateExerciseRoutineDetailMessages() {
         let exerciseName = exerciseData["exerciseName"];
 
         if (paginationDateString === currentDateString) {
-            exerciseRoutineDetailStatusMessage.innerText = "Your latest exercise today is " + exerciseName + " with " + exerciseRoutineDetailDataset[exerciseRoutineDetailID][rep] + " reps!";
+            exerciseRoutineDetailStatusMessage.innerText = "Your latest exercise today is " + exerciseName + " with " + exerciseRoutineDetailDataset[exerciseRoutineDetailID]['rep'] + " reps!";
             exerciseRoutineDetailEncouragementMessage.innerText = "Keep up the good work!";
         } else {
             exerciseRoutineDetailStatusMessage.innerText = "You latest exercise on " + paginationDateString + " is " + exerciseName + "!";
