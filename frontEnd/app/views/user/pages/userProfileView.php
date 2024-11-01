@@ -30,7 +30,7 @@ class ProfileView {
     }
 
     public function renderContent() {?>
-    <section class="bg-indigo-50 min-h-full flex flex-col pb-48">
+    <section class="bg-blue-user min-h-full flex flex-col pb-48">
 
     <div class="container mx-auto p-6 w-full lg:max-w-screen-xl h-full">
         <div class="flex items-center mb-10 mt-5 ml-3">
