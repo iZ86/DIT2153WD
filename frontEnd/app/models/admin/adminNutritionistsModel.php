@@ -18,7 +18,7 @@ class AdminNutritionistsModel {
     }
 
     public function getNutritionists($limit, $offset) {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type 
+        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath
               FROM " . $this->nutritionistsTable . " 
               LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
@@ -56,20 +56,31 @@ class AdminNutritionistsModel {
         return $stmt->get_result();
     }
 
-
-    public function addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type) {
-        $query = "INSERT INTO " . $this->nutritionistsTable . " (firstName, lastName, gender, phoneNo, email, type) VALUES (?, ?, ?, ?, ?, ?)";
+    public function addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath = null) {
+        $query = "INSERT INTO " . $this->nutritionistsTable . " (firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ssssss", $firstName, $lastName, $gender, $phoneNo, $email, $type);
+        $stmt->bind_param("sssssss", $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
         if (!$stmt->execute()) {
             throw new Exception("Failed to add nutritionist: " . $stmt->error);
         }
     }
 
-    public function editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type) {
-        $query = "UPDATE " . $this->nutritionistsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, type = ? WHERE nutritionistID = ?";
+    public function editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath = null) {
+        $query = "UPDATE " . $this->nutritionistsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, type = ?";
+
+        if ($imagePath) {
+            $query .= ", nutritionistImageFilePath = ?";
+        }
+
+        $query .= " WHERE nutritionistID = ?";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $nutritionistID);
+
+        if ($imagePath) {
+            $stmt->bind_param("sssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath, $nutritionistID);
+        } else {
+            $stmt->bind_param("ssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $nutritionistID);
+        }
+
         if (!$stmt->execute()) {
             throw new Exception("Failed to update nutritionist: " . $stmt->error);
         }
