@@ -11,7 +11,6 @@ if (!isset($_SESSION['adminID'])) {
 $adminNutritionistsModel = new AdminNutritionistsModel(require '../../config/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if adding a nutritionist
     if (isset($_POST['addNutritionistButton']) && $_POST['addNutritionistButton'] === "Add Nutritionist") {
         $firstName = trim($_POST['firstName']);
         $lastName = trim($_POST['lastName']);
@@ -157,18 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($description) && !empty($nutritionistScheduleID) && !empty($userID) && !empty($paymentID)) {
             $adminNutritionistsModel->addBooking($description, $nutritionistScheduleID, $userID, $paymentID);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
-        }
-    }
-
-    if (isset($_POST['editBookingButton'])) {
-        $nutritionistBookingID = $_POST['nutritionistBookingID'];
-        $description = trim($_POST['description']);
-        $nutritionistScheduleID = $_POST['nutritionistScheduleID'];
-
-        if (!empty($nutritionistBookingID) && !empty($description) && !empty($nutritionistScheduleID)) {
-            $adminNutritionistsModel->editBooking($nutritionistBookingID, $description, $nutritionistScheduleID);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
