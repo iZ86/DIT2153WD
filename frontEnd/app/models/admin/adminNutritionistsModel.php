@@ -76,7 +76,7 @@ class AdminNutritionistsModel {
         $stmt = $this->databaseConn->prepare($query);
 
         if ($imagePath) {
-            $stmt->bind_param("ssssssssi", $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath, $nutritionistID);
+            $stmt->bind_param("sssssssssi", $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath, $nutritionistID);
         } else {
             $stmt->bind_param("ssssssssi", $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $nutritionistID);
         }
