@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         if ($paymentStatus) {
 
                             // Redirect nicely.
-                            die(header('location: index.php'));
+                            die(header('location: paymentSuccess.php'));
 
                         } else {
                             die(header('location: error.php'));
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         
                         if ($paymentStatus) {
                             
-                            die(header('location: index.php'));
+                            die(header('location: paymentSuccess.php'));
                         } else {
                             die(header("location: error.php"));
                         }
@@ -175,7 +175,7 @@ if (isGetRequestFormatValid()) {
                 $paymentView = new UserPaymentView($nutritionistSchedulePurchaseData);
                 $paymentView->renderView();
             } else {
-                //die(header("location: error.php"));
+                die(header("location: error.php"));
             }
         }
 
