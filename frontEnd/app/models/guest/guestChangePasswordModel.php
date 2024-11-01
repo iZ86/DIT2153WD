@@ -28,6 +28,7 @@ class GuestChangePasswordModel {
     }
 
     public function changePassword($email, $password) {
+        $password = password_hash($password, PASSWORD_DEFAULT);
         $changePasswordSQL = "UPDATE " . $this->registeredUserTable . " SET password = ? WHERE email = ?";
         $changePasswordSTMT = $this->databaseConn->prepare($changePasswordSQL);
         $changePasswordSTMT->bind_param("ss", $password, $email);

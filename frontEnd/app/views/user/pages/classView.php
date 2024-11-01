@@ -36,7 +36,7 @@ class ClassView {
         if($this->data) {
             foreach($this->data as $classes) {?>
                 <div class="mt-12">
-                    <a href="./fitness-class-details.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
+                    <a href="./fitness-class-detail.php?fitnessClassID=<?= htmlspecialchars($classes['fitnessClassID']) ?>">
                         <div class="flex flex-row">
                             <div class="mr-28">
                                 <img class="<?= $this->classesImageStyles ?>" src="<?=IMAGE_FILE_PATH?><?= $classes['fitnessClassImageFilePath'] ?>" alt="Yoga.jpg">

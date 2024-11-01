@@ -18,7 +18,7 @@ class AdminNutritionistsModel {
     }
 
     public function getNutritionists($limit, $offset) {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type 
+        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath
               FROM " . $this->nutritionistsTable . " 
               LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
@@ -56,31 +56,33 @@ class AdminNutritionistsModel {
         return $stmt->get_result();
     }
 
-
-    public function addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type) {
-        $query = "INSERT INTO " . $this->nutritionistsTable . " (firstName, lastName, gender, phoneNo, email, type) VALUES (?, ?, ?, ?, ?, ?)";
+    public function addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath = null) {
+        $query = "INSERT INTO " . $this->nutritionistsTable . " (firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ssssss", $firstName, $lastName, $gender, $phoneNo, $email, $type);
+        $stmt->bind_param("sssssss", $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
         if (!$stmt->execute()) {
             throw new Exception("Failed to add nutritionist: " . $stmt->error);
         }
     }
 
-    public function editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type) {
-        $query = "UPDATE " . $this->nutritionistsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, type = ? WHERE nutritionistID = ?";
+    public function editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath = null) {
+        $query = "UPDATE " . $this->nutritionistsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, type = ?";
+
+        if ($imagePath) {
+            $query .= ", nutritionistImageFilePath = ?";
+        }
+
+        $query .= " WHERE nutritionistID = ?";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $nutritionistID);
+
+        if ($imagePath) {
+            $stmt->bind_param("sssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath, $nutritionistID);
+        } else {
+            $stmt->bind_param("ssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $nutritionistID);
+        }
+
         if (!$stmt->execute()) {
             throw new Exception("Failed to update nutritionist: " . $stmt->error);
-        }
-    }
-
-    public function deleteNutritionist($nutritionistID) {
-        $query = "DELETE FROM " . $this->nutritionistsTable . " WHERE nutritionistID = ?";
-        $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("i", $nutritionistID);
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to delete nutritionist: " . $stmt->error);
         }
     }
 
@@ -121,26 +123,12 @@ class AdminNutritionistsModel {
         return $result['total'];
     }
 
-    public function getBookings($limit, $offset) {
-        $query = "SELECT nb.nutritionistBookingID, nb.description, ns.scheduleDateTime, 
-                     CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName 
-              FROM NUTRITIONIST_BOOKING AS nb
-              JOIN NUTRITIONIST_SCHEDULE AS ns ON nb.nutritionistScheduleID = ns.nutritionistScheduleID
-              JOIN NUTRITIONIST AS n ON ns.nutritionistID = n.nutritionistID
-              LIMIT ? OFFSET ?";
+    public function getBookingDetails($nutritionistBookingID) {
+        $query = "SELECT nutritionistID, nutritionistScheduleID, description FROM NUTRITIONIST_BOOKING WHERE nutritionistBookingID = ?";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->bind_param("i", $nutritionistBookingID);
         $stmt->execute();
-        return $stmt->get_result();
-    }
-
-    public function editBooking($nutritionistBookingID, $description, $nutritionistScheduleID) {
-        $query = "UPDATE NUTRITIONIST_BOOKING SET description = ?, nutritionistScheduleID = ? WHERE nutritionistBookingID = ?";
-        $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("sii", $description, $nutritionistScheduleID, $nutritionistBookingID);
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to update booking: " . $stmt->error);
-        }
+        return $stmt->get_result()->fetch_assoc();
     }
 
     public function getBookingsWithDetails($limit, $offset) {
@@ -172,7 +160,7 @@ class AdminNutritionistsModel {
     }
 
     public function getFilteredNutritionists($limit, $offset, $filterType, $keywords) {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type 
+        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath 
               FROM " . $this->nutritionistsTable . " 
               WHERE 1=1";
 

@@ -11,8 +11,10 @@ class AdminNutritionistsView {
     private $noNutritionistsFound;
     private $noSchedulesFound;
     private $noBookingsFound;
+    private $currentNutritionistID;
+    private $currentScheduleID;
 
-    public function __construct($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBookings, $currentPage, $noNutritionistsFound, $noSchedulesFound, $noBookingsFound) {
+    public function __construct($nutritionists, $schedules, $bookings, $totalPagesNutritionists, $totalPagesSchedules, $totalPagesBookings, $currentPage, $noNutritionistsFound, $noSchedulesFound, $noBookingsFound, $currentNutritionistID = null, $currentScheduleID = null) {
         $this->nutritionists = $nutritionists;
         $this->schedules = $schedules;
         $this->bookings = $bookings;
@@ -23,7 +25,10 @@ class AdminNutritionistsView {
         $this->noNutritionistsFound = $noNutritionistsFound;
         $this->noSchedulesFound = $noSchedulesFound;
         $this->noBookingsFound = $noBookingsFound;
+        $this->currentNutritionistID = $currentNutritionistID;
+        $this->currentScheduleID = $currentScheduleID;
     }
+
 
     public function renderView() : void {
         $this->renderHeader();
@@ -98,6 +103,9 @@ class AdminNutritionistsView {
                                     <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $nutritionist['type']; ?></span>
                                 </td>
                                 <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openPhotoModal('<?php echo addslashes($nutritionist['nutritionistImageFilePath']); ?>')">
+                                        <i class="bx bx-image"></i>
+                                    </button>
                                     <button class="text-gray-500 hover:text-blue-600" onclick="openEditNutritionistModal(<?php echo $nutritionist['nutritionistID']; ?>, '<?php echo addslashes($nutritionist['firstName']); ?>', '<?php echo addslashes($nutritionist['lastName']); ?>', '<?php echo addslashes($nutritionist['phoneNo']); ?>', '<?php echo addslashes($nutritionist['email']); ?>', '<?php echo addslashes($nutritionist['gender']); ?>', '<?php echo addslashes($nutritionist['type']); ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
@@ -210,10 +218,6 @@ class AdminNutritionistsView {
                             <i class='bx bx-filter-alt'></i>
                             <span>Filter</span>
                         </button>
-                        <button class="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-2" onclick="openBookingModal()">
-                            <i class="bx bxs-plus-circle"></i>
-                            <span>Add Booking</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -227,7 +231,6 @@ class AdminNutritionistsView {
                         <th class="py-4 px-6 border-b border-gray-200">Schedule ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Username</th>
                         <th class="py-4 px-6 border-b border-gray-200">Description</th>
-                        <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
@@ -243,11 +246,6 @@ class AdminNutritionistsView {
                                 <td class="p-3"><?php echo $booking['nutritionistScheduleID']; ?></td>
                                 <td class="p-3"><?php echo $booking['username']; ?></td>
                                 <td class="p-3"><?php echo $booking['description']; ?></td>
-                                <td class="p-3 flex justify-center">
-                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditBookingModal(<?php echo $booking['nutritionistBookingID']; ?>, '<?php echo addslashes($booking['description']); ?>', '<?php echo $booking['nutritionistScheduleID']; ?>')">
-                                        <i class="bx bx-pencil"></i>
-                                    </button>
-                                </td>
                             </tr>
                         <?php endwhile; ?>
                     <?php endif; ?>
@@ -274,6 +272,13 @@ class AdminNutritionistsView {
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
+        <div id="photoModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl p-6">
+                <img id="photoModalImage" src="" alt="Nutritionist Photo" class="max-w-full max-h-96 rounded-lg">
+                <button onclick="closePhotoModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mt-4">Close</button>
+            </div>
+        </div>
+
         <!-- Nutritionist Filter Modal -->
         <div id="nutritionistFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
@@ -296,7 +301,7 @@ class AdminNutritionistsView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeNutritionistFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/nutritionists.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -324,7 +329,7 @@ class AdminNutritionistsView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/nutritionists.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -352,7 +357,7 @@ class AdminNutritionistsView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeBookingFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/nutritionists.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -360,10 +365,10 @@ class AdminNutritionistsView {
         </div>
 
         <div id="nutritionistModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="nutritionistModalTitle" class="text-2xl font-semibold mb-4">Add Nutritionist</h2>
                 <hr class="py-2">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="nutritionistID" name="nutritionistID">
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
@@ -392,6 +397,9 @@ class AdminNutritionistsView {
                     <label class="block text-gray-700 text-sm font-medium mt-4">Type <span class="text-red-500">*</span></label>
                     <input name="type" type="text" id="type" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
+                    <input type="file" name="nutritionistsImages" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
+
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeNutritionistModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
                         <button type="submit" id="submitNutritionistButton" name="addNutritionistButton" value="Add Nutritionist" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Save Changes</button>
@@ -401,7 +409,7 @@ class AdminNutritionistsView {
         </div>
 
         <div id="scheduleModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="scheduleModalTitle" class="text-2xl font-semibold mb-4">Add Schedule</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -430,48 +438,6 @@ class AdminNutritionistsView {
             </div>
         </div>
 
-        <div id="bookingModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
-                <h2 id="bookingModalTitle" class="text-2xl font-semibold mb-4">Edit Booking</h2>
-                <hr class="py-2">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <input type="hidden" id="nutritionistBookingID" name="nutritionistBookingID">
-
-                    <label class="block text-gray-700 text-sm font-medium">Description <span class="text-red-500">*</span></label>
-                    <input name="description" type="text" id="description" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Nutritionist <span class="text-red-500">*</span></label>
-                    <select name="nutritionistID" id="nutritionistID" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-                        <option value="">Select Nutritionist</option>
-                        <?php
-                        $this->nutritionists->data_seek(0);
-                        while ($nutritionist = $this->nutritionists->fetch_assoc()): ?>
-                            <option value="<?php echo $nutritionist['nutritionistID']; ?>" <?php echo ($nutritionist['nutritionistID'] == $currentNutritionistID) ? 'selected' : ''; ?>>
-                                <?php echo $nutritionist['firstName'] . ' ' . $nutritionist['lastName']; ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Schedule <span class="text-red-500">*</span></label>
-                    <select name="nutritionistScheduleID" id="nutritionistScheduleID" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-                        <option value="">Select Schedule</option>
-                        <?php
-                        $this->schedules->data_seek(0);
-                        while ($schedule = $this->schedules->fetch_assoc()): ?>
-                            <option value="<?php echo $schedule['nutritionistScheduleID']; ?>" <?php echo ($schedule['nutritionistScheduleID'] == $currentScheduleID) ? 'selected' : ''; ?>>
-                                <?php echo date('d M Y H:i', strtotime($schedule['scheduleDateTime'])); ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-
-                    <div class="flex justify-end mt-10">
-                        <button type="button" onclick="closeBookingModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <button type="submit" id="submitBookingButton" name="editBookingButton" value="Edit Booking" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <style>
                 .modal {
                     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -487,6 +453,32 @@ class AdminNutritionistsView {
             </style>
 
         <script>
+            function openPhotoModal(imagePath) {
+                document.getElementById('photoModalImage').src = imagePath;
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                // Trigger the transition
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closePhotoModal() {
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openNutritionistFilterModal() {
                 const modal = document.getElementById('nutritionistFilterModal');
                 const overlay = document.getElementById('modalOverlay');
@@ -653,49 +645,6 @@ class AdminNutritionistsView {
                 }, 10);
             }
 
-            function openBookingModal() {
-                const modal = document.getElementById('bookingModal');
-                const overlay = document.getElementById('modalOverlay');
-
-                modal.classList.remove('hidden');
-                overlay.classList.remove('hidden');
-
-                setTimeout(() => {
-                    modal.classList.add('show');
-                }, 10);
-            }
-
-            function closeBookingModal() {
-                const modal = document.getElementById('bookingModal');
-                const overlay = document.getElementById('modalOverlay');
-
-                modal.classList.remove('show');
-
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    overlay.classList.add('hidden');
-                    clearBookingModalFields();
-                }, 300);
-            }
-
-            function openEditBookingModal(nutritionistBookingID, description, nutritionistScheduleID, nutritionistID) {
-                const modal = document.getElementById('bookingModal');
-                const overlay = document.getElementById('modalOverlay');
-
-                modal.classList.remove('hidden');
-                overlay.classList.remove('hidden');
-
-                document.getElementById('nutritionistBookingID').value = nutritionistBookingID;
-                document.getElementById('description').value = description;
-                document.getElementById('nutritionistID').value = nutritionistID;
-                document.getElementById('nutritionistScheduleID').value = nutritionistScheduleID;
-                document.getElementById('bookingModalTitle').innerText = 'Edit Booking';
-
-                setTimeout(() => {
-                    modal.classList.add('show');
-                }, 10);
-            }
-
             function clearNutritionistModalFields() {
                 document.getElementById('nutritionistID').value = '';
                 document.getElementById('firstName').value = '';
@@ -711,12 +660,6 @@ class AdminNutritionistsView {
                 document.getElementById('scheduleDateTime').value = '';
                 document.getElementById('price').value = '';
                 document.querySelector('select[name="nutritionistID"]').value ='';
-            }
-
-            function clearBookingModalFields() {
-                document.getElementById('nutritionistBookingID').value = '';
-                document.getElementById('description').value = '';
-                document.getElementById('nutritionistScheduleID').value = '';
             }
         </script>
         <?php

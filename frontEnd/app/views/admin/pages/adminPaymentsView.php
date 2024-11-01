@@ -54,13 +54,10 @@ class AdminPaymentsView {
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 600px;">
+            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 540px;">
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
-                        <th class="py-4 px-6 w-12 border-b border-gray-200">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                        </th>
                         <th class="py-4 px-6 border-b border-gray-200">ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Details</th>
                         <th class="py-4 px-6 border-b border-gray-200">Username</th>
@@ -76,9 +73,6 @@ class AdminPaymentsView {
                         $username = $this->adminPaymentsModel->getUsernameByUserID($payment['userID']);
                         ?>
                         <tr class="bg-white">
-                            <td class="p-3">
-                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                            </td>
                             <td class="p-3"><?php echo '#' . $payment['paymentID']; ?></td>
                             <td class="p-3"><?php echo $payment['type']; ?></td>
                             <td class="p-3"><?php echo $username; ?></td>
@@ -137,7 +131,7 @@ class AdminPaymentsView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/payments.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/payments.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -145,7 +139,7 @@ class AdminPaymentsView {
         </div>
 
         <div id="paymentModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="paymentModalTitle" class="text-2xl font-semibold mb-4">Edit Payment</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">

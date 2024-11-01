@@ -101,7 +101,11 @@ class AdminClassesView {
                                 <td class="p-3"><?php echo $class['description']; ?></td>
                                 <td class="p-3 flex justify-center space-x-2">
                                     <button class="text-gray-500 hover:text-blue-600"
-                                            onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>', '<?php echo addslashes($class['fitnessClassImageFilePath']); ?>')">
+                                            onclick="openPhotoModal('<?php echo $class['fitnessClassImageFilePath']; ?>')">
+                                        <i class="bx bx-image"></i>
+                                    </button>
+                                    <button class="text-gray-500 hover:text-blue-600"
+                                            onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo ($class['name']); ?>', '<?php echo ($class['description']); ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
                                 </td>
@@ -208,6 +212,13 @@ class AdminClassesView {
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
+        <div id="photoModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl p-6">
+                <img id="photoModalImage" src="" alt="Classes Photo" class="max-w-full max-h-96 rounded-lg">
+                <button onclick="closePhotoModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mt-4">Close</button>
+            </div>
+        </div>
+
         <div id="filterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
                 <h2 class="text-2xl font-semibold mb-4">Filter Classes</h2>
@@ -225,7 +236,7 @@ class AdminClassesView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/classes.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/classes.php"class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -243,8 +254,8 @@ class AdminClassesView {
                         <option value="className">Class Name</option>
                         <option value="instructor">Instructor</option>
                         <option value="pax">Pax</option>
+                        <option value="scheduledOn">Scheduled On (YYYY-MM-DD)</option>
                         <option value="status">Status</option>
-                        <option value="scheduledOn">Scheduled On</option>
                     </select>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
@@ -252,7 +263,7 @@ class AdminClassesView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/classes.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/classes.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -260,7 +271,7 @@ class AdminClassesView {
         </div>
 
         <div id="classModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="classModalTitle" class="text-2xl font-semibold mb-4">Add Class</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
@@ -271,9 +282,6 @@ class AdminClassesView {
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Description <span class="text-red-500">*</span></label>
                     <textarea name="description" id="classDescription" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required></textarea>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4 mb-2">Current Image</label>
-                    <img id="imagePreview" src="https://placehold.co/640x360/png?text=No+Image+Available" alt="Current Class Image" class="w-full rounded-xl h-auto mb-2" />
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
                     <input type="file" name="classImage" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
@@ -287,7 +295,7 @@ class AdminClassesView {
         </div>
 
         <div id="scheduleModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="scheduleModalTitle" class="text-2xl font-semibold mb-4">Add Schedule</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -330,6 +338,31 @@ class AdminClassesView {
         </div>
 
         <script>
+            function openPhotoModal(imagePath) {
+                document.getElementById('photoModalImage').src = imagePath;
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closePhotoModal() {
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openFilterModal() {
                 const modal = document.getElementById('filterModal');
                 const overlay = document.getElementById('modalOverlay');
@@ -428,7 +461,7 @@ class AdminClassesView {
                 }, 300);
             }
 
-            function openEditClassModal(id, name, description, fitnessClassImageFilePath) {
+            function openEditClassModal(id, name, description) {
                 const modal = document.getElementById('classModal');
                 const overlay = document.getElementById('modalOverlay');
 
@@ -439,9 +472,6 @@ class AdminClassesView {
                 document.getElementById('fitnessClassID').value = id;
                 document.getElementById('className').value = name;
                 document.getElementById('classDescription').value = description;
-
-                const imagePreview = document.getElementById('imagePreview');
-                imagePreview.src = fitnessClassImageFilePath ? fitnessClassImageFilePath : 'default-image-path.jpg';
 
                 document.getElementById('submitClassButton').name = 'editClassButton';
                 document.getElementById('submitClassButton').value = 'Edit Class';

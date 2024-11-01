@@ -85,7 +85,7 @@ class AdminUsersView {
                                     <span class="bg-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $user['membershipStatus']; ?></span>
                                 </td>
                                 <td class="p-3 mt-4 flex justify-center space-x-2">
-                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>')">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>', '<?php echo $user['startOn']; ?>', '<?php echo $user['endOn']; ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
                                 </td>
@@ -135,7 +135,7 @@ class AdminUsersView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeUserFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/users.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/users.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -269,8 +269,8 @@ class AdminUsersView {
                 document.getElementById('phoneNo').value = phoneNo;
                 document.getElementById('gender').value = gender;
                 document.getElementById('dateOfBirth').value = dateOfBirth;
-                document.getElementById('membershipStart').value = membershipStart ? membershipStart: '-';
-                document.getElementById('membershipEnd').value = membershipEnd ? membershipEnd: '-';
+                document.getElementById('membershipStart').value = membershipStart ? membershipStart : 'N/A';
+                document.getElementById('membershipEnd').value = membershipEnd ? membershipEnd : 'N/A';
 
                 setTimeout(() => {
                     modal.classList.add('show');
