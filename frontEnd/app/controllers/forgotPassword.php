@@ -2,6 +2,15 @@
 require "../views/guest/pages/guestForgotPasswordView.php";
 require "../models/guest/guestForgotPasswordModel.php";
 session_start();
+
+if (isset($_SESSION['userID'])) {
+    header("Location: user/");
+    exit;
+} else if (isset($_SESSION['adminID'])) {
+    header("Location: admin/");
+    exit;
+}
+
 $guestForgotPasswordModel = new GuestForgotPasswordModel(require "../config/db_connection.php");
 
 if (isset($_POST['request']) && $_POST['request'] === "Request") {

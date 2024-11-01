@@ -40,76 +40,45 @@ class UserIndexView {
     public function renderContent(): void {?>
     
     <section class="flex flex-col font-montserrat bg-blue-user pt-16 pb-48">
-        <h1 class="text-5xl font-bold ml-20"><?php echo "Welcome back, " . $this->username; ?></h1>
+        <h1 class="text-5xl font-bold ml-40"><?php echo "Welcome back, " . $this->username; ?></h1>
 
-        <!-- Upcoming schedules -->
-        <div class="flex flex-col mt-24">
-            <h2 class="text-4xl font-bold ml-20">Upcoming schedules</h2>
-
-            <div class="flex items-center justify-between mt-14 mx-24">
-
-
-                <input type="button" id="previousSchedule" name="previousSchedule" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-
-                <!-- Schedule card layout -->
-                <div class="flex items-center">
-
-                    
-                    <div class="w-64 h-64 bg-purple-100 rounded-2xl">
-                    </div>
-                    
-                    
-                </div>
-
-                <input type="button" id="nextSchedule" name="nextSchedule" value=">" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-            </div>
-
-        </div>
-
-        <!-- Feedback Updates -->
-        <div class="flex flex-col mt-48">
-            <h2 class="text-4xl font-bold ml-20">Feedback Updates</h2>
-
-            <div class="flex items-center justify-between mt-14 mx-24">
-
-
-                <input type="button" id="previousFeedback" name="previousFeedback" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-
-                <!-- Feedback card layout -->
-                <div class="flex items-center">
-
-                    
-                    <div class="w-64 h-64 bg-purple-100 rounded-2xl">
-                    </div>
-                    
-                    
-                </div>
-
-                <input type="button" id="nextFeedback" name="nextFeedback" value=">" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-            </div>
-
-        </div>
 
         <!-- Tracker -->
         <div class="flex flex-col mt-48">
-            <h2 class="text-4xl font-bold ml-20">Tracker</h2>
+            <h2 class="text-4xl font-bold ml-40">Tracker</h2>
 
-            <div class="flex items-center justify-between mt-14 mx-24">
+            <div class="flex items-center justify-around mt-14 mx-24">
 
-
-                <input type="button" id="previousTracker" name="previousTracker" value="<" class="w-8 h-20 text-4xl font-bold bg-gray-200">
-
-                <!-- Tracker card layout -->
-                <div class="flex items-center">
-
-                    
-                    <div class="w-64 h-64 bg-purple-100 rounded-2xl">
+ 
+                <a href="track-water-consumption.php">
+                    <div class="flex flex-col justify-center items-center w-64 h-64 bg-blue-vivid hover:bg-blue-mid rounded-2xl cursor-pointer" onclick="goToTrackWater()">
+                        <img src="../../public/images/track_water_consumption_icon.png" class="w-16 h-16 mt-10 mb-5">
+                        <p class="text-white drop-shadow-dark font-semibold text-2xl text-center">Track Water Consumption</p>
                     </div>
-                    
-                    
-                </div>
+                </a>
 
-                <input type="button" id="nextTracker" name="nextTracker" value=">" class="w-8 h-20 text-4xl font-bold bg-gray-200">
+                <a href="track-weight.php">
+                    <div class="flex flex-col justify-center items-center w-64 h-64 bg-yellow-500 hover:bg-yellow-700  rounded-2xl cursor-pointer" onclick="goToWeight()">
+                        <img src="../../public/images/track_weight_icon.png" class="w-16 h-16 mt-10 mb-5">
+                        <p class="text-white drop-shadow-dark font-semibold text-2xl text-center">Track Weight</p>
+                    </div>
+                </a>
+
+                <a href="track-exercise-routine-detail.php">
+                    <div class="flex flex-col justify-center items-center w-64 h-64 bg-orange-400 hover:bg-orange-600 rounded-2xl cursor-pointer" onclick="goToBMI()">
+                        <img src="../../public/images/track_exercise_routine_detail_icon.png" class="w-16 h-16 mt-10 mb-5">
+                        <p class="text-white drop-shadow-dark font-semibold text-2xl text-center">Track Exercise Routine Detail</p>
+                    </div>
+                </a>
+
+                <a href="track-bmi.php">
+                    <div class="flex flex-col justify-center items-center w-64 h-64 bg-gray-400 hover:bg-gray-600 rounded-2xl cursor-pointer" onclick="goToBMI()">
+                        <img src="../../public/images/track_bmi_icon.png" class="w-16 h-16 mt-10 mb-5">
+                        <p class="text-white drop-shadow-dark font-semibold text-2xl text-center">Track BMI</p>
+                    </div>
+                </a>
+
+                
             </div>
 
         </div>

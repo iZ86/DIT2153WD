@@ -148,7 +148,7 @@ class UserTrackWeightView {
                 <input type="hidden" id="weightID" name="weightID">
                     
 
-                <div class="flex mt-8 justify-between min-w-100">
+                <div class="flex mt-8 justify-between gap-x-2 min-w-100">
                     <div class="flex flex-col justify-between items-end gap-y-2 font-semibold text-2xl">
                         <div class="flex">
                             

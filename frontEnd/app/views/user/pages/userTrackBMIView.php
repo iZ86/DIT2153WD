@@ -37,7 +37,7 @@ class UserTrackBMIView {
 
     /** Renders ONE card of BMI data. */
     private function renderOneBMIDataRow($bmiID) {?>
-    <div id=<?php echo $bmiID; ?> class="basis-32 bg-gray-400 flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-gray-400 cursor-pointer" onclick="openEditBMIDataModal(<?php echo $bmiID . ')';?>">
+    <div id=<?php echo $bmiID; ?> class="basis-32 bg-gray-400 flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-gray-600 cursor-pointer" onclick="openEditBMIDataModal(<?php echo $bmiID . ')';?>">
         <img src="../../public/images/track_bmi_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
             <p id=<?php echo '"' . $bmiID . 'Text"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"></p>
@@ -127,8 +127,8 @@ class UserTrackBMIView {
             <form action="<?php echo $_SERVER['PHP_SELF'] . "?date=" . $_GET['date']; ?>" method="POST">
                 <input type="hidden" id="bmiID" name="bmiID">
 
-                <div class="flex mt-8 min-w-100 items-between">
-                    <div class="flex flex-col justify-between text-white drop-shadow-dark font-semibold text-2xl">
+                <div class="flex mt-8 min-w-100 gap-x-2 items-between">
+                    <div class="flex flex-col justify-between items-end text-white drop-shadow-dark font-semibold text-2xl">
                         <label for="age">Age:</label>
                         <label for="gender">Gender:</label>
                         <label for="height">Height:</label>

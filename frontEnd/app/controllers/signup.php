@@ -2,6 +2,15 @@
 require "../views/guest/pages/guestSignUpView.php";
 require "../models/guest/guestSignUpModel.php";
 session_start();
+
+if (isset($_SESSION['userID'])) {
+    header("Location: user/");
+    exit;
+} else if (isset($_SESSION['adminID'])) {
+    header("Location: admin/");
+    exit;
+}
+
 $guestSignUpModel = new GuestSignUpModel(require "../config/db_connection.php");
 
 if (isset($_POST['signUp']) && $_POST['signUp'] === "Sign Up") {
