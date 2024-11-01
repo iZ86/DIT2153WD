@@ -174,7 +174,7 @@ class AdminNutritionistsModel {
     }
 
     public function getFilteredNutritionists($limit, $offset, $filterType, $keywords) {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type 
+        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath 
               FROM " . $this->nutritionistsTable . " 
               WHERE 1=1";
 
