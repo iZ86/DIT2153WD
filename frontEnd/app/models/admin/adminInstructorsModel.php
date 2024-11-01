@@ -63,15 +63,6 @@ class AdminInstructorsModel {
         }
     }
 
-    public function deleteInstructor($instructorID) {
-        $query = "DELETE FROM " . $this->instructorsTable . " WHERE instructorID = ?";
-        $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("i", $instructorID);
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to delete instructor: " . $stmt->error);
-        }
-    }
-
     public function getInstructorById($instructorID) {
         $query = "SELECT instructorID, firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth FROM INSTRUCTOR WHERE instructorID = ?";
         $stmt = $this->databaseConn->prepare($query);
