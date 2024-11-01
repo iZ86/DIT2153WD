@@ -11,7 +11,6 @@ if (!isset($_SESSION['adminID'])) {
 $adminNutritionistsModel = new AdminNutritionistsModel(require '../../config/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if adding a nutritionist
     if (isset($_POST['addNutritionistButton']) && $_POST['addNutritionistButton'] === "Add Nutritionist") {
         $firstName = trim($_POST['firstName']);
         $lastName = trim($_POST['lastName']);
@@ -71,16 +70,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $type = trim($_POST['type']);
         $imagePath = '';
 
-        if (!empty($_FILES['nutritionistsImage']['name'])) {
-            $targetDir = "../../public/images/nutritionistsImage/";
+        if (!empty($_FILES['nutritionistsImages']['name'])) {
+            $targetDir = "../../public/images/nutritionistsImages/";
             if (!file_exists($targetDir)) {
                 mkdir($targetDir, 0777, true);
             }
 
-            $originalFileName = basename($_FILES['nutritionistsImage']['name']);
+            $originalFileName = basename($_FILES['nutritionistsImages']['name']);
             $targetFilePath = $targetDir . $originalFileName;
 
-            $check = getimagesize($_FILES['nutritionistsImage']['tmp_name']);
+            $check = getimagesize($_FILES['nutritionistsImages']['tmp_name']);
             if ($check === false) {
                 echo "File is not an image.";
                 exit;
@@ -94,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            if (move_uploaded_file($_FILES['nutritionistsImage']['tmp_name'], $targetFilePath)) {
+            if (move_uploaded_file($_FILES['nutritionistsImages']['tmp_name'], $targetFilePath)) {
                 $imagePath = $targetFilePath;
             } else {
                 echo "Sorry, there was an error uploading your file.";
@@ -157,18 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($description) && !empty($nutritionistScheduleID) && !empty($userID) && !empty($paymentID)) {
             $adminNutritionistsModel->addBooking($description, $nutritionistScheduleID, $userID, $paymentID);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
-        }
-    }
-
-    if (isset($_POST['editBookingButton'])) {
-        $nutritionistBookingID = $_POST['nutritionistBookingID'];
-        $description = trim($_POST['description']);
-        $nutritionistScheduleID = $_POST['nutritionistScheduleID'];
-
-        if (!empty($nutritionistBookingID) && !empty($description) && !empty($nutritionistScheduleID)) {
-            $adminNutritionistsModel->editBooking($nutritionistBookingID, $description, $nutritionistScheduleID);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }

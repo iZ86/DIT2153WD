@@ -123,26 +123,12 @@ class AdminNutritionistsModel {
         return $result['total'];
     }
 
-    public function getBookings($limit, $offset) {
-        $query = "SELECT nb.nutritionistBookingID, nb.description, ns.scheduleDateTime, 
-                     CONCAT(n.firstName, ' ', n.lastName) AS nutritionistName 
-              FROM NUTRITIONIST_BOOKING AS nb
-              JOIN NUTRITIONIST_SCHEDULE AS ns ON nb.nutritionistScheduleID = ns.nutritionistScheduleID
-              JOIN NUTRITIONIST AS n ON ns.nutritionistID = n.nutritionistID
-              LIMIT ? OFFSET ?";
+    public function getBookingDetails($nutritionistBookingID) {
+        $query = "SELECT nutritionistID, nutritionistScheduleID, description FROM NUTRITIONIST_BOOKING WHERE nutritionistBookingID = ?";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->bind_param("i", $nutritionistBookingID);
         $stmt->execute();
-        return $stmt->get_result();
-    }
-
-    public function editBooking($nutritionistBookingID, $description, $nutritionistScheduleID) {
-        $query = "UPDATE NUTRITIONIST_BOOKING SET description = ?, nutritionistScheduleID = ? WHERE nutritionistBookingID = ?";
-        $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("sii", $description, $nutritionistScheduleID, $nutritionistBookingID);
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to update booking: " . $stmt->error);
-        }
+        return $stmt->get_result()->fetch_assoc();
     }
 
     public function getBookingsWithDetails($limit, $offset) {
@@ -174,7 +160,7 @@ class AdminNutritionistsModel {
     }
 
     public function getFilteredNutritionists($limit, $offset, $filterType, $keywords) {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type 
+        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath 
               FROM " . $this->nutritionistsTable . " 
               WHERE 1=1";
 

@@ -100,11 +100,12 @@ class AdminClassesView {
                                 <td class="p-3"><?php echo $class['name']; ?></td>
                                 <td class="p-3"><?php echo $class['description']; ?></td>
                                 <td class="p-3 flex justify-center space-x-2">
-                                    <button class="text-gray-500 hover:text-blue-600" onclick="openPhotoModal('<?php echo addslashes($class['fitnessClassImageFilePath']); ?>')">
+                                    <button class="text-gray-500 hover:text-blue-600"
+                                            onclick="openPhotoModal('<?php echo $class['fitnessClassImageFilePath']; ?>')">
                                         <i class="bx bx-image"></i>
                                     </button>
                                     <button class="text-gray-500 hover:text-blue-600"
-                                            onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>', '<?php echo addslashes($class['fitnessClassImageFilePath']); ?>')">
+                                            onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo ($class['name']); ?>', '<?php echo ($class['description']); ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
                                 </td>
@@ -213,7 +214,7 @@ class AdminClassesView {
 
         <div id="photoModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
             <div class="bg-white rounded-xl p-6">
-                <img id="photoModalImage" src="" alt="Classes Photo" class="rounded-lg">
+                <img id="photoModalImage" src="" alt="Classes Photo" class="max-w-full max-h-96 rounded-lg">
                 <button onclick="closePhotoModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mt-4">Close</button>
             </div>
         </div>
@@ -253,8 +254,8 @@ class AdminClassesView {
                         <option value="className">Class Name</option>
                         <option value="instructor">Instructor</option>
                         <option value="pax">Pax</option>
+                        <option value="scheduledOn">Scheduled On (YYYY-MM-DD)</option>
                         <option value="status">Status</option>
-                        <option value="scheduledOn">Scheduled On</option>
                     </select>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
@@ -345,7 +346,6 @@ class AdminClassesView {
                 modal.classList.remove('hidden');
                 overlay.classList.remove('hidden');
 
-                // Trigger the transition
                 setTimeout(() => {
                     modal.classList.add('show');
                 }, 10);
@@ -461,7 +461,7 @@ class AdminClassesView {
                 }, 300);
             }
 
-            function openEditClassModal(id, name, description, fitnessClassImageFilePath) {
+            function openEditClassModal(id, name, description) {
                 const modal = document.getElementById('classModal');
                 const overlay = document.getElementById('modalOverlay');
 
