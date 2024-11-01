@@ -146,7 +146,7 @@ class AdminInstructorsView {
         </div>
 
         <div id="instructorModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg max-h-screen overflow-y-auto rounded-2xl shadow-lg p-6 mx-4 sm:mx-6 lg:mx-8">
                 <h2 id="instructorModalTitle" class="text-2xl font-semibold mb-4">Add Instructor</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
