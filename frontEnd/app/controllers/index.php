@@ -8,4 +8,3 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Join Us Today!") {
 
 $guestIndexView = new GuestIndexView();
 $guestIndexView->renderView();
-?>
