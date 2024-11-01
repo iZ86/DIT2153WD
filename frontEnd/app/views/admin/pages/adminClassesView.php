@@ -214,7 +214,7 @@ class AdminClassesView {
 
         <div id="photoModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
             <div class="bg-white rounded-xl p-6">
-                <img id="photoModalImage" src="" alt="Classes Photo" class="rounded-lg">
+                <img id="photoModalImage" src="" alt="Classes Photo" class="max-w-full max-h-96 rounded-lg">
                 <button onclick="closePhotoModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mt-4">Close</button>
             </div>
         </div>
