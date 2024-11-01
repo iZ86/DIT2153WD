@@ -87,6 +87,9 @@ class AdminInstructorsView {
                                 <td class="p-3"><?php echo $instructor['email']; ?></td>
                                 <td class="p-3"><?php echo $instructor['gender']; ?></td>
                                 <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openPhotoModal('<?php echo addslashes($instructor['instructorImageFilePath']); ?>')">
+                                        <i class="bx bx-image"></i>
+                                    </button>
                                     <button class="text-gray-500 hover:text-blue-600" onclick="openEditInstructorModal(<?php echo $instructor['instructorID']; ?>)">
                                         <i class="bx bx-pencil"></i>
                                     </button>
@@ -116,6 +119,13 @@ class AdminInstructorsView {
         </section>
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+        <div id="photoModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl p-6">
+                <img id="photoModalImage" src="" alt="Instructors Photo" class="max-w-full max-h-96 rounded-lg">
+                <button onclick="closePhotoModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mt-4">Close</button>
+            </div>
+        </div>
 
         <div id="instructorFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
@@ -149,7 +159,7 @@ class AdminInstructorsView {
             <div class="bg-white w-full max-w-lg max-h-screen overflow-y-auto rounded-2xl shadow-lg p-6 mx-4 sm:mx-6 lg:mx-8">
                 <h2 id="instructorModalTitle" class="text-2xl font-semibold mb-4">Add Instructor</h2>
                 <hr class="py-2">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="instructorID" name="instructorID">
 
                     <div class="flex space-x-4">
@@ -202,6 +212,9 @@ class AdminInstructorsView {
                     <label class="block text-gray-700 text-sm font-medium mt-4">Description <span class="text-red-500">*</span></label>
                     <textarea name="description" id="description" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required></textarea>
 
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
+                    <input type="file" name="instructorsImages" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
+
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeInstructorModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
                         <button type="submit" id="submitInstructorButton" name="addInstructorButton" value="Add Instructor" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Save Changes</button>
@@ -226,6 +239,32 @@ class AdminInstructorsView {
         </style>
 
         <script>
+            function openPhotoModal(imagePath) {
+                document.getElementById('photoModalImage').src = imagePath;
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                // Trigger the transition
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closePhotoModal() {
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openInstructorFilterModal() {
                 const modal = document.getElementById('instructorFilterModal');
                 const overlay = document.getElementById('modalOverlay');
