@@ -74,7 +74,7 @@ class AdminInstructorsModel {
     }
 
     public function getFilteredInstructors($filterType, $keywords, $limit, $offset) {
-        $query = "SELECT instructorID, firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth FROM " . $this->instructorsTable . " WHERE 1=1";
+        $query = "SELECT instructorID, firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth, instructorImageFilePath FROM " . $this->instructorsTable . " WHERE 1=1";
 
         switch ($filterType) {
             case 'instructorID':
