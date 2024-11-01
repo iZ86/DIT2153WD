@@ -30,7 +30,7 @@ class GuestLogInModel {
         $registeredUserResult = $this->getRegisteredUserSQLResult($username);
         if ($registeredUserResult->num_rows > 0) {
             $registeredUserRow = $registeredUserResult->fetch_assoc();
-            if ($registeredUserRow['password'] === $password) {
+            if (password_verify($password, $registeredUserRow['password'])) {
                 return 1;
             }
         }
