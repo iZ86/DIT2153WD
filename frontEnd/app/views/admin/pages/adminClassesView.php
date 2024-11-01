@@ -63,6 +63,8 @@ class AdminClassesView {
 
         <section class="p-6 space-y-6">
             <div class="mx-4">
+                <?php include __DIR__ . '/../components/adminSuccessNotification.php'; ?>
+
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Classes</h2>
                     <div class="flex items-center space-x-4">
