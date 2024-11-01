@@ -14,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['editUserButton']) && $_POST['editUserButton'] === "Edit User") {
         $registeredUserID = $_POST['registeredUserID'];
         $adminUsersModel->editUser($registeredUserID, $_POST['firstName'], $_POST['lastName'], $_POST['phoneNo'], $_POST['gender'], $_POST['dateOfBirth']);
+
+        $_SESSION['successMessage'] = "Save user records successfully.";
+
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
