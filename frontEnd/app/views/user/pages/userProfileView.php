@@ -34,9 +34,6 @@ class ProfileView {
 
     <div class="container mx-auto p-6 w-full lg:max-w-screen-xl h-full">
         <div class="flex items-center mb-10 mt-5 ml-3">
-            <button onclick="window.history.go(-1); return false;" class="flex items-center justify-center text-xl text-gray-600 p-2 bg-indigo-100 hover:bg-indigo-200 rounded-lg transition">
-                <i class='bx bx-chevrons-left'></i>
-            </button>
             <h2 class="text-2xl font-semibold ml-6">User Profile</h2>
         </div>
 
