@@ -24,6 +24,7 @@ class AdminInstructorsModel {
         return $stmt->get_result();
     }
 
+    // Get total count of instructors
     public function getTotalInstructors() {
         $query = "SELECT COUNT(*) as total FROM " . $this->instructorsTable;
         $stmt = $this->databaseConn->prepare($query);
