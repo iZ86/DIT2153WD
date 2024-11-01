@@ -254,8 +254,8 @@ class AdminClassesView {
                         <option value="className">Class Name</option>
                         <option value="instructor">Instructor</option>
                         <option value="pax">Pax</option>
+                        <option value="scheduledOn">Scheduled On (YYYY-MM-DD)</option>
                         <option value="status">Status</option>
-                        <option value="scheduledOn">Scheduled On</option>
                     </select>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Keyword <span class="text-red-500">*</span></label>
