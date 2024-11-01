@@ -100,7 +100,7 @@ function displayMessageOfAllExerciseRoutineDetailDataRow() {
     Object.entries(exerciseRoutineDetailDataset).map(entry => {
         let exerciseRoutineDetailData = entry[1];
         let exerciseRoutineDetailDataRowText =  document.getElementById(exerciseRoutineDetailData["exerciseRoutineDetailID"] + "Text");
-        exerciseRoutineDetailDataRowText.innerText = "You did " + exerciseDataset[exerciseRoutineDetailData["exerciseID"]]["exerciseName"] +
+        exerciseRoutineDetailDataRowText.innerText = "You did " + exerciseRoutineDetailData['rep'] + " reps of " + exerciseDataset[exerciseRoutineDetailData["exerciseID"]]["exerciseName"] +
         " at " + exerciseRoutineDetailData["recordedOnTime"];
     });
 }
