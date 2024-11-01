@@ -11,6 +11,7 @@ if (!isset($_SESSION['adminID'])) {
 $adminNutritionistsModel = new AdminNutritionistsModel(require '../../config/db_connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if adding a nutritionist
     if (isset($_POST['addNutritionistButton']) && $_POST['addNutritionistButton'] === "Add Nutritionist") {
         $firstName = trim($_POST['firstName']);
         $lastName = trim($_POST['lastName']);
@@ -18,11 +19,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phoneNo = trim($_POST['phoneNo']);
         $email = trim($_POST['email']);
         $type = trim($_POST['type']);
+        $imagePath = '';
+
+        if (!empty($_FILES['nutritionistsImages']['name'])) {
+            $targetDir = "../../public/images/nutritionistsImages/";
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            $originalFileName = basename($_FILES['nutritionistsImages']['name']);
+            $targetFilePath = $targetDir . $originalFileName;
+
+            $check = getimagesize($_FILES['nutritionistsImages']['tmp_name']);
+            if ($check === false) {
+                echo "File is not an image.";
+                exit;
+            }
+
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            $fileType = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($fileType), $allowedTypes)) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                exit;
+            }
+
+            if (move_uploaded_file($_FILES['nutritionistsImages']['tmp_name'], $targetFilePath)) {
+                $imagePath = $targetFilePath;
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+                exit;
+            }
+        }
 
         if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
-            $adminNutritionistsModel->addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type);
+            $adminNutritionistsModel->addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
+        } else {
+            echo "Please fill in all required fields.";
         }
     }
 
@@ -34,11 +69,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phoneNo = trim($_POST['phoneNo']);
         $email = trim($_POST['email']);
         $type = trim($_POST['type']);
+        $imagePath = '';
 
-        if (!empty($nutritionistID) && !empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
-            $adminNutritionistsModel->editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type);
+        if (!empty($_FILES['nutritionistsImage']['name'])) {
+            $targetDir = "../../public/images/nutritionistsImage/";
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            $originalFileName = basename($_FILES['nutritionistsImage']['name']);
+            $targetFilePath = $targetDir . $originalFileName;
+
+            $check = getimagesize($_FILES['nutritionistsImage']['tmp_name']);
+            if ($check === false) {
+                echo "File is not an image.";
+                exit;
+            }
+
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            $fileType = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($fileType), $allowedTypes)) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                exit;
+            }
+
+            if (move_uploaded_file($_FILES['nutritionistsImage']['tmp_name'], $targetFilePath)) {
+                $imagePath = $targetFilePath;
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+                exit;
+            }
+        }
+
+        if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
+            $adminNutritionistsModel->editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
+        } else {
+            echo "Please fill in all required fields.";
         }
     }
 

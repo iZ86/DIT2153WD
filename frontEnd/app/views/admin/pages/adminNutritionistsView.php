@@ -98,6 +98,9 @@ class AdminNutritionistsView {
                                     <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $nutritionist['type']; ?></span>
                                 </td>
                                 <td class="p-3 flex justify-center space-x-2">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openPhotoModal('<?php echo addslashes($nutritionist['nutritionistImageFilePath']); ?>')">
+                                        <i class="bx bx-image"></i>
+                                    </button>
                                     <button class="text-gray-500 hover:text-blue-600" onclick="openEditNutritionistModal(<?php echo $nutritionist['nutritionistID']; ?>, '<?php echo addslashes($nutritionist['firstName']); ?>', '<?php echo addslashes($nutritionist['lastName']); ?>', '<?php echo addslashes($nutritionist['phoneNo']); ?>', '<?php echo addslashes($nutritionist['email']); ?>', '<?php echo addslashes($nutritionist['gender']); ?>', '<?php echo addslashes($nutritionist['type']); ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
@@ -274,6 +277,13 @@ class AdminNutritionistsView {
 
         <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
+        <div id="photoModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl p-6">
+                <img id="photoModalImage" src="" alt="Nutritionist Photo" class="max-w-full max-h-96 rounded-lg">
+                <button onclick="closePhotoModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mt-4">Close</button>
+            </div>
+        </div>
+
         <!-- Nutritionist Filter Modal -->
         <div id="nutritionistFilterModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
@@ -296,7 +306,7 @@ class AdminNutritionistsView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeNutritionistFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/nutritionists.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -324,7 +334,7 @@ class AdminNutritionistsView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/nutritionists.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -352,7 +362,7 @@ class AdminNutritionistsView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeBookingFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/nutritionists.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/nutritionists.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -360,10 +370,10 @@ class AdminNutritionistsView {
         </div>
 
         <div id="nutritionistModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="nutritionistModalTitle" class="text-2xl font-semibold mb-4">Add Nutritionist</h2>
                 <hr class="py-2">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="nutritionistID" name="nutritionistID">
                     <div class="flex space-x-4 mt-4">
                         <div class="flex-1">
@@ -392,6 +402,9 @@ class AdminNutritionistsView {
                     <label class="block text-gray-700 text-sm font-medium mt-4">Type <span class="text-red-500">*</span></label>
                     <input name="type" type="text" id="type" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
+                    <input type="file" name="nutritionistsImages" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
+
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeNutritionistModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
                         <button type="submit" id="submitNutritionistButton" name="addNutritionistButton" value="Add Nutritionist" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Save Changes</button>
@@ -401,7 +414,7 @@ class AdminNutritionistsView {
         </div>
 
         <div id="scheduleModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="scheduleModalTitle" class="text-2xl font-semibold mb-4">Add Schedule</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -431,7 +444,7 @@ class AdminNutritionistsView {
         </div>
 
         <div id="bookingModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
+            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
                 <h2 id="bookingModalTitle" class="text-2xl font-semibold mb-4">Edit Booking</h2>
                 <hr class="py-2">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -487,6 +500,32 @@ class AdminNutritionistsView {
             </style>
 
         <script>
+            function openPhotoModal(imagePath) {
+                document.getElementById('photoModalImage').src = imagePath;
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+
+                // Trigger the transition
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+
+            function closePhotoModal() {
+                const modal = document.getElementById('photoModal');
+                const overlay = document.getElementById('modalOverlay');
+
+                modal.classList.remove('show');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
             function openNutritionistFilterModal() {
                 const modal = document.getElementById('nutritionistFilterModal');
                 const overlay = document.getElementById('modalOverlay');

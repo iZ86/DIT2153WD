@@ -41,6 +41,9 @@ class GuestSignUpModel {
     }
     
     public function createUser($firstName, $lastName, $username, $password, $email, $phoneNo, $gender, $dateOfBirth, $profileImageFilePath, $joinedDate) {
+        // Hash the password
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
         $registeredUserSQL = "INSERT INTO " . $this->registeredUserTable . "(firstName, lastName, username, password, email, phoneNo, gender, dateOfBirth, profileImageFilePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $registeredUserSQLSTMT = $this->databaseConn->prepare($registeredUserSQL);
         $registeredUserSQLSTMT->bind_param("sssssssss", $firstName, $lastName, $username, $password, $email, $phoneNo, $gender, $dateOfBirth, $profileImageFilePath);

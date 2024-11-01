@@ -22,9 +22,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description']);
         $certification = trim($_POST['certification']);
         $dateOfBirth = trim($_POST['dateOfBirth']);
+        $imagePath = '';
+
+        if (!empty($_FILES['instructorsImages']['name'])) {
+            $targetDir = "../../public/images/instructorsImages/";
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            $originalFileName = basename($_FILES['instructorsImages']['name']);
+            $targetFilePath = $targetDir . $originalFileName;
+
+            $check = getimagesize($_FILES['instructorsImages']['tmp_name']);
+            if ($check === false) {
+                echo "File is not an image.";
+                exit;
+            }
+
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            $fileType = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($fileType), $allowedTypes)) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                exit;
+            }
+
+            if (move_uploaded_file($_FILES['instructorsImages']['tmp_name'], $targetFilePath)) {
+                $imagePath = $targetFilePath;
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+                exit;
+            }
+        }
 
         if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($dateOfBirth)) {
-            $adminInstructorsModel->addInstructor($firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth);
+            $adminInstructorsModel->addInstructor($firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
@@ -42,19 +74,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description']);
         $certification = trim($_POST['certification']);
         $dateOfBirth = trim($_POST['dateOfBirth']);
+        $imagePath = '';
+
+        if (!empty($_FILES['instructorsImages']['name'])) {
+            $targetDir = "../../public/images/instructorsImages/";
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            $originalFileName = basename($_FILES['instructorsImages']['name']);
+            $targetFilePath = $targetDir . $originalFileName;
+
+            $check = getimagesize($_FILES['instructorsImages']['tmp_name']);
+            if ($check === false) {
+                echo "File is not an image.";
+                exit;
+            }
+
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            $fileType = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($fileType), $allowedTypes)) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                exit;
+            }
+
+            if (move_uploaded_file($_FILES['instructorsImages']['tmp_name'], $targetFilePath)) {
+                $imagePath = $targetFilePath;
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+                exit;
+            }
+        }
 
         if (!empty($instructorID) && !empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($dateOfBirth)) {
-            $adminInstructorsModel->editInstructor($instructorID, $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth);
+            $adminInstructorsModel->editInstructor($instructorID, $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
-    }
-
-    if (isset($_POST['deleteInstructorButton'])) {
-        $instructorID = $_POST['instructorID'];
-        $adminInstructorsModel->deleteInstructor($instructorID);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
     }
 }
 
