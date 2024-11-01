@@ -13,6 +13,7 @@ $adminClassesModel = new AdminClassesModel(require '../../config/db_connection.p
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['addClassButton']) && $_POST['addClassButton'] === "Add Class") {
         $name = trim($_POST['name']);
+        $price = trim($_POST['price']);
         $description = trim($_POST['description']);
         $imagePath = '';
 
@@ -48,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (!empty($name) && !empty($description)) {
-            $adminClassesModel->addClass($name, $description, $imagePath);
+        if (!empty($name) && !empty($price) && !empty($description)) {
+            $adminClassesModel->addClass($name, $price, $description, $imagePath);
 
             $_SESSION['successMessage'] = "Added new class successfully.";
 
@@ -61,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['editClassButton']) && $_POST['editClassButton'] === "Edit Class") {
         $fitnessClassID = $_POST['fitnessClassID'];
         $name = trim($_POST['name']);
+        $price = trim($_POST['price']);
         $description = trim($_POST['description']);
         $imagePath = '';
 
@@ -96,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (!empty($fitnessClassID) && !empty($name) && !empty($description)) {
-            $adminClassesModel->editClass($fitnessClassID, $name, $description, $imagePath);
+        if (!empty($fitnessClassID) && !empty($name) && !empty($price) && !empty($description)) {
+            $adminClassesModel->editClass($fitnessClassID, $name, $price, $description, $imagePath);
 
             $_SESSION['successMessage'] = "Edited class record successfully.";
 
