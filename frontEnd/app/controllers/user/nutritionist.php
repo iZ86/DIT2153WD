@@ -1,6 +1,12 @@
 <?php
 session_start();
 ob_start();
+
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 require '../../models/nutritionistModel.php';
 require '../../views/user/pages/userNutritionistsView.php';
 

@@ -2,6 +2,12 @@
 require('../../views/user/pages/userTrackWeightView.php');
 require('../../models/user/userTrackWeightModel.php');
 session_start();
+
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 define("KILOGRAMTOGRAMCONVERSIONRATE", 1000);
 define("POUNDTOGRAMCONVERSIONRATE", 453.6);
 $userTrackWeightModel = new UserTrackWeightModel(require "../../config/db_connection.php");
@@ -58,13 +64,13 @@ function checkIsBasicPostVariablesSet() {
  * Otherwise, return false.
  */
 function validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitFormat, $regexWeightFormat, $regexTimeFormat) {
-    
+
     if ((($weightUnit !== null) && preg_match($regexWeightUnitFormat, $weightUnit)) &&
     (($weight !== null) && (preg_match($regexWeightFormat, $weight))) &&
     (($time !==null) && (preg_match($regexTimeFormat, $time)))) {
         return true;
     }
-    
+
     return false;
 }
 
@@ -79,20 +85,20 @@ $date = $_GET['date'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submitWeightDataButton'])) {
         if ($_POST['submitWeightDataButton'] === "Add") {
-            
+
             if (checkIsBasicPostVariablesSet()) {
-                
+
                 $weightUnit = cleanData($_POST['weightUnitInWeightDataModalInUserTrackWeightView']);
                 $weight = cleanData($_POST['weight']);
                 $time = cleanData($_POST['time']);
                 if (validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitFormat, $regexWeightFormat, $regexTimeFormat)) {
-                    
-                    
-                    
+
+
+
                     $weight = (float) $weight;
                     $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
                     $dateTime = $date . " " . $time;
-    
+
                     $addStatus = $userTrackWeightModel->addWeightData($_SESSION['userID'], $weight, $dateTime);
                     if ($addStatus) {
                         die(header('location: track-weight.php?date=' . $date));
@@ -104,17 +110,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die(header('location: error.php'));
 
         } else if ($_POST['submitWeightDataButton'] === "Save") {
-            
+
             if (checkIsBasicPostVariablesSet() && isset($_POST['weightID'])) {
                 $weightID = cleanData($_POST['weightID']);
                 $weightUnit = cleanData($_POST['weightUnitInWeightDataModalInUserTrackWeightView']);
                 $weight = cleanData($_POST['weight']);
                 $time = cleanData($_POST['time']);
-                
+
                 if (validateBasicPostData($weightUnit, $weight, $time, $regexWeightUnitFormat, $regexWeightFormat, $regexTimeFormat) &&
                 (($weightID !== null) &&
                 preg_match($regexIDFormat, $weightID))) {
-                    
+
                     $weightID = (int) $weightID;
                     $weight = (float) $weight;
                     $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
@@ -131,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
     } else if (isset($_POST['submitDeleteWeightDataButton'])) {
-        
+
         if ($_POST['submitDeleteWeightDataButton'] === "Delete") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['weightID'])) {
                 $weightID = cleanData($_POST['weightID']);
@@ -143,11 +149,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 preg_match($regexIDFormat, $weightID))) {
                     $weightID = (int) $weightID;
 
-                    
+
 
                     $deleteStatus = $userTrackWeightModel->deleteWeightData($weightID, $_SESSION['userID']);
-                    
-                    
+
+
                     if ($deleteStatus) {
                         die(header('location: track-weight.php?date=' . $date));
                     }

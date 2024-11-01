@@ -2,6 +2,12 @@
 require('../../views/user/pages/userTrackWaterConsumptionView.php');
 require('../../models/user/userTrackWaterConsumptionModel.php');
 session_start();
+
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 define("LITERTOMILLILITERCONVERSIONRATE", 1000);
 define("OUNCETOMILLILITERCONVERSIONRATE", 29.574);
 $userTrackWaterConsumptionModel = new UserTrackWaterConsumptionModel(require "../../config/db_connection.php");
@@ -63,7 +69,7 @@ function validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUni
     (($time !==null) && (preg_match($regexTimeFormat, $time)))) {
         return true;
     }
-    
+
     return false;
 }
 
@@ -83,11 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $amountDrank = cleanData($_POST['amountDrank']);
                 $time = cleanData($_POST['time']);
                 if (validateBasicPostData($volumeUnit, $amountDrank, $time, $regexVolumeUnitFormat, $regexAmountDrankFormat, $regexTimeFormat)) {
-                    
+
                     $amountDrank = (float) $amountDrank;
                     $amountDrank = convertValueOfVolumeUnitToMilliliter($amountDrank, $volumeUnit);
                     $dateTime = $date . " " . $time;
-    
+
                     $addStatus = $userTrackWaterConsumptionModel->addWaterConsumptionData($_SESSION['userID'], $amountDrank, $dateTime);
                     if ($addStatus) {
                         die(header('location: track-water-consumption.php?date=' . $date));
@@ -125,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
     } else if (isset($_POST['submitDeleteWaterConsumptionDataButton'])) {
-        
+
         if ($_POST['submitDeleteWaterConsumptionDataButton'] === "Delete") {
             if (checkIsBasicPostVariablesSet() && isset($_POST['waterConsumptionID'])) {
                 $waterConsumptionID = cleanData($_POST['waterConsumptionID']);
