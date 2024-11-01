@@ -9,46 +9,43 @@ class AdminUsersModel {
         $this->databaseConn = $databaseConn;
     }
 
-    public function getAllUsers($limit, $offset, $searchQuery = '') {
-        $searchCondition = '';
-        if ($searchQuery) {
-            $searchCondition = " AND (CONCAT(ru.firstName, ' ', ru.lastName) LIKE ? OR ru.username LIKE ? OR ru.email LIKE ?)";
-        }
-
+    public function getAllUsers($limit, $offset) {
         $query = "SELECT ru.registeredUserID, ru.firstName, ru.lastName, CONCAT(ru.firstName, ' ', ru.lastName) AS fullName, 
                  ru.phoneNo, ru.username, ru.email, ru.gender, ru.dateOfBirth,
                  ms.startOn, ms.endOn, 
                  IF(ms.endOn IS NULL OR ms.endOn < NOW(), 'Inactive', 'Active') AS membershipStatus 
-          FROM " . $this->registeredUserTable . " AS ru
-          JOIN " . $this->userTable . " AS u ON ru.registeredUserID = u.userID
-          LEFT JOIN " . $this->memberSubscriptionTable . " AS ms ON ms.membershipID = u.userID
-          WHERE u.userID IS NOT NULL" . $searchCondition . "
-          LIMIT ? OFFSET ?";
+              FROM " . $this->registeredUserTable . " AS ru
+              JOIN " . $this->userTable . " AS u ON ru.registeredUserID = u.userID
+              LEFT JOIN " . $this->memberSubscriptionTable . " AS ms ON ms.membershipID = u.userID
+              WHERE u.userID IS NOT NULL
+              LIMIT ? OFFSET ?";
 
         $stmt = $this->databaseConn->prepare($query);
-        if ($searchQuery) {
-            $likeQuery = '%' . $searchQuery . '%';
-            $stmt->bind_param("ssssi", $likeQuery, $likeQuery, $likeQuery, $limit, $offset);
-        } else {
-            $stmt->bind_param("ii", $limit, $offset);
-        }
+        $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
         return $stmt->get_result();
     }
 
+
     public function getUserDetails($registeredUserID) {
         $query = "SELECT ru.registeredUserID, ru.firstName, ru.lastName, ru.username, ru.email, 
-                 ru.phoneNo, ru.gender, ru.dateOfBirth,
-                 ms.startOn, ms.endOn
-          FROM " . $this->registeredUserTable . " AS ru
-          JOIN " . $this->userTable . " AS u ON ru.registeredUserID = u.userID
-          LEFT JOIN " . $this->memberSubscriptionTable . " AS ms ON ms.membershipID = u.userID
-          WHERE ru.registeredUserID = ?";
+              ru.phoneNo, ru.gender, ru.dateOfBirth,
+              ms.startOn, ms.endOn
+              FROM " . $this->registeredUserTable . " AS ru
+              JOIN " . $this->userTable . " AS u ON ru.registeredUserID = u.userID
+              LEFT JOIN " . $this->memberSubscriptionTable . " AS ms ON ms.membershipID = u.userID
+              WHERE ru.registeredUserID = ?";
 
         $stmt = $this->databaseConn->prepare($query);
         $stmt->bind_param("i", $registeredUserID);
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        $userDetails = $stmt->get_result()->fetch_assoc();
+
+        $activeMembership = $this->getActiveMembershipSubscriptionRecord($registeredUserID);
+        $userDetails['membershipStart'] = $activeMembership['startOn'] ?? null;
+        $userDetails['membershipEnd'] = $activeMembership['endOn'] ?? null;
+
+        return $userDetails;
     }
 
     public function getTotalUsers() {
@@ -91,7 +88,7 @@ class AdminUsersModel {
         } elseif ($filterType === 'email') {
             $query .= " AND ru.email LIKE ?";
         } elseif ($filterType === 'gender') {
-            $query .= " AND ru.gender = ?";
+            $query .= " AND ru.gender LIKE ?";
         } elseif ($filterType === 'membership') {
             $query .= " AND IF(ms.endOn IS NULL OR ms.endOn < NOW(), 'Inactive', 'Active') = ?";
         }
