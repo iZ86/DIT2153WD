@@ -54,7 +54,7 @@ class AdminPaymentsView {
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 600px;">
+            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto" style="height: 540px;">
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
