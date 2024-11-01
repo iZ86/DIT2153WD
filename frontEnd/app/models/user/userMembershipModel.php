@@ -2,8 +2,8 @@
 class UserMembershipModel {
     /** Database connection */
     private $databaseConn;
-    /** MEMBER_SUBSCRIPTION Table. */
-    private $memberSubscriptionTable = "MEMBER_SUBSCRIPTION";
+    /** MEMBERSHIP_SUBSCRIPTION Table. */
+    private $membershipSubscriptionTable = "MEMBERSHIP_SUBSCRIPTION";
     /** MEMBERSHIP Table. */
     private $membershipTable = "MEMBERSHIP";
     /** PAYMENT Table */
@@ -22,7 +22,7 @@ class UserMembershipModel {
      * If there is no active membership subscription data, return an empty array.
      */
     public function getActiveMembershipSubscriptionData($userID) {
-        $activeMembershipSubscriptionSQL = "SELECT * FROM " . $this->paymentTable . " p, " . $this->memberSubscriptionTable .
+        $activeMembershipSubscriptionSQL = "SELECT * FROM " . $this->paymentTable . " p, " . $this->membershipSubscriptionTable .
         " ms, " . $this->membershipTable . " m WHERE p.paymentID = ms.paymentID AND 
         ms.membershipID = m.membershipID AND p.userID = ? AND ms.endOn > NOW()";
 

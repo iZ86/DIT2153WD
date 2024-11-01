@@ -3,7 +3,7 @@ class AdminUsersModel {
     private $databaseConn;
     private $registeredUserTable = "REGISTERED_USER";
     private $userTable = "USER";
-    private $memberSubscriptionTable = "MEMBER_SUBSCRIPTION";
+    private $memberSubscriptionTable = "MEMBERSHIP_SUBSCRIPTION";
 
     public function __construct($databaseConn) {
         $this->databaseConn = $databaseConn;
