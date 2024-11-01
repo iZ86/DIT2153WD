@@ -3,6 +3,11 @@ require '../../views/user/pages/userBillingView.php';
 require '../../models/user/userBillingModel.php';
 session_start();
 
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 $regexPageFormat = "/^(0|[1-9][\d]*)$/";
 
 if (!isset($_GET['page']) || !preg_match($regexPageFormat, $_GET['page'])) {

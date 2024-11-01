@@ -3,6 +3,10 @@ require('../../views/user/pages/userMembershipSubscriptionDetailView.php');
 require('../../models/user/userMembershipSubscriptionDetailModel.php');
 session_start();
 
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
 
 $regexIDFormat = "/^(0|[1-9][\d]*)$/";
 

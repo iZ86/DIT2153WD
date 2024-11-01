@@ -2,6 +2,12 @@
 require('../../views/user/pages/userTrackBMIView.php');
 require('../../models/user/userTrackBMIModel.php');
 session_start();
+
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 define("METERTOCENTIMETERCONVERSIONRATE", 100);
 define("FOOTTOCENTIMETERCONVERSIONRATE", 30.48);
 define("KILOGRAMTOGRAMCONVERSIONRATE", 1000);
@@ -70,7 +76,7 @@ function cleanData($data) {
  * Otherwise, return false.
  */
 function checkIsBasicPostVariablesSet() {
-    if (isset($_POST['age']) && isset($_POST['gender']) && isset($_POST['height']) && isset($_POST['heightUnitInBMIDataModalInUserTrackBMIView']) && 
+    if (isset($_POST['age']) && isset($_POST['gender']) && isset($_POST['height']) && isset($_POST['heightUnitInBMIDataModalInUserTrackBMIView']) &&
     isset($_POST['weight']) && isset($_POST['weightUnitInBMIDataModalInUserTrackBMIView']) && isset($_POST['time'])) {
         return true;
     }
@@ -81,7 +87,7 @@ function checkIsBasicPostVariablesSet() {
  * Returns true if valid.
  * Otherwise, return false.
  */
-function validateBasicPostData($age, $gender, $height, $heightUnit, 
+function validateBasicPostData($age, $gender, $height, $heightUnit,
 $weight, $weightUnit, $time, $regexIDAndAgeFormat,
 $regexGenderFormat, $regexWeightAndHeightFormat, $regexWeightUnitFormat, $regexHeightUnitFormat,
 $regexTimeFormat) {
@@ -107,10 +113,10 @@ $date = $_GET['date'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submitBMIDataButton'])) {
-        
+
         if ($_POST['submitBMIDataButton'] === "Add") {
             if (checkIsBasicPostVariablesSet()) {
-                
+
 
                 $age = cleanData($_POST['age']);
                 $gender = cleanData($_POST['gender']);
@@ -121,21 +127,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $time = cleanData($_POST['time']);
 
                 if (validateBasicPostData($age, $gender, $height, $heightUnit,
-                $weight, $weightUnit, $time, $regexIDAndAgeFormat, 
-                $regexGenderFormat, $regexWeightAndHeightFormat, $regexWeightUnitFormat, $regexHeightUnitFormat, 
+                $weight, $weightUnit, $time, $regexIDAndAgeFormat,
+                $regexGenderFormat, $regexWeightAndHeightFormat, $regexWeightUnitFormat, $regexHeightUnitFormat,
                 $regexTimeFormat)) {
-                    
-                    
+
+
                     $height = (float) $height;
                     $weight = (float) $weight;
 
-                
+
                     $height = convertValueOfHeightUnitToCentimeter($height, $heightUnit);
                     $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
-                    
+
 
                     $dateTime = $date . " " . $time;
-    
+
                     $addStatus = $userTrackBMIModel->addBMIData($age, $gender, $height, $weight, $dateTime, $_SESSION['userID']);
                     if ($addStatus) {
                         die(header('location: track-bmi.php?date=' . $date));
@@ -158,10 +164,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $time = cleanData($_POST['time']);
 
 
-                if ((validateBasicPostData($age, $gender, $height, $heightUnit, 
+                if ((validateBasicPostData($age, $gender, $height, $heightUnit,
                 $weight, $weightUnit, $time, $regexIDAndAgeFormat,
                 $regexGenderFormat, $regexWeightAndHeightFormat, $regexWeightUnitFormat, $regexHeightUnitFormat,
-                $regexTimeFormat)) && 
+                $regexTimeFormat)) &&
                 ($bmiID !== null) &&
                 (preg_match($regexIDAndAgeFormat, $bmiID))) {
 
@@ -169,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $height = (float) $height;
                     $weight = (float) $weight;
 
-                    
+
                     $height = convertValueOfHeightUnitToCentimeter($height, $heightUnit);
                     $weight = convertValueOfWeightUnitToGram($weight, $weightUnit);
 
@@ -183,12 +189,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // If there is any error with the database request or the data received.
             die(header('location: error.php'));
-            
+
         }
     } else if (isset($_POST['submitDeleteBMIDataButton'])) {
-        
+
         if ($_POST['submitDeleteBMIDataButton'] === "Delete") {
-            
+
             if (checkIsBasicPostVariablesSet() && isset($_POST['bmiID'])) {
 
                 $bmiID = cleanData($_POST['bmiID']);
@@ -200,10 +206,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $weightUnit = cleanData($_POST['weightUnitInBMIDataModalInUserTrackBMIView']);
                 $time = cleanData($_POST['time']);
 
-                if ((validateBasicPostData($age, $gender, $height, $heightUnit, 
+                if ((validateBasicPostData($age, $gender, $height, $heightUnit,
                 $weight, $weightUnit, $time, $regexIDAndAgeFormat,
                 $regexGenderFormat, $regexWeightAndHeightFormat, $regexWeightUnitFormat, $regexHeightUnitFormat,
-                $regexTimeFormat)) && 
+                $regexTimeFormat)) &&
                 ($bmiID !== null) &&
                 (preg_match($regexIDAndAgeFormat, $bmiID))) {
 

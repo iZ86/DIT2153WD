@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../../controllers/login.php");
+    exit;
+}
+
 require '../../models/user/userFitnessClassModel.php';
 require '../../views/user/pages/classScheduleView.php';
 
