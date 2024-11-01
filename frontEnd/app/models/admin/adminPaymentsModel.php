@@ -52,7 +52,7 @@ class AdminPaymentsModel {
 
         $query = "SELECT SUM(m.price) AS totalAmount
               FROM PAYMENT p
-              JOIN MEMBER_SUBSCRIPTION ms ON p.paymentID = ms.paymentID
+              JOIN MEMBERSHIP_SUBSCRIPTION ms ON p.paymentID = ms.paymentID
               JOIN MEMBERSHIP m ON ms.membershipID = m.membershipID
               WHERE p.paymentID = ?";
 
