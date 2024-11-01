@@ -191,7 +191,7 @@ class UserTrackWeightView {
                 <div id="confirmationModal" class="absolute inset-0 flex items-center justify-center hidden z-30 modal font-montserrat">
                     <div class="flex flex-col items-center justify-center bg-white w-full rounded-2xl shadow-lg modal-content basis-96 min-h-64">
                         
-                        <h2 id="confirmationModalTitle" class="text-3xl text-black font-bold mb-5 text-center">Are you sure you want to delete this weight data?</h2>
+                        <h2 id="confirmationModalTitle" class="text-lg text-black font-bold mb-5 text-center">Are you sure you want to delete this weight data? This action cannot be UNDONE.</h2>
                         <div class ="flex flex-row-reverse">
                             <input type="submit" id="submitDeleteWeightDataButton" name="submitDeleteWeightDataButton" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
                             <input type="button" value="Close" onclick="closeConfirmationModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg mr-2 cursor-pointer">
