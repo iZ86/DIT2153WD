@@ -127,8 +127,8 @@ class UserTrackBMIView {
             <form action="<?php echo $_SERVER['PHP_SELF'] . "?date=" . $_GET['date']; ?>" method="POST">
                 <input type="hidden" id="bmiID" name="bmiID">
 
-                <div class="flex mt-8 min-w-100 items-between">
-                    <div class="flex flex-col justify-between text-white drop-shadow-dark font-semibold text-2xl">
+                <div class="flex mt-8 min-w-100 gap-x-2 items-between">
+                    <div class="flex flex-col justify-between items-end text-white drop-shadow-dark font-semibold text-2xl">
                         <label for="age">Age:</label>
                         <label for="gender">Gender:</label>
                         <label for="height">Height:</label>
