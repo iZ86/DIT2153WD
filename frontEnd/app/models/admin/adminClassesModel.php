@@ -8,18 +8,18 @@ class AdminClassesModel {
         $this->databaseConn = $databaseConn;
     }
 
-    public function addClass($name, $description, $imagePath = null) {
-        $query = "INSERT INTO " . $this->classesTable . " (name, description, fitnessClassImageFilePath) VALUES (?, ?, ?)";
+    public function addClass($name, $price, $description, $imagePath = null) {
+        $query = "INSERT INTO " . $this->classesTable . " (name, price, description, fitnessClassImageFilePath) VALUES (?, ?, ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("sss", $name, $description, $imagePath);
+        $stmt->bind_param("ssss", $name, $price, $description, $imagePath);
 
         if (!$stmt->execute()) {
             throw new Exception("Failed to add class: " . $stmt->error);
         }
     }
 
-    public function editClass($fitnessClassID, $name, $description, $imagePath = null) {
-        $query = "UPDATE " . $this->classesTable . " SET name = ?, description = ?";
+    public function editClass($fitnessClassID, $name, $price, $description, $imagePath = null) {
+        $query = "UPDATE " . $this->classesTable . " SET name = ?, price = ?, description = ?";
 
         if ($imagePath) {
             $query .= ", fitnessClassImageFilePath = ?";
@@ -29,9 +29,9 @@ class AdminClassesModel {
         $stmt = $this->databaseConn->prepare($query);
 
         if ($imagePath) {
-            $stmt->bind_param("sssi", $name, $description, $imagePath, $fitnessClassID);
+            $stmt->bind_param("ssssi", $name, $price, $description, $imagePath, $fitnessClassID);
         } else {
-            $stmt->bind_param("ssi", $name, $description, $fitnessClassID);
+            $stmt->bind_param("sssi", $name, $price, $description, $fitnessClassID);
         }
 
         if (!$stmt->execute()) {
@@ -65,7 +65,7 @@ class AdminClassesModel {
     }
 
     public function getClasses($limit, $offset) {
-        $query = "SELECT fitnessClassID, name, description, fitnessClassImageFilePath FROM " . $this->classesTable . " LIMIT ? OFFSET ?";
+        $query = "SELECT fitnessClassID, name, price, description, fitnessClassImageFilePath FROM " . $this->classesTable . " LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
@@ -114,7 +114,7 @@ class AdminClassesModel {
     }
 
     public function getFilteredClassesByName($name, $limit, $offset) {
-        $query = "SELECT fitnessClassID, name, description, fitnessClassImageFilePath FROM " . $this->classesTable . " WHERE name LIKE ? LIMIT ? OFFSET ?";
+        $query = "SELECT fitnessClassID, name, price, description, fitnessClassImageFilePath FROM " . $this->classesTable . " WHERE name LIKE ? LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
         $searchTerm = '%' . $name . '%';
         $stmt->bind_param("sii", $searchTerm, $limit, $offset);
@@ -123,7 +123,7 @@ class AdminClassesModel {
     }
 
     public function getFilteredClassesByDescription($description, $limit, $offset) {
-        $query = "SELECT fitnessClassID, name, description, fitnessClassImageFilePath FROM " . $this->classesTable . " WHERE description LIKE ? LIMIT ? OFFSET ?";
+        $query = "SELECT fitnessClassID, name, price, description, fitnessClassImageFilePath FROM " . $this->classesTable . " WHERE description LIKE ? LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
         $searchTerm = '%' . $description . '%';
         $stmt->bind_param("sii", $searchTerm, $limit, $offset);

@@ -86,6 +86,7 @@ class AdminClassesView {
                     <tr class="text-gray-500 font-medium text-center">
                         <th class="py-4 px-6 border-b border-gray-200">Class ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Name</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Price</th>
                         <th class="py-4 px-6 border-b border-gray-200">Description</th>
                         <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
@@ -100,14 +101,20 @@ class AdminClassesView {
                             <tr class="bg-white class-row">
                                 <td class="p-3"><?php echo $class['fitnessClassID']; ?></td>
                                 <td class="p-3"><?php echo $class['name']; ?></td>
-                                <td class="p-3"><?php echo $class['description']; ?></td>
+                                <td class="p-3"><?php echo number_format($class['price'], 2); ?></td>
+                                <td class="p-3">
+                                    <?php
+                                    $maxLength = 40;
+                                    echo strlen($class['description']) > $maxLength ? substr($class['description'], 0, $maxLength) . '...' : $class['description'];
+                                    ?>
+                                </td>
                                 <td class="p-3 flex justify-center space-x-2">
                                     <button class="text-gray-500 hover:text-blue-600"
                                             onclick="openPhotoModal('<?php echo $class['fitnessClassImageFilePath']; ?>')">
                                         <i class="bx bx-image"></i>
                                     </button>
                                     <button class="text-gray-500 hover:text-blue-600"
-                                            onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo ($class['name']); ?>', '<?php echo ($class['description']); ?>')">
+                                            onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo htmlspecialchars($class['name']); ?>', '<?php echo htmlspecialchars($class['price']); ?>', '<?php echo htmlspecialchars($class['description']); ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
                                 </td>
@@ -281,6 +288,9 @@ class AdminClassesView {
 
                     <label class="block text-gray-700 text-sm font-medium">Class Name <span class="text-red-500">*</span></label>
                     <input name="name" type="text" id="className" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Price <span class="text-red-500">*</span></label>
+                    <input name="price" type="number" step="0.01" id="classPrice" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Description <span class="text-red-500">*</span></label>
                     <textarea name="description" id="classDescription" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required></textarea>
@@ -463,20 +473,21 @@ class AdminClassesView {
                 }, 300);
             }
 
-            function openEditClassModal(id, name, description) {
+            function openEditClassModal(id, name, price, description) {
                 const modal = document.getElementById('classModal');
                 const overlay = document.getElementById('modalOverlay');
 
                 modal.classList.remove('hidden');
                 overlay.classList.remove('hidden');
 
-                document.getElementById('classModalTitle').innerText = 'Edit Class';
                 document.getElementById('fitnessClassID').value = id;
                 document.getElementById('className').value = name;
+                document.getElementById('classPrice').value = price;
                 document.getElementById('classDescription').value = description;
 
                 document.getElementById('submitClassButton').name = 'editClassButton';
                 document.getElementById('submitClassButton').value = 'Edit Class';
+                document.getElementById('classModalTitle').innerText = 'Edit Class';
 
                 setTimeout(() => {
                     modal.classList.add('show');

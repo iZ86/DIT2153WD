@@ -18,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phoneNo = trim($_POST['phoneNo']);
         $email = trim($_POST['email']);
         $type = trim($_POST['type']);
+        $dateOfBirth = trim($_POST['dateOfBirth']);
+        $description = trim($_POST['description']);
         $imagePath = '';
 
         if (!empty($_FILES['nutritionistsImages']['name'])) {
@@ -51,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
-            $adminNutritionistsModel->addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
+        if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type) && !empty($dateOfBirth) && !empty($description)) {
+            $adminNutritionistsModel->addNutritionist($firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath);
 
             $_SESSION['successMessage'] = "Added new nutritionist successfully.";
 
@@ -69,6 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phoneNo = trim($_POST['phoneNo']);
         $email = trim($_POST['email']);
         $type = trim($_POST['type']);
+        $dateOfBirth = trim($_POST['dateOfBirth']);
+        $description = trim($_POST['description']);
         $imagePath = '';
 
         if (!empty($_FILES['nutritionistsImages']['name'])) {
@@ -102,8 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type)) {
-            $adminNutritionistsModel->editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
+        if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($type) && !empty($dateOfBirth) && !empty($description)) {
+            $adminNutritionistsModel->editNutritionist($nutritionistID, $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath);
 
             $_SESSION['successMessage'] = "Edited nutritionist record successfully.";
 

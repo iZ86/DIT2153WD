@@ -18,7 +18,7 @@ class AdminNutritionistsModel {
     }
 
     public function getNutritionists($limit, $offset) {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath
+        $query = "SELECT nutritionistID, firstName, lastName, gender, dateOfBirth, phoneNo, email, type, description, nutritionistImageFilePath
               FROM " . $this->nutritionistsTable . " 
               LIMIT ? OFFSET ?";
         $stmt = $this->databaseConn->prepare($query);
@@ -56,17 +56,17 @@ class AdminNutritionistsModel {
         return $stmt->get_result();
     }
 
-    public function addNutritionist($firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath = null) {
-        $query = "INSERT INTO " . $this->nutritionistsTable . " (firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public function addNutritionist($firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath = null) {
+        $query = "INSERT INTO " . $this->nutritionistsTable . " (firstName, lastName, gender, dateOfBirth, phoneNo, email, type, description, nutritionistImageFilePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("sssssss", $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath);
+        $stmt->bind_param("sssssssss", $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath);
         if (!$stmt->execute()) {
             throw new Exception("Failed to add nutritionist: " . $stmt->error);
         }
     }
 
-    public function editNutritionist($nutritionistID, $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath = null) {
-        $query = "UPDATE " . $this->nutritionistsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, type = ?";
+    public function editNutritionist($nutritionistID, $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath = null) {
+        $query = "UPDATE " . $this->nutritionistsTable . " SET firstName = ?, lastName = ?, gender = ?, dateOfBirth = ?, phoneNo = ?, email = ?, type = ?, description = ?";
 
         if ($imagePath) {
             $query .= ", nutritionistImageFilePath = ?";
@@ -76,9 +76,9 @@ class AdminNutritionistsModel {
         $stmt = $this->databaseConn->prepare($query);
 
         if ($imagePath) {
-            $stmt->bind_param("sssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $imagePath, $nutritionistID);
+            $stmt->bind_param("ssssssssi", $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $imagePath, $nutritionistID);
         } else {
-            $stmt->bind_param("ssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $type, $nutritionistID);
+            $stmt->bind_param("ssssssssi", $firstName, $lastName, $gender, $dateOfBirth, $phoneNo, $email, $type, $description, $nutritionistID);
         }
 
         if (!$stmt->execute()) {
@@ -103,15 +103,6 @@ class AdminNutritionistsModel {
         $stmt->bind_param("isdi", $nutritionistID, $scheduleDateTime, $price, $nutritionistScheduleID);
         if (!$stmt->execute()) {
             throw new Exception("Failed to update schedule: " . $stmt->error);
-        }
-    }
-
-    public function addBooking($description, $nutritionistScheduleID, $userID, $paymentID) {
-        $query = "INSERT INTO NUTRITIONIST_BOOKING (description, nutritionistScheduleID, userID, paymentID) VALUES (?, ?, ?, ?)";
-        $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("siis", $description, $nutritionistScheduleID, $userID, $paymentID);
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to add booking: " . $stmt->error);
         }
     }
 
@@ -160,7 +151,7 @@ class AdminNutritionistsModel {
     }
 
     public function getFilteredNutritionists($limit, $offset, $filterType, $keywords) {
-        $query = "SELECT nutritionistID, firstName, lastName, gender, phoneNo, email, type, nutritionistImageFilePath 
+        $query = "SELECT nutritionistID, firstName, lastName, gender, dateOfBirth, phoneNo, email, type, description, nutritionistImageFilePath 
               FROM " . $this->nutritionistsTable . " 
               WHERE 1=1";
 

@@ -108,7 +108,7 @@ class AdminNutritionistsView {
                                     <button class="text-gray-500 hover:text-blue-600" onclick="openPhotoModal('<?php echo addslashes($nutritionist['nutritionistImageFilePath']); ?>')">
                                         <i class="bx bx-image"></i>
                                     </button>
-                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditNutritionistModal(<?php echo $nutritionist['nutritionistID']; ?>, '<?php echo addslashes($nutritionist['firstName']); ?>', '<?php echo addslashes($nutritionist['lastName']); ?>', '<?php echo addslashes($nutritionist['phoneNo']); ?>', '<?php echo addslashes($nutritionist['email']); ?>', '<?php echo addslashes($nutritionist['gender']); ?>', '<?php echo addslashes($nutritionist['type']); ?>')">
+                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditNutritionistModal(<?php echo $nutritionist['nutritionistID']; ?>, '<?php echo addslashes($nutritionist['firstName']); ?>', '<?php echo addslashes($nutritionist['lastName']); ?>', '<?php echo addslashes($nutritionist['phoneNo']); ?>', '<?php echo addslashes($nutritionist['email']); ?>', '<?php echo addslashes($nutritionist['gender']); ?>', '<?php echo addslashes($nutritionist['dateOfBirth']); ?>', '<?php echo addslashes($nutritionist['type']); ?>', '<?php echo addslashes($nutritionist['description']); ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
                                 </td>
@@ -389,15 +389,26 @@ class AdminNutritionistsView {
                     <label class="block text-gray-700 text-sm font-medium mt-4">Phone Number <span class="text-red-500">*</span></label>
                     <input name="phoneNo" type="text" id="phoneNo" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Gender <span class="text-red-500">*</span></label>
-                    <select name="gender" id="gender" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
+                    <div class="flex space-x-4 mt-4">
+                        <div class="flex-1">
+                            <label class="block text-gray-700 text-sm font-medium">Date of Birth <span class="text-red-500">*</span></label>
+                            <input name="dateOfBirth" type="date" id="dateOfBirth" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-gray-700 text-sm font-medium">Gender <span class="text-red-500">*</span></label>
+                            <select name="gender" id="gender" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Type <span class="text-red-500">*</span></label>
                     <input name="type" type="text" id="type" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Description</label>
+                    <textarea name="description" id="description" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1"></textarea>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
                     <input type="file" name="nutritionistsImages" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
@@ -578,7 +589,7 @@ class AdminNutritionistsView {
                 }, 300);
             }
 
-            function openEditNutritionistModal(nutritionistID, firstName, lastName, phoneNo, email, gender, type) {
+            function openEditNutritionistModal(nutritionistID, firstName, lastName, phoneNo, email, gender, dateOfBirth, type, description) {
                 const modal = document.getElementById('nutritionistModal');
                 const overlay = document.getElementById('modalOverlay');
 
@@ -592,6 +603,8 @@ class AdminNutritionistsView {
                 document.getElementById('email').value = email;
                 document.getElementById('gender').value = gender;
                 document.getElementById('type').value = type;
+                document.getElementById('dateOfBirth').value = dateOfBirth;
+                document.getElementById('description').value = description;
                 document.getElementById('submitNutritionistButton').name = 'editNutritionistButton';
                 document.getElementById('submitNutritionistButton').value = 'Edit Nutritionist';
                 document.getElementById('nutritionistModalTitle').innerText = 'Edit Nutritionist';
