@@ -14,9 +14,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['addClassButton']) && $_POST['addClassButton'] === "Add Class") {
         $name = trim($_POST['name']);
         $description = trim($_POST['description']);
+        $imagePath = '';
+
+        if (!empty($_FILES['classImage']['name'])) {
+            $targetDir = "../../public/images/classImages/";
+
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            $originalFileName = basename($_FILES['classImage']['name']); // Keep the original file name
+            $targetFilePath = $targetDir . $originalFileName;
+
+            $check = getimagesize($_FILES['classImage']['tmp_name']);
+            if ($check === false) {
+                echo "File is not an image.";
+                exit;
+            }
+
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            $fileType = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($fileType), $allowedTypes)) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                exit;
+            }
+
+            if (move_uploaded_file($_FILES['classImage']['tmp_name'], $targetFilePath)) {
+                $imagePath = $targetFilePath;
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+                exit;
+            }
+        }
 
         if (!empty($name) && !empty($description)) {
-            $adminClassesModel->addClass($name, $description);
+            $adminClassesModel->addClass($name, $description, $imagePath);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
@@ -26,9 +59,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fitnessClassID = $_POST['fitnessClassID'];
         $name = trim($_POST['name']);
         $description = trim($_POST['description']);
+        $imagePath = '';
+
+        if (!empty($_FILES['classImage']['name'])) {
+            $targetDir = "../../public/images/classImages/";
+
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            $originalFileName = basename($_FILES['classImage']['name']);
+            $targetFilePath = $targetDir . $originalFileName;
+
+            $check = getimagesize($_FILES['classImage']['tmp_name']);
+            if ($check === false) {
+                echo "File is not an image.";
+                exit;
+            }
+
+            $allowedTypes = array('jpg', 'png', 'jpeg', 'gif');
+            $fileType = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($fileType), $allowedTypes)) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                exit;
+            }
+
+            if (move_uploaded_file($_FILES['classImage']['tmp_name'], $targetFilePath)) {
+                $imagePath = $targetFilePath;
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+                exit;
+            }
+        }
 
         if (!empty($fitnessClassID) && !empty($name) && !empty($description)) {
-            $adminClassesModel->editClass($fitnessClassID, $name, $description);
+            $adminClassesModel->editClass($fitnessClassID, $name, $description, $imagePath);
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }

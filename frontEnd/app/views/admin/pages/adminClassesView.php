@@ -100,7 +100,8 @@ class AdminClassesView {
                                 <td class="p-3"><?php echo $class['name']; ?></td>
                                 <td class="p-3"><?php echo $class['description']; ?></td>
                                 <td class="p-3 flex justify-center space-x-2">
-                                    <button class="text-gray-500 hover:text-blue-600" onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>')">
+                                    <button class="text-gray-500 hover:text-blue-600"
+                                            onclick="openEditClassModal(<?php echo $class['fitnessClassID']; ?>, '<?php echo addslashes($class['name']); ?>', '<?php echo addslashes($class['description']); ?>', '<?php echo addslashes($class['fitnessClassImageFilePath']); ?>')">
                                         <i class="bx bx-pencil"></i>
                                     </button>
                                 </td>
@@ -262,13 +263,20 @@ class AdminClassesView {
             <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4">
                 <h2 id="classModalTitle" class="text-2xl font-semibold mb-4">Add Class</h2>
                 <hr class="py-2">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <input type="hidden" id="fitnessClassID" name="fitnessClassID">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="fitnessClassID" id="fitnessClassID">
+
                     <label class="block text-gray-700 text-sm font-medium">Class Name <span class="text-red-500">*</span></label>
                     <input name="name" type="text" id="className" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
 
                     <label class="block text-gray-700 text-sm font-medium mt-4">Description <span class="text-red-500">*</span></label>
                     <textarea name="description" id="classDescription" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required></textarea>
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4 mb-2">Current Image</label>
+                    <img id="imagePreview" src="https://placehold.co/640x360/png?text=No+Image+Available" alt="Current Class Image" class="w-full rounded-xl h-auto mb-2" />
+
+                    <label class="block text-gray-700 text-sm font-medium mt-4">Upload Image</label>
+                    <input type="file" name="classImage" accept="image/*" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1">
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeClassModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
@@ -420,16 +428,21 @@ class AdminClassesView {
                 }, 300);
             }
 
-            function openEditClassModal(id, name, description) {
+            function openEditClassModal(id, name, description, fitnessClassImageFilePath) {
                 const modal = document.getElementById('classModal');
                 const overlay = document.getElementById('modalOverlay');
 
                 modal.classList.remove('hidden');
                 overlay.classList.remove('hidden');
+
                 document.getElementById('classModalTitle').innerText = 'Edit Class';
                 document.getElementById('fitnessClassID').value = id;
                 document.getElementById('className').value = name;
                 document.getElementById('classDescription').value = description;
+
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = fitnessClassImageFilePath ? fitnessClassImageFilePath : 'default-image-path.jpg';
+
                 document.getElementById('submitClassButton').name = 'editClassButton';
                 document.getElementById('submitClassButton').value = 'Edit Class';
 
@@ -468,6 +481,8 @@ class AdminClassesView {
                 document.getElementById('fitnessClassID').value = '';
                 document.getElementById('className').value = '';
                 document.getElementById('classDescription').value = '';
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = 'https://placehold.co/640x360/png?text=No+Image+Available';
             }
 
             function clearScheduleModalFields() {
