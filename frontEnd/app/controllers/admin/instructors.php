@@ -113,13 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     }
-
-    if (isset($_POST['deleteInstructorButton'])) {
-        $instructorID = $_POST['instructorID'];
-        $adminInstructorsModel->deleteInstructor($instructorID);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getInstructorDetails') {
