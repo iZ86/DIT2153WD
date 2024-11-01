@@ -25,7 +25,7 @@ class NutritionistsView {
                 <div class="mx-20 pl-10 py-10 flex border border-black border-solid rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.25)] mt-20">
 
                 <div class="bg-[#ECECEC] w-96 h-48 rounded-2xl flex justify-center items-center">
-                    <img src="<?=IMAGE_FILE_PATH?><?=$nutritionistInformations['nutritionistImageFilePath']?>" alt="Nutritionist.png">
+                    <img src="<?=$nutritionistInformations['nutritionistImageFilePath']?>" alt="Nutritionist.png">
                 </div>
                 <div class="ml-10 font-montserrat">
                 <p>Name: <?= htmlspecialchars($nutritionistInformations['firstName']) . ' ' . htmlspecialchars($nutritionistInformations['lastName']) ?></p>

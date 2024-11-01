@@ -41,6 +41,8 @@ class AdminUsersView {
         ?>
         <section class="p-6 space-y-6">
             <div class="mx-4">
+                <?php include __DIR__ . '/../components/adminSuccessNotification.php'; ?>
+
                 <div class="flex items-center justify-between">
                     <h2 class="text-2xl font-bold">Users</h2>
                     <div class="flex items-center space-x-4">
@@ -82,7 +84,9 @@ class AdminUsersView {
                                 <td class="p-3 mt-4"><?php echo $user['email']; ?></td>
                                 <td class="p-3 mt-4"><?php echo $user['gender']; ?></td>
                                 <td class="p-3 mt-4">
-                                    <span class="bg-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-100 text-<?php echo $user['membershipStatus'] === 'Active' ? 'green' : 'red'; ?>-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $user['membershipStatus']; ?></span>
+                                    <span class="<?php echo $user['membershipStatus'] === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'; ?> text-sm font-medium px-3 py-1 rounded-lg">
+                                        <?php echo $user['membershipStatus']; ?>
+                                    </span>
                                 </td>
                                 <td class="p-3 mt-4 flex justify-center space-x-2">
                                     <button class="text-gray-500 hover:text-blue-600" onclick="openEditModal(<?php echo $user['registeredUserID']; ?>, '<?php echo $user['firstName']; ?>', '<?php echo $user['lastName']; ?>', '<?php echo $user['username']; ?>', '<?php echo $user['email']; ?>', '<?php echo $user['phoneNo']; ?>', '<?php echo $user['gender']; ?>', '<?php echo $user['dateOfBirth']; ?>', '<?php echo $user['startOn']; ?>', '<?php echo $user['endOn']; ?>')">
