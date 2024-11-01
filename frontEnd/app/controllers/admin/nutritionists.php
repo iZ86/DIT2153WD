@@ -112,14 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    #TODO:Delete this function
-    if (isset($_POST['deleteNutritionistButton'])) {
-        $nutritionistID = $_POST['nutritionistID'];
-        $adminNutritionistsModel->deleteNutritionist($nutritionistID);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    }
-
     if (isset($_POST['addScheduleButton']) && $_POST['addScheduleButton'] === "Add Schedule") {
         $nutritionistID = $_POST['nutritionistID'];
         $scheduleDateTime = $_POST['scheduleDateTime'];
