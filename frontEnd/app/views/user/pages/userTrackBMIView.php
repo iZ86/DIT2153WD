@@ -37,7 +37,7 @@ class UserTrackBMIView {
 
     /** Renders ONE card of BMI data. */
     private function renderOneBMIDataRow($bmiID) {?>
-    <div id=<?php echo $bmiID; ?> class="basis-32 bg-gray-400 flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-gray-400 cursor-pointer" onclick="openEditBMIDataModal(<?php echo $bmiID . ')';?>">
+    <div id=<?php echo $bmiID; ?> class="basis-32 bg-gray-400 flex items-center border-b-2 border-gray-mid shrink-0 hover:bg-gray-600 cursor-pointer" onclick="openEditBMIDataModal(<?php echo $bmiID . ')';?>">
         <img src="../../public/images/track_bmi_icon.png" class="w-16 h-16 mx-8">
         <div class="flex-col">
             <p id=<?php echo '"' . $bmiID . 'Text"'; ?> class="mb-0 text-white font-bold text-lg drop-shadow-dark"></p>
