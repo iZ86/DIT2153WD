@@ -159,11 +159,6 @@ class NutritionistsView {
                 </select>
             </div>
 
-            <div>
-                <label class="font-nunito" for="desc">Description:</label><br>
-                <textarea class="pl-3 border-[1px] border-black border-solid rounded-md font-nunito resize-none" name="desc" id="desc" rows="4" cols="32" placeholder="Please Tell Us Your GOAL or Any Concern"></textarea>
-            </div>
-
             <div class="text-center">
                 <p class="font-bold text-sm font-nunito">RM20 for each Consultation Session*</p>
             </div>

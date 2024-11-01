@@ -22,7 +22,7 @@ function cleanData($data) {
 }
 
 function checkIsBasicPostVariablesSet() {
-    if (isset($_POST['nutritionist']) && isset($_POST['date-time']) && isset($_POST['desc'])) {
+    if (isset($_POST['nutritionist']) && isset($_POST['date-time'])) {
         return true;
     }
     return false;
@@ -63,16 +63,13 @@ function getBookingInformation() {
                 if(checkIsBasicPostVariablesSet()) {
                     $nutritionistID = cleanData($_POST['nutritionist']) ?? null;
                     $nutritionistSchedule = cleanData($_POST['date-time']) ?? null;
-                    $description = cleanData($_POST['desc']) ?? null;
                     $username = $_SESSION['userID'];
                     if (!empty($nutritionistID) && !empty($nutritionistSchedule) && !empty($username)) {
                         global $nutritionistModel;
-                        echo $nutritionistID . $nutritionistSchedule . $description . $username;
                         $nutritionistScheduleData = $nutritionistModel->getNutritionistScheduleIdByNutritionistIdAndScheduleDateTime($nutritionistID, $nutritionistSchedule);
 
                         if ($nutritionistScheduleData) {
                             $nutritionistScheduleID = $nutritionistScheduleData ? $nutritionistScheduleData['nutritionistScheduleID'] : null;
-                            $_SESSION['description'] = $description;
                             $_SESSION['nutritionistScheduleID'] = $nutritionistScheduleID;
                             $price = $nutritionistModel->getNutritionistSchedulePriceByNutritionistScheduleID($nutritionistScheduleID);
                             $price = $price['price'];
@@ -96,5 +93,4 @@ $nutritionistsView = new NutritionistsView($nutritionistModel->getAllNutritionis
 $nutritionistsView->renderView();
 getBookingInformation();
 ob_end_flush();
-unset($_SESSION['description']);
 unset($_SESSION['nutritionistScheduleID']);
