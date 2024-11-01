@@ -57,6 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($dateOfBirth)) {
             $adminInstructorsModel->addInstructor($firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath);
+
+            $_SESSION['successMessage'] = "Added new instructor successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
@@ -109,6 +112,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($instructorID) && !empty($firstName) && !empty($lastName) && !empty($phoneNo) && !empty($email) && !empty($dateOfBirth)) {
             $adminInstructorsModel->editInstructor($instructorID, $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath);
+
+            $_SESSION['successMessage'] = "Edited instructor record successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
