@@ -225,7 +225,7 @@ class AdminClassesView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/classes.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/classes.php"class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
@@ -252,7 +252,7 @@ class AdminClassesView {
 
                     <div class="flex justify-end mt-10">
                         <button type="button" onclick="closeScheduleFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <a href="../admin/classes.php" style="background-color: #f56565;" onmouseover="this.style.backgroundColor='#c53030';" onmouseout="this.style.backgroundColor='#f56565';" class="text-white font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
+                        <a href="../admin/classes.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
                     </div>
                 </form>
