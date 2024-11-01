@@ -106,15 +106,6 @@ class AdminNutritionistsModel {
         }
     }
 
-    public function addBooking($description, $nutritionistScheduleID, $userID, $paymentID) {
-        $query = "INSERT INTO NUTRITIONIST_BOOKING (description, nutritionistScheduleID, userID, paymentID) VALUES (?, ?, ?, ?)";
-        $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("siis", $description, $nutritionistScheduleID, $userID, $paymentID);
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to add booking: " . $stmt->error);
-        }
-    }
-
     public function getTotalBookings() {
         $query = "SELECT COUNT(*) as total FROM NUTRITIONIST_BOOKING";
         $stmt = $this->databaseConn->prepare($query);
