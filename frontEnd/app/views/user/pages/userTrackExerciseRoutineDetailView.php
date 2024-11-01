@@ -177,17 +177,17 @@ class UserTrackExerciseRoutineDetailView {
                     
 
                 <div class="flex mt-8 justify-between gap-x-2 min-w-100">
-                    <div class="flex flex-col justify-between items-end gap-y-2 font-semibold text-2xl">
+                    <div class="flex flex-col items-end font-semibold text-2xl">
 
                         <label for="exerciseIDForExerciseRoutineDetail" class="text-white drop-shadow-dark">Exercise:</label>
                         <label for="weight" class="text-white drop-shadow-dark">Weights:</label>
                         <label for="rep" class="text-white drop-shadow-dark">Reps:</label>
-                        <label for="note" class="text-white drop-shadow-dark">Note:</label>
-                        <label for="time" class="text-white drop-shadow-dark">Time:</label>
+                        <label for="note" class="text-white drop-shadow-dark mt-2">Note:</label>
+                        <label for="time" class="text-white drop-shadow-dark mt-auto">Time:</label>
 
                     </div>
 
-                    <div class="flex flex-col gap-y-2 justify-between">
+                    <div class="flex flex-col gap-y-2">
                         <select name="exerciseIDForExerciseRoutineDetail" id="exerciseIDForExerciseRoutineDetail" class="bg-white rounded-lg border-2 text-shadow-dark text-black">
                         </select>
                         <div class="flex">
