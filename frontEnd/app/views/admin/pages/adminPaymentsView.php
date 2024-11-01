@@ -58,9 +58,6 @@ class AdminPaymentsView {
                 <table class="min-w-full table-auto border-collapse w-full">
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
-                        <th class="py-4 px-6 w-12 border-b border-gray-200">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                        </th>
                         <th class="py-4 px-6 border-b border-gray-200">ID</th>
                         <th class="py-4 px-6 border-b border-gray-200">Details</th>
                         <th class="py-4 px-6 border-b border-gray-200">Username</th>
@@ -76,9 +73,6 @@ class AdminPaymentsView {
                         $username = $this->adminPaymentsModel->getUsernameByUserID($payment['userID']);
                         ?>
                         <tr class="bg-white">
-                            <td class="p-3">
-                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
-                            </td>
                             <td class="p-3"><?php echo '#' . $payment['paymentID']; ?></td>
                             <td class="p-3"><?php echo $payment['type']; ?></td>
                             <td class="p-3"><?php echo $username; ?></td>
