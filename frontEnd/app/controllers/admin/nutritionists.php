@@ -148,19 +148,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     }
-
-    if (isset($_POST['addBookingButton']) && $_POST['addBookingButton'] === "Add Booking") {
-        $description = trim($_POST['description']);
-        $nutritionistScheduleID = $_POST['nutritionistScheduleID'];
-        $userID = $_SESSION['userID'];
-        $paymentID = $_POST['paymentID'];
-
-        if (!empty($description) && !empty($nutritionistScheduleID) && !empty($userID) && !empty($paymentID)) {
-            $adminNutritionistsModel->addBooking($description, $nutritionistScheduleID, $userID, $paymentID);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
-        }
-    }
 }
 
 $limit = 10;
