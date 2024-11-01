@@ -33,6 +33,7 @@ class AdminInstructorsModel {
         return $result->fetch_assoc()['total'];
     }
 
+    // Add new instructors
     public function addInstructor($firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath=null) {
         $query = "INSERT INTO " . $this->instructorsTable . " (firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth, instructorImageFilePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -43,6 +44,7 @@ class AdminInstructorsModel {
         }
     }
 
+    // Edit existing instructors
     public function editInstructor($instructorID, $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath=null) {
         $query = "UPDATE " . $this->instructorsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, weight = ?, height = ?, description = ?, certification = ?, dateOfBirth = ?";
 
