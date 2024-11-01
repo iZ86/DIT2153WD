@@ -8,7 +8,7 @@ class AdminInstructorsModel {
     }
 
     public function getAllInstructors($limit = null, $offset = null) {
-        $query = "SELECT instructorID, firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth FROM " . $this->instructorsTable;
+        $query = "SELECT instructorID, firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth, instructorImageFilePath FROM " . $this->instructorsTable;
 
         if ($limit !== null && $offset !== null) {
             $query .= " LIMIT ? OFFSET ?";
@@ -32,19 +32,32 @@ class AdminInstructorsModel {
         return $result->fetch_assoc()['total'];
     }
 
-    public function addInstructor($firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth) {
-        $query = "INSERT INTO " . $this->instructorsTable . " (firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public function addInstructor($firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath=null) {
+        $query = "INSERT INTO " . $this->instructorsTable . " (firstName, lastName, gender, phoneNo, email, weight, height, description, certification, dateOfBirth, instructorImageFilePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ssssssssss", $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth);
+        $stmt->bind_param("sssssssssss", $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath);
         if (!$stmt->execute()) {
             throw new Exception("Failed to add instructor: " . $stmt->error);
         }
     }
 
-    public function editInstructor($instructorID, $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth) {
-        $query = "UPDATE " . $this->instructorsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, weight = ?, height = ?, description = ?, certification = ?, dateOfBirth = ? WHERE instructorID = ?";
+    public function editInstructor($instructorID, $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath=null) {
+        $query = "UPDATE " . $this->instructorsTable . " SET firstName = ?, lastName = ?, gender = ?, phoneNo = ?, email = ?, weight = ?, height = ?, description = ?, certification = ?, dateOfBirth = ?";
+
+        if ($imagePath) {
+            $query .= ", instructorImageFilePath = ?";
+        }
+
+        $query .= " WHERE instructorID = ?";
         $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("ssssssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $instructorID);
+
+        if($imagePath) {
+            $stmt->bind_param("sssssssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $imagePath, $instructorID);
+        } else {
+            $stmt->bind_param("ssssssssssi", $firstName, $lastName, $gender, $phoneNo, $email, $weight, $height, $description, $certification, $dateOfBirth, $instructorID);
+        }
+
         if (!$stmt->execute()) {
             throw new Exception("Failed to update instructor: " . $stmt->error);
         }
