@@ -4,6 +4,14 @@ require "../models/guest/guestChangePasswordModel.php";
 session_start();
 $guestChangePasswordModel = new GuestChangePasswordModel(require "../config/db_connection.php");
 
+if (isset($_SESSION['userID'])) {
+    header("Location: user/");
+    exit;
+} else if (isset($_SESSION['adminID'])) {
+    header("Location: admin/");
+    exit;
+}
+
 // Only render the page if token is corrent
 if (isset($_GET['token'])) {
     // get token from url

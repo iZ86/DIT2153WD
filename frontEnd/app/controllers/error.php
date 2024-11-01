@@ -2,6 +2,14 @@
 require('../views/guest/pages/guestErrorRequestView.php');
 session_start();
 
+if (isset($_SESSION['userID'])) {
+    header("Location: user/");
+    exit;
+} else if (isset($_SESSION['adminID'])) {
+    header("Location: admin/");
+    exit;
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submitReturnToIndexButton'])) {
