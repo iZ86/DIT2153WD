@@ -59,12 +59,11 @@ class AdminPaymentsView {
                     <thead>
                     <tr class="text-gray-500 font-medium text-center">
                         <th class="py-4 px-6 border-b border-gray-200">ID</th>
-                        <th class="py-4 px-6 border-b border-gray-200">Details</th>
+                        <th class="py-4 px-6 border-b border-gray-200">Type</th>
                         <th class="py-4 px-6 border-b border-gray-200">Username</th>
                         <th class="py-4 px-6 border-b border-gray-200">Amount (RM)</th>
                         <th class="py-4 px-6 border-b border-gray-200">Date</th>
                         <th class="py-4 px-6 border-b border-gray-200">Status</th>
-                        <th class="py-4 px-6 border-b border-gray-200">Edit</th>
                     </tr>
                     </thead>
                     <tbody class="text-gray-700 text-center">
@@ -80,11 +79,6 @@ class AdminPaymentsView {
                             <td class="p-3"><?php echo date('Y-m-d H:i', strtotime($payment['createdOn'])); ?></td>
                             <td class="p-3">
                                 <span class="bg-<?php echo $payment['status'] === 'Failed' ? 'red' : ($payment['status'] === 'Pending' ? 'orange' : 'green'); ?>-100 text-<?php echo $payment['status'] === 'Failed' ? 'red' : ($payment['status'] === 'Pending' ? 'orange' : 'green'); ?>-700 text-sm font-medium px-3 py-1 rounded-lg"><?php echo $payment['status']; ?></span>
-                            </td>
-                            <td class="p-3 flex justify-center space-x-2">
-                                <button class="text-gray-500 hover:text-blue-600" onclick="openEditPaymentModal(<?php echo $payment['paymentID']; ?>, '<?php echo $payment['type']; ?>', '<?php echo $totalAmount; ?>', '<?php echo $payment['createdOn']; ?>', '<?php echo $payment['status']; ?>', '<?php echo $payment['userID']; ?>')">
-                                    <i class="bx bx-pencil"></i>
-                                </button>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -120,7 +114,7 @@ class AdminPaymentsView {
                     <select name="filterType" id="scheduleFilterType" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
                         <option value="">Please Select a Type</option>
                         <option value="paymentID">Payment ID</option>
-                        <option value="details">Details</option>
+                        <option value="details">Type</option>
                         <option value="username">Username</option>
                         <option value="date">Date</option>
                         <option value="status">Status</option>
@@ -133,49 +127,6 @@ class AdminPaymentsView {
                         <button type="button" onclick="closeFilterModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
                         <a href="../admin/payments.php" class="text-white bg-red-500 hover:bg-red-600 font-bold py-2 px-6 rounded-lg mr-2">Reset</a>
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Filter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div id="paymentModal" class="fixed inset-0 flex items-center justify-center hidden z-50 modal">
-            <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 mx-4 max-h-screen overflow-y-auto sm:mx-6 lg:mx-8">
-                <h2 id="paymentModalTitle" class="text-2xl font-semibold mb-4">Edit Payment</h2>
-                <hr class="py-2">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <input type="hidden" id="paymentID" name="paymentID">
-                    <input type="hidden" name="createdOn" value="<?php echo date('Y-m-d H:i:s'); ?>">
-
-                    <div class="flex space-x-4">
-                        <div class="flex-1">
-                            <label class="block text-gray-700 text-sm font-medium">Details <span class="text-red-500">*</span></label>
-                            <input name="type" type="text" id="type" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-gray-700 text-sm font-medium">Username <span class="text-red-500">*</span></label>
-                            <select name="userID" id="userID" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-                                <option value="">Select User</option>
-                                <?php while ($user = $this->users->fetch_assoc()): ?>
-                                    <option value="<?php echo $user['registeredUserID']; ?>"><?php echo $user['username']; ?></option>
-                                <?php endwhile; ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Amount (RM) <span class="text-red-500">*</span></label>
-                    <input name="amount" type="number" id="amount" class="w-full border border-gray-300 rounded-lg py-2 px-3 mt-1" required>
-
-                    <label class="block text-gray-700 text-sm font-medium mt-4">Status <span class="text-red-500">*</span></label>
-                    <select name="status" id="status" class="w-full border border-gray-300 rounded-lg py-2 px-3" required>
-                        <option value="">Select Status</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Failed">Failed</option>
-                    </select>
-
-                    <div class="flex justify-end mt-10">
-                        <button type="button" onclick="closePaymentModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Close</button>
-                        <button type="submit" id="submitPaymentButton" name="editPaymentButton" value="Edit Payment" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -218,44 +169,6 @@ class AdminPaymentsView {
                     modal.classList.add('hidden');
                     overlay.classList.add('hidden');
                 }, 300);
-            }
-
-            function openEditPaymentModal(paymentID, type, amount, createdOn, status, userID) {
-                const modal = document.getElementById('paymentModal');
-                const overlay = document.getElementById('modalOverlay');
-
-                modal.classList.remove('hidden');
-                overlay.classList.remove('hidden');
-
-                document.getElementById('paymentID').value = paymentID;
-                document.getElementById('type').value = type;
-                document.getElementById('amount').value = amount;
-                document.getElementById('status').value = status;
-                document.getElementById('userID').value = userID;
-
-                setTimeout(() => {
-                    modal.classList.add('show');
-                }, 10);
-            }
-
-            function closePaymentModal() {
-                const modal = document.getElementById('paymentModal');
-                const overlay = document.getElementById('modalOverlay');
-
-                modal.classList.remove('show');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    overlay.classList.add('hidden');
-                }, 300);
-                clearPaymentModalFields();
-            }
-
-            function clearPaymentModalFields() {
-                document.getElementById('paymentID').value = '';
-                document.getElementById('type').value = '';
-                document.getElementById('userID').value = '';
-                document.getElementById('amount').value = '';
-                document.getElementById('status').value = '';
             }
         </script>
         <?php
