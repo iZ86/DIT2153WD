@@ -46,7 +46,7 @@ require __DIR__ . '/../../../config/config.php';
             $age = $currentDate->diff($dob)->y;
             ?>
             <div class='flex font-montserrat mt-4 mb-14'>
-                <img class='object-cover w-64' src="<?=IMAGE_FILE_PATH . htmlspecialchars($datas['instructorImageFilePath']) ?>" alt='Instructor Image'>
+                <img class='object-cover w-64' src="<?=htmlspecialchars($datas['instructorImageFilePath']) ?>" alt='Instructor Image'>
                     <div class='flex flex-col ml-20'>
                     <p class='font-montserrat font-bold text-2xl'><?= htmlspecialchars($datas['firstName']) . ' ' . htmlspecialchars($datas['lastName']) ?></p>
                     <p class='text-[#676767] mt-2'><?= htmlspecialchars($datas['description']) ?></p>
