@@ -121,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Handle AJAX request to get instructor details
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getInstructorDetails') {
     $instructorID = intval($_GET['id']);
     $instructorDetails = $adminInstructorsModel->getInstructorById($instructorID);
@@ -146,8 +147,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     $instructors = $adminInstructorsModel->getAllInstructors($limit, $offset);
 }
 
+// Check if no instructors were found
 $noInstructorsFound = $instructors->num_rows === 0;
 
+// Calculate total pages for pagination
 $totalInstructors = $adminInstructorsModel->getTotalInstructors();
 $totalPagesInstructors = ceil($totalInstructors / $limit);
 
