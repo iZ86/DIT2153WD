@@ -50,6 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($name) && !empty($description)) {
             $adminClassesModel->addClass($name, $description, $imagePath);
+
+            $_SESSION['successMessage'] = "Added new class successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
@@ -95,6 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($fitnessClassID) && !empty($name) && !empty($description)) {
             $adminClassesModel->editClass($fitnessClassID, $name, $description, $imagePath);
+
+            $_SESSION['successMessage'] = "Edited class record successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
@@ -111,6 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($fitnessClassID) && !empty($scheduledOn) && !empty($pax) && !empty($instructorID)) {
             $adminClassesModel->addSchedule($fitnessClassID, $scheduledOn, $pax, $instructorID);
+
+            $_SESSION['successMessage'] = "Added new schedule successfully.";
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
@@ -127,6 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $scheduledOn = $scheduledOnDate . ' ' . $scheduledOnTime;
 
         $adminClassesModel->editSchedule($fitnessClassScheduleID, $fitnessClassID, $scheduledOn, $pax, $instructorID);
+
+        $_SESSION['successMessage'] = "Edited class schedule records successfully.";
+
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
