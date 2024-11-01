@@ -1,9 +1,11 @@
 
 <?php
-class PaymentView {
-    private $data;
-    public function __construct($data) {
-        $this->data = $data;
+class UserPaymentView {
+    
+    private $dataForPaymentView;
+    
+    public function __construct($dataForPaymentView) {
+        $this->dataForPaymentView = $dataForPaymentView;
     }
 
     /** Renders the userNutritionists page. */
@@ -25,17 +27,61 @@ class PaymentView {
 
     }
 
-    /** Reners the footer */
+    /** Renders the footer */
     public function renderFooter() {
         include __DIR__ . '/../components/userFooter.php';
     }
 
+    /** Render one order. */
+    public function renderOneOrderContent($orderName, $price) {?> 
+    
+        <h3 class="pb-2 font-normal text-2xl"><?php echo $orderName;?> <span class="float-right">RM <?php echo $price ?></span></h3>
+    
+    <?php
+    }
+    
+    /** Renders the order summary content. */
+    public function renderOrderSummaryContent() {?>
+    <div class="space-y-4">
+            <h1 class="text-3xl font-bold">Order Summary</h1>
+            <!-- Horizontal Line -->
+            <?php
+            if (isset($this->dataForPaymentView['membershipData'])) {
+                $this->renderOneOrderContent($this->dataForPaymentView['membershipData']['type'] .
+                " " .
+                $this->dataForPaymentView['membershipData']['name'], $this->dataForPaymentView['membershipData']['price']);
+
+                if (isset($this->dataForPaymentView['fitnessClassDataset'])) {
+                    $fitnessClassItems = $this->dataForPaymentView['fitnessClassDataset'];
+                    for ($i = 0; $i < sizeof($fitnessClassItems); $i++) {
+                        $this->renderOneOrderContent($fitnessClassItems[$i]['name'], $fitnessClassItems[$i]['price']);
+                    }
+                }
+                
+            } else if (isset($this->dataForPaymentView['nutritionistScheduleData'])) {
+                $this->renderOneOrderContent("Booking schedule ID " .
+                $this->dataForPaymentView['nutritionistScheduleData']['nutritionistScheduleID'] .
+                " with " .
+                $this->dataForPaymentView['nutritionistData']['firstName'] . " " . $this->dataForPaymentView['nutritionistData']['lastname'] . 
+                " at " . $this->dataForPaymentView['nutritionistScheduleData']['scheduleDateTime'],
+                $this->dataForPaymentView['nutritionistScheduleData']['price']);
+            }
+            
+            ?>
+
+            <div class="border border-gray-500 border-solid mb-6"></div>
+            <h2 class="text-2xl font-semibold">Grand Total <span class="float-right">RM<?php echo $this->dataForPaymentView['totalPrice'];  ?> </span></h2>
+    </div>
+    <?php
+    }
+
+    /** Renders the content. */
     public function renderContent() {
         $order = isset($_GET['order']) ? $_GET['order'] : '';
         $price = isset($_GET['price']) ? $_GET['price'] : '0'; ?>
     <section class="px-32 space-y-6 bg-blue-user pt-10 pb-28">
     <h1 class="text-3xl font-bold font-sans">Monthly Membership</h1>
-    <form action="<?=$_SERVER['PHP_SELF']?>?order=<?= $order ?>" method="POST">
+    <form action="" name="paymentForm" method="POST">
     <div class="flex space-x-14">
         <!--Billing Address-->
         <div class="bg-gray-100 p-6 w-1/2 rounded-lg border border-black">
@@ -82,14 +128,8 @@ class PaymentView {
 
         <!--Order Summary-->
         <div class="bg-gray-100 p-4 w-1/2 rounded-lg flex flex-col space-y-6 border border-black">
-            <h1 class="text-3xl font-bold">Order Summary</h1>
-            <div class="space-y-4">
-                <h3 class="pb-2 font-normal text-2xl"><?= isset($_GET['order'])? $_GET['order'] : "-"  ?> <span class="float-right">RM <?= isset($_GET['price'])? $_GET['price'] : "0"  ?></span></h3>
-
-                <!-- Horizontal Line -->
-                <div class="border border-gray-500 border-solid mb-6"></div>
-                <h2 class="text-2xl font-semibold">Grand Total <span class="float-right">RM<?= isset($_GET['price'])? $_GET['price'] : "0"  ?> </span></h2>
-            </div>
+            <?php $this->renderOrderSummaryContent(); ?>
+            
 
             <!--Payment Method-->
             <div class="font-semibold text-xl">
@@ -155,12 +195,13 @@ class PaymentView {
                         <input required type="tel" name="securityCode" id="securityCode" class="w-full p-2 mb-4 border rounded-lg">
                     </div>
                 </div>
-                <button type="submit" value="Subscribe" name="subscribe" id="subscribe" class="bg-orange-500 font-bold text-2xl hover:bg-orange-300 rounded-lg px-2 py-2 w-full">Subscribe</button>
+                <button type="submit" value="Pay Now" name="submitPayNow" id="submitPayNow" class="bg-orange-500 font-bold text-2xl hover:bg-orange-300 rounded-lg px-2 py-2 w-full">Pay Now</button>
             </div>
         </div>
     </div>
     </form>
 </section>
+<script src="../../public/js/user/userPaymentScript.js"></script>
     <?php
     }
 }

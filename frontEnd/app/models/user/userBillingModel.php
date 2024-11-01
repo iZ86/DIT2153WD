@@ -5,7 +5,7 @@ class UserBillingModel {
     /** Database connection. */
     private $databaseConn;
     /** MEMBERSHIP_SUBSCRIPTION Table. */
-    private $memberSubscriptionTable = "MEMBERSHIP_SUBSCRIPTION";
+    private $membershipSubscriptionTable = "MEMBERSHIP_SUBSCRIPTION";
     /** MEMBERSHIP Table. */
     private $membershipTable = "MEMBERSHIP";
     /** PAYMENT Table */
@@ -41,12 +41,12 @@ class UserBillingModel {
                 $items = array();
                 $totalAmount = 0;
 
-                $memberSubscriptionTransactionData = $this->getMemberSubscriptionTransactionData($paymentID);
+                $membershipSubscriptionTransactionData = $this->getMembershipSubscriptionTransactionData($paymentID);
 
-                if (sizeof($memberSubscriptionTransactionData) > 0) {
-                    $item = $memberSubscriptionTransactionData["type"] . " " . $memberSubscriptionTransactionData["name"] . " (RM" . $memberSubscriptionTransactionData["price"] . ")";
+                if (sizeof($membershipSubscriptionTransactionData) > 0) {
+                    $item = $membershipSubscriptionTransactionData["type"] . " " . $membershipSubscriptionTransactionData["name"] . " (RM" . $membershipSubscriptionTransactionData["price"] . ")";
                     $items[] = $item;
-                    $totalAmount += $memberSubscriptionTransactionData["price"];
+                    $totalAmount += $membershipSubscriptionTransactionData["price"];
                 }
 
                 $fitnessClassSubscriptionTransactionDataset = $this->getFitnessClassSubscriptionTransactionDataset($paymentID);
@@ -111,17 +111,17 @@ class UserBillingModel {
      * Otherwise, return an empty array, but this shouldnt happen,
      * as functions that calls this function verifies its arguements.
      */
-    public function getMemberSubscriptionTransactionData($paymentID) {
+    public function getMembershipSubscriptionTransactionData($paymentID) {
         
-        $selectMemberSubscriptionTransactionDataSQL = "SELECT * FROM " . $this->memberSubscriptionTable . " ms, " .
+        $selectMembershipSubscriptionTransactionDataSQL = "SELECT * FROM " . $this->membershipSubscriptionTable . " ms, " .
         $this->membershipTable . " m WHERE ms.membershipID = m.membershipID AND paymentID = ?";
 
-        $selectMemberSubscriptionTransactionDataSTMT = $this->databaseConn->prepare($selectMemberSubscriptionTransactionDataSQL);
-        $selectMemberSubscriptionTransactionDataSTMT->bind_param("s", $paymentID);
-        $selectMemberSubscriptionTransactionDataSTMT->execute();
-        $selectMemberSubscriptionTransactionDataResult = $selectMemberSubscriptionTransactionDataSTMT->get_result();
-        if ($selectMemberSubscriptionTransactionDataResult->num_rows > 0) {
-            return $selectMemberSubscriptionTransactionDataResult->fetch_assoc();
+        $selectMembershipSubscriptionTransactionDataSTMT = $this->databaseConn->prepare($selectMembershipSubscriptionTransactionDataSQL);
+        $selectMembershipSubscriptionTransactionDataSTMT->bind_param("s", $paymentID);
+        $selectMembershipSubscriptionTransactionDataSTMT->execute();
+        $selectMembershipSubscriptionTransactionDataResult = $selectMembershipSubscriptionTransactionDataSTMT->get_result();
+        if ($selectMembershipSubscriptionTransactionDataResult->num_rows > 0) {
+            return $selectMembershipSubscriptionTransactionDataResult->fetch_assoc();
         }
         return array();
     }
