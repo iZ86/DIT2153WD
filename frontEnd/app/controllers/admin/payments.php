@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $createdOn = trim($_POST['createdOn']);
         $userID = intval($_POST['userID']);
 
+        // Check if all required fields are filled
         if (!empty($paymentID) && !empty($type) && !empty($status) && !empty($createdOn) && !empty($userID)) {
             $adminPaymentsModel->editPayment($paymentID, $type, $status, $createdOn, $userID);
             header("Location: " . $_SERVER['PHP_SELF']);
@@ -30,6 +31,7 @@ $limit = 10;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $limit;
 
+// Filter payments based on selected filter type and keywords
 $filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
 $keywords = isset($_GET['keywords']) ? $_GET['keywords'] : '';
 

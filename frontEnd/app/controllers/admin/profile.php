@@ -11,9 +11,11 @@ if (!isset($_SESSION['adminID'])) {
 
 $adminModel = new AdminProfileModel(require '../../config/db_connection.php');
 
+// Retrieve admin ID from session and fetch admin details
 $adminID = $_SESSION['adminID'];
 $adminDetails = $adminModel->getAdminById($adminID);
 
+// Check if admin details were not found
 if (!$adminDetails) {
     echo "Admin not found.";
     exit;
@@ -72,8 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        // Update profile image path in the database
         $adminModel->updateProfileImagePath($adminID, $profileImagePath);
 
+        // Redirect to the same page to avoid form resubmission
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }

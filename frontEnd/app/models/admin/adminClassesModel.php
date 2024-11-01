@@ -8,6 +8,7 @@ class AdminClassesModel {
         $this->databaseConn = $databaseConn;
     }
 
+    // Method to add a new fitness class to the database
     public function addClass($name, $price, $description, $imagePath = null) {
         $query = "INSERT INTO " . $this->classesTable . " (name, price, description, fitnessClassImageFilePath) VALUES (?, ?, ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
@@ -18,6 +19,7 @@ class AdminClassesModel {
         }
     }
 
+    // Method to edit fitness class in the database
     public function editClass($fitnessClassID, $name, $price, $description, $imagePath = null) {
         $query = "UPDATE " . $this->classesTable . " SET name = ?, price = ?, description = ?";
 
@@ -39,6 +41,7 @@ class AdminClassesModel {
         }
     }
 
+    // Method to retrieve all instructors from the database
     public function getAllInstructors() {
         $query = "SELECT instructorID, CONCAT(firstName, ' ', lastName) AS fullName FROM INSTRUCTOR";
         $stmt = $this->databaseConn->prepare($query);
@@ -46,6 +49,7 @@ class AdminClassesModel {
         return $stmt->get_result();
     }
 
+    // Method to edit schedule for a fitness class
     public function addSchedule($fitnessClassID, $scheduledOn, $pax, $instructorID) {
         $query = "INSERT INTO " . $this->scheduleTable . " (fitnessClassID, scheduledOn, createdOn, pax, instructorID) VALUES (?, ?, NOW(), ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
@@ -73,14 +77,10 @@ class AdminClassesModel {
     }
 
     public function getSchedules($limit, $offset) {
-        $query = "SELECT fcs.fitnessClassScheduleID, 
-                     fcs.fitnessClassID,
-                     fcs.instructorID,
+        $query = "SELECT fcs.fitnessClassScheduleID, fcs.fitnessClassID,fcs.instructorID,
                      fc.name AS className, 
                      CONCAT(i.firstName, ' ', i.lastName) AS instructor, 
-                     fcs.scheduledOn, 
-                     fcs.createdOn, 
-                     fcs.pax,
+                     fcs.scheduledOn, fcs.createdOn, fcs.pax,
                      CASE 
                          WHEN fcs.scheduledOn > NOW() THEN 'Upcoming'
                          WHEN fcs.scheduledOn <= NOW() AND fcs.scheduledOn > NOW() - INTERVAL 2 HOUR THEN 'In Progress'
@@ -132,13 +132,10 @@ class AdminClassesModel {
     }
 
     public function getFilteredSchedules($limit, $offset, $filterType, $keywords) {
-        $query = "SELECT fcs.fitnessClassScheduleID, 
-                     fcs.fitnessClassID,
-                     fcs.instructorID,
+        $query = "SELECT fcs.fitnessClassScheduleID, fcs.fitnessClassID, fcs.instructorID,
                      fc.name AS className, 
                      CONCAT(i.firstName, ' ', i.lastName) AS instructor, 
-                     fcs.scheduledOn, 
-                     fcs.pax,
+                     fcs.scheduledOn, fcs.pax,
                      CASE 
                          WHEN fcs.scheduledOn > NOW() THEN 'Upcoming'
                          WHEN fcs.scheduledOn <= NOW() AND fcs.scheduledOn > NOW() - INTERVAL 2 HOUR THEN 'In Progress'

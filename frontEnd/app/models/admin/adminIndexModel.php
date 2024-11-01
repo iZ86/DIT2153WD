@@ -6,6 +6,7 @@ class AdminIndexModel {
         $this->databaseConn = $databaseConn;
     }
 
+    // Count the total number of users
     public function countUsers() {
         $query = "SELECT COUNT(*) as count FROM USER";
         $stmt = $this->databaseConn->prepare($query);
@@ -13,6 +14,7 @@ class AdminIndexModel {
         return $stmt->get_result()->fetch_assoc()['count'];
     }
 
+    // Count the total number of classes
     public function countClasses() {
         $query = "SELECT COUNT(*) as count FROM FITNESS_CLASS";
         $stmt = $this->databaseConn->prepare($query);
@@ -20,6 +22,7 @@ class AdminIndexModel {
         return $stmt->get_result()->fetch_assoc()['count'];
     }
 
+    // Count the total number of nutritionists
     public function countNutritionists() {
         $query = "SELECT COUNT(*) as count FROM NUTRITIONIST";
         $stmt = $this->databaseConn->prepare($query);
@@ -27,6 +30,7 @@ class AdminIndexModel {
         return $stmt->get_result()->fetch_assoc()['count'];
     }
 
+    // Count the total number of instructors
     public function countInstructors() {
         $query = "SELECT COUNT(*) as count FROM INSTRUCTOR";
         $stmt = $this->databaseConn->prepare($query);
@@ -34,6 +38,7 @@ class AdminIndexModel {
         return $stmt->get_result()->fetch_assoc()['count'];
     }
 
+    // Get upcoming class schedules
     public function getUpcomingClassSchedules($limit = 2) {
         $query = "SELECT fcs.fitnessClassScheduleID, fc.name AS className, fcs.pax, fcs.scheduledOn, i.firstName AS instructorFirstName, i.lastName AS instructorLastName, i.instructorID
             FROM FITNESS_CLASS_SCHEDULE fcs
@@ -48,6 +53,7 @@ class AdminIndexModel {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Get upcoming nutritionist schedules
     public function getUpcomingNutritionistSchedules($limit = 2) {
         $query = "SELECT ns.nutritionistScheduleID, ns.scheduleDateTime, 
                    n.firstName AS nutritionistFirstName, n.lastName AS nutritionistLastName, 
@@ -68,6 +74,7 @@ class AdminIndexModel {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Get latest transactions
     public function getLatestTransactions($limit = 5) {
         $query = "SELECT * FROM PAYMENT ORDER BY createdOn DESC LIMIT ?";
         $stmt = $this->databaseConn->prepare($query);

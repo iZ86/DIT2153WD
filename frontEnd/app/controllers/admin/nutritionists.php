@@ -154,10 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$limit = 10;
+$limit = 10; // Number of records per page
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $limit;
 
+// Filter nutritionists based on selected filter type and keywords
 $nutritionistFilterType = isset($_GET['nutritionistFilterType']) ? $_GET['nutritionistFilterType'] : '';
 $nutritionistKeywords = isset($_GET['nutritionistKeywords']) ? $_GET['nutritionistKeywords'] : '';
 
@@ -178,6 +179,7 @@ if (!empty($scheduleFilterType) && !empty($scheduleKeywords)) {
     $schedules = $adminNutritionistsModel->getSchedules($limit, $offset);
 }
 
+// Filter bookings based on selected filter type and keywords
 $bookingFilterType = isset($_GET['bookingFilterType']) ? $_GET['bookingFilterType'] : '';
 $bookingKeywords = isset($_GET['bookingKeywords']) ? $_GET['bookingKeywords'] : '';
 
@@ -187,10 +189,12 @@ if (!empty($bookingFilterType) && !empty($bookingKeywords)) {
     $bookings = $adminNutritionistsModel->getBookingsWithDetails($limit, $offset);
 }
 
+// Check if no schedules or bookings were found
 $noNutritionistsFound = $nutritionists->num_rows === 0;
 $noSchedulesFound = $schedules->num_rows === 0;
 $noBookingsFound = $bookings->num_rows === 0;
 
+// Calculate total pages for pagination
 $totalNutritionists = $adminNutritionistsModel->getTotalNutritionists();
 $totalSchedules = $adminNutritionistsModel->getTotalSchedules();
 $totalBookings = $adminNutritionistsModel->getTotalBookings();
