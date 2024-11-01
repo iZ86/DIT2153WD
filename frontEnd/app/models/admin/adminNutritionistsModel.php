@@ -86,15 +86,6 @@ class AdminNutritionistsModel {
         }
     }
 
-    public function deleteNutritionist($nutritionistID) {
-        $query = "DELETE FROM " . $this->nutritionistsTable . " WHERE nutritionistID = ?";
-        $stmt = $this->databaseConn->prepare($query);
-        $stmt->bind_param("i", $nutritionistID);
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to delete nutritionist: " . $stmt->error);
-        }
-    }
-
     public function addSchedule($nutritionistID, $scheduleDateTime, $price) {
         $query = "INSERT INTO " . $this->scheduleTable . " (nutritionistID, createdOn, scheduleDateTime, price) VALUES (?, NOW(), ?, ?)";
         $stmt = $this->databaseConn->prepare($query);
