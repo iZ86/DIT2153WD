@@ -31,7 +31,7 @@ $offset = ($page - 1) * $limit;
 $filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
 $keywords = isset($_GET['keywords']) ? $_GET['keywords'] : '';
 
-if (!empty($filterType) && $filterType !== 'all') {
+if (!empty($filterType) && !empty($keywords)) {
     $users = $adminUsersModel->getFilteredUsers($limit, $offset, $filterType, $keywords);
 } else {
     $users = $adminUsersModel->getAllUsers($limit, $offset);
