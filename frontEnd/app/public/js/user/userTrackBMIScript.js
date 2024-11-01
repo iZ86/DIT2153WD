@@ -38,7 +38,7 @@ function convertValueOfGramToWeightUnit(value, weightUnit) {
 /** Redirects the user based on the date inputted in the calendar. */
 function redirectTrackBMIPage() {
     let dateInput = document.getElementById("dateOfBMI");
-    location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=" + dateInput.value;
+    location.href = "track-bmi.php?date=" + dateInput.value;
 }
 
 /** Redirects the user to the same website with GET request to the previous date. */
@@ -46,7 +46,7 @@ function previousDate() {
     let dateInput = document.getElementById("dateOfBMI");
     let date = new Date(dateInput.value);
     date.setDate(date.getDate() - 1);
-    location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
+    location.href = "track-bmi.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
 }
 
 /** Redirects the user to the same website with GET request to the next date. */
@@ -54,7 +54,7 @@ function nextDate() {
     let dateInput = document.getElementById("dateOfBMI");
     let date = new Date(dateInput.value);
     date.setDate(date.getDate() + 1);
-    location.href = "http://localhost/DIT2153WD/frontEnd/app/controllers/user/track-bmi.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
+    location.href = "track-bmi.php?date=" + date.getFullYear() + "-" + (date.getMonth() +  1)+ "-" + date.getDate();
 }
 
 /** Checks if the datasets are empty. */
